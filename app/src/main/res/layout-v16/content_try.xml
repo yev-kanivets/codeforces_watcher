@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.bogdan.codeforceswatcher.TryActivity"
-    tools:showIn="@layout/activity_try">
+    tools:showIn="@layout/activity_try"
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,77 +17,51 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/mytext1"
+            android:id="@+id/tvRang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="casual"
             android:text="Hello World!"
             android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.643"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.215" />
 
         <TextView
-            android:id="@+id/mytext2"
+            android:id="@+id/tvNik"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="casual"
             android:text="Hello World!"
             android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.643"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.156" />
 
 
         <TextView
-            android:id="@+id/mytext3"
+            android:id="@+id/tvCurrentRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="casual"
             android:text="Hello World!"
             android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.643"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.277" />
 
 
         <TextView
-            android:id="@+id/mytext4"
+            android:id="@+id/tvMaxRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="casual"
             android:text="Hello World!"
             android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.643"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.337" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="40dp">
 
-        <ImageView
-            android:id="@+id/myimg"
-            android:layout_width="102dp"
-            android:layout_height="91dp"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="25dp"
-            tools:layout_editor_absoluteY="40dp" />
-    </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/myimg"
+        android:layout_width="102dp"
+        android:layout_height="91dp"
+        tools:ignore="MissingConstraints"
+        android:background="#000" />
+
+</LinearLayout>
