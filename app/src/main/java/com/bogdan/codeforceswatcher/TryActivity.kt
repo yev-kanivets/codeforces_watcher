@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 
 import kotlinx.android.synthetic.main.activity_try.*
+import kotlinx.android.synthetic.main.content_try.*
 
 class TryActivity : AppCompatActivity() {
 
@@ -15,10 +16,8 @@ class TryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_try)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
+        ivAvatar.setImageResource(R.drawable.scaletype1)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
