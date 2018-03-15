@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 
 import kotlinx.android.synthetic.main.activity_try.*
+import kotlinx.android.synthetic.main.content_try.*
 
 class TryActivity : AppCompatActivity() {
 
@@ -14,6 +15,8 @@ class TryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_try)
         setSupportActionBar(toolbar)
+
+        ivAvatar.setImageResource(R.drawable.scaletype1)
 
     }
 
