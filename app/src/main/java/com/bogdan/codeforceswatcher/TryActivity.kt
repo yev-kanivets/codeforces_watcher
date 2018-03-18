@@ -1,13 +1,19 @@
 package com.bogdan.codeforceswatcher
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 
+import retrofit2.*
 import kotlinx.android.synthetic.main.activity_try.*
 import kotlinx.android.synthetic.main.content_try.*
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.Retrofit
+import retrofit2.Callback
+import retrofit2.Response
+
 
 class TryActivity : AppCompatActivity() {
 
@@ -17,6 +23,32 @@ class TryActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         ivAvatar.setImageResource(R.drawable.scaletype1)
+
+        val retrofit = Retrofit.Builder()
+                .baseUrl("http://www.codeforces.com/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+        val userApi = retrofit.create(UserApi::class.java)
+
+        val user = userApi.user()
+
+        val TAG   = "MyLogs"
+
+        user.enqueue(object : Callback<Response1> {
+            override fun onResponse(call: Call<Response1>, response: Response<Response1>) {
+                if (response.isSuccessful) {
+                    Log.d(TAG,"response " + response.body()!!)
+                } else {
+                    Log.d(TAG,"response code " + response.code())
+                }
+            }
+
+            override fun onFailure(call: Call<Response1>, t: Throwable) {
+                Log.d(TAG,"failure $t")
+            }
+        })
+
 
     }
 
