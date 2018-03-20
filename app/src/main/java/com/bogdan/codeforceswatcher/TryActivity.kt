@@ -13,6 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.Retrofit
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.*
 
 
 class TryActivity : AppCompatActivity() {
@@ -24,6 +25,9 @@ class TryActivity : AppCompatActivity() {
 
         ivAvatar.setImageResource(R.drawable.scaletype1)
 
+    }
+
+    fun loadUser() {
         val retrofit = Retrofit.Builder()
                 .baseUrl("http://www.codeforces.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -33,22 +37,21 @@ class TryActivity : AppCompatActivity() {
 
         val user = userApi.user()
 
-        val TAG   = "MyLogs"
+        val TAG = "MyLogs"
 
-        user.enqueue(object : Callback<Response1> {
-            override fun onResponse(call: Call<Response1>, response: Response<Response1>) {
+        user.enqueue(object : Callback<UserResponse> {
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
-                    Log.d(TAG,"response " + response.body()!!)
+                    Log.d(TAG, "response " + response.body()!!)
                 } else {
-                    Log.d(TAG,"response code " + response.code())
+                    Log.d(TAG, "response code " + response.code())
                 }
             }
 
-            override fun onFailure(call: Call<Response1>, t: Throwable) {
-                Log.d(TAG,"failure $t")
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                Log.d(TAG, "failure $t")
             }
         })
-
 
     }
 
