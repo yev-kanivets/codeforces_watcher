@@ -25,6 +25,10 @@ class TryActivity : AppCompatActivity() {
 
         ivAvatar.setImageResource(R.drawable.scaletype1)
 
+    }
+
+    fun loadUser(){
+
         val retrofit = Retrofit.Builder()
                 .baseUrl("http://www.codeforces.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -51,7 +55,6 @@ class TryActivity : AppCompatActivity() {
         })
 
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
