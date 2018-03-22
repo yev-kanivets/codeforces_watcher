@@ -25,9 +25,6 @@ class TryActivity : AppCompatActivity() {
 
         ivAvatar.setImageResource(R.drawable.scaletype1)
 
-    }
-
-    fun loadUser() {
         val retrofit = Retrofit.Builder()
                 .baseUrl("http://www.codeforces.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -35,9 +32,9 @@ class TryActivity : AppCompatActivity() {
 
         val userApi = retrofit.create(UserApi::class.java)
 
-        val user = userApi.user()
+        val user = userApi.user("Nickita2001")
 
-        val TAG = "MyLogs"
+        val TAG: String = "MyLogs"
 
         user.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
@@ -54,6 +51,7 @@ class TryActivity : AppCompatActivity() {
         })
 
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
