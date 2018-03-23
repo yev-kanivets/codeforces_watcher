@@ -25,10 +25,10 @@ class TryActivity : AppCompatActivity() {
 
         ivAvatar.setImageResource(R.drawable.scaletype1)
 
+        loadUser()
     }
 
     fun loadUser(){
-
         val retrofit = Retrofit.Builder()
                 .baseUrl("http://www.codeforces.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -53,7 +53,6 @@ class TryActivity : AppCompatActivity() {
                 Log.d(TAG, "failure $t")
             }
         })
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
