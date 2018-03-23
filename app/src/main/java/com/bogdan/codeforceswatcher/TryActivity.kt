@@ -1,13 +1,20 @@
 package com.bogdan.codeforceswatcher
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 
+import retrofit2.*
 import kotlinx.android.synthetic.main.activity_try.*
 import kotlinx.android.synthetic.main.content_try.*
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.Retrofit
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.http.*
+
 
 class TryActivity : AppCompatActivity() {
 
@@ -18,6 +25,34 @@ class TryActivity : AppCompatActivity() {
 
         ivAvatar.setImageResource(R.drawable.scaletype1)
 
+        loadUser()
+    }
+
+    fun loadUser(){
+        val retrofit = Retrofit.Builder()
+                .baseUrl("http://www.codeforces.com/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+        val userApi = retrofit.create(UserApi::class.java)
+
+        val user = userApi.user("Nickita2001")
+
+        val TAG: String = "MyLogs"
+
+        user.enqueue(object : Callback<UserResponse> {
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                if (response.isSuccessful) {
+                    Log.d(TAG, "response " + response.body()!!)
+                } else {
+                    Log.d(TAG, "response code " + response.code())
+                }
+            }
+
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                Log.d(TAG, "failure $t")
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
