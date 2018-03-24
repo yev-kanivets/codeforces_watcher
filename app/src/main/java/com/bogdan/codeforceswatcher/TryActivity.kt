@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.squareup.picasso.Picasso
 
 import retrofit2.*
 import kotlinx.android.synthetic.main.activity_try.*
@@ -13,7 +14,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.Retrofit
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.*
 
 
 class TryActivity : AppCompatActivity() {
@@ -23,12 +23,10 @@ class TryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_try)
         setSupportActionBar(toolbar)
 
-        ivAvatar.setImageResource(R.drawable.scaletype1)
-
         loadUser()
     }
 
-    fun loadUser(){
+    fun loadUser() {
         val retrofit = Retrofit.Builder()
                 .baseUrl("http://www.codeforces.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -36,14 +34,17 @@ class TryActivity : AppCompatActivity() {
 
         val userApi = retrofit.create(UserApi::class.java)
 
-        val user = userApi.user("Nickita2001")
+        val user = userApi.user("BOGDAN_")
 
-        val TAG: String = "MyLogs"
+        val TAG = "MyLogs"
 
         user.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
                     Log.d(TAG, "response " + response.body()!!)
+                    val purchaser = response.body()!!.result.firstOrNull()!!
+                    val buyer = User(purchaser.avatar, purchaser.rank, purchaser.handle, purchaser.rating, purchaser.maxRating)
+                    displayUser(buyer)
                 } else {
                     Log.d(TAG, "response code " + response.code())
                 }
@@ -53,6 +54,14 @@ class TryActivity : AppCompatActivity() {
                 Log.d(TAG, "failure $t")
             }
         })
+    }
+
+    fun displayUser(user: User) {
+        tvRank.text = "Rank: " + user.rank
+        tvCurrentRating.text = "CurrentRating: " + user.rating.toString()
+        tvHandle.text = "Handle: " + user.handle
+        tvMaxRating.text = "MaxRating: " + user.maxRating.toString()
+        Picasso.get().load(user.avatar).into(ivAvatar)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
