@@ -43,8 +43,7 @@ class TryActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     Log.d(TAG, "response " + response.body()!!)
                     val purchaser = response.body()!!.result.firstOrNull()!!
-                    val buyer = User(purchaser.avatar, purchaser.rank, purchaser.handle, purchaser.rating, purchaser.maxRating)
-                    displayUser(buyer)
+                    displayUser(purchaser)
                 } else {
                     Log.d(TAG, "response code " + response.code())
                 }
