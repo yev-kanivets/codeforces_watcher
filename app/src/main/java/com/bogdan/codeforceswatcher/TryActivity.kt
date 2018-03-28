@@ -6,10 +6,10 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_main.*
 
 import retrofit2.*
 import kotlinx.android.synthetic.main.activity_try.*
-import kotlinx.android.synthetic.main.content_try.*
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.Retrofit
 import retrofit2.Callback
@@ -21,12 +21,11 @@ class TryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_try)
-        setSupportActionBar(toolbar)
 
         loadUser()
     }
 
-    fun loadUser() {
+    private fun loadUser() {
         val retrofit = Retrofit.Builder()
                 .baseUrl("http://www.codeforces.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -34,14 +33,15 @@ class TryActivity : AppCompatActivity() {
 
         val userApi = retrofit.create(UserApi::class.java)
 
-        val user = userApi.user("BOGDAN_")
+        val i = intent
+
+        val user = userApi.user(i.getStringExtra("Handle"))
 
         val TAG = "MyLogs"
 
         user.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
-                    Log.d(TAG, "response " + response.body()!!)
                     val purchaser = response.body()!!.result.firstOrNull()!!
                     displayUser(purchaser)
                 } else {
