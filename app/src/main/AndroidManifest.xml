@@ -13,16 +13,17 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".TryActivity"
-            android:label="Bogdan Evtushenko"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="Bogdan Evtushenko">
         </activity>
-        <activity android:name=".MainActivity" android:label="Codeforces Watcher">
+        <activity
+            android:name=".MainActivity"
+            android:label="Codeforces Watcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
 
 </manifest>
-

@@ -33,17 +33,15 @@ class TryActivity : AppCompatActivity() {
 
         val userApi = retrofit.create(UserApi::class.java)
 
-        val i = intent
-
-        val user = userApi.user(i.getStringExtra("Handle"))
+        val user = userApi.user(intent.getStringExtra(MainActivity.HANDLES))
 
         val TAG = "MyLogs"
 
         user.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
-                    val purchaser = response.body()!!.result.firstOrNull()!!
-                    displayUser(purchaser)
+                    Log.d(TAG, "response " + response.body()!!)
+                    displayUser(response.body()!!.result.firstOrNull()!!)
                 } else {
                     Log.d(TAG, "response code " + response.code())
                 }
@@ -61,6 +59,7 @@ class TryActivity : AppCompatActivity() {
         tvHandle.text = "Handle: " + user.handle
         tvMaxRating.text = "MaxRating: " + user.maxRating.toString()
         Picasso.get().load(user.avatar).into(ivAvatar)
+        title = user.firstName + " " + user.lastName
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
