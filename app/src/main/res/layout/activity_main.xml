@@ -7,15 +7,15 @@
 
     <EditText
         android:id="@+id/etHandle"
-        android:layout_width="210dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:hint="Enter handle here"/>
+        android:hint="Enter handle here"
+        android:layout_weight="7"/>
 
     <Button
         android:id="@+id/btnShow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="Show"/>
+        android:text="Show"
+        android:layout_weight="1"/>
 </LinearLayout>
