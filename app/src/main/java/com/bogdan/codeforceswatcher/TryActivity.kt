@@ -3,8 +3,10 @@ package com.bogdan.codeforceswatcher
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -43,12 +45,20 @@ class TryActivity : AppCompatActivity() {
                     Log.d(TAG, "response " + response.body()!!)
                     displayUser(response.body()!!.result.firstOrNull()!!)
                 } else {
+                    val toast = Toast.makeText(applicationContext,"No such handle found",Toast.LENGTH_SHORT)
+                    toast.setGravity(Gravity.CENTER,0,0)
+                    toast.show()
                     Log.d(TAG, "response code " + response.code())
+                    finish()
                 }
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                val toast = Toast.makeText(applicationContext,"No such handle found",Toast.LENGTH_SHORT)
+                toast.setGravity(Gravity.CENTER,0,0)
+                toast.show()
                 Log.d(TAG, "failure $t")
+                finish()
             }
         })
     }

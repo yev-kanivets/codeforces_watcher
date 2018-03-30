@@ -20,14 +20,14 @@
             android:id="@+id/tvRank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello World!"
+            android:text=""
             android:textSize="15sp" />
 
         <TextView
             android:id="@+id/tvHandle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello World!"
+            android:text=""
             android:textSize="15sp" />
 
 
@@ -35,7 +35,7 @@
             android:id="@+id/tvCurrentRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1234"
+            android:text=""
             android:textSize="15sp" />
 
 
@@ -43,7 +43,7 @@
             android:id="@+id/tvMaxRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1234"
+            android:text=""
             android:textSize="15sp" />
 
     </LinearLayout>
