@@ -3,7 +3,7 @@ package com.bogdan.codeforceswatcher
 import retrofit2.*
 import retrofit2.http.*
 
-data class User(val avatar: String, val rank: String, val handle: String, val rating: Int, val maxRating: Int)
+data class User(val avatar: String, val rank: String, val handle: String, val rating: Int, val maxRating: Int, val firstName: String, val lastName: String)
 
 data class UserResponse(val status: String, val result: List<User>)
 

@@ -6,10 +6,10 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_main.*
 
 import retrofit2.*
 import kotlinx.android.synthetic.main.activity_try.*
-import kotlinx.android.synthetic.main.content_try.*
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.Retrofit
 import retrofit2.Callback
@@ -21,12 +21,11 @@ class TryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_try)
-        setSupportActionBar(toolbar)
 
         loadUser()
     }
 
-    fun loadUser() {
+    private fun loadUser() {
         val retrofit = Retrofit.Builder()
                 .baseUrl("http://www.codeforces.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -34,7 +33,7 @@ class TryActivity : AppCompatActivity() {
 
         val userApi = retrofit.create(UserApi::class.java)
 
-        val user = userApi.user("BOGDAN_")
+        val user = userApi.user(intent.getStringExtra(MainActivity.HANDLES))
 
         val TAG = "MyLogs"
 
@@ -42,8 +41,7 @@ class TryActivity : AppCompatActivity() {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
                     Log.d(TAG, "response " + response.body()!!)
-                    val purchaser = response.body()!!.result.firstOrNull()!!
-                    displayUser(purchaser)
+                    displayUser(response.body()!!.result.firstOrNull()!!)
                 } else {
                     Log.d(TAG, "response code " + response.code())
                 }
@@ -61,6 +59,7 @@ class TryActivity : AppCompatActivity() {
         tvHandle.text = "Handle: " + user.handle
         tvMaxRating.text = "MaxRating: " + user.maxRating.toString()
         Picasso.get().load(user.avatar).into(ivAvatar)
+        title = user.firstName + " " + user.lastName
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
