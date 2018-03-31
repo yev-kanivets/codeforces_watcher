@@ -1,10 +1,13 @@
 package com.bogdan.codeforceswatcher
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toolbar
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -14,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.Retrofit
 import retrofit2.Callback
 import retrofit2.Response
-
+import java.security.KeyStore
 
 class TryActivity : AppCompatActivity() {
 
@@ -22,7 +25,15 @@ class TryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_try)
 
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayShowHomeEnabled(true)
+
         loadUser()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun loadUser() {
@@ -35,7 +46,7 @@ class TryActivity : AppCompatActivity() {
 
         val user = userApi.user(intent.getStringExtra(MainActivity.HANDLES))
 
-        val TAG = "MyLogs"
+        val TAG = "MyLog.s"
 
         user.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
