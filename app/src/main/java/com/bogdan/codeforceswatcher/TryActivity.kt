@@ -46,7 +46,7 @@ class TryActivity : AppCompatActivity() {
                     displayUser(response.body()!!.result.firstOrNull()!!)
                 } else {
                     val toast = Toast.makeText(applicationContext,"No such handle found",Toast.LENGTH_SHORT)
-                    toast.setGravity(Gravity.CENTER,0,0)
+                    toast.setGravity(Gravity.BOTTOM,0,0)
                     toast.show()
                     Log.d(TAG, "response code " + response.code())
                     finish()
@@ -55,7 +55,7 @@ class TryActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 val toast = Toast.makeText(applicationContext,"No such handle found",Toast.LENGTH_SHORT)
-                toast.setGravity(Gravity.CENTER,0,0)
+                toast.setGravity(Gravity.BOTTOM,0,0)
                 toast.show()
                 Log.d(TAG, "failure $t")
                 finish()
