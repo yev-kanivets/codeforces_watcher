@@ -45,17 +45,14 @@ class TryActivity : AppCompatActivity() {
                     Log.d(TAG, "response " + response.body()!!)
                     displayUser(response.body()!!.result.firstOrNull()!!)
                 } else {
-                    val toast = Toast.makeText(applicationContext,"No such handle found",Toast.LENGTH_SHORT)
-                    toast.setGravity(Gravity.BOTTOM,0,0)
-                    toast.show()
                     Log.d(TAG, "response code " + response.code())
+                    showError()
                     finish()
                 }
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                val toast = Toast.makeText(applicationContext,"No such handle found",Toast.LENGTH_SHORT)
-                toast.setGravity(Gravity.BOTTOM,0,0)
+                val toast = Toast.makeText(applicationContext, "No such handle found", Toast.LENGTH_SHORT)
                 toast.show()
                 Log.d(TAG, "failure $t")
                 finish()
@@ -70,6 +67,10 @@ class TryActivity : AppCompatActivity() {
         tvMaxRating.text = "MaxRating: " + user.maxRating.toString()
         Picasso.get().load(user.avatar).into(ivAvatar)
         title = user.firstName + " " + user.lastName
+    }
+
+    fun showError() {
+        Toast.makeText(applicationContext, "No such handle found", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
