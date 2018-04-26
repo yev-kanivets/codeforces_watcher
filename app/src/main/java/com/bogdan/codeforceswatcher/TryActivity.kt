@@ -52,8 +52,7 @@ class TryActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                val toast = Toast.makeText(applicationContext, "No such handle found", Toast.LENGTH_SHORT)
-                toast.show()
+                showError()
                 Log.d(TAG, "failure $t")
                 finish()
             }
