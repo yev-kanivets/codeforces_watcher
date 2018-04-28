@@ -12,8 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".TryActivity"
-            android:label="Bogdan Evtushenko">
+            android:name=".TryActivity">
         </activity>
         <activity
             android:name=".MainActivity"
