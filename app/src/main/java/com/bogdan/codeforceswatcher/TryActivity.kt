@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import android.view.View
 import android.widget.Toolbar
 import com.squareup.picasso.Picasso
@@ -55,11 +57,15 @@ class TryActivity : AppCompatActivity() {
                     displayUser(response.body()!!.result.firstOrNull()!!)
                 } else {
                     Log.d(TAG, "response code " + response.code())
+                    showError()
+                    finish()
                 }
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                showError()
                 Log.d(TAG, "failure $t")
+                finish()
             }
         })
     }
@@ -71,6 +77,10 @@ class TryActivity : AppCompatActivity() {
         tvMaxRating.text = "MaxRating: " + user.maxRating.toString()
         Picasso.get().load(user.avatar).into(ivAvatar)
         title = user.firstName + " " + user.lastName
+    }
+
+    fun showError() {
+        Toast.makeText(applicationContext, "No such handle found", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
