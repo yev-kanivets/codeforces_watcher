@@ -36,23 +36,24 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         val HANDLES = "Handle"
     }
 
-    fun loadText() {
+    private fun loadText() {
         var s = ""
         val sPref = getPreferences(Context.MODE_PRIVATE)
         val savedText = sPref.getString(SAVED_TEXT, "")
-        for (i in savedText) {
-            if (i != ' ') {
-                s += i
+        for (symbol in savedText) {
+            if (symbol != ' ') {
+                s += symbol
             } else {
-                names.add(s)
+                if (!s.isEmpty())
+                    names.add(s)
                 s = ""
             }
         }
-        if (s != "")
+        if (!s.isEmpty())
             names.add(s)
     }
 
-    fun saveText() {
+    private fun saveText() {
         val sPref = getPreferences(Context.MODE_PRIVATE)
         val ed = sPref.edit()
         ed.putString(SAVED_TEXT, sPref.getString(SAVED_TEXT, "") + " " + etHandle.text.toString())
