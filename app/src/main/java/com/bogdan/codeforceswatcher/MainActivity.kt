@@ -11,6 +11,9 @@ import android.widget.ArrayAdapter
 import android.R.id.edit
 import android.util.Log
 import android.R.id.edit
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
+import android.widget.TextView
 
 
 class MainActivity : AppCompatActivity(), OnClickListener {
@@ -30,7 +33,15 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                 android.R.layout.simple_list_item_1, names)
 
         lvMain.adapter = adapter
+
+        lvMain.onItemClickListener = OnItemClickListener { _, view, _, _ ->
+            val intent = Intent(this, TryActivity::class.java)
+            intent.putExtra("Handle", (view as TextView).text)
+            startActivity(intent)
+        }
+
     }
+
 
     companion object {
         val HANDLES = "Handle"
@@ -63,11 +74,9 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.btnShow -> {
-                val intent = Intent(this, TryActivity::class.java)
-                intent.putExtra("Handle", etHandle.text.toString())
-                startActivity(intent)
-                names.add(etHandle.text.toString())
+                names.add(0, etHandle.text.toString())
                 saveText()
+                etHandle.text = null
             }
             else -> {
             }
