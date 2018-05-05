@@ -77,7 +77,6 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             R.id.btnShow -> {
                 names.add(0, etHandle.text.toString())
                 adapter.notifyDataSetChanged()
-                lvMain.deferNotifyDataSetChanged()
                 saveText()
                 etHandle.text = null
             }
