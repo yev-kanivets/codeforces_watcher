@@ -32,6 +32,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         val adapter = ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, names)
 
+        adapter.setNotifyOnChange(true)
+
         lvMain.adapter = adapter
 
         lvMain.onItemClickListener = OnItemClickListener { _, view, _, _ ->
