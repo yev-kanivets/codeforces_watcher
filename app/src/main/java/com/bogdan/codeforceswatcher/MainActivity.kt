@@ -18,6 +18,7 @@ import android.widget.TextView
 
 class MainActivity : AppCompatActivity(), OnClickListener {
 
+    lateinit var adapter: ArrayAdapter<String>
     val names = mutableListOf<String>()
     var SAVED_TEXT = "Text"
 
@@ -29,10 +30,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
         btnShow.setOnClickListener(this)
 
-        val adapter = ArrayAdapter(this,
+        adapter = ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, names)
-
-        adapter.setNotifyOnChange(true)
 
         lvMain.adapter = adapter
 
@@ -77,6 +76,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         when (v.id) {
             R.id.btnShow -> {
                 names.add(0, etHandle.text.toString())
+                adapter.notifyDataSetChanged()
+                lvMain.deferNotifyDataSetChanged()
                 saveText()
                 etHandle.text = null
             }
