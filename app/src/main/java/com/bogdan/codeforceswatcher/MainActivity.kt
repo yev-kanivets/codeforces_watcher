@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         ed.commit()
     }
 
-    private fun loadUser() {
+    private fun loadUser(handle: String) {
         val retrofit = Retrofit.Builder()
                 .baseUrl("http://www.codeforces.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -91,20 +91,16 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         user.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
-                    names.add(0, etHandle.text.toString())
-                    Log.d("MY_TAG", etHandle.text.toString())
+                    names.add(0, handle)
                     adapter.notifyDataSetChanged()
                     saveText()
-                    etHandle.text = null
                 } else {
                     showError()
-                    etHandle.text = null
                 }
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 showError()
-                etHandle.text = null
             }
         })
     }
@@ -112,7 +108,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.btnShow -> {
-                loadUser()
+                loadUser(etHandle.text.toString())
+                etHandle.text = null
             }
             else -> {
             }
