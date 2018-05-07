@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     private fun saveText() {
         val sPref = getPreferences(Context.MODE_PRIVATE)
         val ed = sPref.edit()
-        ed.putString(SAVED_TEXT, sPref.getString(SAVED_TEXT, "") + " " + etHandle.text.toString())
+        ed.putString(SAVED_TEXT, etHandle.text.toString() + " " + sPref.getString(SAVED_TEXT, ""))
         ed.commit()
     }
 
