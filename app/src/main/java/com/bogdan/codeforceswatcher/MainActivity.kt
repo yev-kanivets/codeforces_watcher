@@ -6,21 +6,17 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.View.OnClickListener
-import kotlinx.android.synthetic.main.activity_main.*
-import android.widget.ArrayAdapter
-import android.R.id.edit
-import android.util.Log
-import android.R.id.edit
-import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.ArrayAdapter
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity(), OnClickListener {
 
-    lateinit var adapter: ArrayAdapter<String>
-    val names = mutableListOf<String>()
-    var SAVED_TEXT = "Text"
+    private lateinit var adapter: ArrayAdapter<String>
+    private val names = mutableListOf<String>()
+    private var savedText = "Text"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,13 +41,13 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
 
     companion object {
-        val HANDLES = "Handle"
+        const val HANDLES = "Handle"
     }
 
     private fun loadText() {
         var s = ""
         val sPref = getPreferences(Context.MODE_PRIVATE)
-        val savedText = sPref.getString(SAVED_TEXT, "")
+        val savedText = sPref.getString(this.savedText, "")
         for (symbol in savedText) {
             if (symbol != ' ') {
                 s += symbol
@@ -68,8 +64,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     private fun saveText() {
         val sPref = getPreferences(Context.MODE_PRIVATE)
         val ed = sPref.edit()
-        ed.putString(SAVED_TEXT, etHandle.text.toString() + " " + sPref.getString(SAVED_TEXT, ""))
-        ed.commit()
+        ed.putString(savedText, etHandle.text.toString() + " " + sPref.getString(savedText, ""))
+        ed.apply()
     }
 
     override fun onClick(v: View) {

@@ -1,25 +1,19 @@
 package com.bogdan.codeforceswatcher
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import android.view.View
-import android.widget.Toolbar
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_main.*
-
-import retrofit2.*
 import kotlinx.android.synthetic.main.activity_try.*
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.Retrofit
+import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.security.KeyStore
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class TryActivity : AppCompatActivity() {
 
@@ -48,15 +42,15 @@ class TryActivity : AppCompatActivity() {
 
         val user = userApi.user(intent.getStringExtra(MainActivity.HANDLES))
 
-        val TAG = "MyLog.s"
+        val tag = "MyLog.s"
 
         user.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
-                    Log.d(TAG, "response " + response.body()!!)
+                    Log.d(tag, "response " + response.body()!!)
                     displayUser(response.body()!!.result.firstOrNull()!!)
                 } else {
-                    Log.d(TAG, "response code " + response.code())
+                    Log.d(tag, "response code " + response.code())
                     showError()
                     finish()
                 }
@@ -64,12 +58,13 @@ class TryActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 showError()
-                Log.d(TAG, "failure $t")
+                Log.d(tag, "failure $t")
                 finish()
             }
         })
     }
 
+    @SuppressLint("SetTextI18n")
     fun displayUser(user: User) {
         tvRank.text = "Rank: " + user.rank
         tvCurrentRating.text = "CurrentRating: " + user.rating.toString()
