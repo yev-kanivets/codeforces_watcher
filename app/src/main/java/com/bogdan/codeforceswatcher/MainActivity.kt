@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     private lateinit var adapter: ArrayAdapter<String>
     private val names = mutableListOf<String>()
-    private var savedText = "Text"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +47,13 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     companion object {
         const val HANDLES = "Handle"
+        const val SAVED_TEXT = "Text"
     }
 
     private fun loadText() {
         var s = ""
         val sPref = getPreferences(Context.MODE_PRIVATE)
-        val savedText = sPref.getString(this.savedText, "")
+        val savedText = sPref.getString(SAVED_TEXT, "")
         for (symbol in savedText) {
             if (symbol != ' ') {
                 s += symbol
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     private fun saveText() {
         val sPref = getPreferences(Context.MODE_PRIVATE)
         val ed = sPref.edit()
-        ed.putString(savedText, etHandle.text.toString() + " " + sPref.getString(savedText, ""))
+        ed.putString(SAVED_TEXT, etHandle.text.toString() + " " + sPref.getString(SAVED_TEXT, ""))
         ed.apply()
     }
 

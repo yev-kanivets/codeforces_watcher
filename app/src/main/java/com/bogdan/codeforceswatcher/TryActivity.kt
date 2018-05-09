@@ -32,6 +32,10 @@ class TryActivity : AppCompatActivity() {
         return true
     }
 
+    companion object {
+        const val TAG = "MyLog.s"
+    }
+
     private fun loadUser() {
         val retrofit = Retrofit.Builder()
                 .baseUrl("http://www.codeforces.com/api/")
@@ -42,15 +46,15 @@ class TryActivity : AppCompatActivity() {
 
         val user = userApi.user(intent.getStringExtra(MainActivity.HANDLES))
 
-        val tag = "MyLog.s"
+
 
         user.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
-                    Log.d(tag, "response " + response.body()!!)
+                    Log.d(TAG, "response " + response.body()!!)
                     displayUser(response.body()!!.result.firstOrNull()!!)
                 } else {
-                    Log.d(tag, "response code " + response.code())
+                    Log.d(TAG, "response code " + response.code())
                     showError()
                     finish()
                 }
@@ -58,7 +62,7 @@ class TryActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 showError()
-                Log.d(tag, "failure $t")
+                Log.d(TAG, "failure $t")
                 finish()
             }
         })
