@@ -67,10 +67,10 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             names.add(s)
     }
 
-    private fun saveText() {
+    private fun saveText(handle: String) {
         val sPref = getPreferences(Context.MODE_PRIVATE)
         val ed = sPref.edit()
-        ed.putString(SAVED_TEXT, etHandle.text.toString() + " " + sPref.getString(SAVED_TEXT, ""))
+        ed.putString(SAVED_TEXT, handle + " " + sPref.getString(SAVED_TEXT, ""))
         ed.apply()
     }
 
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                 if (response.isSuccessful) {
                     names.add(0, handle)
                     adapter.notifyDataSetChanged()
-                    saveText()
+                    saveText(handle)
                 } else {
                     showError()
                 }
