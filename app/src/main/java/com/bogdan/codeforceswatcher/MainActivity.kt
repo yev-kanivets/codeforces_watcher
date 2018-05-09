@@ -6,14 +6,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.View.OnClickListener
-import kotlinx.android.synthetic.main.activity_main.*
-import android.widget.ArrayAdapter
-import android.R.id.edit
-import android.util.Log
-import android.R.id.edit
-import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.ArrayAdapter
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_main.*
 import android.widget.Toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,9 +20,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), OnClickListener {
 
-    lateinit var adapter: ArrayAdapter<String>
-    val names = mutableListOf<String>()
-    var SAVED_TEXT = "Text"
+    private lateinit var adapter: ArrayAdapter<String>
+    private val names = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +46,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
 
     companion object {
-        val HANDLES = "Handle"
+        const val HANDLES = "Handle"
+        const val SAVED_TEXT = "Text"
     }
 
     private fun loadText() {
@@ -71,11 +67,11 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             names.add(s)
     }
 
-    private fun saveText() {
+    private fun saveText(handle: String) {
         val sPref = getPreferences(Context.MODE_PRIVATE)
         val ed = sPref.edit()
-        ed.putString(SAVED_TEXT, etHandle.text.toString() + " " + sPref.getString(SAVED_TEXT, ""))
-        ed.commit()
+        ed.putString(SAVED_TEXT, handle + " " + sPref.getString(SAVED_TEXT, ""))
+        ed.apply()
     }
 
     private fun loadUser(handle: String) {
@@ -93,7 +89,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                 if (response.isSuccessful) {
                     names.add(0, handle)
                     adapter.notifyDataSetChanged()
-                    saveText()
+                    saveText(handle)
                 } else {
                     showError()
                 }
