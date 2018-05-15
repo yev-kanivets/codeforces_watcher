@@ -1,16 +1,18 @@
 package com.bogdan.codeforceswatcher
 
+import android.content.ComponentCallbacks2
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.AdapterView.OnItemClickListener
-import android.widget.ArrayAdapter
+import android.widget.SimpleAdapter
 import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_main.*
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,25 +22,26 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), OnClickListener {
 
-    private lateinit var adapter: ArrayAdapter<String>
-    private val names = mutableListOf<String>()
+    val data = mutableListOf<Map<String, Any>>()
+    val from = arrayOf(ATTRIBUTE_NAME_HANDLE, ATTRIBUTE_NAME_RATING)
+    val to: IntArray = intArrayOf(R.id.tv1, R.id.tv2)
+    lateinit var sAdapter: SimpleAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        loadText()
-
         btnShow.setOnClickListener(this)
 
-        adapter = ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, names)
+        sAdapter = SimpleAdapter(this, data, R.layout.list_view, from, to)
 
-        lvMain.adapter = adapter
+        loadText()
+
+        lvMain.adapter = sAdapter
 
         lvMain.onItemClickListener = OnItemClickListener { _, view, _, _ ->
             val intent = Intent(this, TryActivity::class.java)
-            intent.putExtra("Handle", (view as TextView).text)
+            intent.putExtra("Handle", (view.findViewById<TextView>(R.id.tv1) as TextView).text)
             startActivity(intent)
         }
 
@@ -48,29 +51,51 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     companion object {
         const val HANDLES = "Handle"
         const val SAVED_TEXT = "Text"
+        const val ATTRIBUTE_NAME_HANDLE = "handle"
+        const val ATTRIBUTE_NAME_RATING = "rating"
     }
 
     private fun loadText() {
         var s = ""
+        var k = 0
         val sPref = getPreferences(Context.MODE_PRIVATE)
-        val savedText = sPref.getString(SAVED_TEXT, "")
-        for (symbol in savedText) {
-            if (symbol != ' ') {
-                s += symbol
+        val savedText = sPref.getString(SAVED_TEXT, "") + " "
+        var symbol = 0
+        while (symbol != savedText.length) {
+            if (savedText[symbol] != ' ') {
+                s += savedText[symbol]
             } else {
-                if (!s.isEmpty())
-                    names.add(s)
+                if (!s.isEmpty()) {
+                    val m = HashMap<String, Any>()
+                    if (k % 2 == 0) {
+                        m[ATTRIBUTE_NAME_HANDLE] = s
+                        s = ""
+                        for (i in symbol + 1 until savedText.length) {
+                            if (savedText[i] != ' ') {
+                                s += savedText[i]
+                            } else {
+                                m[ATTRIBUTE_NAME_RATING] = s
+                                data.add(m)
+                                Log.d(TryActivity.TAG + k.toString(), m.toString() + "\n")
+                                Log.d(TryActivity.TAG, data.toString())
+                                symbol = i
+                                break
+                            }
+                        }
+                    }
+                    k += 2
+                }
                 s = ""
             }
+            symbol++
         }
-        if (!s.isEmpty())
-            names.add(s)
+        //Log.d(TryActivity.TAG, savedText)
     }
 
-    private fun saveText(handle: String) {
+    private fun saveText(handle: String, rating: String) {
         val sPref = getPreferences(Context.MODE_PRIVATE)
         val ed = sPref.edit()
-        ed.putString(SAVED_TEXT, handle + " " + sPref.getString(SAVED_TEXT, ""))
+        ed.putString(SAVED_TEXT, handle + " " + rating + " " + sPref.getString(SAVED_TEXT, ""))
         ed.apply()
     }
 
@@ -87,9 +112,14 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         user.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
-                    names.add(0, handle)
-                    adapter.notifyDataSetChanged()
-                    saveText(handle)
+                    val m = HashMap<String, Any>()
+                    val rating = response.body()!!.result.firstOrNull()!!.rating.toString()
+                    m[ATTRIBUTE_NAME_RATING] = rating
+                    m[ATTRIBUTE_NAME_HANDLE] = handle
+                    data.add(0, m)
+                    Log.d(TryActivity.TAG, data.toString() + m.toString())
+                    sAdapter.notifyDataSetChanged()
+                    saveText(handle, rating)
                 } else {
                     showError()
                 }
