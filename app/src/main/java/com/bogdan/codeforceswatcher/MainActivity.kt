@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     val data = mutableListOf<Map<String, Any>>()
     val from = arrayOf(ATTRIBUTE_NAME_HANDLE, ATTRIBUTE_NAME_RATING)
-    val to: IntArray = intArrayOf(R.id.tv1, R.id.tv2)
+    val to = intArrayOf(R.id.tv1, R.id.tv2)
     lateinit var sAdapter: SimpleAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         }
 
     }
-
 
     companion object {
         const val HANDLES = "Handle"
@@ -89,7 +88,6 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             }
             symbol++
         }
-        //Log.d(TryActivity.TAG, savedText)
     }
 
     private fun saveText(handle: String, rating: String) {
