@@ -1,6 +1,6 @@
 package com.bogdan.codeforceswatcher
 
-import android.content.ComponentCallbacks2
+import android.arch.persistence.room.*
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -18,6 +18,13 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import android.arch.persistence.room.RoomDatabase
+import android.arch.persistence.room.Database
+import android.arch.persistence.room.Room
+
+
+
+
 
 
 class MainActivity : AppCompatActivity(), OnClickListener {
@@ -30,6 +37,14 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val db = Room.databaseBuilder(applicationContext,
+                AppDatabase::class.java, "database").build()
+
+        val userDao = db.userDao()
+
+
+
 
         btnShow.setOnClickListener(this)
 
@@ -145,3 +160,29 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     }
 
 }
+
+@Dao
+interface UserDao {
+
+    @get:Query("SELECT * FROM user")
+    val all: List<User>
+
+    @Query("SELECT * FROM user WHERE id = :id")
+    fun getById(id: Long): User
+
+    @Insert
+    fun insert(user: User)
+
+    @Update
+    fun update(user: User)
+
+    @Delete
+    fun delete(user: User)
+
+}
+
+@Database(entities = arrayOf(User::class), version = 1)
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun userDao(): UserDao
+}
+
