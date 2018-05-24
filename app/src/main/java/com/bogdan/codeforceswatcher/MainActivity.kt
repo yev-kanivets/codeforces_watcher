@@ -21,8 +21,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
-import android.support.annotation.Nullable
-
 
 class MainActivity : AppCompatActivity(), OnClickListener {
 
@@ -55,20 +53,16 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
         val liveData = userDao.getAll()
 
-
-        liveData.observe(this, object : Observer<List<User>> {
-            override fun onChanged(@Nullable t: List<User>?) {
-                for (element in t!!.size - 1 downTo 0) {
-                    val m = HashMap<String, Any>()
-                    m[ATTRIBUTE_NAME_HANDLE] = t[element].handle
-                    m[ATTRIBUTE_NAME_RATING] = t[element].rating
-                    data.add(m)
-                    sAdapter.notifyDataSetChanged()
-                }
+        liveData.observe(this, Observer<List<User>> { t ->
+            data.clear()
+            for (element in t!!.size - 1 downTo 0) {
+                val m = HashMap<String, Any>()
+                m[ATTRIBUTE_NAME_HANDLE] = t[element].handle
+                m[ATTRIBUTE_NAME_RATING] = t[element].rating
+                data.add(m)
+                sAdapter.notifyDataSetChanged()
             }
-
         })
-
     }
 
     companion object {
@@ -85,17 +79,11 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
         val userApi = retrofit.create(UserApi::class.java)
 
-        val user = userApi.user(etHandle.text.toString())
+        val user = userApi.user(handle)
 
         user.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
-                    val m = HashMap<String, Any>()
-                    val rating = response.body()!!.result.firstOrNull()!!.rating.toString()
-                    m[ATTRIBUTE_NAME_RATING] = rating
-                    m[ATTRIBUTE_NAME_HANDLE] = handle
-                    data.add(0, m)
-                    sAdapter.notifyDataSetChanged()
                     userDao.insert(response.body()!!.result.firstOrNull()!!)
                 } else {
                     showError()
@@ -143,12 +131,9 @@ interface UserDao {
     @Delete
     fun delete(user: User)
 
-
 }
 
 @Database(entities = arrayOf(User::class), version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 }
-
-
