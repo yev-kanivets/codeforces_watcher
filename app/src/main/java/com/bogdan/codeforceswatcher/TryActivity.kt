@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import com.bogdan.codeforceswatcher.MainActivity.Companion.userDao
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_try.*
 import retrofit2.Call
@@ -16,7 +17,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class TryActivity : AppCompatActivity() {
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_try)
@@ -46,8 +47,6 @@ class TryActivity : AppCompatActivity() {
 
         val user = userApi.user(intent.getStringExtra(MainActivity.HANDLES))
 
-
-
         user.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
@@ -70,6 +69,7 @@ class TryActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun displayUser(user: User) {
+        Log.d(TAG + "aa", (intent.getStringExtra(MainActivity.ID)))
         tvRank.text = "Rank: " + user.rank
         tvCurrentRating.text = "CurrentRating: " + user.rating.toString()
         tvHandle.text = "Handle: " + user.handle
@@ -83,18 +83,19 @@ class TryActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_try, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+        when (item.itemId) {
+            R.id.action_delete -> {
+                val id = (intent.getStringExtra(MainActivity.ID)).toLong()
+                Log.d(TAG + "cc", userDao.getById(id).toString())
+                userDao.delete(userDao.getById(id))
+                finish()
+            }
         }
+        return super.onOptionsItemSelected(item)
     }
 }
