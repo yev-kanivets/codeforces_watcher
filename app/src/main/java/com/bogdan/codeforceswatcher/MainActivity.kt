@@ -17,14 +17,18 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import android.arch.persistence.room.RoomDatabase
+import android.arch.persistence.room.Database
+import android.arch.persistence.room.Room
+import android.util.Log
 
 class MainActivity : AppCompatActivity(), OnClickListener {
 
     val data = mutableListOf<Map<String, Any>>()
     val from = arrayOf(ATTRIBUTE_NAME_HANDLE, ATTRIBUTE_NAME_RATING)
     val to = intArrayOf(R.id.tv1, R.id.tv2)
-    lateinit var sAdapter: SimpleAdapter
-    lateinit var userDao: UserDao
+    private lateinit var sAdapter: SimpleAdapter
+    var it: List<User>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,9 +45,11 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
         lvMain.adapter = sAdapter
 
-        lvMain.onItemClickListener = OnItemClickListener { _, view, _, _ ->
+        lvMain.onItemClickListener = OnItemClickListener { _, view, _, id ->
             val intent = Intent(this, TryActivity::class.java)
+            Log.d("MyLog.s", it!![id.toInt()].id.toString())
             intent.putExtra("Handle", (view.findViewById<TextView>(R.id.tv1) as TextView).text)
+            intent.putExtra("Id", it!![it!!.size - 1 - id.toInt()].id.toString())
             startActivity(intent)
         }
 
@@ -51,18 +57,23 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
         liveData.observe(this, Observer<List<User>> { t ->
             data.clear()
+            it = t
             for (element in t!!.size - 1 downTo 0) {
                 val m = HashMap<String, Any>()
+                Log.d("Host", t[element].id.toString())
                 m[ATTRIBUTE_NAME_HANDLE] = t[element].handle
                 m[ATTRIBUTE_NAME_RATING] = t[element].rating
                 data.add(m)
                 sAdapter.notifyDataSetChanged()
             }
+            sAdapter.notifyDataSetChanged()
         })
     }
 
     companion object {
+        lateinit var userDao: UserDao
         const val HANDLES = "Handle"
+        const val ID = "Id"
         const val ATTRIBUTE_NAME_HANDLE = "handle"
         const val ATTRIBUTE_NAME_RATING = "rating"
     }
