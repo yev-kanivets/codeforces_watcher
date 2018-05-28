@@ -74,7 +74,12 @@ class TryActivity : AppCompatActivity() {
         tvCurrentRating.text = "CurrentRating: " + user.rating.toString()
         tvHandle.text = "Handle: " + user.handle
         tvMaxRating.text = "MaxRating: " + user.maxRating.toString()
-        Picasso.get().load(user.avatar).into(ivAvatar)
+        if(user.avatar.substring(0,6) != "https:"){
+            Picasso.get().load("https:" + user.avatar).into(ivAvatar)
+        }
+        else {
+            Picasso.get().load(user.avatar).into(ivAvatar)
+        }
         title = user.firstName + " " + user.lastName
     }
 
