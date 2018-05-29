@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.AdapterView.OnItemClickListener
@@ -17,14 +18,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import android.arch.persistence.room.RoomDatabase
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.Room
-import android.util.Log
 
 class MainActivity : AppCompatActivity(), OnClickListener {
 
-    val data = mutableListOf<Map<String, Any>>()
+    val data = mutableListOf<Map<String, Any?>>()
     val from = arrayOf(ATTRIBUTE_NAME_HANDLE, ATTRIBUTE_NAME_RATING)
     val to = intArrayOf(R.id.tv1, R.id.tv2)
     private lateinit var sAdapter: SimpleAdapter
@@ -59,7 +56,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             data.clear()
             it = t
             for (element in t!!.size - 1 downTo 0) {
-                val m = HashMap<String, Any>()
+                val m = HashMap<String, Any?>()
                 Log.d("Host", t[element].id.toString())
                 m[ATTRIBUTE_NAME_HANDLE] = t[element].handle
                 m[ATTRIBUTE_NAME_RATING] = t[element].rating
@@ -72,7 +69,6 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     companion object {
         lateinit var userDao: UserDao
-        const val HANDLES = "Handle"
         const val ID = "Id"
         const val ATTRIBUTE_NAME_HANDLE = "handle"
         const val ATTRIBUTE_NAME_RATING = "rating"
