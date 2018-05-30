@@ -5,11 +5,9 @@ import android.arch.persistence.room.Room
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.AdapterView.OnItemClickListener
-import android.widget.SimpleAdapter
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -21,10 +19,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), OnClickListener {
 
-    val data = mutableListOf<Map<String, Any?>>()
-    val from = arrayOf(ATTRIBUTE_NAME_HANDLE, ATTRIBUTE_NAME_RATING)
-    val to = intArrayOf(R.id.tv1, R.id.tv2)
-    private lateinit var sAdapter: SimpleAdapter
+    lateinit var userAdapter: UserAdapter
+    private val users = mutableListOf<User>()
     var it: List<User>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,13 +34,12 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
         btnShow.setOnClickListener(this)
 
-        sAdapter = SimpleAdapter(this, data, R.layout.list_view, from, to)
+        userAdapter = UserAdapter(this, users)
 
-        lvMain.adapter = sAdapter
+        lvMain.adapter = userAdapter
 
         lvMain.onItemClickListener = OnItemClickListener { _, view, _, id ->
             val intent = Intent(this, TryActivity::class.java)
-            Log.d("MyLog.s", it!![id.toInt()].id.toString())
             intent.putExtra("Handle", (view.findViewById<TextView>(R.id.tv1) as TextView).text)
             intent.putExtra("Id", it!![it!!.size - 1 - id.toInt()].id.toString())
             startActivity(intent)
@@ -53,25 +48,19 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         val liveData = userDao.getAll()
 
         liveData.observe(this, Observer<List<User>> { t ->
-            data.clear()
+            users.clear()
             it = t
             for (element in t!!.size - 1 downTo 0) {
-                val m = HashMap<String, Any?>()
-                Log.d("Host", t[element].id.toString())
-                m[ATTRIBUTE_NAME_HANDLE] = t[element].handle
-                m[ATTRIBUTE_NAME_RATING] = t[element].rating
-                data.add(m)
-                sAdapter.notifyDataSetChanged()
+                users.add(t[element])
+                userAdapter.notifyDataSetChanged()
             }
-            sAdapter.notifyDataSetChanged()
+            userAdapter.notifyDataSetChanged()
         })
     }
 
     companion object {
         lateinit var userDao: UserDao
         const val ID = "Id"
-        const val ATTRIBUTE_NAME_HANDLE = "handle"
-        const val ATTRIBUTE_NAME_RATING = "rating"
     }
 
     private fun loadUser(handle: String) {

@@ -7,12 +7,13 @@
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/tv1"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_weight="1"
         android:text="TextView"
-        android:textSize="20sp"></TextView>
+        android:textSize="18sp"
+        android:layout_marginStart="10dp" />
 
     <TextView
         android:id="@+id/tv2"
@@ -20,5 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
         android:text="1234"
-        android:textSize="20sp" />
+        android:textSize="18sp"
+        android:layout_marginEnd="20dp" />
 </LinearLayout>
