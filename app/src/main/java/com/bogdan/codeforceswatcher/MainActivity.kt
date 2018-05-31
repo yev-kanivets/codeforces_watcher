@@ -19,7 +19,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), OnClickListener {
 
-    lateinit var userAdapter: UserAdapter
     private val users = mutableListOf<User>()
     var it: List<User>? = null
 
@@ -34,7 +33,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
         btnShow.setOnClickListener(this)
 
-        userAdapter = UserAdapter(this, users)
+        val userAdapter = UserAdapter(this, users)
 
         lvMain.adapter = userAdapter
 
