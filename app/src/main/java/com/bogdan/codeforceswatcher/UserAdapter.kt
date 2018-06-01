@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import com.bogdan.codeforceswatcher.R.color.*
 
-class UserAdapter internal constructor(ctx: Context, private var objects: MutableList<User>) : BaseAdapter() {
+@Suppress("DEPRECATION")
+class UserAdapter internal constructor(private val ctx: Context, private var objects: MutableList<User>) : BaseAdapter() {
 
     private var lInflater: LayoutInflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -30,13 +32,37 @@ class UserAdapter internal constructor(ctx: Context, private var objects: Mutabl
         }
 
         val p = getItem(position)
+
         (view!!.findViewById<View>(R.id.tv1) as TextView).text = p.handle
         if (p.rating == null) {
             (view.findViewById<View>(R.id.tv2) as TextView).text = ""
         } else
             (view.findViewById<View>(R.id.tv2) as TextView).text = p.rating.toString()
-
+        if(p.rank == null){
+            (view.findViewById<View>(R.id.tv1) as TextView).setTextColor(ctx.resources.getColor(grey))
+            (view.findViewById<View>(R.id.tv2) as TextView).setTextColor(ctx.resources.getColor(grey))
+        }
+        else {
+            (view.findViewById<View>(R.id.tv1) as TextView).setTextColor(ctx.resources.getColor(getColor(p.rank)))
+            (view.findViewById<View>(R.id.tv2) as TextView).setTextColor(ctx.resources.getColor(getColor(p.rank)))
+        }
         return view
+    }
+
+    private fun getColor(rank: String): Int {
+        return when (rank) {
+            "newbie" -> grey
+            "pupil" -> green
+            "specialist" -> bluegreen
+            "expert" -> blue
+            "master candidate" -> purple
+            "master" -> orange
+            "international master" -> orange
+            "grandmaster" -> red
+            "international grandmaster" -> red
+            "legendary grandmaster" -> red
+            else -> 1
+        }
     }
 
 }

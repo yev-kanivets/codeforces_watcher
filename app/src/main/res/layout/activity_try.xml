@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:layout_margin="16dp">
+    android:layout_margin="16dp"
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/ivAvatar"
@@ -14,8 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
-        android:orientation="vertical"
-        android:layout_marginStart="20dp">
+        android:layout_marginStart="20dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvRank"
