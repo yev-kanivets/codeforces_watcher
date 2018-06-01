@@ -1,7 +1,6 @@
 package com.bogdan.codeforceswatcher
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,11 +38,14 @@ class UserAdapter internal constructor(private val ctx: Context, private var obj
             (view.findViewById<View>(R.id.tv2) as TextView).text = ""
         } else
             (view.findViewById<View>(R.id.tv2) as TextView).text = p.rating.toString()
-        Log.d("TAG", p.rank + "vs" + getColor(p.rank!!).toString())
-
-        (view.findViewById<View>(R.id.tv1) as TextView).setTextColor(ctx.resources.getColor(getColor(p.rank)))
-        (view.findViewById<View>(R.id.tv2) as TextView).setTextColor(ctx.resources.getColor(getColor(p.rank)))
-
+        if(p.rank == null){
+            (view.findViewById<View>(R.id.tv1) as TextView).setTextColor(ctx.resources.getColor(grey))
+            (view.findViewById<View>(R.id.tv2) as TextView).setTextColor(ctx.resources.getColor(grey))
+        }
+        else {
+            (view.findViewById<View>(R.id.tv1) as TextView).setTextColor(ctx.resources.getColor(getColor(p.rank)))
+            (view.findViewById<View>(R.id.tv2) as TextView).setTextColor(ctx.resources.getColor(getColor(p.rank)))
+        }
         return view
     }
 
