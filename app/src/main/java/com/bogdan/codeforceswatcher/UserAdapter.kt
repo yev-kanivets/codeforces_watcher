@@ -39,7 +39,7 @@ class UserAdapter internal constructor(private val ctx: Context, private var obj
             (view.findViewById<View>(R.id.tv2) as TextView).text = ""
         } else
             (view.findViewById<View>(R.id.tv2) as TextView).text = p.rating.toString()
-        Log.d("TAG",p.rank + "vs" + getColor(p.rank!!).toString())
+        Log.d("TAG", p.rank + "vs" + getColor(p.rank!!).toString())
 
         (view.findViewById<View>(R.id.tv1) as TextView).setTextColor(ctx.resources.getColor(getColor(p.rank)))
         (view.findViewById<View>(R.id.tv2) as TextView).setTextColor(ctx.resources.getColor(getColor(p.rank)))
@@ -47,8 +47,8 @@ class UserAdapter internal constructor(private val ctx: Context, private var obj
         return view
     }
 
-    private fun getColor(rank:String):Int{
-        return when(rank){
+    private fun getColor(rank: String): Int {
+        return when (rank) {
             "newbie" -> grey
             "pupil" -> green
             "specialist" -> bluegreen
