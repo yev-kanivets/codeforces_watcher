@@ -37,7 +37,14 @@ class TryActivity : AppCompatActivity() {
         } else {
             Picasso.get().load(user.avatar).into(ivAvatar)
         }
-        title = user.firstName + " " + user.lastName
+        title = if (user.firstName == null && user.lastName == null) {
+            "No Name"
+        } else if (user.firstName == null) {
+            user.lastName
+        } else if (user.lastName == null) {
+            user.firstName
+        } else
+            user.firstName + " " + user.lastName
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
