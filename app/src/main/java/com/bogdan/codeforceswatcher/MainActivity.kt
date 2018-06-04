@@ -4,10 +4,8 @@ import android.arch.lifecycle.Observer
 import android.arch.persistence.room.Room
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.AdapterView.OnItemClickListener
@@ -68,6 +66,9 @@ class MainActivity : AppCompatActivity(), OnClickListener, SwipeRefreshLayout.On
     }
 
     private fun loadUser(handle: String) {
+
+        ProgressBar.visibility = View.VISIBLE
+
         val retrofit = Retrofit.Builder()
                 .baseUrl("http://www.codeforces.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -91,6 +92,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, SwipeRefreshLayout.On
                 } else {
                     showError()
                 }
+                ProgressBar.visibility = View.INVISIBLE
                 swiperefresh.isRefreshing = false
             }
 
@@ -98,6 +100,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, SwipeRefreshLayout.On
                 showError()
             }
         })
+
     }
 
     override fun onClick(v: View) {
