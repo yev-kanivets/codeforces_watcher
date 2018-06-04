@@ -4,7 +4,10 @@ import android.arch.lifecycle.Observer
 import android.arch.persistence.room.Room
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.AdapterView.OnItemClickListener
@@ -17,7 +20,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainActivity : AppCompatActivity(), OnClickListener {
+class MainActivity : AppCompatActivity(), OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private val users = mutableListOf<User>()
     var it: List<User>? = null
@@ -36,6 +39,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         val userAdapter = UserAdapter(this, users)
 
         lvMain.adapter = userAdapter
+
+        swiperefresh.setOnRefreshListener(this)
 
         lvMain.onItemClickListener = OnItemClickListener { _, view, _, id ->
             val intent = Intent(this, TryActivity::class.java)
@@ -75,10 +80,18 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         user.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
-                    userDao.insert(response.body()!!.result.firstOrNull()!!)
+                    if (handle[handle.length - 1] == ';') {
+                        for ((counter, element) in response.body()!!.result.withIndex()) {
+                            element.id = it!![counter].id
+                            userDao.update(element)
+                        }
+                    } else {
+                        userDao.insert(response.body()!!.result.firstOrNull()!!)
+                    }
                 } else {
                     showError()
                 }
+                swiperefresh.isRefreshing = false
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
@@ -96,6 +109,14 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             else -> {
             }
         }
+    }
+
+    override fun onRefresh() {
+        var handles = ""
+        for (element in this.it!!) {
+            handles += element.handle + ";"
+        }
+        loadUser(handles)
     }
 
     fun showError() {
