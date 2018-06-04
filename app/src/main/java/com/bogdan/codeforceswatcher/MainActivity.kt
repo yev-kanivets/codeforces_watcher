@@ -91,6 +91,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, SwipeRefreshLayout.On
                 } else {
                     showError()
                 }
+                swiperefresh.isRefreshing = false
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
@@ -116,7 +117,6 @@ class MainActivity : AppCompatActivity(), OnClickListener, SwipeRefreshLayout.On
             handles += element.handle + ";"
         }
         loadUser(handles)
-        Handler().postDelayed({ swiperefresh.isRefreshing = false }, 2000)
     }
 
     fun showError() {
