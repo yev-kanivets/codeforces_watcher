@@ -66,8 +66,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, SwipeRefreshLayout.On
     }
 
     private fun loadUser(handle: String) {
-
-        ProgressBar.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE
 
         val retrofit = Retrofit.Builder()
                 .baseUrl("http://www.codeforces.com/api/")
@@ -92,7 +91,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, SwipeRefreshLayout.On
                 } else {
                     showError()
                 }
-                ProgressBar.visibility = View.INVISIBLE
+                progressBar.visibility = View.INVISIBLE
                 swiperefresh.isRefreshing = false
             }
 
@@ -100,7 +99,6 @@ class MainActivity : AppCompatActivity(), OnClickListener, SwipeRefreshLayout.On
                 showError()
             }
         })
-
     }
 
     override fun onClick(v: View) {

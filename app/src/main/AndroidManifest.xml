@@ -14,7 +14,7 @@
         <activity android:name=".TryActivity"></activity>
         <activity
             android:name=".MainActivity"
-            android:label="Codeforces Watcher">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
