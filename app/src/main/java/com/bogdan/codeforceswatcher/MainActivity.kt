@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, SwipeRefreshLayout.On
                 } else {
                     showError()
                 }
-                progressBar.visibility = View.INVISIBLE
+                progressBar.visibility = View.GONE
                 swiperefresh.isRefreshing = false
             }
 
