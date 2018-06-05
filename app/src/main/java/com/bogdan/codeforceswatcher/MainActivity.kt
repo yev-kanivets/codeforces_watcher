@@ -7,10 +7,8 @@ import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.view.View.OnClickListener
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,7 +16,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainActivity : AppCompatActivity(), OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private val users = mutableListOf<User>()
     var it: List<User>? = null
@@ -27,12 +25,12 @@ class MainActivity : AppCompatActivity(), OnClickListener, SwipeRefreshLayout.On
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        fab.setOnClickListener(this)
+
         val db = Room.databaseBuilder(applicationContext,
                 AppDatabase::class.java, "database").allowMainThreadQueries().build()
 
         userDao = db.userDao()
-
-        btnShow.setOnClickListener(this)
 
         val userAdapter = UserAdapter(this, users)
 
@@ -79,37 +77,16 @@ class MainActivity : AppCompatActivity(), OnClickListener, SwipeRefreshLayout.On
 
         user.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                if (response.isSuccessful) {
-                    if (handle[handle.length - 1] == ';') {
-                        for ((counter, element) in response.body()!!.result.withIndex()) {
-                            element.id = it!![counter].id
-                            userDao.update(element)
-                        }
-                    } else {
-                        userDao.insert(response.body()!!.result.firstOrNull()!!)
-                    }
-                } else {
-                    showError()
+                for ((counter, element) in response.body()!!.result.withIndex()) {
+                    element.id = it!![counter].id
+                    userDao.update(element)
                 }
-                progressBar.visibility = View.GONE
+                progressBar.visibility = View.INVISIBLE
                 swiperefresh.isRefreshing = false
             }
 
-            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                showError()
-            }
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {}
         })
-    }
-
-    override fun onClick(v: View) {
-        when (v.id) {
-            R.id.btnShow -> {
-                loadUser(etHandle.text.toString())
-                etHandle.text = null
-            }
-            else -> {
-            }
-        }
     }
 
     override fun onRefresh() {
@@ -120,8 +97,14 @@ class MainActivity : AppCompatActivity(), OnClickListener, SwipeRefreshLayout.On
         loadUser(handles)
     }
 
-    fun showError() {
-        Toast.makeText(applicationContext, "Wrong handle!", Toast.LENGTH_SHORT).show()
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.fab -> {
+                startActivity(Intent(this, AddUserActivity::class.java))
+            }
+            else -> {
+            }
+        }
     }
 
 }
