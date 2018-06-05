@@ -21,6 +21,11 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
         btnShow.setOnClickListener(this)
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
     private fun loadUser(handle: String) {
         val retrofit = Retrofit.Builder()
                 .baseUrl("http://www.codeforces.com/api/")
