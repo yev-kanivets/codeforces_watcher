@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
                     element.id = it!![counter].id
                     userDao.update(element)
                 }
-                progressBar.visibility = View.GONE
+                progressBar.visibility = View.INVISIBLE
                 swiperefresh.isRefreshing = false
             }
 
@@ -100,8 +100,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
     override fun onClick(v: View) {
         when (v.id) {
             R.id.fab -> {
-                val intent = Intent(this, AddUserActivity::class.java)
-                startActivity(intent)
+                startActivity(Intent(this, AddUserActivity::class.java))
             }
             else -> {
             }

@@ -19,7 +19,6 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
         setContentView(R.layout.activity_add_user)
 
         btnShow.setOnClickListener(this)
-
     }
 
     private fun loadUser(handle: String) {
