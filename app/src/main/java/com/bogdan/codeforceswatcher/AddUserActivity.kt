@@ -18,6 +18,8 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_user)
 
+        title = "Add User"
+
         btnShow.setOnClickListener(this)
     }
 
