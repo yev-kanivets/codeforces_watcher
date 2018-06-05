@@ -30,14 +30,7 @@ class TryActivity : AppCompatActivity() {
     private fun displayUser(user: User) {
         tvRank.text = "Rank: " + user.rank
         tvCurrentRating.text = "CurrentRating: " + user.rating.toString()
-        tvHandle.text = "Handle: " + user.handle
-        tvMaxRating.text = "MaxRating: " + user.maxRating.toString()
-        if (user.avatar.substring(0, 6) != "https:") {
-            Picasso.get().load("https:" + user.avatar).into(ivAvatar)
-        } else {
-            Picasso.get().load(user.avatar).into(ivAvatar)
-        }
-        title = if (user.firstName == null && user.lastName == null) {
+        tvHandle.text = "Name: " + if (user.firstName == null && user.lastName == null) {
             "No Name"
         } else if (user.firstName == null) {
             user.lastName
@@ -45,6 +38,13 @@ class TryActivity : AppCompatActivity() {
             user.firstName
         } else
             user.firstName + " " + user.lastName
+        tvMaxRating.text = "MaxRating: " + user.maxRating.toString()
+        if (user.avatar.substring(0, 6) != "https:") {
+            Picasso.get().load("https:" + user.avatar).into(ivAvatar)
+        } else {
+            Picasso.get().load(user.avatar).into(ivAvatar)
+        }
+        title = user.handle
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
