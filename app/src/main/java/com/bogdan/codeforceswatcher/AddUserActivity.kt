@@ -40,9 +40,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
 
         val user = userApi.user(handle)
 
-        val ratingApi = retrofit.create(RatingApi::class.java)
-
-        val rating = ratingApi.rating(handle)
+        val rating = userApi.rating(handle)
 
         user.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
@@ -51,7 +49,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
                     rating.enqueue(object : Callback<RatingChangeResponse> {
                         override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
                             if (response.isSuccessful) {
-                                userk.RatingChanges = response.body()!!.result
+                                userk.ratingChanges = response.body()!!.result
                                 Log.d("TAG", userk.toString())
                                 MainActivity.userDao.insert(userk)
                                 finish()
