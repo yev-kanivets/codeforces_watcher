@@ -4,13 +4,13 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-data class RatingChange(val ratingUpdateTimeChange: Long, val contestId: Int, val contestName: String, val handle: String, val rank: Int, val oldRating: Int, val newRating: Int)
+data class RatingChange(val contestId: Int, val contestName: String, val handle: String, val rank: Int, val ratingUpdateTimeSeconds: Long, val oldRating: Int, val newRating: Int)
 
 data class RatingChangeResponse(val status: String, val result: List<RatingChange>)
 
 interface RatingApi {
 
     @GET("user.rating")
-    fun rating(@Query("handle") handle : String): Call<RatingChangeResponse>
+    fun rating(@Query("handle") handle: String): Call<RatingChangeResponse>
 
 }

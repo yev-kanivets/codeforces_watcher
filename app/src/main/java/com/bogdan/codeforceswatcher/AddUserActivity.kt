@@ -52,13 +52,14 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
                         override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
                             if (response.isSuccessful) {
                                 userk.RatingChanges = response.body()!!.result
+                                Log.d("TAG", userk.toString())
+                                MainActivity.userDao.insert(userk)
+                                finish()
                             }
                         }
 
                         override fun onFailure(call: Call<RatingChangeResponse>, t: Throwable) {}
                     })
-                    Log.d("TAG",userk.RatingChanges.toString())
-                    MainActivity.userDao.insert(userk)
                 } else {
                     showError()
                 }
