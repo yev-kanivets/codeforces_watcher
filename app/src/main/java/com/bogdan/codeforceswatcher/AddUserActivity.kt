@@ -45,13 +45,12 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
         user.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
-                    val userk = response.body()!!.result.firstOrNull()!!
+                    val localUser = response.body()!!.result.firstOrNull()!!
                     rating.enqueue(object : Callback<RatingChangeResponse> {
                         override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
                             if (response.isSuccessful) {
-                                userk.ratingChanges = response.body()!!.result
-                                Log.d("TAG", userk.toString())
-                                MainActivity.userDao.insert(userk)
+                                localUser.ratingChanges = response.body()!!.result
+                                MainActivity.userDao.insert(localUser)
                                 finish()
                             }
                         }
