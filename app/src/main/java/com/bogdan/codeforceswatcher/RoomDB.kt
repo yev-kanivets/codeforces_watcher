@@ -2,6 +2,10 @@ package com.bogdan.codeforceswatcher
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+
+
 
 @Dao
 interface UserDao {
@@ -24,6 +28,7 @@ interface UserDao {
 }
 
 @Database(entities = arrayOf(User::class), version = 1)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 }

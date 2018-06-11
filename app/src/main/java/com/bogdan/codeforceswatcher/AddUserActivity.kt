@@ -2,6 +2,7 @@ package com.bogdan.codeforceswatcher
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Toast
@@ -39,11 +40,23 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
 
         val user = userApi.user(handle)
 
+        val rating = userApi.rating(handle)
+
         user.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
-                    MainActivity.userDao.insert(response.body()!!.result.firstOrNull()!!)
-                    finish()
+                    val localUser = response.body()!!.result.firstOrNull()!!
+                    rating.enqueue(object : Callback<RatingChangeResponse> {
+                        override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
+                            if (response.isSuccessful) {
+                                localUser.ratingChanges = response.body()!!.result
+                                MainActivity.userDao.insert(localUser)
+                                finish()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<RatingChangeResponse>, t: Throwable) {}
+                    })
                 } else {
                     showError()
                 }
@@ -54,6 +67,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
             }
         })
     }
+
 
     override fun onClick(v: View) {
         when (v.id) {
