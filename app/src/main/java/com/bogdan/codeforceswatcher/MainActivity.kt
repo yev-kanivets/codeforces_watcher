@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView
@@ -79,8 +80,23 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         user.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 for ((counter, element) in response.body()!!.result.withIndex()) {
+                    val rating = userApi.rating(element.handle)
                     element.id = it!![counter].id
-                    userDao.update(element)
+                    if (element.rating == it!![counter].rating) {
+                        element.ratingChanges = it!![counter].ratingChanges
+                        userDao.update(element)
+                    } else {
+                        rating.enqueue(object : Callback<RatingChangeResponse> {
+                            override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
+                                if (response.isSuccessful) {
+                                    element.ratingChanges = response.body()!!.result
+                                    MainActivity.userDao.update(element)
+                                }
+                            }
+
+                            override fun onFailure(call: Call<RatingChangeResponse>, t: Throwable) {}
+                        })
+                    }
                 }
                 progressBar.visibility = View.INVISIBLE
                 swiperefresh.isRefreshing = false
