@@ -1,13 +1,12 @@
 package com.bogdan.codeforceswatcher
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.persistence.room.Room
-import android.arch.persistence.room.TypeConverters
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView
@@ -17,6 +16,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
