@@ -2,12 +2,10 @@ package com.bogdan.codeforceswatcher
 
 import android.arch.lifecycle.Observer
 import android.arch.persistence.room.Room
-import android.arch.persistence.room.TypeConverters
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView

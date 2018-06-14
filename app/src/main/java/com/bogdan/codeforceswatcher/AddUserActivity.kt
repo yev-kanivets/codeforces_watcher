@@ -1,8 +1,7 @@
 package com.bogdan.codeforceswatcher
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Toast
