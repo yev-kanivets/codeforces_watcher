@@ -1,6 +1,5 @@
 package com.bogdan.codeforceswatcher
 
-import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.persistence.room.Room
 import android.content.Intent
@@ -15,10 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.text.SimpleDateFormat
-import java.util.*
-
+import retrofit2.converter.gson.GsonConverterFactory.create
 
 class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
@@ -72,7 +68,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
 
         val retrofit = Retrofit.Builder()
                 .baseUrl("http://www.codeforces.com/api/")
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(create())
                 .build()
 
         val userApi = retrofit.create(UserApi::class.java)

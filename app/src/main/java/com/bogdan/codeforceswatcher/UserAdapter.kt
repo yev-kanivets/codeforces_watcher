@@ -9,8 +9,8 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.bogdan.codeforceswatcher.R.color.*
-import com.bogdan.codeforceswatcher.R.drawable.*
-import org.w3c.dom.Text
+import com.bogdan.codeforceswatcher.R.drawable.ic_rating_down
+import com.bogdan.codeforceswatcher.R.drawable.ic_rating_up
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -52,15 +52,17 @@ class UserAdapter internal constructor(private val ctx: Context, private var obj
             (view.findViewById<View>(R.id.tv1) as TextView).setTextColor(ctx.resources.getColor(getColor(p.rank)))
             (view.findViewById<View>(R.id.tv2) as TextView).setTextColor(ctx.resources.getColor(getColor(p.rank)))
         }
-        if (p.ratingChanges.lastOrNull() != null) {
-            (view.findViewById<View>(R.id.tv3) as TextView).text = getDataTime(p.ratingChanges.lastOrNull()!!.ratingUpdateTimeSeconds * 1000)
-            if (p.ratingChanges.lastOrNull()!!.newRating - p.ratingChanges.lastOrNull()!!.oldRating >= 0) {
+        val lastRatingChange = p.ratingChanges.lastOrNull()
+        if (lastRatingChange != null) {
+            val ratingDelta = lastRatingChange.newRating - lastRatingChange.oldRating
+            (view.findViewById<View>(R.id.tv3) as TextView).text = getDataTime(lastRatingChange.ratingUpdateTimeSeconds * 1000)
+            if (ratingDelta >= 0) {
                 (view.findViewById<View>(R.id.ivDelta) as ImageView).setImageResource(ic_rating_up)
-                (view.findViewById<View>(R.id.tv4) as TextView).text = (p.ratingChanges.lastOrNull()!!.newRating - p.ratingChanges.lastOrNull()!!.oldRating).toString()
+                (view.findViewById<View>(R.id.tv4) as TextView).text = ratingDelta.toString()
                 (view.findViewById<View>(R.id.tv4) as TextView).setTextColor(ctx.resources.getColor(brightgreen))
             } else {
                 (view.findViewById<View>(R.id.ivDelta) as ImageView).setImageResource(ic_rating_down)
-                (view.findViewById<View>(R.id.tv4) as TextView).text = (p.ratingChanges.lastOrNull()!!.oldRating - p.ratingChanges.lastOrNull()!!.newRating).toString()
+                (view.findViewById<View>(R.id.tv4) as TextView).text = (-ratingDelta).toString()
                 (view.findViewById<View>(R.id.tv4) as TextView).setTextColor(ctx.resources.getColor(red))
             }
         } else {
