@@ -14,7 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory.create
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
 
         val retrofit = Retrofit.Builder()
                 .baseUrl("http://www.codeforces.com/api/")
-                .addConverterFactory(create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .build()
 
         val userApi = retrofit.create(UserApi::class.java)
