@@ -9,8 +9,6 @@ import kotlinx.android.synthetic.main.activity_add_user.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class AddUserActivity : AppCompatActivity(), OnClickListener {
 
@@ -30,16 +28,10 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
     }
 
     private fun loadUser(handle: String) {
-        val retrofit = Retrofit.Builder()
-                .baseUrl("http://www.codeforces.com/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
 
-        val userApi = retrofit.create(UserApi::class.java)
+        val user = CwApp.app.userApi.user(handle)
 
-        val user = userApi.user(handle)
-
-        val rating = userApi.rating(handle)
+        val rating = CwApp.app.userApi.rating(handle)
 
         user.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
