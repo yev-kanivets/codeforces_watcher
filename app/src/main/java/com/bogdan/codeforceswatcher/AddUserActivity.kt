@@ -49,7 +49,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
                         override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
                             if (response.isSuccessful) {
                                 localUser.ratingChanges = response.body()!!.result
-                                MainActivity.userDao.insert(localUser)
+                                CwApp.app.userDao.insert(localUser)
                                 finish()
                             }
                         }

@@ -27,11 +27,6 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
 
         fab.setOnClickListener(this)
 
-        val db = Room.databaseBuilder(applicationContext,
-                AppDatabase::class.java, "database").allowMainThreadQueries().build()
-
-        userDao = db.userDao()
-
         val userAdapter = UserAdapter(this, users)
 
         lvMain.adapter = userAdapter
@@ -45,7 +40,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
             startActivity(intent)
         }
 
-        val liveData = userDao.getAll()
+        val liveData = CwApp.app.userDao.getAll()
 
         liveData.observe(this, Observer<List<User>> { t ->
             users.clear()
@@ -59,7 +54,6 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
     }
 
     companion object {
-        lateinit var userDao: UserDao
         const val ID = "Id"
     }
 
@@ -82,13 +76,13 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
                     element.id = it[counter].id
                     if (element.rating == it[counter].rating) {
                         element.ratingChanges = it[counter].ratingChanges
-                        userDao.update(element)
+                        CwApp.app.userDao.update(element)
                     } else {
                         ratingCall.enqueue(object : Callback<RatingChangeResponse> {
                             override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
                                 if (response.isSuccessful) {
                                     element.ratingChanges = response.body()!!.result
-                                    userDao.update(element)
+                                    CwApp.app.userDao.update(element)
                                 }
                             }
 

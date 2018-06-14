@@ -10,7 +10,8 @@
         android:label="Codeforces Watcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name=".CwApp">
         <activity android:name=".TryActivity" />
         <activity
             android:name=".MainActivity"
