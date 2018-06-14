@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import com.bogdan.codeforceswatcher.MainActivity.Companion.userDao
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_try.*
 
@@ -18,7 +17,7 @@ class TryActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
-        displayUser(userDao.getById(intent.getStringExtra(MainActivity.ID).toLong()))
+        displayUser(CwApp.app.userDao.getById(intent.getStringExtra(MainActivity.ID).toLong()))
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -56,7 +55,7 @@ class TryActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_delete -> {
                 val id = (intent.getStringExtra(MainActivity.ID)).toLong()
-                userDao.delete(userDao.getById(id))
+                CwApp.app.userDao.delete(CwApp.app.userDao.getById(id))
                 finish()
             }
         }

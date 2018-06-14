@@ -65,6 +65,8 @@ class UserAdapter internal constructor(private val ctx: Context, private var obj
             }
         } else {
             (view.findViewById<View>(R.id.tv3) as TextView).text = "No rating update"
+            (view.findViewById<View>(R.id.ivDelta) as ImageView).setImageResource(0)
+            (view.findViewById<View>(R.id.tv4) as TextView).text = null
         }
 
         return view
