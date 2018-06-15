@@ -1,10 +1,13 @@
-package com.bogdan.codeforceswatcher
+package com.bogdan.codeforceswatcher.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.bogdan.codeforceswatcher.CwApp
+import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.User
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_try.*
 
