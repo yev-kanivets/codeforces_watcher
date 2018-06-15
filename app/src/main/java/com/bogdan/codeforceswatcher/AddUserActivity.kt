@@ -29,15 +29,15 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
 
     private fun loadUser(handle: String) {
 
-        val user = CwApp.app.userApi.user(handle)
+        val userCall = CwApp.app.userApi.user(handle)
 
-        val rating = CwApp.app.userApi.rating(handle)
+        val ratingCall = CwApp.app.userApi.rating(handle)
 
-        user.enqueue(object : Callback<UserResponse> {
+        userCall.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
                     val localUser = response.body()!!.result.firstOrNull()!!
-                    rating.enqueue(object : Callback<RatingChangeResponse> {
+                    ratingCall.enqueue(object : Callback<RatingChangeResponse> {
                         override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
                             if (response.isSuccessful) {
                                 localUser.ratingChanges = response.body()!!.result
