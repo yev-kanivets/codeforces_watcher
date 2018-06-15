@@ -40,7 +40,7 @@ class UserAdapter internal constructor(private val ctx: Context, private var obj
 
         (view!!.findViewById<View>(R.id.tv1) as TextView).text = p.handle
         if (p.rating == null) {
-            (view.findViewById<View>(R.id.tv2) as TextView).text = ""
+            (view.findViewById<View>(R.id.tv2) as TextView).text = null
         } else
             (view.findViewById<View>(R.id.tv2) as TextView).text = p.rating.toString()
         if (p.rank == null) {
@@ -53,7 +53,7 @@ class UserAdapter internal constructor(private val ctx: Context, private var obj
         val lastRatingChange = p.ratingChanges.lastOrNull()
         if (lastRatingChange != null) {
             val ratingDelta = lastRatingChange.newRating - lastRatingChange.oldRating
-            (view.findViewById<View>(R.id.tv3) as TextView).text = getDataTime(lastRatingChange.ratingUpdateTimeSeconds * 1000)
+            (view.findViewById<View>(R.id.tv3) as TextView).text = ctx.resources.getString(R.string.lastRatingUpdate, getDataTime(lastRatingChange.ratingUpdateTimeSeconds * 1000))
             if (ratingDelta >= 0) {
                 (view.findViewById<View>(R.id.ivDelta) as ImageView).setImageResource(R.drawable.ic_rating_up)
                 (view.findViewById<View>(R.id.tv4) as TextView).text = ratingDelta.toString()
@@ -64,7 +64,7 @@ class UserAdapter internal constructor(private val ctx: Context, private var obj
                 (view.findViewById<View>(R.id.tv4) as TextView).setTextColor(ctx.resources.getColor(red))
             }
         } else {
-            (view.findViewById<View>(R.id.tv3) as TextView).text = "No rating update"
+            (view.findViewById<View>(R.id.tv3) as TextView).text = ctx.resources.getString(R.string.noratingupdate)
             (view.findViewById<View>(R.id.ivDelta) as ImageView).setImageResource(0)
             (view.findViewById<View>(R.id.tv4) as TextView).text = null
         }

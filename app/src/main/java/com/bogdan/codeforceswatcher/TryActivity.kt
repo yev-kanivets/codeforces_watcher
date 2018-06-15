@@ -27,17 +27,30 @@ class TryActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun displayUser(user: User) {
-        tvRank.text = "Rank: " + user.rank
-        tvCurrentRating.text = "CurrentRating: " + user.rating.toString()
-        tvHandle.text = "Name: " + if (user.firstName == null && user.lastName == null) {
-            "No Name"
+        if (user.rank == null) {
+            tvRank.text = getString(R.string.rank, getString(R.string.norank))
+        } else {
+            tvRank.text = getString(R.string.rank, user.rank)
+        }
+        if (user.rating == null) {
+            tvCurrentRating.text = getString(R.string.currating, getString(R.string.nocurrating))
+        } else {
+            tvCurrentRating.text = getString(R.string.currating, user.rating.toString())
+        }
+        val handle = if (user.firstName == null && user.lastName == null) {
+            getString(R.string.noname)
         } else if (user.firstName == null) {
             user.lastName
         } else if (user.lastName == null) {
             user.firstName
         } else
             user.firstName + " " + user.lastName
-        tvMaxRating.text = "MaxRating: " + user.maxRating.toString()
+        tvHandle.text = getString(R.string.name, handle)
+        if (user.maxRating == null) {
+            tvMaxRating.text = getString(R.string.maxrating, getString(R.string.nomaxrating))
+        } else {
+            tvMaxRating.text = getString(R.string.maxrating, user.maxRating.toString())
+        }
         if (user.avatar.substring(0, 6) != "https:") {
             Picasso.get().load("https:" + user.avatar).into(ivAvatar)
         } else {

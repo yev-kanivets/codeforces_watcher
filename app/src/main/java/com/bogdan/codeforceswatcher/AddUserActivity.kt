@@ -80,7 +80,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
     }
 
     fun showError() {
-        Toast.makeText(applicationContext, "Wrong handle!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, getString(R.string.wrong), Toast.LENGTH_SHORT).show()
     }
 
 }
