@@ -2,6 +2,8 @@ package com.bogdan.codeforceswatcher
 
 import android.app.Application
 import android.arch.persistence.room.Room
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * Custom Application class.
@@ -14,10 +16,9 @@ class CwApp : Application() {
 
     lateinit var userDao: UserDao
 
-    companion object {
-        lateinit var app: CwApp
-            private set
-    }
+    private lateinit var retrofit: Retrofit
+
+    lateinit var userApi: UserApi
 
     override fun onCreate() {
         super.onCreate()
@@ -28,6 +29,19 @@ class CwApp : Application() {
                 AppDatabase::class.java, "database").allowMainThreadQueries().build()
 
         userDao = db.userDao()
+
+        retrofit = Retrofit.Builder()
+                .baseUrl("http://www.codeforces.com/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+        userApi = this.retrofit.create(UserApi::class.java)
+    }
+
+
+    companion object {
+        lateinit var app: CwApp
+            private set
     }
 
 }
