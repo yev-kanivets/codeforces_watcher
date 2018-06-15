@@ -39,5 +39,8 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:1.1.1"
     kapt "android.arch.lifecycle:compiler:1.1.1"
     implementation "android.arch.persistence.room:runtime:1.1.0"
+    compile 'com.google.firebase:firebase-core:16.0.1'
     kapt "android.arch.persistence.room:compiler:1.1.0"
 }
+
+apply plugin: 'com.goolge.gms.google-services'
