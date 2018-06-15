@@ -12,9 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".CwApp">
-        <activity android:name=".TryActivity" />
+        <activity android:name=".activity.TryActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddUserActivity"
+            android:name=".activity.AddUserActivity"
             android:label="Add User" />
     </application>
 

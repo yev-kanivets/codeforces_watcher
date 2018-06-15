@@ -1,4 +1,4 @@
-package com.bogdan.codeforceswatcher
+package com.bogdan.codeforceswatcher.activity
 
 import android.arch.lifecycle.Observer
 import android.content.Intent
@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView
-import android.widget.Toast
+import com.bogdan.codeforceswatcher.*
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
