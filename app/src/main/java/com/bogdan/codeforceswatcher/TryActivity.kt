@@ -28,17 +28,17 @@ class TryActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun displayUser(user: User) {
         if (user.rank == null) {
-            tvRank.text = getString(R.string.rank, "No Rank")
+            tvRank.text = getString(R.string.rank, getString(R.string.norank))
         } else {
             tvRank.text = getString(R.string.rank, user.rank)
         }
         if (user.rating == null) {
-            tvCurrentRating.text = getString(R.string.currating, "No CurRating")
+            tvCurrentRating.text = getString(R.string.currating, getString(R.string.nocurrating))
         } else {
             tvCurrentRating.text = getString(R.string.currating, user.rating.toString())
         }
         val handle = if (user.firstName == null && user.lastName == null) {
-            "No Name"
+            getString(R.string.noname)
         } else if (user.firstName == null) {
             user.lastName
         } else if (user.lastName == null) {
@@ -47,7 +47,7 @@ class TryActivity : AppCompatActivity() {
             user.firstName + " " + user.lastName
         tvHandle.text = getString(R.string.name, handle)
         if (user.maxRating == null) {
-            tvMaxRating.text = getString(R.string.maxrating, "No MaxRating")
+            tvMaxRating.text = getString(R.string.maxrating, getString(R.string.nomaxrating))
         } else {
             tvMaxRating.text = getString(R.string.maxrating, user.maxRating.toString())
         }

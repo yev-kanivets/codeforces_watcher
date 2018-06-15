@@ -1,12 +1,14 @@
 <resources>
     <string name="app_name">Codeforces Watcher</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_main2">Main2Activity</string>
     <string name="rank">Rank: %1$s</string>
     <string name="name">Name: %1$s</string>
-    <string name="currating">CurrentRating: %1$s</string>
-    <string name="maxrating">MaxRating: %1$s</string>
+    <string name="currating">Current Rating: %1$s</string>
+    <string name="maxrating">Max Rating: %1$s</string>
     <string name="wrong">Wrong handle!</string>
     <string name="lastRatingUpdate">Last rating update: %1$s</string>
     <string name="noratingupdate">No rating update</string>
+    <string name="norank">No Rank</string>
+    <string name="nocurrating">No Cur Rating</string>
+    <string name="nomaxrating">No Max Rating</string>
+    <string name="noname">No Name</string>
 </resources>
