@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -84,7 +85,11 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
                 swiperefresh.isRefreshing = false
             }
 
-            override fun onFailure(call: Call<UserResponse>, t: Throwable) {}
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                progressBar.visibility = View.INVISIBLE
+                swiperefresh.isRefreshing = false
+                CwApp.app.showError()
+            }
         })
     }
 

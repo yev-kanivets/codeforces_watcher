@@ -54,7 +54,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                showError()
+                CwApp.app.showError()
             }
         })
     }
