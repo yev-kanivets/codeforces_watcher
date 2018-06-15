@@ -85,7 +85,11 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
                 swiperefresh.isRefreshing = false
             }
 
-            override fun onFailure(call: Call<UserResponse>, t: Throwable) {}
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                progressBar.visibility = View.INVISIBLE
+                swiperefresh.isRefreshing = false
+                CwApp.app.showError()
+            }
         })
     }
 

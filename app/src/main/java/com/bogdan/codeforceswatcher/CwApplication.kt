@@ -2,6 +2,7 @@ package com.bogdan.codeforceswatcher
 
 import android.app.Application
 import android.arch.persistence.room.Room
+import android.widget.Toast
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -38,6 +39,10 @@ class CwApp : Application() {
         userApi = this.retrofit.create(UserApi::class.java)
     }
 
+
+    fun showError() {
+        Toast.makeText(applicationContext, getString(R.string.connectionerror), Toast.LENGTH_SHORT).show()
+    }
 
     companion object {
         lateinit var app: CwApp
