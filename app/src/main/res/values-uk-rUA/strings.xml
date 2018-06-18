@@ -8,9 +8,6 @@
     <string name="wrong">Невірний хендл!</string>
     <string name="lastRatingUpdate">Останнє оновлення рейтингу: %1$s</string>
     <string name="noratingupdate">Немає оновлення рейтингу</string>
-    <string name="nocurrating">Немає</string>
-    <string name="noname">Немає</string>
-    <string name="nomaxrating">Немає</string>
-    <string name="norank">Немає</string>
+    <string name="none">Немає</string>
     <string name="connectionerror">Немає зв`язку з Інтернетом</string>
 </resources>
