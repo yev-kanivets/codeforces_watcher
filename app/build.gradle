@@ -13,6 +13,14 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        releaseConfig {
+            storeFile file("cw.keystore")
+            storePassword("cw2018")
+            keyAlias "cw2018"
+            keyPassword "cw2018"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
