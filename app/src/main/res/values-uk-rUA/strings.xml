@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Codeforces Watcher</string>
+    <string name="rank">Ранг: %1$s</string>
+    <string name="name">Iм\'я: %1$s</string>
+    <string name="currating">Поточний рейтинг: %1$s</string>
+    <string name="maxrating">Макс. рейтинг: %1$s</string>
+    <string name="wrong">Невірний хендл!</string>
+    <string name="lastRatingUpdate">Останнє оновлення рейтингу: %1$s</string>
+    <string name="noratingupdate">Немає оновлення рейтингу</string>
+    <string name="none">Немає</string>
+    <string name="connectionerror">Немає зв`язку з Інтернетом</string>
+</resources>

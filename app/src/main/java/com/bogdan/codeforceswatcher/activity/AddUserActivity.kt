@@ -40,18 +40,22 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
         userCall.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
-                    val localUser = response.body()!!.result.firstOrNull()!!
-                    ratingCall.enqueue(object : Callback<RatingChangeResponse> {
-                        override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
-                            if (response.isSuccessful) {
-                                localUser.ratingChanges = response.body()!!.result
-                                CwApp.app.userDao.insert(localUser)
-                                finish()
+                    if (response.body()!!.result.firstOrNull() == null) {
+                        showError()
+                    } else {
+                        val localUser = response.body()!!.result.firstOrNull()!!
+                        ratingCall.enqueue(object : Callback<RatingChangeResponse> {
+                            override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
+                                if (response.isSuccessful) {
+                                    localUser.ratingChanges = response.body()!!.result
+                                    CwApp.app.userDao.insert(localUser)
+                                    finish()
+                                }
                             }
-                        }
 
-                        override fun onFailure(call: Call<RatingChangeResponse>, t: Throwable) {}
-                    })
+                            override fun onFailure(call: Call<RatingChangeResponse>, t: Throwable) {}
+                        })
+                    }
                 } else {
                     showError()
                 }

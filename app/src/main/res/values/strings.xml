@@ -7,9 +7,6 @@
     <string name="wrong">Wrong handle!</string>
     <string name="lastRatingUpdate">Last rating update: %1$s</string>
     <string name="noratingupdate">No rating update</string>
-    <string name="norank">No Rank</string>
-    <string name="nocurrating">No Cur Rating</string>
-    <string name="nomaxrating">No Max Rating</string>
-    <string name="noname">No Name</string>
+    <string name="none">None</string>
     <string name="connectionerror">No internet connection</string>
 </resources>
