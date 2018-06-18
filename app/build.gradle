@@ -17,7 +17,7 @@ android {
         releaseConfig {
             storeFile file("cw.keystore")
             storePassword("cw2018")
-            keyAlias "cw2018"
+            keyAlias "cw"
             keyPassword "cw2018"
         }
     }
@@ -25,6 +25,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseConfig
         }
     }
 }
