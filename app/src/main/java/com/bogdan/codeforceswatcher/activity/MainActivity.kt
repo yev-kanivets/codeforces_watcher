@@ -57,8 +57,6 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
     }
 
     private fun loadUser(handle: String) {
-        progressBar.visibility = View.VISIBLE
-
         val userCall = CwApp.app.userApi.user(handle)
         userCall.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
@@ -66,7 +64,6 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
                 Thread {
                     countDownLatch.await()
                     runOnUiThread {
-                        progressBar.visibility = View.INVISIBLE
                         swiperefresh.isRefreshing = false
                     }
 
@@ -94,10 +91,10 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
                         })
                     }
                 }
+                swiperefresh.isRefreshing = false
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                progressBar.visibility = View.INVISIBLE
                 swiperefresh.isRefreshing = false
                 CwApp.app.showError()
             }
