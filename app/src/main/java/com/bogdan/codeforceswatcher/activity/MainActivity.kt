@@ -13,11 +13,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.CountDownLatch
 
 class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private val users = mutableListOf<User>()
     lateinit var it: List<User>
+    lateinit var countDownLatch: CountDownLatch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,21 +61,31 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         progressBar.visibility = View.VISIBLE
 
         val userCall = CwApp.app.userApi.user(handle)
-
         userCall.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                countDownLatch = CountDownLatch(response.body()!!.result.size)
+                Thread {
+                    countDownLatch.await()
+                    runOnUiThread {
+                        progressBar.visibility = View.INVISIBLE
+                        swiperefresh.isRefreshing = false
+                    }
+
+                }.start()
                 for ((counter, element) in response.body()!!.result.withIndex()) {
                     val ratingCall = CwApp.app.userApi.rating(element.handle)
                     element.id = it[counter].id
                     if (element.rating == it[counter].rating) {
                         element.ratingChanges = it[counter].ratingChanges
                         CwApp.app.userDao.update(element)
+                        countDownLatch.countDown()
                     } else {
                         ratingCall.enqueue(object : Callback<RatingChangeResponse> {
                             override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
                                 if (response.isSuccessful) {
                                     element.ratingChanges = response.body()!!.result
                                     CwApp.app.userDao.update(element)
+                                    countDownLatch.countDown()
                                 }
                             }
 
@@ -81,8 +93,6 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
                         })
                     }
                 }
-                progressBar.visibility = View.INVISIBLE
-                swiperefresh.isRefreshing = false
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
