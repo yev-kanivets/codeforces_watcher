@@ -10,6 +10,7 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.RatingChangeResponse
 import com.bogdan.codeforceswatcher.UserResponse
 import kotlinx.android.synthetic.main.activity_add_user.*
+import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,7 +20,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_user)
-
+        setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
@@ -32,6 +33,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
     }
 
     private fun loadUser(handle: String) {
+        progressBar.visibility = View.VISIBLE
 
         val userCall = CwApp.app.userApi.user(handle)
 
@@ -41,6 +43,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
                     if (response.body()!!.result.firstOrNull() == null) {
+                        progressBar.visibility = View.INVISIBLE
                         showError()
                     } else {
                         val localUser = response.body()!!.result.firstOrNull()!!
@@ -49,6 +52,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
                                 if (response.isSuccessful) {
                                     localUser.ratingChanges = response.body()!!.result
                                     CwApp.app.userDao.insert(localUser)
+                                    progressBar.visibility = View.INVISIBLE
                                     finish()
                                 }
                             }
@@ -57,11 +61,13 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
                         })
                     }
                 } else {
+                    progressBar.visibility = View.INVISIBLE
                     showError()
                 }
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                progressBar.visibility = View.INVISIBLE
                 CwApp.app.showError()
             }
         })

@@ -24,7 +24,8 @@
         </activity>
         <activity
             android:name=".activity.AddUserActivity"
-            android:label="Add User" />
+            android:label="Add User"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
