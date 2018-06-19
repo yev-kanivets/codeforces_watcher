@@ -36,9 +36,9 @@ class TryActivity : AppCompatActivity() {
             tvRank.text = getString(R.string.rank, user.rank)
         }
         if (user.rating == null) {
-            tvCurrentRating.text = getString(R.string.currating, getString(R.string.none))
+            tvCurrentRating.text = getString(R.string.cur_rating, getString(R.string.none))
         } else {
-            tvCurrentRating.text = getString(R.string.currating, user.rating.toString())
+            tvCurrentRating.text = getString(R.string.cur_rating, user.rating.toString())
         }
         val handle = if (user.firstName == null && user.lastName == null) {
             getString(R.string.none)
@@ -50,9 +50,9 @@ class TryActivity : AppCompatActivity() {
             user.firstName + " " + user.lastName
         tvHandle.text = getString(R.string.name, handle)
         if (user.maxRating == null) {
-            tvMaxRating.text = getString(R.string.maxrating, getString(R.string.none))
+            tvMaxRating.text = getString(R.string.max_rating, getString(R.string.none))
         } else {
-            tvMaxRating.text = getString(R.string.maxrating, user.maxRating.toString())
+            tvMaxRating.text = getString(R.string.max_rating, user.maxRating.toString())
         }
         if (user.avatar.substring(0, 6) != "https:") {
             Picasso.get().load("https:" + user.avatar).into(ivAvatar)

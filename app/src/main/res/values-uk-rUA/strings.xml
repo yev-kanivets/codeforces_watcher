@@ -3,11 +3,11 @@
     <string name="app_name">Codeforces Watcher</string>
     <string name="rank">Ранг: %1$s</string>
     <string name="name">Iм\'я: %1$s</string>
-    <string name="currating">Поточний рейтинг: %1$s</string>
-    <string name="maxrating">Макс. рейтинг: %1$s</string>
+    <string name="cur_rating">Поточний рейтинг: %1$s</string>
+    <string name="max_rating">Макс. рейтинг: %1$s</string>
     <string name="wrong">Невірний хендл!</string>
-    <string name="lastRatingUpdate">Останнє оновлення рейтингу: %1$s</string>
-    <string name="noratingupdate">Немає оновлення рейтингу</string>
+    <string name="last_rating_update">Останнє оновлення рейтингу: %1$s</string>
+    <string name="no_rating_update">Немає оновлення рейтингу</string>
     <string name="none">Немає</string>
-    <string name="connectionerror">Немає зв`язку з Інтернетом</string>
+    <string name="no_internet_connection">Немає зв`язку з Інтернетом</string>
 </resources>

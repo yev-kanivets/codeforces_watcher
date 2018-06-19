@@ -2,11 +2,11 @@
     <string name="app_name">Codeforces Watcher</string>
     <string name="rank">Rank: %1$s</string>
     <string name="name">Name: %1$s</string>
-    <string name="currating">Current Rating: %1$s</string>
-    <string name="maxrating">Max Rating: %1$s</string>
+    <string name="cur_rating">Current Rating: %1$s</string>
+    <string name="max_rating">Max Rating: %1$s</string>
     <string name="wrong">Wrong handle!</string>
-    <string name="lastRatingUpdate">Last rating update: %1$s</string>
-    <string name="noratingupdate">No rating update</string>
+    <string name="last_rating_update">Last rating update: %1$s</string>
+    <string name="no_rating_update">No rating update</string>
     <string name="none">None</string>
-    <string name="connectionerror">No internet connection</string>
+    <string name="no_internet_connection">No internet connection</string>
 </resources>
