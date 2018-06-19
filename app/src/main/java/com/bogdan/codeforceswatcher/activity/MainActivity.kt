@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
 
     private val users = mutableListOf<User>()
     lateinit var it: List<User>
-    lateinit var countDownLatch: CountDownLatch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +62,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         val userCall = CwApp.app.userApi.user(handle)
         userCall.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                countDownLatch = CountDownLatch(response.body()!!.result.size)
+                val countDownLatch = CountDownLatch(response.body()!!.result.size)
                 Thread {
                     countDownLatch.await()
                     runOnUiThread {
@@ -89,7 +88,9 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
                                 }
                             }
 
-                            override fun onFailure(call: Call<RatingChangeResponse>, t: Throwable) {}
+                            override fun onFailure(call: Call<RatingChangeResponse>, t: Throwable) {
+                                countDownLatch.countDown()
+                            }
                         })
                     }
                 }
