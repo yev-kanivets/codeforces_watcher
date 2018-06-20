@@ -1,19 +1,21 @@
 package com.bogdan.codeforceswatcher.activity
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.View.OnClickListener
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.RatingChangeResponse
 import com.bogdan.codeforceswatcher.UserResponse
 import kotlinx.android.synthetic.main.activity_add_user.*
-import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class AddUserActivity : AppCompatActivity(), OnClickListener {
 
@@ -24,10 +26,12 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
+        showhideKeyboard()
         btnShow.setOnClickListener(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        showhideKeyboard()
         onBackPressed()
         return true
     }
@@ -50,6 +54,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
                         ratingCall.enqueue(object : Callback<RatingChangeResponse> {
                             override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
                                 if (response.isSuccessful) {
+                                    showhideKeyboard()
                                     localUser.ratingChanges = response.body()!!.result
                                     CwApp.app.userDao.insert(localUser)
                                     progressBar.visibility = View.INVISIBLE
@@ -87,6 +92,10 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
 
     fun showError() {
         Toast.makeText(applicationContext, getString(R.string.wrong), Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showhideKeyboard() {
+        (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
     }
 
 }
