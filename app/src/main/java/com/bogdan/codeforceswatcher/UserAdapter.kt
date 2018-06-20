@@ -2,74 +2,72 @@ package com.bogdan.codeforceswatcher
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.TextView
 import com.bogdan.codeforceswatcher.R.color.*
+import com.bogdan.codeforceswatcher.activity.TryActivity
+import kotlinx.android.synthetic.main.list_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 @Suppress("DEPRECATION")
-class UserAdapter internal constructor(private val ctx: Context, private var objects: MutableList<User>) : BaseAdapter() {
+class UserAdapter(val items: MutableList<User>, val ctx: Context) : RecyclerView.Adapter<ViewHolder>() {
 
-    private var lInflater: LayoutInflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
-    override fun getCount(): Int {
-        return objects.size
+    override fun getItemCount(): Int {
+        return items.size
     }
 
-    override fun getItem(position: Int): User {
-        return objects[position]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        Log.d("MyHog", "String")
+        return ViewHolder(LayoutInflater.from(ctx).inflate(R.layout.list_view, parent, false))
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    @SuppressLint("SetTextI18n")
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var view: View? = convertView
-        if (view == null) {
-            view = lInflater.inflate(R.layout.list_view, parent, false)
-        }
-
-        val p = getItem(position)
-
-        (view!!.findViewById<View>(R.id.tv1) as TextView).text = p.handle
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val p = items[position]
+        Log.d("MyHog", p.toString())
+        holder.tv1.text = p.handle
         if (p.rating == null) {
-            (view.findViewById<View>(R.id.tv2) as TextView).text = null
+            holder.tv2.text = null
         } else
-            (view.findViewById<View>(R.id.tv2) as TextView).text = p.rating.toString()
+            holder.tv2.text = p.rating.toString()
         if (p.rank == null) {
-            (view.findViewById<View>(R.id.tv1) as TextView).setTextColor(ctx.resources.getColor(grey))
-            (view.findViewById<View>(R.id.tv2) as TextView).setTextColor(ctx.resources.getColor(grey))
+            holder.tv1.setTextColor(ctx.resources.getColor(grey))
+            holder.tv2.setTextColor(ctx.resources.getColor(grey))
         } else {
-            (view.findViewById<View>(R.id.tv1) as TextView).setTextColor(ctx.resources.getColor(getColor(p.rank)))
-            (view.findViewById<View>(R.id.tv2) as TextView).setTextColor(ctx.resources.getColor(getColor(p.rank)))
+            holder.tv1.setTextColor(ctx.resources.getColor(getColor(p.rank)))
+            holder.tv2.setTextColor(ctx.resources.getColor(getColor(p.rank)))
         }
         val lastRatingChange = p.ratingChanges.lastOrNull()
         if (lastRatingChange != null) {
             val ratingDelta = lastRatingChange.newRating - lastRatingChange.oldRating
-            (view.findViewById<View>(R.id.tv3) as TextView).text = ctx.resources.getString(R.string.lastRatingUpdate, getDataTime(lastRatingChange.ratingUpdateTimeSeconds * 1000))
+            holder.tv3.text = ctx.resources.getString(R.string.lastRatingUpdate, getDataTime(lastRatingChange.ratingUpdateTimeSeconds * 1000))
             if (ratingDelta >= 0) {
-                (view.findViewById<View>(R.id.ivDelta) as ImageView).setImageResource(R.drawable.ic_rating_up)
-                (view.findViewById<View>(R.id.tv4) as TextView).text = ratingDelta.toString()
-                (view.findViewById<View>(R.id.tv4) as TextView).setTextColor(ctx.resources.getColor(brightgreen))
+                holder.ivDelta.setImageResource(R.drawable.ic_rating_up)
+                holder.tv4.text = ratingDelta.toString()
+                holder.tv4.setTextColor(ctx.resources.getColor(brightgreen))
             } else {
-                (view.findViewById<View>(R.id.ivDelta) as ImageView).setImageResource(R.drawable.ic_rating_down)
-                (view.findViewById<View>(R.id.tv4) as TextView).text = (-ratingDelta).toString()
-                (view.findViewById<View>(R.id.tv4) as TextView).setTextColor(ctx.resources.getColor(red))
+                holder.ivDelta.setImageResource(R.drawable.ic_rating_down)
+                holder.tv4.text = (-ratingDelta).toString()
+                holder.tv4.setTextColor(ctx.resources.getColor(red))
             }
         } else {
-            (view.findViewById<View>(R.id.tv3) as TextView).text = ctx.resources.getString(R.string.noratingupdate)
-            (view.findViewById<View>(R.id.ivDelta) as ImageView).setImageResource(0)
-            (view.findViewById<View>(R.id.tv4) as TextView).text = null
+            holder.tv3.text = ctx.resources.getString(R.string.noratingupdate)
+            holder.ivDelta.setImageResource(0)
+            holder.tv4.text = null
         }
 
-        return view
+        holder.itemView.setOnClickListener {
+            Log.d("MyTag", p.id.toString())
+            val intent = Intent(ctx, TryActivity::class.java)
+            intent.putExtra("Handle", p.handle)
+            intent.putExtra("Id", p.id.toString())
+            ctx.startActivity(intent)
+        }
     }
 
     private fun getColor(rank: String): Int {
@@ -92,5 +90,16 @@ class UserAdapter internal constructor(private val ctx: Context, private var obj
     private fun getDataTime(seconds: Long): String {
         return SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH).format(Date(seconds)).toString()
     }
+
+}
+
+class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+    // Holds the TextView that will add each animal to
+    val tv1 = view.tv1
+    val tv2 = view.tv2
+    val tv3 = view.tv3
+    val tv4 = view.tv4
+    val ivDelta = view.ivDelta
 
 }

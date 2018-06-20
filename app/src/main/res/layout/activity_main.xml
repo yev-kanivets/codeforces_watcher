@@ -24,8 +24,8 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <ListView
-            android:id="@+id/lvMain"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_Main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </android.support.v4.widget.SwipeRefreshLayout>
