@@ -27,11 +27,11 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
 
         val userAdapter = UserAdapter(users, this)
 
-        rv_Main.adapter = userAdapter
+        rvMain.adapter = userAdapter
 
         swiperefresh.setOnRefreshListener(this)
 
-        rv_Main.layoutManager = LinearLayoutManager(this)
+        rvMain.layoutManager = LinearLayoutManager(this)
 
         val liveData = CwApp.app.userDao.getAll()
 

@@ -2,7 +2,6 @@ package com.bogdan.codeforceswatcher.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Toast
@@ -11,7 +10,6 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.RatingChangeResponse
 import com.bogdan.codeforceswatcher.UserResponse
 import kotlinx.android.synthetic.main.activity_add_user.*
-import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

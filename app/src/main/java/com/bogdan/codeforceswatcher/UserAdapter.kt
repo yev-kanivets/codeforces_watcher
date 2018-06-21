@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,46 +22,43 @@ class UserAdapter(val items: MutableList<User>, val ctx: Context) : RecyclerView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        Log.d("MyHog", "String")
         return ViewHolder(LayoutInflater.from(ctx).inflate(R.layout.list_view, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val p = items[position]
-        Log.d("MyHog", p.toString())
-        holder.tv1.text = p.handle
+        holder.tvHandle.text = p.handle
         if (p.rating == null) {
-            holder.tv2.text = null
+            holder.tvRating.text = null
         } else
-            holder.tv2.text = p.rating.toString()
+            holder.tvRating.text = p.rating.toString()
         if (p.rank == null) {
-            holder.tv1.setTextColor(ctx.resources.getColor(grey))
-            holder.tv2.setTextColor(ctx.resources.getColor(grey))
+            holder.tvHandle.setTextColor(ctx.resources.getColor(grey))
+            holder.tvRating.setTextColor(ctx.resources.getColor(grey))
         } else {
-            holder.tv1.setTextColor(ctx.resources.getColor(getColor(p.rank)))
-            holder.tv2.setTextColor(ctx.resources.getColor(getColor(p.rank)))
+            holder.tvHandle.setTextColor(ctx.resources.getColor(getColor(p.rank)))
+            holder.tvRating.setTextColor(ctx.resources.getColor(getColor(p.rank)))
         }
         val lastRatingChange = p.ratingChanges.lastOrNull()
         if (lastRatingChange != null) {
             val ratingDelta = lastRatingChange.newRating - lastRatingChange.oldRating
-            holder.tv3.text = ctx.resources.getString(R.string.lastRatingUpdate, getDataTime(lastRatingChange.ratingUpdateTimeSeconds * 1000))
+            holder.tvLastRatingUpdate.text = ctx.resources.getString(R.string.lastRatingUpdate, getDataTime(lastRatingChange.ratingUpdateTimeSeconds * 1000))
             if (ratingDelta >= 0) {
                 holder.ivDelta.setImageResource(R.drawable.ic_rating_up)
-                holder.tv4.text = ratingDelta.toString()
-                holder.tv4.setTextColor(ctx.resources.getColor(brightgreen))
+                holder.tvRatingChange.text = ratingDelta.toString()
+                holder.tvRatingChange.setTextColor(ctx.resources.getColor(brightgreen))
             } else {
                 holder.ivDelta.setImageResource(R.drawable.ic_rating_down)
-                holder.tv4.text = (-ratingDelta).toString()
-                holder.tv4.setTextColor(ctx.resources.getColor(red))
+                holder.tvRatingChange.text = (-ratingDelta).toString()
+                holder.tvRatingChange.setTextColor(ctx.resources.getColor(red))
             }
         } else {
-            holder.tv3.text = ctx.resources.getString(R.string.noratingupdate)
+            holder.tvLastRatingUpdate.text = ctx.resources.getString(R.string.noratingupdate)
             holder.ivDelta.setImageResource(0)
-            holder.tv4.text = null
+            holder.tvRatingChange.text = null
         }
 
         holder.itemView.setOnClickListener {
-            Log.d("MyTag", p.id.toString())
             val intent = Intent(ctx, TryActivity::class.java)
             intent.putExtra("Handle", p.handle)
             intent.putExtra("Id", p.id.toString())
@@ -96,10 +92,10 @@ class UserAdapter(val items: MutableList<User>, val ctx: Context) : RecyclerView
 class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     // Holds the TextView that will add each animal to
-    val tv1 = view.tv1
-    val tv2 = view.tv2
-    val tv3 = view.tv3
-    val tv4 = view.tv4
+    val tvHandle = view.tv1
+    val tvRating = view.tv2
+    val tvLastRatingUpdate = view.tv3
+    val tvRatingChange = view.tv4
     val ivDelta = view.ivDelta
 
 }
