@@ -1,3 +1,4 @@
+//noinspection GradleCompatible
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -50,6 +51,7 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:1.1.0"
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.4'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+    compile 'com.android.support:cardview-v7:27.1.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
