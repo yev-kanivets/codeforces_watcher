@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:windowSoftInputMode="stateVisible"
             android:name=".activity.AddUserActivity"
             android:label="Add User"
             android:theme="@style/AppTheme.NoActionBar"/>

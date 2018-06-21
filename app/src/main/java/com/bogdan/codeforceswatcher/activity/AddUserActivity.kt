@@ -26,12 +26,10 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
-        showhideKeyboard()
         btnShow.setOnClickListener(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        showhideKeyboard()
         onBackPressed()
         return true
     }
@@ -54,7 +52,6 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
                         ratingCall.enqueue(object : Callback<RatingChangeResponse> {
                             override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
                                 if (response.isSuccessful) {
-                                    showhideKeyboard()
                                     localUser.ratingChanges = response.body()!!.result
                                     CwApp.app.userDao.insert(localUser)
                                     progressBar.visibility = View.INVISIBLE
@@ -92,10 +89,6 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
 
     fun showError() {
         Toast.makeText(applicationContext, getString(R.string.wrong), Toast.LENGTH_SHORT).show()
-    }
-
-    private fun showhideKeyboard() {
-        (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
     }
 
 }
