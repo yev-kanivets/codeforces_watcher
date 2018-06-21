@@ -5,9 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import android.widget.AdapterView.OnItemClickListener
-import android.widget.TextView
 import com.bogdan.codeforceswatcher.*
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
@@ -26,18 +25,13 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
 
         fab.setOnClickListener(this)
 
-        val userAdapter = UserAdapter(this, users)
+        val userAdapter = UserAdapter(users, this)
 
-        lvMain.adapter = userAdapter
+        rvMain.adapter = userAdapter
 
         swiperefresh.setOnRefreshListener(this)
 
-        lvMain.onItemClickListener = OnItemClickListener { _, view, _, id ->
-            val intent = Intent(this, TryActivity::class.java)
-            intent.putExtra("Handle", (view.findViewById<TextView>(R.id.tv1) as TextView).text)
-            intent.putExtra("Id", it[it.size - 1 - id.toInt()].id.toString())
-            startActivity(intent)
-        }
+        rvMain.layoutManager = LinearLayoutManager(this)
 
         val liveData = CwApp.app.userDao.getAll()
 
