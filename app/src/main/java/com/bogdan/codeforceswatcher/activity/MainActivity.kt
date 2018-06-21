@@ -66,38 +66,42 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         val userCall = CwApp.app.userApi.user(handle)
         userCall.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                val countDownLatch = CountDownLatch(response.body()!!.result.size)
-                Thread {
-                    countDownLatch.await()
-                    runOnUiThread {
-                        swiperefresh.isRefreshing = false
-                    }
+                if (response.body() == null) {
+                    swiperefresh.isRefreshing = false
+                } else {
+                    val countDownLatch = CountDownLatch(response.body()!!.result.size)
+                    Thread {
+                        countDownLatch.await()
+                        runOnUiThread {
+                            swiperefresh.isRefreshing = false
+                        }
 
-                }.start()
-                for ((counter, element) in response.body()!!.result.withIndex()) {
-                    val ratingCall = CwApp.app.userApi.rating(element.handle)
-                    element.id = it[counter].id
-                    if (element.rating == it[counter].rating) {
-                        element.ratingChanges = it[counter].ratingChanges
-                        CwApp.app.userDao.update(element)
-                        countDownLatch.countDown()
-                    } else {
-                        ratingCall.enqueue(object : Callback<RatingChangeResponse> {
-                            override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
-                                if (response.isSuccessful) {
-                                    element.ratingChanges = response.body()!!.result
-                                    CwApp.app.userDao.update(element)
+                    }.start()
+                    for ((counter, element) in response.body()!!.result.withIndex()) {
+                        val ratingCall = CwApp.app.userApi.rating(element.handle)
+                        element.id = it[counter].id
+                        if (element.rating == it[counter].rating) {
+                            element.ratingChanges = it[counter].ratingChanges
+                            CwApp.app.userDao.update(element)
+                            countDownLatch.countDown()
+                        } else {
+                            ratingCall.enqueue(object : Callback<RatingChangeResponse> {
+                                override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
+                                    if (response.isSuccessful) {
+                                        element.ratingChanges = response.body()!!.result
+                                        CwApp.app.userDao.update(element)
+                                        countDownLatch.countDown()
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<RatingChangeResponse>, t: Throwable) {
                                     countDownLatch.countDown()
                                 }
-                            }
-
-                            override fun onFailure(call: Call<RatingChangeResponse>, t: Throwable) {
-                                countDownLatch.countDown()
-                            }
-                        })
+                            })
+                        }
                     }
+                    swiperefresh.isRefreshing = false
                 }
-                swiperefresh.isRefreshing = false
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
