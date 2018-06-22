@@ -80,7 +80,7 @@ class UserAdapter(val items: MutableList<User>, val ctx: Context) : RecyclerView
       "grandmaster" -> red
       "international grandmaster" -> red
       "legendary grandmaster" -> red
-      else -> 1
+      else -> grey
     }
   }
 
