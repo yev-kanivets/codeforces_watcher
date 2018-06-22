@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.AdapterView.OnItemClickListener
-import android.widget.TextView
 import com.bogdan.codeforceswatcher.*
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
@@ -26,20 +26,26 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
 
         fab.setOnClickListener(this)
 
-        val userAdapter = UserAdapter(this, users)
+        val userAdapter = UserAdapter(users, this)
 
-        lvMain.adapter = userAdapter
+        rvMain.adapter = userAdapter
 
         swiperefresh.setOnRefreshListener(this)
 
-        lvMain.onItemClickListener = OnItemClickListener { _, view, _, id ->
-            val intent = Intent(this, TryActivity::class.java)
-            intent.putExtra("Handle", (view.findViewById<TextView>(R.id.tv1) as TextView).text)
-            intent.putExtra("Id", it[it.size - 1 - id.toInt()].id.toString())
-            startActivity(intent)
-        }
+        rvMain.layoutManager = LinearLayoutManager(this)
 
         val liveData = CwApp.app.userDao.getAll()
+
+        rvMain.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0 && fab.visibility == View.VISIBLE) {
+                    fab.hide()
+                } else if (dy < 0 && fab.visibility != View.VISIBLE) {
+                    fab.show()
+                }
+            }
+        })
 
         liveData.observe(this, Observer<List<User>> { t ->
             users.clear()
@@ -60,38 +66,42 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         val userCall = CwApp.app.userApi.user(handle)
         userCall.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                val countDownLatch = CountDownLatch(response.body()!!.result.size)
-                Thread {
-                    countDownLatch.await()
-                    runOnUiThread {
-                        swiperefresh.isRefreshing = false
-                    }
+                if (response.body() == null) {
+                    swiperefresh.isRefreshing = false
+                } else {
+                    val countDownLatch = CountDownLatch(response.body()!!.result.size)
+                    Thread {
+                        countDownLatch.await()
+                        runOnUiThread {
+                            swiperefresh.isRefreshing = false
+                        }
 
-                }.start()
-                for ((counter, element) in response.body()!!.result.withIndex()) {
-                    val ratingCall = CwApp.app.userApi.rating(element.handle)
-                    element.id = it[counter].id
-                    if (element.rating == it[counter].rating) {
-                        element.ratingChanges = it[counter].ratingChanges
-                        CwApp.app.userDao.update(element)
-                        countDownLatch.countDown()
-                    } else {
-                        ratingCall.enqueue(object : Callback<RatingChangeResponse> {
-                            override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
-                                if (response.isSuccessful) {
-                                    element.ratingChanges = response.body()!!.result
-                                    CwApp.app.userDao.update(element)
+                    }.start()
+                    for ((counter, element) in response.body()!!.result.withIndex()) {
+                        val ratingCall = CwApp.app.userApi.rating(element.handle)
+                        element.id = it[counter].id
+                        if (element.rating == it[counter].rating) {
+                            element.ratingChanges = it[counter].ratingChanges
+                            CwApp.app.userDao.update(element)
+                            countDownLatch.countDown()
+                        } else {
+                            ratingCall.enqueue(object : Callback<RatingChangeResponse> {
+                                override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
+                                    if (response.isSuccessful) {
+                                        element.ratingChanges = response.body()!!.result
+                                        CwApp.app.userDao.update(element)
+                                        countDownLatch.countDown()
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<RatingChangeResponse>, t: Throwable) {
                                     countDownLatch.countDown()
                                 }
-                            }
-
-                            override fun onFailure(call: Call<RatingChangeResponse>, t: Throwable) {
-                                countDownLatch.countDown()
-                            }
-                        })
+                            })
+                        }
                     }
+                    swiperefresh.isRefreshing = false
                 }
-                swiperefresh.isRefreshing = false
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
