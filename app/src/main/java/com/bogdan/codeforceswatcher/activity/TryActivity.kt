@@ -20,7 +20,7 @@ class TryActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
-        displayUser(CwApp.app.userDao.getById(intent.getStringExtra(MainActivity.ID).toLong()))
+        displayUser(CwApp.app.userDao.getById(intent.getStringExtra(MainActivity.ID).trim().toLong()))
     }
 
     override fun onSupportNavigateUp(): Boolean {
