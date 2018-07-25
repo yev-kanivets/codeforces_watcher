@@ -3,13 +3,22 @@ package com.bogdan.codeforceswatcher.activity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.User
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_try.*
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 class TryActivity : AppCompatActivity() {
 
@@ -21,6 +30,9 @@ class TryActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
         displayUser(CwApp.app.userDao.getById(intent.getStringExtra(MainActivity.ID).trim().toLong()))
+        val user = CwApp.app.userDao.getById(intent.getStringExtra(MainActivity.ID).toLong())
+        displayUser(user)
+        displayChart(user)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -62,6 +74,28 @@ class TryActivity : AppCompatActivity() {
         title = user.handle
     }
 
+    private fun displayChart(user: User) {
+        val entries = mutableListOf<Entry>()
+
+        val xAxis = chart.xAxis
+
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+
+        xAxis.valueFormatter = IAxisValueFormatter { value, _ ->
+            SimpleDateFormat("MMM yyyy", Locale.ENGLISH).format(Date(value.toLong() * 1000)).toString()
+        }
+
+        for (element in user.ratingChanges) {
+            entries.add(Entry(element.ratingUpdateTimeSeconds.toFloat(), element.newRating.toFloat()))
+        }
+
+        val lineDataSet = LineDataSet(entries, user.handle)
+
+        lineDataSet.setDrawValues(false)
+
+        chart.data = LineData(lineDataSet)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_try, menu)
         return true
@@ -77,4 +111,5 @@ class TryActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
 }
