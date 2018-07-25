@@ -8,6 +8,6 @@
     <string name="wrong">Неправильный хэндл!</string>
     <string name="last_rating_update">Последнее обновление рейтинга: %1$s</string>
     <string name="no_rating_update">Нет обновления рейтинга</string>
-    <string name="none">None</string>
+    <string name="none">Нет</string>
     <string name="no_internet_connection">Нет соединения с интернетом</string>
 </resources>

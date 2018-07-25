@@ -29,6 +29,7 @@ class TryActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
+        displayUser(CwApp.app.userDao.getById(intent.getStringExtra(MainActivity.ID).trim().toLong()))
         val user = CwApp.app.userDao.getById(intent.getStringExtra(MainActivity.ID).toLong())
         displayUser(user)
         displayChart(user)
@@ -73,7 +74,7 @@ class TryActivity : AppCompatActivity() {
         title = user.handle
     }
 
-    private fun displayChart(user: User){
+    private fun displayChart(user: User) {
         val entries = mutableListOf<Entry>()
 
         val xAxis = chart.xAxis
@@ -84,7 +85,7 @@ class TryActivity : AppCompatActivity() {
             SimpleDateFormat("MMM yyyy", Locale.ENGLISH).format(Date(value.toLong() * 1000)).toString()
         }
 
-        for(element in user.ratingChanges){
+        for (element in user.ratingChanges) {
             entries.add(Entry(element.ratingUpdateTimeSeconds.toFloat(), element.newRating.toFloat()))
         }
 

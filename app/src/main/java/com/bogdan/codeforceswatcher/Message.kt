@@ -6,7 +6,7 @@ import retrofit2.*
 import retrofit2.http.*
 
 @Entity
-data class User(@PrimaryKey(autoGenerate = true) var id: Long, val avatar: String, val rank: String?, val handle: String, val rating: Int?, val maxRating: Int?, val firstName: String?, val lastName: String?, var ratingChanges: List<RatingChange>)
+data class User(@PrimaryKey(autoGenerate = true) var id: Long = 0, val avatar: String, val rank: String?, val handle: String, val rating: Int?, val maxRating: Int?, val firstName: String?, val lastName: String?, var ratingChanges: List<RatingChange>)
 
 data class UserResponse(val status: String, val result: List<User>)
 
