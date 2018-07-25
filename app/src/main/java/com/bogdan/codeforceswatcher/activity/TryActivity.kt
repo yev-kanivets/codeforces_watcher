@@ -32,10 +32,10 @@ class TryActivity : AppCompatActivity() {
 
         val user = CwApp.app.userDao.getById(intent.getStringExtra(MainActivity.ID).toLong())
         displayUser(user)
-        if (user.ratingChanges.isNotEmpty())
+        if (user.ratingChanges.isNotEmpty()) {
             displayChart(user)
-        else{
-            rating_changes.text = ""
+        } else {
+            tvRatingChanges.text = ""
         }
     }
 
@@ -80,27 +80,16 @@ class TryActivity : AppCompatActivity() {
 
     private fun displayChart(user: User) {
         val entries = mutableListOf<Entry>()
-
         val xAxis = chart.xAxis
-
         chart.setTouchEnabled(true)
-
         chart.markerView = CustomMarkerView(this, R.layout.chart)
-
         chart.isDragEnabled = true
-
         chart.axisRight.setDrawLabels(false)
-
         xAxis.setDrawAxisLine(true)
-
         xAxis.setDrawAxisLine(true)
-
         chart.description.isEnabled = false
-
         chart.legend.isEnabled = false
-
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-
         xAxis.labelCount = 3
 
         xAxis.valueFormatter = IAxisValueFormatter { value, _ ->
@@ -114,9 +103,7 @@ class TryActivity : AppCompatActivity() {
         }
 
         val lineDataSet = LineDataSet(entries, user.handle)
-
         lineDataSet.setDrawValues(false)
-
         chart.data = LineData(lineDataSet)
     }
 
