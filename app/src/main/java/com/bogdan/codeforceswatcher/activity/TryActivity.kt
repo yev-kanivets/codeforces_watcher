@@ -30,6 +30,7 @@ class TryActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
+        displayUser(CwApp.app.userDao.getById(intent.getStringExtra(MainActivity.ID).trim().toLong()))
         val user = CwApp.app.userDao.getById(intent.getStringExtra(MainActivity.ID).toLong())
         displayUser(user)
         if (user.ratingChanges.isNotEmpty()) {
@@ -100,6 +101,7 @@ class TryActivity : AppCompatActivity() {
             val entry = Entry(element.ratingUpdateTimeSeconds.toFloat(), element.newRating.toFloat())
             entry.data = element.contestName
             entries.add(entry)
+            entries.add(Entry(element.ratingUpdateTimeSeconds.toFloat(), element.newRating.toFloat()))
         }
 
         val lineDataSet = LineDataSet(entries, user.handle)
