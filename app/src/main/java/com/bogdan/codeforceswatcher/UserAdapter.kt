@@ -70,7 +70,7 @@ class UserAdapter(private val items: MutableList<User>, private val ctx: Context
 
 
     @SuppressLint("SimpleDateFormat")
-    fun getDataTime(seconds: Long): String {
+    private fun getDataTime(seconds: Long): String {
         return SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH).format(Date(seconds)).toString()
     }
 

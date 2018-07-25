@@ -3,9 +3,9 @@ package com.bogdan.codeforceswatcher.activity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.bogdan.codeforceswatcher.CustomMarkerView
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.User
@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
+@Suppress("DEPRECATION")
 class TryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +33,11 @@ class TryActivity : AppCompatActivity() {
         displayUser(CwApp.app.userDao.getById(intent.getStringExtra(MainActivity.ID).trim().toLong()))
         val user = CwApp.app.userDao.getById(intent.getStringExtra(MainActivity.ID).toLong())
         displayUser(user)
-        displayChart(user)
+        if (user.ratingChanges.isNotEmpty()) {
+            displayChart(user)
+        } else {
+            tvRatingChanges.text = ""
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -76,23 +81,31 @@ class TryActivity : AppCompatActivity() {
 
     private fun displayChart(user: User) {
         val entries = mutableListOf<Entry>()
-
         val xAxis = chart.xAxis
-
+        chart.setTouchEnabled(true)
+        chart.markerView = CustomMarkerView(this, R.layout.chart)
+        chart.isDragEnabled = true
+        chart.axisRight.setDrawLabels(false)
+        xAxis.setDrawAxisLine(true)
+        xAxis.setDrawAxisLine(true)
+        chart.description.isEnabled = false
+        chart.legend.isEnabled = false
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.labelCount = 3
 
         xAxis.valueFormatter = IAxisValueFormatter { value, _ ->
             SimpleDateFormat("MMM yyyy", Locale.ENGLISH).format(Date(value.toLong() * 1000)).toString()
         }
 
         for (element in user.ratingChanges) {
+            val entry = Entry(element.ratingUpdateTimeSeconds.toFloat(), element.newRating.toFloat())
+            entry.data = element.contestName
+            entries.add(entry)
             entries.add(Entry(element.ratingUpdateTimeSeconds.toFloat(), element.newRating.toFloat()))
         }
 
         val lineDataSet = LineDataSet(entries, user.handle)
-
         lineDataSet.setDrawValues(false)
-
         chart.data = LineData(lineDataSet)
     }
 
