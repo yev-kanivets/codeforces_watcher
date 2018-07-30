@@ -10,4 +10,5 @@
     <string name="none">None</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="rating_changes">Rating Changes</string>
+    <string name="ratings_have_been_updated">Ratings have been updated</string>
 </resources>

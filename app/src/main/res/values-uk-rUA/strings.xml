@@ -10,4 +10,5 @@
     <string name="no_rating_update">Немає оновлення рейтингу</string>
     <string name="none">Немає</string>
     <string name="no_internet_connection">Немає зв`язку з Інтернетом</string>
+    <string name="ratings_have_been_updated">Рейтинги оновлені</string>
 </resources>
