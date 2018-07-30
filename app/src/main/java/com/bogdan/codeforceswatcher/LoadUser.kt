@@ -44,6 +44,9 @@ object LoadUser {
                             if (flag == 1) {
                                 textNotification += "\n"
                             }
+                            else{
+                                textNotification = ""
+                            }
                             textNotification += element.handle + " "
                             ratingCall.enqueue(object : Callback<RatingChangeResponse> {
                                 override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
