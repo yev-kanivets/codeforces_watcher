@@ -30,7 +30,7 @@
             android:windowSoftInputMode="stateVisible" />
 
         <receiver
-            android:name="com.bogdan.codeforceswatcher.NotificationReceiver"
+            android:name="com.bogdan.codeforceswatcher.RatingUpdateReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

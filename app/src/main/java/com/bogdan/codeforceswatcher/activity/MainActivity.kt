@@ -26,9 +26,9 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val sPref = getPreferences(MODE_PRIVATE)
+        val sharedPrefs = getPreferences(MODE_PRIVATE)
 
-        val savedText = sPref.getString(SAVED_TEXT, "")
+        val savedText = sharedPrefs.getString(SAVED_TEXT, "")
         if (savedText == "") {
             startAlarm()
         }
@@ -67,14 +67,14 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
     }
 
     private fun startAlarm() {
-        val intent = Intent(applicationContext, NotificationReceiver::class.java)
-        val pIntent = PendingIntent.getBroadcast(applicationContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val intent = Intent(applicationContext, RatingUpdateReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(applicationContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), AlarmManager.INTERVAL_DAY, pIntent)
-        val sPref = getPreferences(MODE_PRIVATE)
-        val ed = sPref.edit()
-        ed.putString(SAVED_TEXT, alarmManager.toString())
-        ed.apply()
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), AlarmManager.INTERVAL_DAY, pendingIntent)
+        val sharedPrefs = getPreferences(MODE_PRIVATE)
+        val editor = sharedPrefs.edit()
+        editor.putString(SAVED_TEXT, alarmManager.toString())
+        editor.apply()
     }
 
     override fun onRefresh() {
@@ -82,7 +82,9 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         for (element in it) {
             handles += element.handle + ";"
         }
-        LoadUser.loadUser(handles, swiperefresh)
+        UserLoaded.loadUsers(handles) {
+            swiperefresh.isRefreshing = false
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)

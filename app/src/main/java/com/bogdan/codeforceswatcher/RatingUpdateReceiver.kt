@@ -8,19 +8,23 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.support.v4.app.NotificationCompat
+import android.util.Log
 import com.bogdan.codeforceswatcher.activity.MainActivity
 
-class NotificationReceiver : BroadcastReceiver() {
+class RatingUpdateReceiver : BroadcastReceiver() {
+
+    var notificationText = ""
 
     override fun onReceive(context: Context?, intent: Intent?) {
         onRefresh()
-        if (LoadUser.textNotification != "") {
+        Log.d("MeTag", "onReceive")
+        if (notificationText != "") {
             val notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
             val intentReceiver = Intent(context, MainActivity::class.java)
             intentReceiver.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
 
-            val pIntent = PendingIntent.getActivity(context, 0, intentReceiver, PendingIntent.FLAG_UPDATE_CURRENT)
+            val pendingIntent = PendingIntent.getActivity(context, 0, intentReceiver, PendingIntent.FLAG_UPDATE_CURRENT)
 
             val channelId = "1234"
 
@@ -36,9 +40,9 @@ class NotificationReceiver : BroadcastReceiver() {
 
             val builder = NotificationCompat.Builder(context, channelId)
                     .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentTitle("Title")
-                    .setContentText(LoadUser.textNotification)
-                    .setContentIntent(pIntent)
+                    .setContentTitle(context.getString(R.string.ratings_have_been_updated))
+                    .setContentText(notificationText)
+                    .setContentIntent(pendingIntent)
 
             val notification = builder.build()
 
@@ -51,6 +55,22 @@ class NotificationReceiver : BroadcastReceiver() {
         for (element in MainActivity.it) {
             handles += element.handle + ";"
         }
-        LoadUser.loadUser(handles, null)
+        UserLoaded.loadUsers(handles) { it ->
+            if (it != null) {
+                var flag = 0
+                for (element in it) {
+                    if (flag == 1) {
+                        notificationText += "\n"
+                    }
+                    flag = 1
+                    notificationText += element.first + " " + if (element.second < 0) {
+                        "-${element.second}"
+                    } else {
+                        "+${element.second}"
+                    }
+                }
+            }
+        }
     }
+
 }
