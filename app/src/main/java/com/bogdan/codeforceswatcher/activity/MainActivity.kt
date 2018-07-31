@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         for (element in it) {
             handles += element.handle + ";"
         }
-        UserLoaded.loadUsers(handles) {
+        UserLoader.loadUsers(handles) {
             swiperefresh.isRefreshing = false
         }
     }

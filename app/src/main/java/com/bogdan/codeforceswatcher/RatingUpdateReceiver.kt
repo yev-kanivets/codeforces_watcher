@@ -55,19 +55,17 @@ class RatingUpdateReceiver : BroadcastReceiver() {
         for (element in MainActivity.it) {
             handles += element.handle + ";"
         }
-        UserLoaded.loadUsers(handles) { it ->
-            if (it != null) {
-                var flag = 0
-                for (element in it) {
-                    if (flag == 1) {
-                        notificationText += "\n"
-                    }
-                    flag = 1
-                    notificationText += element.first + " " + if (element.second < 0) {
-                        "-${element.second}"
-                    } else {
-                        "+${element.second}"
-                    }
+        UserLoader.loadUsers(handles) { it ->
+            var flag = 0
+            for (element in it) {
+                if (flag == 1) {
+                    notificationText += "\n"
+                }
+                flag = 1
+                notificationText += element.first + " " + if (element.second < 0) {
+                    "-${element.second}"
+                } else {
+                    "+${element.second}"
                 }
             }
         }

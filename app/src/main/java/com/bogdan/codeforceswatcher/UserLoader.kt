@@ -6,10 +6,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.CountDownLatch
 
-object UserLoaded {
+object UserLoader {
 
-    fun loadUsers(handle: String, userLoaded: (MutableList<Pair<String, Int>>?) -> Unit) {
-        val ratingChanges: MutableList<Pair<String, Int>>? = null
+    fun loadUsers(handle: String, userLoaded: (MutableList<Pair<String, Int>>) -> Unit) {
+        val ratingChanges: MutableList<Pair<String, Int>> = mutableListOf()
         val userCall = CwApp.app.userApi.user(handle)
         userCall.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
@@ -33,7 +33,7 @@ object UserLoaded {
                                 override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
                                     if (response.isSuccessful) {
                                         val delta = element.ratingChanges.lastOrNull()!!.newRating - element.ratingChanges.lastOrNull()!!.oldRating
-                                        ratingChanges?.add(Pair(element.handle, delta))
+                                        ratingChanges.add(Pair(element.handle, delta))
                                         element.ratingChanges = response.body()!!.result
                                         CwApp.app.userDao.update(element)
                                         countDownLatch.countDown()
