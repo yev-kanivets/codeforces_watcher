@@ -29,9 +29,9 @@ class RatingUpdateReceiver : BroadcastReceiver() {
             val channelId = "1234"
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                val channel = NotificationChannel(channelId, "My channel",
+                val channel = NotificationChannel(channelId, context.getString(R.string.app_name),
                         NotificationManager.IMPORTANCE_HIGH)
-                channel.description = "My channel description"
+                channel.description = context.getString(R.string.ratings_update)
                 channel.enableLights(true)
                 channel.lightColor = Color.RED
                 channel.enableVibration(false)
