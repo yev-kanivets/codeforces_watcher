@@ -17,17 +17,12 @@ import com.bogdan.codeforceswatcher.activity.MainActivity
 class RatingUpdateReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
-        val roomUserList = CwApp.app.userDao.getAll().value ?: return
+        val roomUserList = CwApp.app.userDao.getAll()
 
-        var handles = ""
-        for (element in roomUserList) {
-            handles += element.handle + ";"
-        }
-
-        var notificationText = ""
-
-        UserLoader.loadUsers(handles) { it ->
+        UserLoader.loadUsers(roomUserList) { it ->
+            var notificationText = ""
             var flag = 0
+
             for (element in it) {
                 if (flag == 1) {
                     notificationText += "\n"
@@ -39,6 +34,7 @@ class RatingUpdateReceiver : BroadcastReceiver() {
                     "+${element.second}"
                 }
             }
+
             showNotification(context, notificationText)
         }
     }

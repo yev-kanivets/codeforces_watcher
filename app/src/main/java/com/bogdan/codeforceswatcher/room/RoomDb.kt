@@ -8,7 +8,10 @@ import com.bogdan.codeforceswatcher.model.User
 interface UserDao {
 
     @Query("SELECT * FROM user")
-    fun getAll(): LiveData<List<User>>
+    fun getAllLive(): LiveData<List<User>>
+
+    @Query("SELECT * FROM user")
+    fun getAll(): List<User>
 
     @Query("SELECT * FROM user WHERE id = :id")
     fun getById(id: Long): User

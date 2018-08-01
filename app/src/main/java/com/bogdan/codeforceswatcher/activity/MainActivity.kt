@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
             }
         })
 
-        val liveData = CwApp.app.userDao.getAll()
+        val liveData = CwApp.app.userDao.getAllLive()
         liveData.observe(this, Observer<List<User>> { userList ->
             users.clear()
             userList?.let { users.addAll(it) }
@@ -82,13 +82,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
     }
 
     override fun onRefresh() {
-        var handles = ""
-        for (element in users) {
-            handles += element.handle + ";"
-        }
-        UserLoader.loadUsers(handles) {
-            swiperefresh.isRefreshing = false
-        }
+        UserLoader.loadUsers(users) { swiperefresh.isRefreshing = false }
     }
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)

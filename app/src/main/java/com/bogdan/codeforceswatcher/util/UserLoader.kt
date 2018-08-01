@@ -11,8 +11,8 @@ import java.util.concurrent.CountDownLatch
 
 object UserLoader {
 
-    fun loadUsers(handle: String, userLoaded: (MutableList<Pair<String, Int>>) -> Unit) {
-        val userCall = CwApp.app.userApi.user(handle)
+    fun loadUsers(roomUserList: List<User>, userLoaded: (MutableList<Pair<String, Int>>) -> Unit) {
+        val userCall = CwApp.app.userApi.user(getHandles(roomUserList))
         userCall.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.body() == null) {
@@ -20,7 +20,7 @@ object UserLoader {
                 } else {
                     val userList = response.body()?.result
                     if (userList != null) {
-                        loadRatingUpdates(userList, userLoaded)
+                        loadRatingUpdates(roomUserList, userList, userLoaded)
                     } else {
                         userLoaded(mutableListOf())
                     }
@@ -34,14 +34,9 @@ object UserLoader {
         })
     }
 
-    private fun loadRatingUpdates(userList: List<User>,
+    private fun loadRatingUpdates(roomUserList: List<User>,
+                                  userList: List<User>,
                                   userLoaded: (MutableList<Pair<String, Int>>) -> Unit) {
-        val roomUserList = CwApp.app.userDao.getAll().value
-        if (roomUserList == null) {
-            userLoaded(mutableListOf())
-            return
-        }
-
         val ratingChanges: MutableList<Pair<String, Int>> = mutableListOf()
         val countDownLatch = CountDownLatch(userList.size)
 
@@ -79,6 +74,14 @@ object UserLoader {
                 })
             }
         }
+    }
+
+    private fun getHandles(roomUserList: List<User>): String {
+        var handles = ""
+        for (element in roomUserList) {
+            handles += element.handle + ";"
+        }
+        return handles
     }
 
 }
