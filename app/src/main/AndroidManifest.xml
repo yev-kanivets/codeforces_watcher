@@ -31,7 +31,7 @@
             android:windowSoftInputMode="stateVisible" />
 
         <receiver
-            android:name="com.bogdan.codeforceswatcher.RatingUpdateReceiver"
+            android:name="com.bogdan.codeforceswatcher.receiver.RatingUpdateReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -39,7 +39,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.bogdan.codeforceswatcher.StartAlarm"
+            android:name="com.bogdan.codeforceswatcher.receiver.StartAlarm"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

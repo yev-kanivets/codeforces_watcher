@@ -1,14 +1,16 @@
 package com.bogdan.codeforceswatcher.activity
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import com.bogdan.codeforceswatcher.CustomMarkerView
+import com.bogdan.codeforceswatcher.util.CustomMarkerView
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.User
+import com.bogdan.codeforceswatcher.model.User
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -19,9 +21,10 @@ import kotlinx.android.synthetic.main.activity_try.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 @Suppress("DEPRECATION")
 class TryActivity : AppCompatActivity() {
+
+    private var userId: Long = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +33,10 @@ class TryActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
-        displayUser(CwApp.app.userDao.getById(intent.getStringExtra(MainActivity.ID).trim().toLong()))
-        val user = CwApp.app.userDao.getById(intent.getStringExtra(MainActivity.ID).toLong())
+        userId = intent.getLongExtra(ID, -1)
+
+        displayUser(CwApp.app.userDao.getById(userId))
+        val user = CwApp.app.userDao.getById(userId)
         displayUser(user)
         if (user.ratingChanges.isNotEmpty()) {
             displayChart(user)
@@ -117,12 +122,21 @@ class TryActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_delete -> {
-                val id = (intent.getStringExtra(MainActivity.ID)).toLong()
-                CwApp.app.userDao.delete(CwApp.app.userDao.getById(id))
+                CwApp.app.userDao.delete(CwApp.app.userDao.getById(userId))
                 finish()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    companion object {
+        private val ID = "id"
+
+        fun newIntent(context: Context, userId: Long): Intent {
+            val intent = Intent(context, TryActivity::class.java)
+            intent.putExtra(ID, userId)
+            return intent
+        }
     }
 
 }

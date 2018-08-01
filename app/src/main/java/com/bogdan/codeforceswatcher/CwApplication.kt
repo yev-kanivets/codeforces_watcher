@@ -3,6 +3,9 @@ package com.bogdan.codeforceswatcher
 import android.app.Application
 import android.arch.persistence.room.Room
 import android.widget.Toast
+import com.bogdan.codeforceswatcher.model.UserApi
+import com.bogdan.codeforceswatcher.room.AppDatabase
+import com.bogdan.codeforceswatcher.room.UserDao
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

@@ -1,4 +1,4 @@
-package com.bogdan.codeforceswatcher
+package com.bogdan.codeforceswatcher.receiver
 
 import android.app.AlarmManager
 import android.app.PendingIntent

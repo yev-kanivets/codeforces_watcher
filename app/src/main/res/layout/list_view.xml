@@ -26,8 +26,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/tv1"
+                <TextView
+                    android:id="@+id/tvHandle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -36,13 +36,13 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/tv2"
-
+                    android:id="@+id/tvRating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
                     android:textSize="18sp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -51,7 +51,7 @@
                 android:layout_marginTop="3dp">
 
                 <TextView
-                    android:id="@+id/tv3"
+                    android:id="@+id/tvLastRatingUpdate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -68,7 +68,7 @@
                     android:layout_marginRight="2dp" />
 
                 <TextView
-                    android:id="@+id/tv4"
+                    android:id="@+id/tvRatingChange"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"

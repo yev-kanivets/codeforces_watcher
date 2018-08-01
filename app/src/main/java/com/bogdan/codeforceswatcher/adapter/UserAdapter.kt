@@ -1,14 +1,17 @@
-package com.bogdan.codeforceswatcher
+package com.bogdan.codeforceswatcher.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.R.color.*
 import com.bogdan.codeforceswatcher.activity.TryActivity
+import com.bogdan.codeforceswatcher.model.User
 import kotlinx.android.synthetic.main.list_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,20 +28,19 @@ class UserAdapter(private val items: MutableList<User>, private val ctx: Context
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val p = items[position]
-        holder.tvHandle.text = p.handle
-        if (p.rating == null) {
+        val user = items[position]
+        holder.tvHandle.text = user.handle
+        if (user.rating == null) {
             holder.tvRating.text = null
-        } else
-            holder.tvRating.text = p.rating.toString()
-        if (p.rank == null) {
+        } else holder.tvRating.text = user.rating.toString()
+        if (user.rank == null) {
             holder.tvHandle.setTextColor(ctx.resources.getColor(grey))
             holder.tvRating.setTextColor(ctx.resources.getColor(grey))
         } else {
-            holder.tvHandle.setTextColor(ctx.resources.getColor(getColor(p.rank)))
-            holder.tvRating.setTextColor(ctx.resources.getColor(getColor(p.rank)))
+            holder.tvHandle.setTextColor(ctx.resources.getColor(getColor(user.rank)))
+            holder.tvRating.setTextColor(ctx.resources.getColor(getColor(user.rank)))
         }
-        val lastRatingChange = p.ratingChanges.lastOrNull()
+        val lastRatingChange = user.ratingChanges.lastOrNull()
         if (lastRatingChange != null) {
             val ratingDelta = lastRatingChange.newRating - lastRatingChange.oldRating
             holder.tvLastRatingUpdate.text = ctx.resources.getString(
@@ -61,10 +63,7 @@ class UserAdapter(private val items: MutableList<User>, private val ctx: Context
         }
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(ctx, TryActivity::class.java)
-            intent.putExtra("Handle", p.handle)
-            intent.putExtra("Id", p.id.toString())
-            ctx.startActivity(intent)
+            ctx.startActivity(TryActivity.newIntent(ctx, user.id))
         }
     }
 
@@ -94,10 +93,10 @@ class UserAdapter(private val items: MutableList<User>, private val ctx: Context
 
 class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    val tvHandle = view.tv1
-    val tvRating = view.tv2
-    val tvLastRatingUpdate = view.tv3
-    val tvRatingChange = view.tv4
-    val ivDelta = view.ivDelta
+    val tvHandle: TextView = view.tvHandle
+    val tvRating: TextView = view.tvRating
+    val tvLastRatingUpdate: TextView = view.tvLastRatingUpdate
+    val tvRatingChange: TextView = view.tvRatingChange
+    val ivDelta: ImageView = view.ivDelta
 
 }

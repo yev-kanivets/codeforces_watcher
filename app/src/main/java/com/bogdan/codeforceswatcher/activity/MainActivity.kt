@@ -15,8 +15,11 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.bogdan.codeforceswatcher.*
+import com.bogdan.codeforceswatcher.adapter.UserAdapter
+import com.bogdan.codeforceswatcher.model.User
+import com.bogdan.codeforceswatcher.receiver.RatingUpdateReceiver
+import com.bogdan.codeforceswatcher.util.UserLoader
 import kotlinx.android.synthetic.main.activity_main.*
-
 
 class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
@@ -32,18 +35,18 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         if (savedText == "") {
             startAlarm()
         }
+
+        initViews()
+    }
+
+    private fun initViews() {
         fab.setOnClickListener(this)
+        swiperefresh.setOnRefreshListener(this)
 
         val userAdapter = UserAdapter(users, this)
 
         rvMain.adapter = userAdapter
-
-        swiperefresh.setOnRefreshListener(this)
-
         rvMain.layoutManager = LinearLayoutManager(this)
-
-        val liveData = CwApp.app.userDao.getAll()
-
         rvMain.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -55,22 +58,23 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
             }
         })
 
-        liveData.observe(this, Observer<List<User>> { t ->
+        val liveData = CwApp.app.userDao.getAll()
+        liveData.observe(this, Observer<List<User>> { userList ->
             users.clear()
-            it = t!!
-            for (element in t.size - 1 downTo 0) {
-                users.add(t[element])
-                userAdapter.notifyDataSetChanged()
-            }
+            userList?.let { users.addAll(it) }
             userAdapter.notifyDataSetChanged()
         })
     }
 
     private fun startAlarm() {
         val intent = Intent(applicationContext, RatingUpdateReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(applicationContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getBroadcast(applicationContext, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT)
+
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), AlarmManager.INTERVAL_DAY, pendingIntent)
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime(), AlarmManager.INTERVAL_DAY, pendingIntent)
+
         val sharedPrefs = getPreferences(MODE_PRIVATE)
         val editor = sharedPrefs.edit()
         editor.putString(SAVED_TEXT, alarmManager.toString())
@@ -79,7 +83,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
 
     override fun onRefresh() {
         var handles = ""
-        for (element in it) {
+        for (element in users) {
             handles += element.handle + ";"
         }
         UserLoader.loadUsers(handles) {
@@ -99,9 +103,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
     }
 
     companion object {
-        const val SAVED_TEXT = "saved_text"
-        lateinit var it: List<User>
-        const val ID = "Id"
+        private const val SAVED_TEXT = "saved_text"
     }
 
 }

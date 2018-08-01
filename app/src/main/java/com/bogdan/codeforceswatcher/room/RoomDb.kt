@@ -1,11 +1,8 @@
-package com.bogdan.codeforceswatcher
+package com.bogdan.codeforceswatcher.room
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-
-
+import com.bogdan.codeforceswatcher.model.User
 
 @Dao
 interface UserDao {
