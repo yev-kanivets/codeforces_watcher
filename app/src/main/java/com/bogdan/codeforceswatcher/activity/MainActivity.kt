@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         val liveData = CwApp.app.userDao.getAllLive()
         liveData.observe(this, Observer<List<User>> { userList ->
             users.clear()
-            userList?.let { users.addAll(it) }
+            userList?.let { users.addAll(it.reversed()) }
             userAdapter.notifyDataSetChanged()
         })
     }

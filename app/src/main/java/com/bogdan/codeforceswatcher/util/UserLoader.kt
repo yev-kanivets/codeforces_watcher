@@ -37,12 +37,12 @@ object UserLoader {
     private fun loadRatingUpdates(roomUserList: List<User>,
                                   userList: List<User>,
                                   userLoaded: (MutableList<Pair<String, Int>>) -> Unit) {
-        val ratingChanges: MutableList<Pair<String, Int>> = mutableListOf()
+        val result: MutableList<Pair<String, Int>> = mutableListOf()
         val countDownLatch = CountDownLatch(userList.size)
 
         Thread {
             countDownLatch.await()
-            userLoaded(ratingChanges)
+            userLoaded(result)
         }.start()
 
         for ((counter, element) in userList.withIndex()) {
@@ -57,11 +57,12 @@ object UserLoader {
                     override fun onResponse(call: Call<RatingChangeResponse>,
                                             response: Response<RatingChangeResponse>) {
                         if (response.isSuccessful) {
-                            val ratingChange = element.ratingChanges.lastOrNull()
+                            val ratingChanges = response.body()?.result
+                            val ratingChange = ratingChanges?.lastOrNull()
                             ratingChange?.let {
                                 val delta = ratingChange.newRating - ratingChange.oldRating
-                                ratingChanges.add(Pair(element.handle, delta))
-                                element.ratingChanges = response.body()!!.result
+                                result.add(Pair(element.handle, delta))
+                                element.ratingChanges = ratingChanges
                                 CwApp.app.userDao.update(element)
                             }
                         }

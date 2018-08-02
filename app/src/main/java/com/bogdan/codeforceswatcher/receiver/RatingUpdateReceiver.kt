@@ -19,19 +19,19 @@ class RatingUpdateReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         val roomUserList = CwApp.app.userDao.getAll()
 
-        UserLoader.loadUsers(roomUserList) { it ->
+        UserLoader.loadUsers(roomUserList) { ratingChanges ->
             var notificationText = ""
             var flag = 0
 
-            for (element in it) {
+            for (ratingChange in ratingChanges) {
                 if (flag == 1) {
                     notificationText += "\n"
                 }
                 flag = 1
-                notificationText += element.first + " " + if (element.second < 0) {
-                    "-${element.second}"
+                notificationText += ratingChange.first + " " + if (ratingChange.second < 0) {
+                    "${ratingChange.second}"
                 } else {
-                    "+${element.second}"
+                    "+${ratingChange.second}"
                 }
             }
 
@@ -57,6 +57,7 @@ class RatingUpdateReceiver : BroadcastReceiver() {
                 .setContentTitle(context.getString(R.string.ratings_have_been_updated))
                 .setContentText(text)
                 .setContentIntent(pendingIntent)
+                .setStyle(NotificationCompat.BigTextStyle().bigText(text))
 
         val notification = builder.build()
 
