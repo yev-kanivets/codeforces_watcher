@@ -1,41 +1,52 @@
 package com.bogdan.codeforceswatcher.activity
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.arch.lifecycle.Observer
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
+import android.support.annotation.RequiresApi
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.bogdan.codeforceswatcher.*
+import com.bogdan.codeforceswatcher.adapter.UserAdapter
+import com.bogdan.codeforceswatcher.model.User
+import com.bogdan.codeforceswatcher.receiver.RatingUpdateReceiver
+import com.bogdan.codeforceswatcher.util.UserLoader
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.util.concurrent.CountDownLatch
 
 class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private val users = mutableListOf<User>()
-    lateinit var it: List<User>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val sharedPrefs = getPreferences(MODE_PRIVATE)
+
+        val savedText = sharedPrefs.getString(SAVED_TEXT, "")
+        if (savedText == "") {
+            startAlarm()
+        }
+
+        initViews()
+    }
+
+    private fun initViews() {
         fab.setOnClickListener(this)
+        swiperefresh.setOnRefreshListener(this)
 
         val userAdapter = UserAdapter(users, this)
 
         rvMain.adapter = userAdapter
-
-        swiperefresh.setOnRefreshListener(this)
-
         rvMain.layoutManager = LinearLayoutManager(this)
-
-        val liveData = CwApp.app.userDao.getAll()
-
         rvMain.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -47,78 +58,34 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
             }
         })
 
-        liveData.observe(this, Observer<List<User>> { t ->
+        val liveData = CwApp.app.userDao.getAllLive()
+        liveData.observe(this, Observer<List<User>> { userList ->
             users.clear()
-            it = t!!
-            for (element in t.size - 1 downTo 0) {
-                users.add(t[element])
-                userAdapter.notifyDataSetChanged()
-            }
+            userList?.let { users.addAll(it.reversed()) }
             userAdapter.notifyDataSetChanged()
         })
     }
 
-    companion object {
-        const val ID = "Id"
-    }
+    private fun startAlarm() {
+        val intent = Intent(applicationContext, RatingUpdateReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(applicationContext, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT)
 
-    private fun loadUser(handle: String) {
-        val userCall = CwApp.app.userApi.user(handle)
-        userCall.enqueue(object : Callback<UserResponse> {
-            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                if (response.body() == null) {
-                    swiperefresh.isRefreshing = false
-                } else {
-                    val countDownLatch = CountDownLatch(response.body()!!.result.size)
-                    Thread {
-                        countDownLatch.await()
-                        runOnUiThread {
-                            swiperefresh.isRefreshing = false
-                        }
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime(), AlarmManager.INTERVAL_DAY, pendingIntent)
 
-                    }.start()
-                    for ((counter, element) in response.body()!!.result.withIndex()) {
-                        val ratingCall = CwApp.app.userApi.rating(element.handle)
-                        element.id = it[counter].id
-                        if (element.rating == it[counter].rating) {
-                            element.ratingChanges = it[counter].ratingChanges
-                            CwApp.app.userDao.update(element)
-                            countDownLatch.countDown()
-                        } else {
-                            ratingCall.enqueue(object : Callback<RatingChangeResponse> {
-                                override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
-                                    if (response.isSuccessful) {
-                                        element.ratingChanges = response.body()!!.result
-                                        CwApp.app.userDao.update(element)
-                                        countDownLatch.countDown()
-                                    }
-                                }
-
-                                override fun onFailure(call: Call<RatingChangeResponse>, t: Throwable) {
-                                    countDownLatch.countDown()
-                                }
-                            })
-                        }
-                    }
-                    swiperefresh.isRefreshing = false
-                }
-            }
-
-            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                swiperefresh.isRefreshing = false
-                CwApp.app.showError()
-            }
-        })
+        val sharedPrefs = getPreferences(MODE_PRIVATE)
+        val editor = sharedPrefs.edit()
+        editor.putString(SAVED_TEXT, alarmManager.toString())
+        editor.apply()
     }
 
     override fun onRefresh() {
-        var handles = ""
-        for (element in this.it) {
-            handles += element.handle + ";"
-        }
-        loadUser(handles)
+        UserLoader.loadUsers(users) { runOnUiThread { swiperefresh.isRefreshing = false } }
     }
 
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     override fun onClick(v: View) {
         when (v.id) {
             R.id.fab -> {
@@ -127,6 +94,10 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
             else -> {
             }
         }
+    }
+
+    companion object {
+        private const val SAVED_TEXT = "saved_text"
     }
 
 }

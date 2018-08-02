@@ -3,15 +3,17 @@
     package="com.bogdan.codeforceswatcher">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.androd.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
+        android:name=".CwApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".CwApp">
+        android:theme="@style/AppTheme">
         <activity android:name=".activity.TryActivity" />
         <activity
             android:name=".activity.MainActivity"
@@ -23,10 +25,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:windowSoftInputMode="stateVisible"
             android:name=".activity.AddUserActivity"
             android:label="Add User"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible" />
+
+        <receiver
+            android:name="com.bogdan.codeforceswatcher.receiver.RatingUpdateReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.bogdan.codeforceswatcher.NotificationReceiver.POST_NOTIF" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.bogdan.codeforceswatcher.receiver.StartAlarm"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

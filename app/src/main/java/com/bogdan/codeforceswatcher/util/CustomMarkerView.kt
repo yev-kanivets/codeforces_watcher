@@ -1,7 +1,8 @@
-package com.bogdan.codeforceswatcher
+package com.bogdan.codeforceswatcher.util
 
 import android.annotation.SuppressLint
 import android.content.Context
+import com.bogdan.codeforceswatcher.R
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
