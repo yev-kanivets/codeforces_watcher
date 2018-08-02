@@ -29,6 +29,10 @@ android {
             signingConfig signingConfigs.releaseConfig
         }
     }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
 }
 
 allprojects {
