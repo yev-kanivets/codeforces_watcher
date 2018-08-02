@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
     }
 
     override fun onRefresh() {
-        UserLoader.loadUsers(users) { swiperefresh.isRefreshing = false }
+        UserLoader.loadUsers(users) { runOnUiThread { swiperefresh.isRefreshing = false } }
     }
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
