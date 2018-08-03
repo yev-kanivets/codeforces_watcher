@@ -34,8 +34,9 @@ class RatingUpdateReceiver : BroadcastReceiver() {
                     "+${ratingChange.second}"
                 }
             }
-
-            showNotification(context, notificationText)
+            if (notificationText.isNotEmpty()) {
+                showNotification(context, notificationText)
+            }
         }
     }
 
@@ -58,6 +59,7 @@ class RatingUpdateReceiver : BroadcastReceiver() {
                 .setContentText(text)
                 .setContentIntent(pendingIntent)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(text))
+                .setAutoCancel(true)
 
         val notification = builder.build()
 
