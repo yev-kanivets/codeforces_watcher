@@ -79,7 +79,7 @@ class UserAdapter(private val items: MutableList<User>, private val ctx: Context
             "pupil" -> green
             "specialist" -> bluegreen
             "expert" -> blue
-            "master candidate" -> purple
+            "candidate master" -> purple
             "master" -> orange
             "international master" -> orange
             "grandmaster" -> red
