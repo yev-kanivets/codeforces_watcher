@@ -12,4 +12,5 @@
     <string name="no_internet_connection">Нет соединения с интернетом</string>
     <string name="ratings_have_been_updated">Рейтинги обновлены</string>
     <string name="ratings_update">Обновление рейтинга</string>
+    <string name="user_already_added">Пользователь уже добавлен</string>
 </resources>

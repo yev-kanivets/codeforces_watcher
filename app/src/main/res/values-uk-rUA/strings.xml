@@ -9,7 +9,8 @@
     <string name="last_rating_update">Останнє оновлення рейтингу: %1$s</string>
     <string name="no_rating_update">Немає оновлення рейтингу</string>
     <string name="none">Немає</string>
-    <string name="no_internet_connection">Немає зв`язку з Інтернетом</string>
+    <string name="no_internet_connection">Немає зв\'язку з Інтернетом</string>
     <string name="ratings_have_been_updated">Рейтинги оновлені</string>
     <string name="ratings_update">Оновлення рейтингу</string>
+    <string name="user_already_added">Користувача вже додано</string>
 </resources>

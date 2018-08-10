@@ -12,4 +12,5 @@
     <string name="rating_changes">Rating Changes</string>
     <string name="ratings_have_been_updated">Ratings have been updated</string>
     <string name="ratings_update">Rating updates</string>
+    <string name="user_already_added">User already added</string>
 </resources>
