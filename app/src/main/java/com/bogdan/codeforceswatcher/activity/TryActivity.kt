@@ -130,7 +130,7 @@ class TryActivity : AppCompatActivity() {
     }
 
     companion object {
-        private val ID = "id"
+        private const val ID = "id"
 
         fun newIntent(context: Context, userId: Long): Intent {
             val intent = Intent(context, TryActivity::class.java)
