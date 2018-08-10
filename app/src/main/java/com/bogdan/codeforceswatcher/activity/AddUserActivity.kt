@@ -52,13 +52,13 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
                                 progressBar.visibility = View.INVISIBLE
                                 if (response.isSuccessful) {
                                     localUser.ratingChanges = response.body()!!.result
-                                    if (CwApp.app.userDao.getAll().find { it.handle == localUser.handle } != null) {
-                                        Toast.makeText(applicationContext, getString(R.string.user_already_added), Toast.LENGTH_SHORT).show()
-                                        return
-                                    } else {
+                                    val findUser = CwApp.app.userDao.getAll().find { it.handle == localUser.handle }
+                                    if (findUser == null) {
                                         CwApp.app.userDao.insert(localUser)
+                                        finish()
+                                    } else {
+                                        Toast.makeText(applicationContext, getString(R.string.user_already_added), Toast.LENGTH_SHORT).show()
                                     }
-                                    finish()
                                 }
                             }
 
