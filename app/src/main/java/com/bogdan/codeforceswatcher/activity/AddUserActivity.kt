@@ -2,6 +2,7 @@ package com.bogdan.codeforceswatcher.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Toast
@@ -13,7 +14,6 @@ import kotlinx.android.synthetic.main.activity_add_user.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 class AddUserActivity : AppCompatActivity(), OnClickListener {
 
@@ -49,15 +49,22 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
                         val localUser = response.body()!!.result.firstOrNull()!!
                         ratingCall.enqueue(object : Callback<RatingChangeResponse> {
                             override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
+                                progressBar.visibility = View.INVISIBLE
                                 if (response.isSuccessful) {
                                     localUser.ratingChanges = response.body()!!.result
-                                    CwApp.app.userDao.insert(localUser)
-                                    progressBar.visibility = View.INVISIBLE
-                                    finish()
+                                    val findUser = CwApp.app.userDao.getAll().find { it.handle == localUser.handle }
+                                    if (findUser == null) {
+                                        CwApp.app.userDao.insert(localUser)
+                                        finish()
+                                    } else {
+                                        Toast.makeText(applicationContext, getString(R.string.user_already_added), Toast.LENGTH_SHORT).show()
+                                    }
                                 }
                             }
 
-                            override fun onFailure(call: Call<RatingChangeResponse>, t: Throwable) {}
+                            override fun onFailure(call: Call<RatingChangeResponse>, t: Throwable) {
+                                progressBar.visibility = View.INVISIBLE
+                            }
                         })
                     }
                 } else {
