@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        showItemMenu(menu.findItem(R.id.action_descending_ascending))
+        showItemMenu(menu.findItem(R.id.action_descending_ascending), true)
         return true
     }
 
@@ -60,11 +60,11 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_descending_ascending -> {
-                showItemMenu(item)
+                showItemMenu(item, false)
                 counterIcon = (counterIcon + 1) % 3
                 val sharedPrefs = getPreferences(MODE_PRIVATE)
                 val editor = sharedPrefs.edit()
-                editor.putString(SAVED_TEXT, counterIcon.toString())
+                editor.putString(SAVED_TEXT_COUNT, counterIcon.toString())
                 editor.apply()
             }
         }
@@ -117,20 +117,37 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         editor.apply()
     }
 
-    private fun showItemMenu(item: MenuItem) {
+    private fun showItemMenu(item: MenuItem, firstTime: Boolean) {
         val users = CwApp.app.userDao.getAll()
-        when (counterIcon) {
-            0 -> {
-                userAdapter.setItems(users.sortedBy { it.rating })
-                item.icon = resources.getDrawable(R.drawable.ic_sort_descending_white)
+        if (firstTime) {
+            when (counterIcon) {
+                0 -> {
+                    userAdapter.setItems(users.reversed())
+                    item.icon = resources.getDrawable(R.drawable.ic_sort_descending_grey)
+                }
+                1 -> {
+                    userAdapter.setItems(users.sortedBy { it.rating })
+                    item.icon = resources.getDrawable(R.drawable.ic_sort_descending_white)
+                }
+                2 -> {
+                    userAdapter.setItems(users.sortedByDescending { it.rating })
+                    item.icon = resources.getDrawable(R.drawable.ic_sort_ascending)
+                }
             }
-            1 -> {
-                userAdapter.setItems(users.sortedByDescending { it.rating })
-                item.icon = resources.getDrawable(R.drawable.ic_sort_ascending)
-            }
-            2 -> {
-                userAdapter.setItems(users.reversed())
-                item.icon = resources.getDrawable(R.drawable.ic_sort_descending_grey)
+        } else {
+            when (counterIcon) {
+                0 -> {
+                    userAdapter.setItems(users.sortedBy { it.rating })
+                    item.icon = resources.getDrawable(R.drawable.ic_sort_descending_white)
+                }
+                1 -> {
+                    userAdapter.setItems(users.sortedByDescending { it.rating })
+                    item.icon = resources.getDrawable(R.drawable.ic_sort_ascending)
+                }
+                2 -> {
+                    userAdapter.setItems(users.reversed())
+                    item.icon = resources.getDrawable(R.drawable.ic_sort_descending_grey)
+                }
             }
         }
     }
