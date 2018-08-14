@@ -21,6 +21,7 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.adapter.UserAdapter
 import com.bogdan.codeforceswatcher.model.User
 import com.bogdan.codeforceswatcher.receiver.RatingUpdateReceiver
+import com.bogdan.codeforceswatcher.util.Prefs
 import com.bogdan.codeforceswatcher.util.UserLoader
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -28,22 +29,16 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
 
     private lateinit var userAdapter: UserAdapter
     private var counterIcon: Int = 0
+    private val prefs = Prefs(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val sharedPrefs = getPreferences(MODE_PRIVATE)
+        counterIcon = if (prefs.readCounter().isEmpty()) 0 else prefs.readCounter().toInt()
 
-        val countSavedText = sharedPrefs.getString(SAVED_TEXT_COUNT, "")
-        counterIcon = if (countSavedText.isEmpty()) {
-            0
-        } else {
-            countSavedText.toInt()
-        }
-        val savedText = sharedPrefs.getString(SAVED_TEXT, "")
-        if (savedText.isEmpty()) {
+        if (prefs.readAlarm().isEmpty()) {
             startAlarm()
         }
 
@@ -52,7 +47,8 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        showItemMenu(menu.findItem(R.id.action_descending_ascending), true)
+        counterIcon = (counterIcon + 2) % 3
+        showItemMenu(menu.findItem(R.id.action_descending_ascending))
         return true
     }
 
@@ -60,12 +56,8 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_descending_ascending -> {
-                showItemMenu(item, false)
-                counterIcon = (counterIcon + 1) % 3
-                val sharedPrefs = getPreferences(MODE_PRIVATE)
-                val editor = sharedPrefs.edit()
-                editor.putString(SAVED_TEXT_COUNT, counterIcon.toString())
-                editor.apply()
+                showItemMenu(item)
+                prefs.writeCounter(counterIcon)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -94,9 +86,9 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         liveData.observe(this, Observer<List<User>> { userList ->
             userList?.let {
                 when (counterIcon) {
-                    0 -> userAdapter.setItems(userList.reversed())
-                    1 -> userAdapter.setItems(userList.sortedBy { it.rating })
-                    2 -> userAdapter.setItems(userList.sortedByDescending { it.rating })
+                    0 -> userAdapter.setItems(it.reversed())
+                    1 -> userAdapter.setItems(it.sortedBy(User::rating))
+                    2 -> userAdapter.setItems(it.sortedByDescending(User::rating))
                 }
             }
         })
@@ -111,45 +103,26 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime(), AlarmManager.INTERVAL_DAY, pendingIntent)
 
-        val sharedPrefs = getPreferences(MODE_PRIVATE)
-        val editor = sharedPrefs.edit()
-        editor.putString(SAVED_TEXT, alarmManager.toString())
-        editor.apply()
+        prefs.writeAlarm(alarmManager.toString())
     }
 
-    private fun showItemMenu(item: MenuItem, firstTime: Boolean) {
+    private fun showItemMenu(item: MenuItem) {
         val users = CwApp.app.userDao.getAll()
-        if (firstTime) {
-            when (counterIcon) {
-                0 -> {
-                    userAdapter.setItems(users.reversed())
-                    item.icon = resources.getDrawable(R.drawable.ic_sort_descending_grey)
-                }
-                1 -> {
-                    userAdapter.setItems(users.sortedBy { it.rating })
-                    item.icon = resources.getDrawable(R.drawable.ic_sort_descending_white)
-                }
-                2 -> {
-                    userAdapter.setItems(users.sortedByDescending { it.rating })
-                    item.icon = resources.getDrawable(R.drawable.ic_sort_ascending)
-                }
+        when (counterIcon) {
+            0 -> {
+                userAdapter.setItems(users.sortedBy { it.rating })
+                item.icon = resources.getDrawable(R.drawable.ic_sort_descending_white)
             }
-        } else {
-            when (counterIcon) {
-                0 -> {
-                    userAdapter.setItems(users.sortedBy { it.rating })
-                    item.icon = resources.getDrawable(R.drawable.ic_sort_descending_white)
-                }
-                1 -> {
-                    userAdapter.setItems(users.sortedByDescending { it.rating })
-                    item.icon = resources.getDrawable(R.drawable.ic_sort_ascending)
-                }
-                2 -> {
-                    userAdapter.setItems(users.reversed())
-                    item.icon = resources.getDrawable(R.drawable.ic_sort_descending_grey)
-                }
+            1 -> {
+                userAdapter.setItems(users.sortedByDescending { it.rating })
+                item.icon = resources.getDrawable(R.drawable.ic_sort_ascending)
+            }
+            2 -> {
+                userAdapter.setItems(users.reversed())
+                item.icon = resources.getDrawable(R.drawable.ic_sort_descending_grey)
             }
         }
+        counterIcon = (counterIcon + 1) % 3
     }
 
     override fun onRefresh() {
@@ -165,11 +138,6 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
             else -> {
             }
         }
-    }
-
-    companion object {
-        private const val SAVED_TEXT = "saved_text"
-        private const val SAVED_TEXT_COUNT = "saved_text_count"
     }
 
 }
