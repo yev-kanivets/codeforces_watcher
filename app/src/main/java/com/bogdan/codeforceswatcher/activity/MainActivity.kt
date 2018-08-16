@@ -13,6 +13,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -47,7 +48,6 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        counterIcon = (counterIcon + 2) % 3
         showItemMenu(menu.findItem(R.id.action_descending_ascending))
         return true
     }
@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_descending_ascending -> {
+                counterIcon = (counterIcon + 1) % 3
                 showItemMenu(item)
                 prefs.writeCounter(counterIcon)
             }
@@ -86,9 +87,9 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         liveData.observe(this, Observer<List<User>> { userList ->
             userList?.let {
                 when (counterIcon) {
-                    0 -> userAdapter.setItems(it.reversed())
-                    1 -> userAdapter.setItems(it.sortedBy(User::rating))
-                    2 -> userAdapter.setItems(it.sortedByDescending(User::rating))
+                    0 -> userAdapter.setItems(it.sortedBy(User::rating))
+                    1 -> userAdapter.setItems(it.sortedByDescending(User::rating))
+                    2 -> userAdapter.setItems(it.reversed())
                 }
             }
         })
@@ -122,7 +123,6 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
                 item.icon = resources.getDrawable(R.drawable.ic_sort_descending_grey)
             }
         }
-        counterIcon = (counterIcon + 1) % 3
     }
 
     override fun onRefresh() {
