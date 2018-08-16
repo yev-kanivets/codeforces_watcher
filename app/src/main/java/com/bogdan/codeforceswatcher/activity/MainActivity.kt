@@ -13,29 +13,33 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.adapter.UserAdapter
 import com.bogdan.codeforceswatcher.model.User
 import com.bogdan.codeforceswatcher.receiver.RatingUpdateReceiver
+import com.bogdan.codeforceswatcher.util.Prefs
 import com.bogdan.codeforceswatcher.util.UserLoader
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
-    private val users = mutableListOf<User>()
+    private lateinit var userAdapter: UserAdapter
+    private var counterIcon: Int = 0
+    private val prefs = Prefs(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val sharedPrefs = getPreferences(MODE_PRIVATE)
+        counterIcon = if (prefs.readCounter().isEmpty()) 0 else prefs.readCounter().toInt()
 
-        val savedText = sharedPrefs.getString(SAVED_TEXT, "")
-        if (savedText == "") {
+        if (prefs.readAlarm().isEmpty()) {
             startAlarm()
         }
 
@@ -44,15 +48,27 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+        showItemMenu(menu.findItem(R.id.action_descending_ascending))
         return true
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_descending_ascending -> {
+                counterIcon = (counterIcon + 1) % 3
+                showItemMenu(item)
+                prefs.writeCounter(counterIcon)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     private fun initViews() {
         fab.setOnClickListener(this)
         swiperefresh.setOnRefreshListener(this)
 
-        val userAdapter = UserAdapter(users, this)
+        userAdapter = UserAdapter(listOf(), this)
 
         rvMain.adapter = userAdapter
         rvMain.layoutManager = LinearLayoutManager(this)
@@ -69,9 +85,13 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
 
         val liveData = CwApp.app.userDao.getAllLive()
         liveData.observe(this, Observer<List<User>> { userList ->
-            users.clear()
-            userList?.let { users.addAll(it.reversed()) }
-            userAdapter.notifyDataSetChanged()
+            userList?.let {
+                when (counterIcon) {
+                    0 -> userAdapter.setItems(it.sortedBy(User::rating))
+                    1 -> userAdapter.setItems(it.sortedByDescending(User::rating))
+                    2 -> userAdapter.setItems(it.reversed())
+                }
+            }
         })
     }
 
@@ -84,14 +104,29 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime(), AlarmManager.INTERVAL_DAY, pendingIntent)
 
-        val sharedPrefs = getPreferences(MODE_PRIVATE)
-        val editor = sharedPrefs.edit()
-        editor.putString(SAVED_TEXT, alarmManager.toString())
-        editor.apply()
+        prefs.writeAlarm(alarmManager.toString())
+    }
+
+    private fun showItemMenu(item: MenuItem) {
+        val users = CwApp.app.userDao.getAll()
+        when (counterIcon) {
+            0 -> {
+                userAdapter.setItems(users.sortedBy { it.rating })
+                item.icon = resources.getDrawable(R.drawable.ic_sort_descending_white)
+            }
+            1 -> {
+                userAdapter.setItems(users.sortedByDescending { it.rating })
+                item.icon = resources.getDrawable(R.drawable.ic_sort_ascending)
+            }
+            2 -> {
+                userAdapter.setItems(users.reversed())
+                item.icon = resources.getDrawable(R.drawable.ic_sort_descending_grey)
+            }
+        }
     }
 
     override fun onRefresh() {
-        UserLoader.loadUsers(users) { runOnUiThread { swiperefresh.isRefreshing = false } }
+        UserLoader.loadUsers(CwApp.app.userDao.getAll()) { runOnUiThread { swiperefresh.isRefreshing = false } }
     }
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -103,10 +138,6 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
             else -> {
             }
         }
-    }
-
-    companion object {
-        private const val SAVED_TEXT = "saved_text"
     }
 
 }

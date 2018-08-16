@@ -17,10 +17,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @Suppress("DEPRECATION")
-class UserAdapter(private val items: MutableList<User>, private val ctx: Context) : RecyclerView.Adapter<ViewHolder>() {
+class UserAdapter(private var items: List<User>, private val ctx: Context) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun getItemCount(): Int {
         return items.size
+    }
+
+    fun setItems(userList: List<User>) {
+        items = userList
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
