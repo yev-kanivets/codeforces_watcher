@@ -87,9 +87,9 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         liveData.observe(this, Observer<List<User>> { userList ->
             userList?.let {
                 when (counterIcon) {
-                    0 -> userAdapter.setItems(it.sortedBy(User::rating))
-                    1 -> userAdapter.setItems(it.sortedByDescending(User::rating))
-                    2 -> userAdapter.setItems(it.reversed())
+                    0 -> userAdapter.setItems(it.reversed())
+                    1 -> userAdapter.setItems(it.sortedBy(User::rating))
+                    2 -> userAdapter.setItems(it.sortedByDescending(User::rating))
                 }
             }
         })
@@ -111,16 +111,16 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         val users = CwApp.app.userDao.getAll()
         when (counterIcon) {
             0 -> {
-                userAdapter.setItems(users.sortedBy { it.rating })
-                item.icon = resources.getDrawable(R.drawable.ic_sort_descending_white)
+                userAdapter.setItems(users.reversed())
+                item.icon = resources.getDrawable(R.drawable.ic_sort_descending_grey)
             }
             1 -> {
-                userAdapter.setItems(users.sortedByDescending { it.rating })
+                userAdapter.setItems(users.sortedBy { it.rating })
                 item.icon = resources.getDrawable(R.drawable.ic_sort_ascending)
             }
             2 -> {
-                userAdapter.setItems(users.reversed())
-                item.icon = resources.getDrawable(R.drawable.ic_sort_descending_grey)
+                userAdapter.setItems(users.sortedByDescending { it.rating })
+                item.icon = resources.getDrawable(R.drawable.ic_sort_descending_white)
             }
         }
     }
