@@ -13,4 +13,9 @@
     <string name="ratings_have_been_updated">Рейтинги оновлені</string>
     <string name="ratings_update">Оновлення рейтингу</string>
     <string name="user_already_added">Користувача вже додано</string>
+    <string name="by_default">Сортувати за замовчуванням</string>
+    <string name="by_descending_rating">Сортувати за ↓ рейтингу</string>
+    <string name="by_ascending_rating">Сортувати за ↑ рейтингу</string>
+    <string name="by_descending_update">Сортувати за ↓ оновлення</string>
+    <string name="by_ascending_update">Сортувати за ↑ оновлення</string>
 </resources>

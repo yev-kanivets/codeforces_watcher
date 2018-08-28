@@ -14,9 +14,9 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.adapter.UserAdapter
@@ -26,16 +26,20 @@ import com.bogdan.codeforceswatcher.util.Prefs
 import com.bogdan.codeforceswatcher.util.UserLoader
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private lateinit var userAdapter: UserAdapter
     private var counterIcon: Int = 0
     private val prefs = Prefs(this)
+    private lateinit var spinnerAdapter: ArrayAdapter<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         counterIcon = if (prefs.readCounter().isEmpty()) 0 else prefs.readCounter().toInt()
 
@@ -46,27 +50,29 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         initViews()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        showItemMenu(menu.findItem(R.id.action_descending_ascending))
-        return true
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_descending_ascending -> {
-                counterIcon = (counterIcon + 1) % 3
-                showItemMenu(item)
-                prefs.writeCounter(counterIcon)
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     private fun initViews() {
         fab.setOnClickListener(this)
         swiperefresh.setOnRefreshListener(this)
+
+        spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1,
+                resources.getStringArray(R.array.array_sort))
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        spSort.adapter = spinnerAdapter
+
+        spSort.setSelection(counterIcon)
+
+        spSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                counterIcon = position
+                updateList(CwApp.app.userDao.getAll())
+                prefs.writeCounter(counterIcon)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+        }
 
         userAdapter = UserAdapter(listOf(), this)
 
@@ -85,13 +91,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
 
         val liveData = CwApp.app.userDao.getAllLive()
         liveData.observe(this, Observer<List<User>> { userList ->
-            userList?.let {
-                when (counterIcon) {
-                    0 -> userAdapter.setItems(it.reversed())
-                    1 -> userAdapter.setItems(it.sortedByDescending(User::rating))
-                    2 -> userAdapter.setItems(it.sortedBy(User::rating))
-                }
-            }
+            userList?.let { updateList(it) }
         })
     }
 
@@ -107,21 +107,13 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         prefs.writeAlarm(alarmManager.toString())
     }
 
-    private fun showItemMenu(item: MenuItem) {
-        val users = CwApp.app.userDao.getAll()
+    private fun updateList(users: List<User>) {
         when (counterIcon) {
-            0 -> {
-                userAdapter.setItems(users.reversed())
-                item.icon = resources.getDrawable(R.drawable.ic_sort_descending_grey)
-            }
-            1 -> {
-                userAdapter.setItems(users.sortedByDescending { it.rating })
-                item.icon = resources.getDrawable(R.drawable.ic_sort_descending_white)
-            }
-            2 -> {
-                userAdapter.setItems(users.sortedBy { it.rating })
-                item.icon = resources.getDrawable(R.drawable.ic_sort_ascending)
-            }
+            0 -> userAdapter.setItems(users.reversed())
+            1 -> userAdapter.setItems(users.sortedByDescending(User::rating))
+            2 -> userAdapter.setItems(users.sortedBy(User::rating))
+            3 -> userAdapter.setItems(users.sortedByDescending { user -> user.ratingChanges.lastOrNull()?.ratingUpdateTimeSeconds })
+            4 -> userAdapter.setItems(users.sortedBy { user -> user.ratingChanges.lastOrNull()?.ratingUpdateTimeSeconds })
         }
     }
 
