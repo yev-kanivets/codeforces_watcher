@@ -13,4 +13,9 @@
     <string name="ratings_have_been_updated">Рейтинги обновлены</string>
     <string name="ratings_update">Обновление рейтинга</string>
     <string name="user_already_added">Пользователь уже добавлен</string>
+    <string name="by_default">Sort by default</string>
+    <string name="by_descending_rating">Sort by ↓ rating</string>
+    <string name="by_ascending_rating">Sort by ↑ rating</string>
+    <string name="by_descending_update">Sort by ↓ update</string>
+    <string name="by_ascending_update">Sort by ↑ update</string>
 </resources>

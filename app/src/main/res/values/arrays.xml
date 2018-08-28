@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="array_sort">
+        <item>@string/by_default</item>
+        <item>@string/by_descending_rating</item>
+        <item>@string/by_ascending_rating</item>
+        <item>@string/by_descending_update</item>
+        <item>@string/by_ascending_update</item>
+    </string-array>
+</resources>
