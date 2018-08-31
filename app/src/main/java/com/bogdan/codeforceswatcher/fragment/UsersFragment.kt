@@ -51,35 +51,34 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
     }
 
     private fun initViews() {
-        val fab = activity?.findViewById<FloatingActionButton>(R.id.fab)
-        val spSort = activity?.findViewById<AppCompatSpinner>(R.id.spSort)
-        fab?.visibility = View.VISIBLE
-        spSort?.visibility = View.VISIBLE
-        fab?.setOnClickListener(this)
-        swiperefresh.setOnRefreshListener(this)
+        activity?.let {
+            val fab = it.findViewById<FloatingActionButton>(R.id.fab)
+            val spSort = it.findViewById<AppCompatSpinner>(R.id.spSort)
+            fab.visibility = View.VISIBLE
+            spSort.visibility = View.VISIBLE
+            fab.setOnClickListener(this)
+            swiperefresh.setOnRefreshListener(this)
 
-        val spinnerAdapter = ArrayAdapter(activity, android.R.layout.simple_list_item_1,
-                resources.getStringArray(R.array.array_sort))
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            val spinnerAdapter = ArrayAdapter(it, android.R.layout.simple_list_item_1,
+                    resources.getStringArray(R.array.array_sort))
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        spSort?.adapter = spinnerAdapter
+            spSort.adapter = spinnerAdapter
 
-        spSort?.setSelection(counterIcon)
+            spSort.setSelection(counterIcon)
 
-        spSort?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                counterIcon = position
-                updateList(CwApp.app.userDao.getAll())
-                activity?.let {
+            spSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    counterIcon = position
+                    updateList(CwApp.app.userDao.getAll())
                     val prefs = Prefs(it)
                     prefs.writeCounter(counterIcon)
                 }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-            }
-        }
-        activity?.let {
             userAdapter = UserAdapter(listOf(), it)
             rvMain.adapter = userAdapter
             rvMain.layoutManager = LinearLayoutManager(it)
@@ -99,15 +98,12 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
                 userList?.let { usersList -> updateList(usersList) }
             })
         }
-
     }
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.fab -> {
-                startActivity(Intent(activity, AddUserActivity::class.java))
-            }
+            R.id.fab -> startActivity(Intent(activity, AddUserActivity::class.java))
             else -> {
             }
         }

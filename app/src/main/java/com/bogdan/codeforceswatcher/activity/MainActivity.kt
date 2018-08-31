@@ -44,8 +44,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViews() {
         val adapter = ViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(UsersFragment(), "Users")
-        adapter.addFragment(ContestsFragment(), "Contests")
         viewPager.adapter = adapter
 
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -87,8 +85,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
-        private val mFragmentList = ArrayList<Fragment>()
-        private val mFragmentTitleList = ArrayList<String>()
+        private val mFragmentList = arrayListOf(UsersFragment(), ContestsFragment())
+        private val mFragmentTitleList = arrayListOf("Users", "Contests")
 
         override fun getItem(position: Int): Fragment {
             return mFragmentList[position]
@@ -96,11 +94,6 @@ class MainActivity : AppCompatActivity() {
 
         override fun getCount(): Int {
             return mFragmentList.size
-        }
-
-        fun addFragment(fragment: Fragment, title: String) {
-            mFragmentList.add(fragment)
-            mFragmentTitleList.add(title)
         }
 
         override fun getPageTitle(position: Int): CharSequence {
