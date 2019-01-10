@@ -10,7 +10,9 @@
     <string name="no_rating_update">Нет обновления рейтинга</string>
     <string name="none">Нет</string>
     <string name="no_internet_connection">Нет соединения с интернетом</string>
+    <string name="rating_changes">Изменения рейтинга</string>
     <string name="ratings_have_been_updated">Рейтинги обновлены</string>
     <string name="ratings_update">Обновление рейтинга</string>
     <string name="user_already_added">Пользователь уже добавлен</string>
+    <string name="failed_to_fetch_users">Не получилось обновить пользователей! Проверьте хэндлы…</string>
 </resources>

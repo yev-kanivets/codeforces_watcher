@@ -43,8 +43,8 @@ class CwApp : Application() {
     }
 
 
-    fun showError() {
-        Toast.makeText(applicationContext, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
+    fun showError(message: String = getString(R.string.no_internet_connection)) {
+        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {

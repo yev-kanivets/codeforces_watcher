@@ -1,6 +1,7 @@
 package com.bogdan.codeforceswatcher.util
 
 import com.bogdan.codeforceswatcher.CwApp
+import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.model.RatingChangeResponse
 import com.bogdan.codeforceswatcher.model.User
 import com.bogdan.codeforceswatcher.model.UserResponse
@@ -17,6 +18,7 @@ object UserLoader {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.body() == null) {
                     userLoaded(mutableListOf())
+                    CwApp.app.showError(CwApp.app.getString(R.string.failed_to_fetch_users))
                 } else {
                     val userList = response.body()?.result
                     if (userList != null) {
@@ -34,9 +36,11 @@ object UserLoader {
         })
     }
 
-    private fun loadRatingUpdates(roomUserList: List<User>,
-                                  userList: List<User>,
-                                  userLoaded: (MutableList<Pair<String, Int>>) -> Unit) {
+    private fun loadRatingUpdates(
+        roomUserList: List<User>,
+        userList: List<User>,
+        userLoaded: (MutableList<Pair<String, Int>>) -> Unit
+    ) {
         val result: MutableList<Pair<String, Int>> = mutableListOf()
         val countDownLatch = CountDownLatch(userList.size)
 
@@ -54,8 +58,10 @@ object UserLoader {
                 countDownLatch.countDown()
             } else {
                 ratingCall.enqueue(object : Callback<RatingChangeResponse> {
-                    override fun onResponse(call: Call<RatingChangeResponse>,
-                                            response: Response<RatingChangeResponse>) {
+                    override fun onResponse(
+                        call: Call<RatingChangeResponse>,
+                        response: Response<RatingChangeResponse>
+                    ) {
                         if (response.isSuccessful) {
                             val ratingChanges = response.body()?.result
                             val ratingChange = ratingChanges?.lastOrNull()

@@ -13,4 +13,5 @@
     <string name="ratings_have_been_updated">Ratings have been updated</string>
     <string name="ratings_update">Rating updates</string>
     <string name="user_already_added">User already added</string>
+    <string name="failed_to_fetch_users">Failed to fetch users! Check handles…</string>
 </resources>
