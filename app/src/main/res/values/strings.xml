@@ -14,4 +14,9 @@
     <string name="ratings_update">Rating updates</string>
     <string name="user_already_added">User already added</string>
     <string name="failed_to_fetch_users">Failed to fetch users! Check handles…</string>
+    <string name="by_default">Sort by default</string>
+    <string name="by_descending_rating">Sort by ↓ rating</string>
+    <string name="by_ascending_rating">Sort by ↑ rating</string>
+    <string name="by_descending_update">Sort by ↓ update</string>
+    <string name="by_ascending_update">Sort by ↑ update</string>
 </resources>

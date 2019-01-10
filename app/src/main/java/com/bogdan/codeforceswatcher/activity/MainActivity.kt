@@ -2,33 +2,27 @@ package com.bogdan.codeforceswatcher.activity
 
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
-import android.support.annotation.RequiresApi
-import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.adapter.UserAdapter
-import com.bogdan.codeforceswatcher.model.User
+import com.bogdan.codeforceswatcher.fragment.ContestsFragment
+import com.bogdan.codeforceswatcher.fragment.UsersFragment
 import com.bogdan.codeforceswatcher.receiver.RatingUpdateReceiver
 import com.bogdan.codeforceswatcher.util.Prefs
-import com.bogdan.codeforceswatcher.util.UserLoader
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
-class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
-    private lateinit var userAdapter: UserAdapter
+class MainActivity : AppCompatActivity() {
+
     private var counterIcon: Int = 0
     private val prefs = Prefs(this)
 
@@ -36,6 +30,8 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         counterIcon = if (prefs.readCounter().isEmpty()) 0 else prefs.readCounter().toInt()
 
@@ -46,53 +42,34 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         initViews()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        showItemMenu(menu.findItem(R.id.action_descending_ascending))
-        return true
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_descending_ascending -> {
-                counterIcon = (counterIcon + 1) % 3
-                showItemMenu(item)
-                prefs.writeCounter(counterIcon)
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     private fun initViews() {
-        fab.setOnClickListener(this)
-        swiperefresh.setOnRefreshListener(this)
+        val adapter = ViewPagerAdapter(supportFragmentManager)
+        viewPager.adapter = adapter
 
-        userAdapter = UserAdapter(listOf(), this)
+        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
-        rvMain.adapter = userAdapter
-        rvMain.layoutManager = LinearLayoutManager(this)
-        rvMain.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (dy > 0 && fab.visibility == View.VISIBLE) {
-                    fab.hide()
-                } else if (dy < 0 && fab.visibility != View.VISIBLE) {
-                    fab.show()
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                when (position) {
+                    0 -> {
+                        fab.show()
+                        spSort.visibility = View.VISIBLE
+                    }
+                    1 -> {
+                        fab.hide()
+                        spSort.visibility = View.INVISIBLE
+                    }
                 }
             }
+
         })
 
-        val liveData = CwApp.app.userDao.getAllLive()
-        liveData.observe(this, Observer<List<User>> { userList ->
-            userList?.let {
-                when (counterIcon) {
-                    0 -> userAdapter.setItems(it.reversed())
-                    1 -> userAdapter.setItems(it.sortedByDescending(User::rating))
-                    2 -> userAdapter.setItems(it.sortedBy(User::rating))
-                }
-            }
-        })
+        tabs.setupWithViewPager(viewPager)
     }
 
     private fun startAlarm() {
@@ -107,36 +84,20 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener, 
         prefs.writeAlarm(alarmManager.toString())
     }
 
-    private fun showItemMenu(item: MenuItem) {
-        val users = CwApp.app.userDao.getAll()
-        when (counterIcon) {
-            0 -> {
-                userAdapter.setItems(users.reversed())
-                item.icon = resources.getDrawable(R.drawable.ic_sort_descending_grey)
-            }
-            1 -> {
-                userAdapter.setItems(users.sortedByDescending { it.rating })
-                item.icon = resources.getDrawable(R.drawable.ic_sort_descending_white)
-            }
-            2 -> {
-                userAdapter.setItems(users.sortedBy { it.rating })
-                item.icon = resources.getDrawable(R.drawable.ic_sort_ascending)
-            }
+    class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
+        private val mFragmentList = arrayListOf(UsersFragment(), ContestsFragment())
+        private val mFragmentTitleList = arrayListOf("Users", "Contests")
+
+        override fun getItem(position: Int): Fragment {
+            return mFragmentList[position]
         }
-    }
 
-    override fun onRefresh() {
-        UserLoader.loadUsers(CwApp.app.userDao.getAll()) { runOnUiThread { swiperefresh.isRefreshing = false } }
-    }
+        override fun getCount(): Int {
+            return mFragmentList.size
+        }
 
-    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
-    override fun onClick(v: View) {
-        when (v.id) {
-            R.id.fab -> {
-                startActivity(Intent(this, AddUserActivity::class.java))
-            }
-            else -> {
-            }
+        override fun getPageTitle(position: Int): CharSequence {
+            return mFragmentTitleList[position]
         }
     }
 
