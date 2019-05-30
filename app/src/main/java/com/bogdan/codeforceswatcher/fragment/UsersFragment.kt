@@ -83,7 +83,7 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
             rvMain.adapter = userAdapter
             rvMain.layoutManager = LinearLayoutManager(it)
             rvMain.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     if (dy > 0 && fab?.visibility == View.VISIBLE) {
                         fab.hide()
