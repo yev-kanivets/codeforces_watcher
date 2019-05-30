@@ -2,9 +2,7 @@ package com.bogdan.codeforceswatcher.fragment
 
 import android.arch.lifecycle.Observer
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.AppCompatSpinner
@@ -30,7 +28,9 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
     private var counterIcon: Int = 0
 
     override fun onRefresh() {
-        UserLoader.loadUsers(CwApp.app.userDao.getAll()) { activity?.runOnUiThread { swiperefresh.isRefreshing = false } }
+        UserLoader.loadUsers(CwApp.app.userDao.getAll(), "refresh") {
+            swiperefresh.isRefreshing = false
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +54,7 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
         activity?.let {
             val fab = it.findViewById<FloatingActionButton>(R.id.fab)
             val spSort = it.findViewById<AppCompatSpinner>(R.id.spSort)
-            fab.visibility = View.VISIBLE
+            (fab as View).visibility = View.VISIBLE
             spSort.visibility = View.VISIBLE
             fab.setOnClickListener(this)
             swiperefresh.setOnRefreshListener(this)
@@ -85,10 +85,10 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
             rvMain.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
-                    if (dy > 0 && fab?.visibility == View.VISIBLE) {
+                    if (dy > 0 && fab.visibility == View.VISIBLE) {
                         fab.hide()
-                    } else if (dy < 0 && fab?.visibility != View.VISIBLE) {
-                        fab?.show()
+                    } else if (dy < 0 && fab.visibility != View.VISIBLE) {
+                        fab.show()
                     }
                 }
             })
@@ -100,7 +100,6 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     override fun onClick(v: View) {
         when (v.id) {
             R.id.fab -> startActivity(Intent(activity, AddUserActivity::class.java))

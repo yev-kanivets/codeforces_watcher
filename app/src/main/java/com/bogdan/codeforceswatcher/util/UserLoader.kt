@@ -12,13 +12,14 @@ import java.util.concurrent.CountDownLatch
 
 object UserLoader {
 
-    fun loadUsers(roomUserList: List<User>, userLoaded: (MutableList<Pair<String, Int>>) -> Unit) {
+    fun loadUsers(roomUserList: List<User>, status: String, userLoaded: (MutableList<Pair<String, Int>>) -> Unit) {
         val userCall = CwApp.app.userApi.user(getHandles(roomUserList))
         userCall.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.body() == null) {
                     userLoaded(mutableListOf())
-                    CwApp.app.showError(CwApp.app.getString(R.string.failed_to_fetch_users))
+                    if (status != "receiver")
+                        CwApp.app.showError(CwApp.app.getString(R.string.failed_to_fetch_users))
                 } else {
                     val userList = response.body()?.result
                     if (userList != null) {
@@ -31,15 +32,16 @@ object UserLoader {
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 userLoaded(mutableListOf())
-                CwApp.app.showError()
+                if (status != "receiver")
+                    CwApp.app.showError()
             }
         })
     }
 
     private fun loadRatingUpdates(
-        roomUserList: List<User>,
-        userList: List<User>,
-        userLoaded: (MutableList<Pair<String, Int>>) -> Unit
+            roomUserList: List<User>,
+            userList: List<User>,
+            userLoaded: (MutableList<Pair<String, Int>>) -> Unit
     ) {
         val result: MutableList<Pair<String, Int>> = mutableListOf()
         val countDownLatch = CountDownLatch(userList.size)
@@ -59,8 +61,8 @@ object UserLoader {
             } else {
                 ratingCall.enqueue(object : Callback<RatingChangeResponse> {
                     override fun onResponse(
-                        call: Call<RatingChangeResponse>,
-                        response: Response<RatingChangeResponse>
+                            call: Call<RatingChangeResponse>,
+                            response: Response<RatingChangeResponse>
                     ) {
                         if (response.isSuccessful) {
                             val ratingChanges = response.body()?.result
