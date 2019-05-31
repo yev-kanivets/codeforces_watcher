@@ -26,19 +26,19 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
 
     private lateinit var userAdapter: UserAdapter
     private var counterIcon: Int = 0
+    private lateinit var fab: FloatingActionButton
+    private lateinit var spSort: AppCompatSpinner
 
     override fun onRefresh() {
-        UserLoader.loadUsers(CwApp.app.userDao.getAll(), "refresh") {
+        UserLoader.loadUsers(CwApp.app.userDao.getAll(), true) {
             swiperefresh.isRefreshing = false
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.let {
-            val prefs = Prefs(it)
-            counterIcon = if (prefs.readCounter().isEmpty()) 0 else prefs.readCounter().toInt()
-        }
+        val prefs = Prefs(requireContext())
+        counterIcon = if (prefs.readCounter().isEmpty()) 0 else prefs.readCounter().toInt()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -51,53 +51,52 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
     }
 
     private fun initViews() {
-        activity?.let {
-            val fab = it.findViewById<FloatingActionButton>(R.id.fab)
-            val spSort = it.findViewById<AppCompatSpinner>(R.id.spSort)
-            (fab as View).visibility = View.VISIBLE
-            spSort.visibility = View.VISIBLE
-            fab.setOnClickListener(this)
-            swiperefresh.setOnRefreshListener(this)
+        fab = requireActivity().findViewById(R.id.fab)
+        spSort = requireActivity().findViewById(R.id.spSort)
+        swiperefresh.setOnRefreshListener(this)
 
-            val spinnerAdapter = ArrayAdapter(it, android.R.layout.simple_list_item_1,
-                    resources.getStringArray(R.array.array_sort))
-            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        (fab as View).visibility = View.VISIBLE
+        spSort.visibility = View.VISIBLE
+        fab.setOnClickListener(this)
 
-            spSort.adapter = spinnerAdapter
+        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1,
+                resources.getStringArray(R.array.array_sort))
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-            spSort.setSelection(counterIcon)
+        spSort.adapter = spinnerAdapter
 
-            spSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    counterIcon = position
-                    updateList(CwApp.app.userDao.getAll())
-                    val prefs = Prefs(it)
-                    prefs.writeCounter(counterIcon)
-                }
+        spSort.setSelection(counterIcon)
 
-                override fun onNothingSelected(parent: AdapterView<*>) {
-                }
+        spSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                counterIcon = position
+                updateList(CwApp.app.userDao.getAll())
+                val prefs = Prefs(requireContext())
+                prefs.writeCounter(counterIcon)
             }
 
-            userAdapter = UserAdapter(listOf(), it)
-            rvMain.adapter = userAdapter
-            rvMain.layoutManager = LinearLayoutManager(it)
-            rvMain.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    if (dy > 0 && fab.visibility == View.VISIBLE) {
-                        fab.hide()
-                    } else if (dy < 0 && fab.visibility != View.VISIBLE) {
-                        fab.show()
-                    }
-                }
-            })
-
-            val liveData = CwApp.app.userDao.getAllLive()
-            liveData.observe(this, Observer<List<User>> { userList ->
-                userList?.let { usersList -> updateList(usersList) }
-            })
+            override fun onNothingSelected(parent: AdapterView<*>) {
+            }
         }
+
+        userAdapter = UserAdapter(listOf(), requireContext())
+        rvMain.adapter = userAdapter
+        rvMain.layoutManager = LinearLayoutManager(requireContext())
+        rvMain.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0 && fab.visibility == View.VISIBLE) {
+                    fab.hide()
+                } else if (dy < 0 && fab.visibility != View.VISIBLE) {
+                    fab.show()
+                }
+            }
+        })
+
+        val liveData = CwApp.app.userDao.getAllLive()
+        liveData.observe(this, Observer<List<User>> { userList ->
+            userList?.let { usersList -> updateList(usersList) }
+        })
     }
 
     override fun onClick(v: View) {
