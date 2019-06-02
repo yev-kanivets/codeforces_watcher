@@ -18,12 +18,9 @@ import com.bogdan.codeforceswatcher.fragment.UsersFragment
 import com.bogdan.codeforceswatcher.receiver.RatingUpdateReceiver
 import com.bogdan.codeforceswatcher.util.Prefs
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
-
 
 class MainActivity : AppCompatActivity() {
 
-    private var counterIcon: Int = 0
     private val prefs = Prefs(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +29,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayShowTitleEnabled(false)
-
-        counterIcon = if (prefs.readCounter().isEmpty()) 0 else prefs.readCounter().toInt()
 
         if (prefs.readAlarm().isEmpty()) {
             startAlarm()
@@ -57,11 +52,11 @@ class MainActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 when (position) {
                     0 -> {
-                        fab.show()
                         spSort.visibility = View.VISIBLE
+                        bottomNavigation.selectedItemId = R.id.navUsers
                     }
                     1 -> {
-                        fab.hide()
+                        bottomNavigation.selectedItemId = R.id.navContests
                         spSort.visibility = View.INVISIBLE
                     }
                 }
@@ -69,7 +64,13 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-        tabs.setupWithViewPager(viewPager)
+        bottomNavigation.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navUsers -> viewPager.currentItem = 0
+                R.id.navContests -> viewPager.currentItem = 1
+            }
+            true
+        }
     }
 
     private fun startAlarm() {

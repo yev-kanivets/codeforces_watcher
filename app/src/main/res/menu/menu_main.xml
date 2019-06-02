@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
-        android:id="@+id/action_descending_ascending"
-        android:title=""
-        android:visible="true"
-        app:showAsAction="ifRoom" />
+        android:id="@+id/navUsers"
+        android:icon="@drawable/ic_poll"
+        android:title=""/>
+
+    <item
+        android:id="@+id/navContests"
+        android:icon="@drawable/ic_calendar"
+        android:title=""/>
+
+
 </menu>

@@ -3,7 +3,6 @@ package com.bogdan.codeforceswatcher.fragment
 import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.AppCompatSpinner
 import android.support.v7.widget.LinearLayoutManager
@@ -22,12 +21,12 @@ import com.bogdan.codeforceswatcher.util.Prefs
 import com.bogdan.codeforceswatcher.util.UserLoader
 import kotlinx.android.synthetic.main.fragment_users.*
 
-class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var userAdapter: UserAdapter
     private var counterIcon: Int = 0
-    private lateinit var fab: FloatingActionButton
     private lateinit var spSort: AppCompatSpinner
+    private lateinit var prefs: Prefs
 
     override fun onRefresh() {
         UserLoader.loadUsers(CwApp.app.userDao.getAll(), true) {
@@ -37,7 +36,8 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val prefs = Prefs(requireContext())
+
+        prefs = Prefs(requireContext())
         counterIcon = if (prefs.readCounter().isEmpty()) 0 else prefs.readCounter().toInt()
     }
 
@@ -51,33 +51,8 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
     }
 
     private fun initViews() {
-        fab = requireActivity().findViewById(R.id.fab)
-        spSort = requireActivity().findViewById(R.id.spSort)
+        fab.setOnClickListener { startActivity(Intent(requireContext(), AddUserActivity::class.java)) }
         swiperefresh.setOnRefreshListener(this)
-
-        (fab as View).visibility = View.VISIBLE
-        spSort.visibility = View.VISIBLE
-        fab.setOnClickListener(this)
-
-        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1,
-                resources.getStringArray(R.array.array_sort))
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        spSort.adapter = spinnerAdapter
-
-        spSort.setSelection(counterIcon)
-
-        spSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                counterIcon = position
-                updateList(CwApp.app.userDao.getAll())
-                val prefs = Prefs(requireContext())
-                prefs.writeCounter(counterIcon)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-            }
-        }
 
         userAdapter = UserAdapter(listOf(), requireContext())
         rvMain.adapter = userAdapter
@@ -93,21 +68,33 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
             }
         })
 
+        spSort = requireActivity().findViewById(R.id.spSort)
+
+        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1,
+                resources.getStringArray(R.array.array_sort))
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        spSort.adapter = spinnerAdapter
+        spSort.setSelection(counterIcon)
+
+        spSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                counterIcon = position
+                updateList(CwApp.app.userDao.getAll())
+                prefs.writeCounter(counterIcon)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+            }
+        }
+
         val liveData = CwApp.app.userDao.getAllLive()
         liveData.observe(this, Observer<List<User>> { userList ->
             userList?.let { usersList -> updateList(usersList) }
         })
     }
 
-    override fun onClick(v: View) {
-        when (v.id) {
-            R.id.fab -> startActivity(Intent(activity, AddUserActivity::class.java))
-            else -> {
-            }
-        }
-    }
-
-    private fun updateList(users: List<User>) {
+    fun updateList(users: List<User>) {
         when (counterIcon) {
             0 -> userAdapter.setItems(users.reversed())
             1 -> userAdapter.setItems(users.sortedByDescending(User::rating))

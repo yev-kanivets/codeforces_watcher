@@ -11,4 +11,5 @@
     <color name="orange">#FFA500</color>
     <color name="red">#FF0000</color>
     <color name="brightgreen">#00FF00</color>
+    <color name="white">#FFFFFF</color>
 </resources>
