@@ -19,7 +19,7 @@ class RatingUpdateReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         val roomUserList = CwApp.app.userDao.getAll()
 
-        UserLoader.loadUsers(roomUserList) { ratingChanges ->
+        UserLoader.loadUsers(roomUserList, false) { ratingChanges ->
             var notificationText = ""
             var flag = 0
 
