@@ -15,6 +15,8 @@ import com.bogdan.codeforceswatcher.model.User
 import kotlinx.android.synthetic.main.list_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
+import android.text.Html
+
 
 @Suppress("DEPRECATION")
 class UserAdapter(private var items: List<User>, private val ctx: Context) : RecyclerView.Adapter<ViewHolder>() {
@@ -42,8 +44,14 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
             holder.tvHandle.setTextColor(ctx.resources.getColor(grey))
             holder.tvRating.setTextColor(ctx.resources.getColor(grey))
         } else {
-            holder.tvHandle.setTextColor(ctx.resources.getColor(getColor(user.rank)))
+            if (user.rank == "legendary grandmaster") {
+                val text = "<font color=black>${user.handle[0]}</font><font color=red>${user.handle.subSequence(1, user.handle.lastIndex + 1)}</font>"
+                holder.tvHandle.text = Html.fromHtml(text)
+            } else {
+                holder.tvHandle.setTextColor(ctx.resources.getColor(getColor(user.rank)))
+            }
             holder.tvRating.setTextColor(ctx.resources.getColor(getColor(user.rank)))
+
         }
         val lastRatingChange = user.ratingChanges.lastOrNull()
         if (lastRatingChange != null) {
