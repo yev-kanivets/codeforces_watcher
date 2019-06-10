@@ -35,7 +35,6 @@ class TryActivity : AppCompatActivity() {
 
         userId = intent.getLongExtra(ID, -1)
 
-        displayUser(CwApp.app.userDao.getById(userId))
         val user = CwApp.app.userDao.getById(userId)
         displayUser(user)
         if (user.ratingChanges.isNotEmpty()) {
