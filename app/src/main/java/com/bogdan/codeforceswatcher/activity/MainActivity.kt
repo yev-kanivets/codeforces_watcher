@@ -12,11 +12,13 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.fragment.ContestsFragment
 import com.bogdan.codeforceswatcher.fragment.UsersFragment
 import com.bogdan.codeforceswatcher.receiver.RatingUpdateReceiver
 import com.bogdan.codeforceswatcher.util.Prefs
+import com.bogdan.codeforceswatcher.util.UserLoader
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -33,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         if (prefs.readAlarm().isEmpty()) {
             startAlarm()
         }
+
+        UserLoader.loadUsers(CwApp.app.userDao.getAll(), false) {}
 
         initViews()
     }
@@ -90,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         private val mFragmentTitleList = arrayListOf("Users", "Contests")
 
         override fun getItem(position: Int): Fragment {
-            return mFragmentList[position]
+            return mFragmentList[position] as Fragment
         }
 
         override fun getCount(): Int {

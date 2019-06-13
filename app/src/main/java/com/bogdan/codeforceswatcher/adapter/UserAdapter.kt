@@ -12,14 +12,14 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.R.color.*
 import com.bogdan.codeforceswatcher.activity.TryActivity
 import com.bogdan.codeforceswatcher.model.User
-import kotlinx.android.synthetic.main.list_view.view.*
+import kotlinx.android.synthetic.main.users_list_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import android.text.Html
 
 
 @Suppress("DEPRECATION")
-class UserAdapter(private var items: List<User>, private val ctx: Context) : RecyclerView.Adapter<ViewHolder>() {
+class UserAdapter(private var items: List<User>, private val ctx: Context) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return items.size
@@ -31,7 +31,7 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(ctx).inflate(R.layout.list_view, parent, false))
+        return ViewHolder(LayoutInflater.from(ctx).inflate(R.layout.users_list_view, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -58,7 +58,7 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
             val ratingDelta = lastRatingChange.newRating - lastRatingChange.oldRating
             holder.tvLastRatingUpdate.text = ctx.resources.getString(
                     R.string.last_rating_update,
-                    getDataTime(lastRatingChange.ratingUpdateTimeSeconds * 1000)
+                    getDataTime(lastRatingChange.ratingUpdateTimeSeconds)
             )
             if (ratingDelta >= 0) {
                 holder.ivDelta.setImageResource(R.drawable.ic_rating_up)
@@ -80,10 +80,9 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
         }
     }
 
-
     @SuppressLint("SimpleDateFormat")
     private fun getDataTime(seconds: Long): String {
-        return SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH).format(Date(seconds)).toString()
+        return SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH).format(Date(seconds * 1000)).toString()
     }
 
     private fun getColor(rank: String): Int {
@@ -102,14 +101,15 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
         }
     }
 
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        val tvHandle: TextView = view.tvHandle
+        val tvRating: TextView = view.tvRating
+        val tvLastRatingUpdate: TextView = view.tvLastRatingUpdate
+        val tvRatingChange: TextView = view.tvRatingChange
+        val ivDelta: ImageView = view.ivDelta
+
+    }
+
 }
 
-class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-    val tvHandle: TextView = view.tvHandle
-    val tvRating: TextView = view.tvRating
-    val tvLastRatingUpdate: TextView = view.tvLastRatingUpdate
-    val tvRatingChange: TextView = view.tvRatingChange
-    val ivDelta: ImageView = view.ivDelta
-
-}
