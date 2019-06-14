@@ -58,7 +58,7 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
             val ratingDelta = lastRatingChange.newRating - lastRatingChange.oldRating
             holder.tvLastRatingUpdate.text = ctx.resources.getString(
                     R.string.last_rating_update,
-                    getDataTime(lastRatingChange.ratingUpdateTimeSeconds)
+                    getDateTime(lastRatingChange.ratingUpdateTimeSeconds)
             )
             if (ratingDelta >= 0) {
                 holder.ivDelta.setImageResource(R.drawable.ic_rating_up)
@@ -81,7 +81,7 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun getDataTime(seconds: Long): String {
+    private fun getDateTime(seconds: Long): String {
         return SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH).format(Date(seconds * 1000)).toString()
     }
 

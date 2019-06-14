@@ -21,9 +21,7 @@ class ContestsFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.O
 
     private lateinit var contestAdapter: ContestAdapter
 
-    override fun onRefresh() {
-        updateContestList()
-    }
+    override fun onRefresh() = updateContestList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_contests, container, false)
@@ -35,21 +33,21 @@ class ContestsFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.O
     }
 
     private fun initViews() {
-        swiperefreshContests.setOnRefreshListener(this)
+        swiperefresh.setOnRefreshListener(this)
         updateContestList()
 
         contestAdapter = ContestAdapter(listOf(), requireContext())
-        rvContests.adapter = contestAdapter
-        rvContests.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = contestAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        val liveData = CwApp.app.contestDao.getAllLiveWithBefore()
+        val liveData = CwApp.app.contestDao.getUpcomingContests()
         liveData.observe(this, Observer<List<Contest>> { contestList ->
             contestList?.let { contestsList -> contestAdapter.setItems(contestsList.sortedBy(Contest::time)) }
         })
     }
 
     private fun updateContestList() {
-        val contestCall = CwApp.app.contestApi.contests()
+        val contestCall = CwApp.app.codeforcesApi.contests()
         contestCall.enqueue(object : Callback<ContestResponse> {
             override fun onResponse(call: Call<ContestResponse>, response: Response<ContestResponse>) {
                 if (response.body() != null) {
@@ -59,11 +57,11 @@ class ContestsFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.O
                         CwApp.app.contestDao.insert(contestList)
                     }
                 }
-                swiperefreshContests.isRefreshing = false
+                swiperefresh.isRefreshing = false
             }
 
             override fun onFailure(call: Call<ContestResponse>, t: Throwable) {
-                swiperefreshContests.isRefreshing = false
+                swiperefresh.isRefreshing = false
             }
         })
     }

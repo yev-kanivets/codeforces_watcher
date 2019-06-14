@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             startAlarm()
         }
 
-        UserLoader.loadUsers(CwApp.app.userDao.getAll(), false) {}
+        UserLoader.loadUsers(shouldDisplayErrors = false)
 
         initViews()
     }
@@ -90,11 +90,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
-        private val mFragmentList = arrayListOf(UsersFragment(), ContestsFragment())
-        private val mFragmentTitleList = arrayListOf("Users", "Contests")
+        private val mFragmentList = listOf<Fragment>(UsersFragment(), ContestsFragment())
+        private val mFragmentTitleList = listOf("Users", "Contests")
 
         override fun getItem(position: Int): Fragment {
-            return mFragmentList[position] as Fragment
+            return mFragmentList[position]
         }
 
         override fun getCount(): Int {

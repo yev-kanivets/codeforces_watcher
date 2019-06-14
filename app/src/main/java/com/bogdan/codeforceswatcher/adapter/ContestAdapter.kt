@@ -14,17 +14,16 @@ import java.util.*
 
 class ContestAdapter(private var items: List<Contest>, private val ctx: Context) : RecyclerView.Adapter<ContestAdapter.ViewHolder>() {
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount() = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(ctx).inflate(R.layout.contests_list_view, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvContestName.text = items[position].name
-        holder.tvContestTime.text = getDataTime(items[position].time)
+        val contest = items[position]
+        holder.tvContestName.text = contest.name
+        holder.tvContestTime.text = getDateTime(contest.time)
     }
 
     fun setItems(contestList: List<Contest>) {
@@ -32,7 +31,7 @@ class ContestAdapter(private var items: List<Contest>, private val ctx: Context)
         notifyDataSetChanged()
     }
 
-    private fun getDataTime(seconds: Long): String {
+    private fun getDateTime(seconds: Long): String {
         return SimpleDateFormat("kk:mm MMM d, yyyy", Locale.ENGLISH).format(Date(seconds * 1000)).toString()
     }
 

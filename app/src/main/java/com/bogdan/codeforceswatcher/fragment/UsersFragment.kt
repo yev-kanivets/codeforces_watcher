@@ -29,8 +29,8 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
     private lateinit var prefs: Prefs
 
     override fun onRefresh() {
-        UserLoader.loadUsers(CwApp.app.userDao.getAll(), true) {
-            swiperefreshUsers.isRefreshing = false
+        UserLoader.loadUsers(shouldDisplayErrors = true) {
+            swiperefresh.isRefreshing = false
         }
     }
 
@@ -52,12 +52,12 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
 
     private fun initViews() {
         fab.setOnClickListener { startActivity(Intent(requireContext(), AddUserActivity::class.java)) }
-        swiperefreshUsers.setOnRefreshListener(this)
+        swiperefresh.setOnRefreshListener(this)
 
         userAdapter = UserAdapter(listOf(), requireContext())
-        rvUsers.adapter = userAdapter
-        rvUsers.layoutManager = LinearLayoutManager(requireContext())
-        rvUsers.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        recyclerView.adapter = userAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (dy > 0 && fab.visibility == View.VISIBLE) {
