@@ -9,17 +9,14 @@ import android.content.Intent
 import android.graphics.Color
 import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
-import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.util.UserLoader
 import com.bogdan.codeforceswatcher.activity.MainActivity
+import com.bogdan.codeforceswatcher.util.UserLoader
 
 class RatingUpdateReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
-        val roomUserList = CwApp.app.userDao.getAll()
-
-        UserLoader.loadUsers(roomUserList, false) { ratingChanges ->
+        UserLoader.loadUsers(shouldDisplayErrors = false) { ratingChanges ->
             var notificationText = ""
             var flag = 0
 

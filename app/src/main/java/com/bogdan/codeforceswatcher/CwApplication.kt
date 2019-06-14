@@ -3,9 +3,10 @@ package com.bogdan.codeforceswatcher
 import android.app.Application
 import android.arch.persistence.room.Room
 import android.widget.Toast
-import com.bogdan.codeforceswatcher.model.UserApi
 import com.bogdan.codeforceswatcher.room.AppDatabase
+import com.bogdan.codeforceswatcher.room.ContestDao
 import com.bogdan.codeforceswatcher.room.UserDao
+import com.bogdan.codeforceswatcher.util.CodeforcesApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -19,10 +20,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 class CwApp : Application() {
 
     lateinit var userDao: UserDao
+    lateinit var contestDao: ContestDao
 
     private lateinit var retrofit: Retrofit
 
-    lateinit var userApi: UserApi
+    lateinit var codeforcesApi: CodeforcesApi
 
     override fun onCreate() {
         super.onCreate()
@@ -33,13 +35,14 @@ class CwApp : Application() {
                 AppDatabase::class.java, "database").allowMainThreadQueries().build()
 
         userDao = db.userDao()
+        contestDao = db.contestDao()
 
         retrofit = Retrofit.Builder()
                 .baseUrl("http://www.codeforces.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 
-        userApi = this.retrofit.create(UserApi::class.java)
+        codeforcesApi = this.retrofit.create(CodeforcesApi::class.java)
     }
 
 

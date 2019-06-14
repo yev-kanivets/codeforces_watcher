@@ -27,8 +27,4 @@ interface UserDao {
 
 }
 
-@Database(entities = arrayOf(User::class), version = 1)
-@TypeConverters(Converters::class)
-abstract class AppDatabase : RoomDatabase() {
-    abstract fun userDao(): UserDao
-}
+

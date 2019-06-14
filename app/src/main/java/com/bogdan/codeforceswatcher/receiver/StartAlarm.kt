@@ -15,4 +15,5 @@ class StartAlarm : BroadcastReceiver() {
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), AlarmManager.INTERVAL_DAY, pendingIntent)
     }
+
 }

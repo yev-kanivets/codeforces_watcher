@@ -34,9 +34,9 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
     private fun loadUser(handle: String) {
         progressBar.visibility = View.VISIBLE
 
-        val userCall = CwApp.app.userApi.user(handle)
+        val userCall = CwApp.app.codeforcesApi.getUsers(handle)
 
-        val ratingCall = CwApp.app.userApi.rating(handle)
+        val ratingCall = CwApp.app.codeforcesApi.getRating(handle)
 
         userCall.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
