@@ -7,7 +7,7 @@ import com.bogdan.codeforceswatcher.model.Contest
 import com.bogdan.codeforceswatcher.model.User
 
 
-@Database(entities = [User::class, Contest::class], version = 1)
+@Database(entities = [User::class, Contest::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 

@@ -33,7 +33,7 @@ class ContestsFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.O
     }
 
     private fun initViews() {
-        swiperefresh.setOnRefreshListener(this)
+        swipeToRefresh.setOnRefreshListener(this)
         updateContestList()
 
         contestAdapter = ContestAdapter(listOf(), requireContext())
@@ -47,7 +47,7 @@ class ContestsFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.O
     }
 
     private fun updateContestList() {
-        val contestCall = CwApp.app.codeforcesApi.contests()
+        val contestCall = CwApp.app.codeforcesApi.getContests()
         contestCall.enqueue(object : Callback<ContestResponse> {
             override fun onResponse(call: Call<ContestResponse>, response: Response<ContestResponse>) {
                 if (response.body() != null) {
@@ -57,11 +57,11 @@ class ContestsFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.O
                         CwApp.app.contestDao.insert(contestList)
                     }
                 }
-                swiperefresh.isRefreshing = false
+                swipeToRefresh.isRefreshing = false
             }
 
             override fun onFailure(call: Call<ContestResponse>, t: Throwable) {
-                swiperefresh.isRefreshing = false
+                swipeToRefresh.isRefreshing = false
             }
         })
     }

@@ -30,7 +30,7 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
 
     override fun onRefresh() {
         UserLoader.loadUsers(shouldDisplayErrors = true) {
-            swiperefresh.isRefreshing = false
+            swipeToRefresh.isRefreshing = false
         }
     }
 
@@ -52,7 +52,7 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
 
     private fun initViews() {
         fab.setOnClickListener { startActivity(Intent(requireContext(), AddUserActivity::class.java)) }
-        swiperefresh.setOnRefreshListener(this)
+        swipeToRefresh.setOnRefreshListener(this)
 
         userAdapter = UserAdapter(listOf(), requireContext())
         recyclerView.adapter = userAdapter

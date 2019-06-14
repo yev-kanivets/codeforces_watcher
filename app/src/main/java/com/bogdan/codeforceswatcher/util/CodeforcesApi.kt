@@ -10,12 +10,12 @@ import retrofit2.http.Query
 interface CodeforcesApi {
 
     @GET("user.rating")
-    fun rating(@Query("handle") handle: String): Call<RatingChangeResponse>
+    fun getRating(@Query("handle") handle: String): Call<RatingChangeResponse>
 
     @GET("user.info")
-    fun user(@Query("handles") handles: String): Call<UserResponse>
+    fun getUsers(@Query("handles") handles: String): Call<UserResponse>
 
     @GET("contest.list")
-    fun contests(): Call<ContestResponse>
+    fun getContests(): Call<ContestResponse>
 
 }

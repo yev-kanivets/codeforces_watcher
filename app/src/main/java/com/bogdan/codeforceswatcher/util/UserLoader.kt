@@ -13,7 +13,7 @@ import java.util.concurrent.CountDownLatch
 object UserLoader {
 
     fun loadUsers(roomUserList: List<User> = CwApp.app.userDao.getAll(), shouldDisplayErrors: Boolean, userLoaded: (MutableList<Pair<String, Int>>) -> Unit = {}) {
-        val userCall = CwApp.app.codeforcesApi.user(getHandles(roomUserList))
+        val userCall = CwApp.app.codeforcesApi.getUsers(getHandles(roomUserList))
         userCall.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.body() == null) {
@@ -52,7 +52,7 @@ object UserLoader {
         }.start()
 
         for ((counter, element) in userList.withIndex()) {
-            val ratingCall = CwApp.app.codeforcesApi.rating(element.handle)
+            val ratingCall = CwApp.app.codeforcesApi.getRating(element.handle)
             element.id = roomUserList[counter].id
 
             ratingCall.enqueue(object : Callback<RatingChangeResponse> {
