@@ -70,7 +70,7 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
 
         spSort = requireActivity().findViewById(R.id.spSort)
 
-        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1,
+        val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.spinner_item,
                 resources.getStringArray(R.array.array_sort))
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
