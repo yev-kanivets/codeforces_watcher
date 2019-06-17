@@ -26,7 +26,7 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
     private lateinit var userAdapter: UserAdapter
     private var counterIcon: Int = 0
     private lateinit var spSort: AppCompatSpinner
-    private lateinit var prefs: Prefs
+    private var prefs = Prefs.get()
 
     override fun onRefresh() {
         UserLoader.loadUsers(shouldDisplayErrors = true) {
@@ -37,7 +37,6 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        prefs = Prefs(requireContext())
         counterIcon = if (prefs.readCounter().isEmpty()) 0 else prefs.readCounter().toInt()
     }
 

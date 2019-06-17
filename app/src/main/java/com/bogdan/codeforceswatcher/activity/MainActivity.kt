@@ -1,29 +1,24 @@
 package com.bogdan.codeforceswatcher.activity
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.SystemClock
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.fragment.ContestsFragment
 import com.bogdan.codeforceswatcher.fragment.UsersFragment
-import com.bogdan.codeforceswatcher.receiver.RatingUpdateReceiver
+import com.bogdan.codeforceswatcher.receiver.StartAlarm
 import com.bogdan.codeforceswatcher.util.Prefs
 import com.bogdan.codeforceswatcher.util.UserLoader
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val prefs = Prefs(this)
+    private val prefs = Prefs.get()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         if (prefs.readAlarm().isEmpty()) {
             startAlarm()
+            prefs.writeAlarm("alarm")
         }
 
         UserLoader.loadUsers(shouldDisplayErrors = false)
@@ -78,15 +74,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startAlarm() {
-        val intent = Intent(applicationContext, RatingUpdateReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(applicationContext, 0, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT)
-
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime(), AlarmManager.INTERVAL_DAY, pendingIntent)
-
-        prefs.writeAlarm(alarmManager.toString())
+        val intent = Intent(this, StartAlarm::class.java)
+        sendBroadcast(intent)
     }
 
     class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {

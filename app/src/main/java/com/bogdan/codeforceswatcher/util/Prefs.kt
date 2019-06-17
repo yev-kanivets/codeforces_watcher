@@ -14,29 +14,27 @@ import com.bogdan.codeforceswatcher.CwApp
 
 class Prefs constructor(private val context: Context) {
 
-    private val defaultPrefs: SharedPreferences
-        get() = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
-
-    private val editor: SharedPreferences.Editor
-        get() = defaultPrefs.edit()
-
     fun readCounter(): String {
-        return defaultPrefs.getString(KEY_COUNTER, "")
+        val defaultPrefs = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
+        return defaultPrefs.getString(KEY_COUNTER, "") ?: ""
     }
 
     fun writeCounter(counter: Int) {
         val counterString = counter.toString()
-        val editor = editor
+        val defaultPrefs = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
+        val editor = defaultPrefs.edit()
         editor.putString(KEY_COUNTER, counterString)
         editor.apply()
     }
 
     fun readAlarm(): String {
-        return defaultPrefs.getString(KEY_ALARM, "")
+        val defaultPrefs = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
+        return defaultPrefs.getString(KEY_COUNTER, "") ?: ""
     }
 
     fun writeAlarm(alarm: String) {
-        val editor = editor
+        val defaultPrefs = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
+        val editor = defaultPrefs.edit()
         editor.putString(KEY_ALARM, alarm)
         editor.apply()
     }
@@ -47,13 +45,9 @@ class Prefs constructor(private val context: Context) {
         private const val KEY_ALARM = "key_alarm"
 
         @SuppressLint("StaticFieldLeak")
-        private var prefs: Prefs? = null
 
-        fun get(): Prefs? {
-            if (prefs == null) {
-                prefs = Prefs(CwApp.app)
-            }
-            return prefs
+        fun get(): Prefs {
+            return Prefs(CwApp.app)
         }
     }
 

@@ -43,7 +43,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
                 if (response.isSuccessful) {
                     if (response.body()!!.result.firstOrNull() == null) {
                         progressBar.visibility = View.INVISIBLE
-                        showError()
+                        CwApp.app.showError()
                     } else {
                         val localUser = response.body()!!.result.firstOrNull()!!
                         ratingCall.enqueue(object : Callback<RatingChangeResponse> {
@@ -68,7 +68,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
                     }
                 } else {
                     progressBar.visibility = View.INVISIBLE
-                    showError()
+                    CwApp.app.showError()
                 }
             }
 
@@ -89,10 +89,6 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
             else -> {
             }
         }
-    }
-
-    fun showError() {
-        Toast.makeText(applicationContext, getString(R.string.wrong), Toast.LENGTH_SHORT).show()
     }
 
 }
