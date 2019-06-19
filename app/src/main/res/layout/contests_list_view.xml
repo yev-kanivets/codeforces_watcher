@@ -12,18 +12,17 @@
     card_view:cardUseCompatPadding="true">
 
     <LinearLayout
-        style="@style/Default_margins"
+        style="@style/ListViewCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvContestName"
-            style="@style/One_line"
+            style="@style/HeaderText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/bright_black"
-            android:textSize="18sp" />
+            android:textColor="@color/bright_black" />
 
         <TextView
             android:id="@+id/tvContestTime"
