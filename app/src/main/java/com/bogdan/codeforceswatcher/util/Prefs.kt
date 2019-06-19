@@ -16,7 +16,7 @@ class Prefs constructor(private val context: Context) {
 
     fun readCounter(): String {
         val defaultPrefs = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
-        return defaultPrefs.getString(KEY_COUNTER, "") ?: ""
+        return defaultPrefs.getString(KEY_COUNTER, "")
     }
 
     fun writeCounter(counter: Int) {
@@ -29,7 +29,7 @@ class Prefs constructor(private val context: Context) {
 
     fun readAlarm(): String {
         val defaultPrefs = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
-        return defaultPrefs.getString(KEY_COUNTER, "") ?: ""
+        return defaultPrefs.getString(KEY_COUNTER, "")
     }
 
     fun writeAlarm(alarm: String) {
@@ -45,10 +45,12 @@ class Prefs constructor(private val context: Context) {
         private const val KEY_ALARM = "key_alarm"
 
         @SuppressLint("StaticFieldLeak")
+        private val prefs: Prefs = Prefs(CwApp.app)
 
         fun get(): Prefs {
-            return Prefs(CwApp.app)
+            return prefs
         }
+
     }
 
 }

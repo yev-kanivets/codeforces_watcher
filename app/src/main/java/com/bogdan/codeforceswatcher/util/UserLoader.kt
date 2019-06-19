@@ -1,5 +1,6 @@
 package com.bogdan.codeforceswatcher.util
 
+import android.widget.Toast
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.model.RatingChangeResponse
@@ -19,7 +20,7 @@ object UserLoader {
                 if (response.body() == null) {
                     userLoaded(mutableListOf())
                     if (shouldDisplayErrors)
-                        CwApp.app.showError(CwApp.app.getString(R.string.failed_to_fetch_users))
+                        showError(CwApp.app.getString(R.string.failed_to_fetch_users))
                 } else {
                     val userList = response.body()?.result
                     if (userList != null) {
@@ -33,7 +34,7 @@ object UserLoader {
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 userLoaded(mutableListOf())
                 if (shouldDisplayErrors)
-                    CwApp.app.showError()
+                    showError()
             }
         })
     }
@@ -89,6 +90,10 @@ object UserLoader {
             handles += element.handle + ";"
         }
         return handles
+    }
+
+    private fun showError(message: String = CwApp.app.resources.getString(R.string.no_internet_connection)) {
+        Toast.makeText(CwApp.app, message, Toast.LENGTH_SHORT).show()
     }
 
 }

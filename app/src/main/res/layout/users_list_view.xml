@@ -12,10 +12,9 @@
     card_view:cardUseCompatPadding="true">
 
     <LinearLayout
+        style="@style/Default_margins"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -24,10 +23,9 @@
 
             <TextView
                 android:id="@+id/tvHandle"
+                style="@style/One_line"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:textSize="18sp" />
 
@@ -35,8 +33,6 @@
                 android:id="@+id/tvRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -50,8 +46,6 @@
                 android:id="@+id/tvLastRatingUpdate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:textSize="12sp" />
 
@@ -67,8 +61,6 @@
                 android:id="@+id/tvRatingChange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
                 android:textSize="12sp" />
         </LinearLayout>
 

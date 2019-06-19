@@ -1,10 +1,12 @@
 package com.bogdan.codeforceswatcher.activity
 
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -15,6 +17,7 @@ import com.bogdan.codeforceswatcher.receiver.StartAlarm
 import com.bogdan.codeforceswatcher.util.Prefs
 import com.bogdan.codeforceswatcher.util.UserLoader
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,6 +43,8 @@ class MainActivity : AppCompatActivity() {
     private fun initViews() {
         val adapter = ViewPagerAdapter(supportFragmentManager)
         viewPager.adapter = adapter
+
+        spSort.background.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP)
 
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
