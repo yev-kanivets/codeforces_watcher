@@ -71,7 +71,7 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
 
         spSort = requireActivity().findViewById(R.id.spSort)
 
-        //spSort.background.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white), PorterDuff.Mode.SRC_ATOP)
+        spSort.background.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white), PorterDuff.Mode.SRC_ATOP)
 
         val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.spinner_item,
                 resources.getStringArray(R.array.array_sort))

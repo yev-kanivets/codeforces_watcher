@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/swipeToRefresh"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_margin="16dp"
         android:src="@drawable/ic_plus" />
 </RelativeLayout>

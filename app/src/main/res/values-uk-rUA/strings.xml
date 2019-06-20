@@ -21,4 +21,6 @@
     <string name="by_ascending_rating">↑ рейтингу</string>
     <string name="by_descending_update">↓ оновлення</string>
     <string name="by_ascending_update">↑ оновлення</string>
+    <string name="add">Додати</string>
+    <string name="enter_handle">Введіть хендл</string>
 </resources>
