@@ -15,9 +15,10 @@
     <string name="ratings_update">Оновлення рейтингу</string>
     <string name="user_already_added">Користувача вже додано</string>
     <string name="failed_to_fetch_users">Не вдалося оновити користувачiв! Перевiрте хендли…</string>
-    <string name="by_default">Сортувати за замовчуванням</string>
-    <string name="by_descending_rating">Сортувати за ↓ рейтингу</string>
-    <string name="by_ascending_rating">Сортувати за ↑ рейтингу</string>
-    <string name="by_descending_update">Сортувати за ↓ оновлення</string>
-    <string name="by_ascending_update">Сортувати за ↑ оновлення</string>
+    <string name="sort_by">Сортувати за</string>
+    <string name="by_default">замовчуванням</string>
+    <string name="by_descending_rating">↓ рейтингу</string>
+    <string name="by_ascending_rating">↑ рейтингу</string>
+    <string name="by_descending_update">↓ оновлення</string>
+    <string name="by_ascending_update">↑ оновлення</string>
 </resources>

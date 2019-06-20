@@ -44,8 +44,6 @@ class MainActivity : AppCompatActivity() {
         val adapter = ViewPagerAdapter(supportFragmentManager)
         viewPager.adapter = adapter
 
-        spSort.background.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP)
-
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
             override fun onPageScrollStateChanged(state: Int) {
@@ -57,12 +55,14 @@ class MainActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 when (position) {
                     0 -> {
-                        spSort.visibility = View.VISIBLE
                         bottomNavigation.selectedItemId = R.id.navUsers
+                        spSort.visibility = View.VISIBLE
+                        tvSort.visibility = View.VISIBLE
                     }
                     1 -> {
                         bottomNavigation.selectedItemId = R.id.navContests
                         spSort.visibility = View.INVISIBLE
+                        tvSort.visibility = View.INVISIBLE
                     }
                 }
             }
