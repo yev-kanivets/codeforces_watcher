@@ -26,7 +26,7 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
     private lateinit var userAdapter: UserAdapter
     private var counterIcon: Int = 0
     private lateinit var spSort: AppCompatSpinner
-    private lateinit var prefs: Prefs
+    private var prefs = Prefs.get()
 
     override fun onRefresh() {
         UserLoader.loadUsers(shouldDisplayErrors = true) {
@@ -37,7 +37,6 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        prefs = Prefs(requireContext())
         counterIcon = if (prefs.readCounter().isEmpty()) 0 else prefs.readCounter().toInt()
     }
 
@@ -70,7 +69,7 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
 
         spSort = requireActivity().findViewById(R.id.spSort)
 
-        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1,
+        val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.spinner_item,
                 resources.getStringArray(R.array.array_sort))
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 

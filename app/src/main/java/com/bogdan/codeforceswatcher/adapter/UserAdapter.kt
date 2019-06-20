@@ -63,7 +63,7 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
             if (ratingDelta >= 0) {
                 holder.ivDelta.setImageResource(R.drawable.ic_rating_up)
                 holder.tvRatingChange.text = ratingDelta.toString()
-                holder.tvRatingChange.setTextColor(ctx.resources.getColor(brightgreen))
+                holder.tvRatingChange.setTextColor(ctx.resources.getColor(bright_green))
             } else {
                 holder.ivDelta.setImageResource(R.drawable.ic_rating_down)
                 holder.tvRatingChange.text = (-ratingDelta).toString()
@@ -89,7 +89,7 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
         return when (rank) {
             "newbie" -> grey
             "pupil" -> green
-            "specialist" -> bluegreen
+            "specialist" -> blue_green
             "expert" -> blue
             "candidate master" -> purple
             "master" -> orange

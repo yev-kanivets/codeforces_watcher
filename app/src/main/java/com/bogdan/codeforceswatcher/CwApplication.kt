@@ -45,11 +45,6 @@ class CwApp : Application() {
         codeforcesApi = this.retrofit.create(CodeforcesApi::class.java)
     }
 
-
-    fun showError(message: String = getString(R.string.no_internet_connection)) {
-        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
-    }
-
     companion object {
         lateinit var app: CwApp
             private set

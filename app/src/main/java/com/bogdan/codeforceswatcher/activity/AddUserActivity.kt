@@ -20,8 +20,8 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_user)
         setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         btnShow.setOnClickListener(this)
     }
@@ -74,11 +74,14 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 progressBar.visibility = View.INVISIBLE
-                CwApp.app.showError()
+                showError()
             }
         })
     }
 
+    fun showError(message: String = getString(R.string.no_internet_connection)) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 
     override fun onClick(v: View) {
         when (v.id) {
@@ -89,10 +92,6 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
             else -> {
             }
         }
-    }
-
-    fun showError() {
-        Toast.makeText(applicationContext, getString(R.string.wrong), Toast.LENGTH_SHORT).show()
     }
 
 }

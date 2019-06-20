@@ -9,7 +9,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.bogdan.codeforceswatcher"
-        minSdkVersion 15
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 9
         versionName "1.0.7"

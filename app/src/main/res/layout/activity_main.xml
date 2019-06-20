@@ -20,9 +20,7 @@
                 android:id="@+id/spSort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:theme="@style/Theme.AppCompat.Light"
-                tools:listitem="@android:layout/simple_expandable_list_item_1" />
+                android:layout_gravity="end"/>
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
@@ -44,6 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            app:labelVisibilityMode="unlabeled"
             app:menu="@menu/menu_main" />
     </LinearLayout>
 
