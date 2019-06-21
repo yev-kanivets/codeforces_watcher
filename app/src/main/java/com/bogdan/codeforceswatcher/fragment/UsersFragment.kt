@@ -2,9 +2,7 @@ package com.bogdan.codeforceswatcher.fragment
 
 import android.arch.lifecycle.Observer
 import android.content.Intent
-import android.graphics.PorterDuff
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.AppCompatSpinner
 import android.support.v7.widget.LinearLayoutManager
@@ -70,8 +68,6 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
         })
 
         spSort = requireActivity().findViewById(R.id.spSort)
-
-        spSort.background.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white), PorterDuff.Mode.SRC_ATOP)
 
         val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.spinner_item,
                 resources.getStringArray(R.array.array_sort))
