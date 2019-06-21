@@ -2,7 +2,6 @@
 
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -16,11 +15,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/spSort"
+            <LinearLayout
+                android:id="@+id/llToolbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/HeaderText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:text="@string/sort_by"
+                    android:textColor="@color/white" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spSort"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
@@ -35,6 +50,7 @@
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginEnd="4dp"
             android:layout_weight="1" />
 
         <android.support.design.widget.BottomNavigationView

@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.view.ViewGroup
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.fragment.ContestsFragment
 import com.bogdan.codeforceswatcher.fragment.UsersFragment
@@ -57,12 +58,12 @@ class MainActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 when (position) {
                     0 -> {
-                        spSort.visibility = View.VISIBLE
                         bottomNavigation.selectedItemId = R.id.navUsers
+                        llToolbar.visibility = View.VISIBLE
                     }
                     1 -> {
                         bottomNavigation.selectedItemId = R.id.navContests
-                        spSort.visibility = View.INVISIBLE
+                        llToolbar.visibility = View.GONE
                     }
                 }
             }
