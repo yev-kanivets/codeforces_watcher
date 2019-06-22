@@ -10,11 +10,11 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.view.ViewGroup
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.fragment.ContestsFragment
 import com.bogdan.codeforceswatcher.fragment.UsersFragment
 import com.bogdan.codeforceswatcher.receiver.StartAlarm
+import com.bogdan.codeforceswatcher.ui.AppRateDialog
 import com.bogdan.codeforceswatcher.util.Prefs
 import com.bogdan.codeforceswatcher.util.UserLoader
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,10 +27,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
 
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        initData()
+        initViews()
+    }
 
+    private fun initData() {
         if (prefs.readAlarm().isEmpty()) {
             startAlarm()
             prefs.writeAlarm("alarm")
@@ -38,10 +40,14 @@ class MainActivity : AppCompatActivity() {
 
         UserLoader.loadUsers(shouldDisplayErrors = false)
 
-        initViews()
+        if (prefs.checkRateDialog()) showAppRateDialog()
+        prefs.addLaunchCount()
     }
 
     private fun initViews() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
         val adapter = ViewPagerAdapter(supportFragmentManager)
         viewPager.adapter = adapter
 
@@ -82,6 +88,12 @@ class MainActivity : AppCompatActivity() {
     private fun startAlarm() {
         val intent = Intent(this, StartAlarm::class.java)
         sendBroadcast(intent)
+    }
+
+    private fun showAppRateDialog() {
+        val rateDialog = AppRateDialog()
+        rateDialog.isCancelable = false
+        rateDialog.show(supportFragmentManager, "progressDialog")
     }
 
     class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {

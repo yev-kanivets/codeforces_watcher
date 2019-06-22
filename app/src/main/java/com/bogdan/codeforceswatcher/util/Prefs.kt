@@ -14,35 +14,64 @@ import com.bogdan.codeforceswatcher.CwApp
 
 class Prefs constructor(private val context: Context) {
 
+    var ratePeriod = 5
+
     fun readCounter(): String {
-        val defaultPrefs = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
+        val defaultPrefs = getDefaultPrefs()
         return defaultPrefs.getString(KEY_COUNTER, "")
     }
 
     fun writeCounter(counter: Int) {
         val counterString = counter.toString()
-        val defaultPrefs = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
-        val editor = defaultPrefs.edit()
+        val editor = getDefaultPrefs().edit()
         editor.putString(KEY_COUNTER, counterString)
         editor.apply()
     }
 
     fun readAlarm(): String {
-        val defaultPrefs = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
+        val defaultPrefs = getDefaultPrefs()
         return defaultPrefs.getString(KEY_COUNTER, "")
     }
 
     fun writeAlarm(alarm: String) {
-        val defaultPrefs = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
-        val editor = defaultPrefs.edit()
+        val editor = getDefaultPrefs().edit()
         editor.putString(KEY_ALARM, alarm)
         editor.apply()
+    }
+
+    fun addLaunchCount() {
+        val defaultPrefs = getDefaultPrefs()
+        val editor = defaultPrefs.edit()
+        editor.putInt(LAUNCH_COUNT, defaultPrefs.getInt(LAUNCH_COUNT, 1) + 1)
+        editor.apply()
+    }
+
+    fun checkRateDialog(): Boolean {
+        val defaultPrefs = getDefaultPrefs()
+
+        val appRated = defaultPrefs.getBoolean(APP_RATED, false)
+        if (appRated) return false
+
+        val launchCount = defaultPrefs.getInt(LAUNCH_COUNT, 1)
+        return launchCount % ratePeriod == 0
+    }
+
+    fun appRated() {
+        val editor = getDefaultPrefs().edit()
+        editor.putBoolean(APP_RATED, true)
+        editor.apply()
+    }
+
+    private fun getDefaultPrefs(): SharedPreferences {
+        return context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
     }
 
     companion object {
 
         private const val KEY_COUNTER = "key_counter"
         private const val KEY_ALARM = "key_alarm"
+        private const val APP_RATED = "app_rated"
+        private const val LAUNCH_COUNT = "launch_count"
 
         @SuppressLint("StaticFieldLeak")
         private val prefs: Prefs = Prefs(CwApp.app)

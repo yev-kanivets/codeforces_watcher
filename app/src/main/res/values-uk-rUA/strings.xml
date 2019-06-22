@@ -23,4 +23,13 @@
     <string name="by_ascending_update">↑ оновлення</string>
     <string name="add">Додати</string>
     <string name="enter_handle">Введіть хендл</string>
+
+    <string name="like_codeforces_watcher">Вам подобається Codeforces Watcher?</string>
+    <string name="rate_it_on_gp">Оцініть його на Google Play!</string>
+    <string name="maybe_later">Можливо пізніше</string>
+    <string name="no_thank_you">Ні, дякую</string>
+    <string name="yes_very">Так!</string>
+
+    <string name="play_store_not_found">Play Store не знайдено</string>
+
 </resources>
