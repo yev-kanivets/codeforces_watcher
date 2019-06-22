@@ -19,7 +19,6 @@ import com.bogdan.codeforceswatcher.util.Prefs
 import com.bogdan.codeforceswatcher.util.UserLoader
 import kotlinx.android.synthetic.main.activity_main.*
 
-
 class MainActivity : AppCompatActivity() {
 
     private val prefs = Prefs.get()
@@ -40,8 +39,8 @@ class MainActivity : AppCompatActivity() {
 
         UserLoader.loadUsers(shouldDisplayErrors = false)
 
-        if (prefs.checkRateDialog()) showAppRateDialog()
         prefs.addLaunchCount()
+        if (prefs.checkRateDialog()) showAppRateDialog()
     }
 
     private fun initViews() {

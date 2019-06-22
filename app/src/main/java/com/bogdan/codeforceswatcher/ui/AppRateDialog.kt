@@ -31,25 +31,30 @@ class AppRateDialog : DialogFragment(), View.OnClickListener {
 
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.btnYes -> {
-                try {
-                    requireContext().startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(GP_MARKET + requireContext().packageName)))
-                } catch (e: Exception) {
-                    Toast.makeText(requireContext(), getString(R.string.play_store_not_found), Toast.LENGTH_SHORT).show()
-                    e.printStackTrace()
-                    dismiss()
-                }
-                prefs.appRated()
-            }
-            R.id.btnNo -> {
-                if (prefs.ratePeriod >= 25) {
-                    prefs.appRated()
-                } else {
-                    prefs.ratePeriod *= 5
-                }
-            }
+            R.id.btnYes -> onClickYes()
+
+            R.id.btnNo -> onClickNo()
         }
         dismiss()
+    }
+
+    private fun onClickYes() {
+        try {
+            requireContext().startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(GP_MARKET + requireContext().packageName)))
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), getString(R.string.play_store_not_found), Toast.LENGTH_SHORT).show()
+            e.printStackTrace()
+            dismiss()
+        }
+        prefs.appRated()
+    }
+
+    private fun onClickNo() {
+        if (prefs.ratePeriod == BIG_PERIOD) {
+            prefs.appRated()
+        } else {
+            prefs.ratePeriod = BIG_PERIOD
+        }
     }
 
     override fun onStart() {
@@ -58,7 +63,10 @@ class AppRateDialog : DialogFragment(), View.OnClickListener {
     }
 
     companion object {
+
         private const val GP_MARKET = "market://details?id="
+        private const val BIG_PERIOD = 25
+
     }
 
 }

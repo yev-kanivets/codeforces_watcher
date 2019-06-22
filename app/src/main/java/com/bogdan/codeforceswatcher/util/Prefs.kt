@@ -42,7 +42,7 @@ class Prefs constructor(private val context: Context) {
     fun addLaunchCount() {
         val defaultPrefs = getDefaultPrefs()
         val editor = defaultPrefs.edit()
-        editor.putInt(LAUNCH_COUNT, defaultPrefs.getInt(LAUNCH_COUNT, 1) + 1)
+        editor.putInt(LAUNCH_COUNT, defaultPrefs.getInt(LAUNCH_COUNT, 0) + 1)
         editor.apply()
     }
 
@@ -52,7 +52,7 @@ class Prefs constructor(private val context: Context) {
         val appRated = defaultPrefs.getBoolean(APP_RATED, false)
         if (appRated) return false
 
-        val launchCount = defaultPrefs.getInt(LAUNCH_COUNT, 1)
+        val launchCount = defaultPrefs.getInt(LAUNCH_COUNT, 0)
         return launchCount % ratePeriod == 0
     }
 
