@@ -2,6 +2,8 @@ package com.bogdan.codeforceswatcher.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.support.v4.content.ContextCompat
+import android.support.v4.text.HtmlCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -39,16 +41,17 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
             holder.tvRating.text = null
         } else holder.tvRating.text = user.rating.toString()
         if (user.rank == null) {
-            holder.tvHandle.setTextColor(ctx.resources.getColor(grey))
-            holder.tvRating.setTextColor(ctx.resources.getColor(grey))
+            holder.tvHandle.setTextColor(ContextCompat.getColor(ctx, grey))
+            holder.tvRating.setTextColor(ContextCompat.getColor(ctx, grey))
         } else {
             if (user.rank == "legendary grandmaster") {
                 val text = "<font color=black>${user.handle[0]}</font><font color=red>${user.handle.subSequence(1, user.handle.lastIndex + 1)}</font>"
-                holder.tvHandle.text = Html.fromHtml(text)
+                holder.tvHandle.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY);
+
             } else {
-                holder.tvHandle.setTextColor(ctx.resources.getColor(getColor(user.rank)))
+                holder.tvHandle.setTextColor(ContextCompat.getColor(ctx, getColor(user.rank)))
             }
-            holder.tvRating.setTextColor(ctx.resources.getColor(getColor(user.rank)))
+            holder.tvRating.setTextColor(ContextCompat.getColor(ctx, getColor(user.rank)))
 
         }
         val lastRatingChange = user.ratingChanges.lastOrNull()
@@ -61,11 +64,11 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
             if (ratingDelta >= 0) {
                 holder.ivDelta.setImageResource(R.drawable.ic_rating_up)
                 holder.tvRatingChange.text = ratingDelta.toString()
-                holder.tvRatingChange.setTextColor(ctx.resources.getColor(bright_green))
+                holder.tvRatingChange.setTextColor(ContextCompat.getColor(ctx, bright_green))
             } else {
                 holder.ivDelta.setImageResource(R.drawable.ic_rating_down)
                 holder.tvRatingChange.text = (-ratingDelta).toString()
-                holder.tvRatingChange.setTextColor(ctx.resources.getColor(red))
+                holder.tvRatingChange.setTextColor(ContextCompat.getColor(ctx, red))
             }
         } else {
             holder.tvLastRatingUpdate.text = ctx.resources.getString(R.string.no_rating_update)
