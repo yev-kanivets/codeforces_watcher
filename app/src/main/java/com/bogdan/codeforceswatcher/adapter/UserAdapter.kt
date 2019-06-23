@@ -17,7 +17,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.text.Html
 
-@Suppress("DEPRECATION")
 class UserAdapter(private var items: List<User>, private val ctx: Context) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
