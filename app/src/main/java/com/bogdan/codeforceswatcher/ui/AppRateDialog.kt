@@ -32,7 +32,6 @@ class AppRateDialog : DialogFragment(), View.OnClickListener {
     override fun onClick(view: View) {
         when (view.id) {
             R.id.btnYes -> onClickYes()
-
             R.id.btnNo -> onClickNo()
         }
         dismiss()
@@ -42,7 +41,7 @@ class AppRateDialog : DialogFragment(), View.OnClickListener {
         try {
             requireContext().startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(GP_MARKET + requireContext().packageName)))
         } catch (e: Exception) {
-            Toast.makeText(requireContext(), getString(R.string.play_store_not_found), Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.google_play_not_found), Toast.LENGTH_SHORT).show()
             e.printStackTrace()
             dismiss()
         }
