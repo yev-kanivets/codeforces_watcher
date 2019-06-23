@@ -1,6 +1,5 @@
 package com.bogdan.codeforceswatcher.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.support.v4.text.HtmlCompat
@@ -17,7 +16,6 @@ import com.bogdan.codeforceswatcher.model.User
 import kotlinx.android.synthetic.main.users_list_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
-import android.text.Html
 
 class UserAdapter(private var items: List<User>, private val ctx: Context) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
@@ -47,7 +45,6 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
             if (user.rank == "legendary grandmaster") {
                 val text = "<font color=black>${user.handle[0]}</font><font color=red>${user.handle.subSequence(1, user.handle.lastIndex + 1)}</font>"
                 holder.tvHandle.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY);
-
             } else {
                 holder.tvHandle.setTextColor(ContextCompat.getColor(ctx, getColor(user.rank)))
             }
@@ -81,9 +78,8 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
         }
     }
 
-    @SuppressLint("SimpleDateFormat")
     private fun getDateTime(seconds: Long): String {
-        return SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH).format(Date(seconds * 1000)).toString()
+        return SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(Date(seconds * 1000)).toString()
     }
 
     private fun getColor(rank: String): Int {
