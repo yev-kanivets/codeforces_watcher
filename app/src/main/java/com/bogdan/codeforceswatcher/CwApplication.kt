@@ -1,11 +1,10 @@
 package com.bogdan.codeforceswatcher
 
 import android.app.Application
-import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Room
-import android.arch.persistence.room.migration.Migration
 import com.bogdan.codeforceswatcher.room.AppDatabase
 import com.bogdan.codeforceswatcher.room.ContestDao
+import com.bogdan.codeforceswatcher.room.MIGRATION_1_2
 import com.bogdan.codeforceswatcher.room.UserDao
 import com.bogdan.codeforceswatcher.util.CodeforcesApi
 import retrofit2.Retrofit
@@ -34,12 +33,7 @@ class CwApp : Application() {
 
         val db = Room.databaseBuilder(applicationContext,
                 AppDatabase::class.java, "database").allowMainThreadQueries()
-                .addMigrations(object : Migration(1, 2) {
-                    override fun migrate(database: SupportSQLiteDatabase) {
-                        database.execSQL("CREATE TABLE Contest (id INTEGER NOT NULL, " +
-                                "name TEXT NOT NULL, time INTEGER NOT NULL, phase TEXT NOT NULL, PRIMARY KEY(id))")
-                    }
-                }).build()
+                .addMigrations(MIGRATION_1_2).build()
 
         userDao = db.userDao()
         contestDao = db.contestDao()
