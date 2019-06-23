@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.adapter.ContestAdapter
@@ -34,7 +35,7 @@ class ContestsFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.O
 
     private fun initViews() {
         swipeToRefresh.setOnRefreshListener(this)
-        updateContestList()
+        updateContestList(false)
 
         contestAdapter = ContestAdapter(listOf(), requireContext())
         recyclerView.adapter = contestAdapter
@@ -46,7 +47,7 @@ class ContestsFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.O
         })
     }
 
-    private fun updateContestList() {
+    private fun updateContestList(shouldDisplayError: Boolean = true) {
         val contestCall = CwApp.app.codeforcesApi.getContests()
         contestCall.enqueue(object : Callback<ContestResponse> {
             override fun onResponse(call: Call<ContestResponse>, response: Response<ContestResponse>) {
@@ -62,6 +63,8 @@ class ContestsFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.O
 
             override fun onFailure(call: Call<ContestResponse>, t: Throwable) {
                 swipeToRefresh.isRefreshing = false
+                if (shouldDisplayError)
+                    Toast.makeText(CwApp.app, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
             }
         })
     }
