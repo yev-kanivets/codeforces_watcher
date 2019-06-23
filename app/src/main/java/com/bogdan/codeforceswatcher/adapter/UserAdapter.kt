@@ -3,7 +3,6 @@ package com.bogdan.codeforceswatcher.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import com.bogdan.codeforceswatcher.model.User
 import kotlinx.android.synthetic.main.users_list_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
+import android.text.Html
 
 @Suppress("DEPRECATION")
 class UserAdapter(private var items: List<User>, private val ctx: Context) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
@@ -81,7 +81,7 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
 
     @SuppressLint("SimpleDateFormat")
     private fun getDateTime(seconds: Long): String {
-        return SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(Date(seconds * 1000)).toString()
+        return SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH).format(Date(seconds * 1000)).toString()
     }
 
     private fun getColor(rank: String): Int {
@@ -111,4 +111,3 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
     }
 
 }
-

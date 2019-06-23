@@ -18,6 +18,7 @@
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/bright_black</item>
     </style>
 
     <style name="ListViewCardView">

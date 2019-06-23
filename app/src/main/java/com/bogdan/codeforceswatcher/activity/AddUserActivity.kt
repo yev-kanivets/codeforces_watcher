@@ -23,7 +23,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        btnShow.setOnClickListener(this)
+        btnAdd.setOnClickListener(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -43,32 +43,37 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
                 if (response.isSuccessful) {
                     if (response.body()!!.result.firstOrNull() == null) {
                         progressBar.visibility = View.INVISIBLE
-                        showError()
+                        showError(getString(R.string.wrong))
                     } else {
                         val localUser = response.body()!!.result.firstOrNull()!!
                         ratingCall.enqueue(object : Callback<RatingChangeResponse> {
                             override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
-                                progressBar.visibility = View.INVISIBLE
                                 if (response.isSuccessful) {
                                     localUser.ratingChanges = response.body()!!.result
                                     val findUser = CwApp.app.userDao.getAll().find { it.handle == localUser.handle }
                                     if (findUser == null) {
                                         CwApp.app.userDao.insert(localUser)
+                                        progressBar.visibility = View.INVISIBLE
                                         finish()
                                     } else {
+                                        progressBar.visibility = View.INVISIBLE
                                         Toast.makeText(applicationContext, getString(R.string.user_already_added), Toast.LENGTH_SHORT).show()
                                     }
+                                } else {
+                                    progressBar.visibility = View.INVISIBLE
+                                    showError(getString(R.string.wrong))
                                 }
                             }
 
                             override fun onFailure(call: Call<RatingChangeResponse>, t: Throwable) {
                                 progressBar.visibility = View.INVISIBLE
+                                showError()
                             }
                         })
                     }
                 } else {
                     progressBar.visibility = View.INVISIBLE
-                    showError()
+                    showError(getString(R.string.wrong))
                 }
             }
 
@@ -85,7 +90,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.btnShow -> {
+            R.id.btnAdd -> {
                 loadUser(etHandle.text.toString())
                 etHandle.text = null
             }
