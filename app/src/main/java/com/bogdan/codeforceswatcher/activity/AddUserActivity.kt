@@ -53,16 +53,14 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
                                     val findUser = CwApp.app.userDao.getAll().find { it.handle == localUser.handle }
                                     if (findUser == null) {
                                         CwApp.app.userDao.insert(localUser)
-                                        progressBar.visibility = View.INVISIBLE
                                         finish()
                                     } else {
-                                        progressBar.visibility = View.INVISIBLE
                                         Toast.makeText(applicationContext, getString(R.string.user_already_added), Toast.LENGTH_SHORT).show()
                                     }
                                 } else {
-                                    progressBar.visibility = View.INVISIBLE
                                     showError(getString(R.string.wrong))
                                 }
+                                progressBar.visibility = View.INVISIBLE
                             }
 
                             override fun onFailure(call: Call<RatingChangeResponse>, t: Throwable) {
