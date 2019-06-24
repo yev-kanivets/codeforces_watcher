@@ -2,9 +2,9 @@ package com.bogdan.codeforceswatcher
 
 import android.app.Application
 import android.arch.persistence.room.Room
-import android.widget.Toast
 import com.bogdan.codeforceswatcher.room.AppDatabase
 import com.bogdan.codeforceswatcher.room.ContestDao
+import com.bogdan.codeforceswatcher.room.MIGRATION_1_2
 import com.bogdan.codeforceswatcher.room.UserDao
 import com.bogdan.codeforceswatcher.util.CodeforcesApi
 import retrofit2.Retrofit
@@ -32,7 +32,8 @@ class CwApp : Application() {
         app = this
 
         val db = Room.databaseBuilder(applicationContext,
-                AppDatabase::class.java, "database").allowMainThreadQueries().build()
+                AppDatabase::class.java, "database").allowMainThreadQueries()
+                .addMigrations(MIGRATION_1_2).build()
 
         userDao = db.userDao()
         contestDao = db.contestDao()

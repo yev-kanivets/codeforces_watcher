@@ -15,7 +15,7 @@
     <string name="ratings_update">Обновление рейтинга</string>
     <string name="user_already_added">Пользователь уже добавлен</string>
     <string name="failed_to_fetch_users">Не получилось обновить пользователей! Проверьте хэндлы…</string>
-    <string name="sort_by">Сортировать по</string>
+    <string name="sort_by">Сорт. по</string>
     <string name="by_default">умолчанию</string>
     <string name="by_descending_rating">↓ рейтинга</string>
     <string name="by_ascending_rating">↑ рейтинга</string>
@@ -23,4 +23,15 @@
     <string name="by_ascending_update">↑ обновления</string>
     <string name="add">Добавить</string>
     <string name="enter_handle">Введите хэндл</string>
+
+    <string name="like_codeforces_watcher">Вам нравится Codeforces Watcher?</string>
+    <string name="rate_it_on_gp">Оцените его на Google Play!</string>
+    <string name="maybe_later">Может быть позже</string>
+    <string name="no_thank_you">Нет, спасибо</string>
+    <string name="yes_very">Да!</string>
+
+    <string name="google_play_not_found">Google Play не найден</string>
+
+    <string name="users">Пользователи</string>
+    <string name="contests">Контесты</string>
 </resources>

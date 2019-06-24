@@ -1,7 +1,8 @@
 package com.bogdan.codeforceswatcher.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
+import android.support.v4.content.ContextCompat
+import android.support.v4.text.HtmlCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -15,10 +16,7 @@ import com.bogdan.codeforceswatcher.model.User
 import kotlinx.android.synthetic.main.users_list_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
-import android.text.Html
 
-
-@Suppress("DEPRECATION")
 class UserAdapter(private var items: List<User>, private val ctx: Context) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
@@ -31,7 +29,7 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(ctx).inflate(R.layout.users_list_view, parent, false))
+        return ViewHolder(LayoutInflater.from(ctx).inflate(R.layout.users_list_view, parent, false), ctx, items)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -41,16 +39,16 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
             holder.tvRating.text = null
         } else holder.tvRating.text = user.rating.toString()
         if (user.rank == null) {
-            holder.tvHandle.setTextColor(ctx.resources.getColor(grey))
-            holder.tvRating.setTextColor(ctx.resources.getColor(grey))
+            holder.tvHandle.setTextColor(ContextCompat.getColor(ctx, grey))
+            holder.tvRating.setTextColor(ContextCompat.getColor(ctx, grey))
         } else {
             if (user.rank == "legendary grandmaster") {
                 val text = "<font color=black>${user.handle[0]}</font><font color=red>${user.handle.subSequence(1, user.handle.lastIndex + 1)}</font>"
-                holder.tvHandle.text = Html.fromHtml(text)
+                holder.tvHandle.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY);
             } else {
-                holder.tvHandle.setTextColor(ctx.resources.getColor(getColor(user.rank)))
+                holder.tvHandle.setTextColor(ContextCompat.getColor(ctx, getColor(user.rank)))
             }
-            holder.tvRating.setTextColor(ctx.resources.getColor(getColor(user.rank)))
+            holder.tvRating.setTextColor(ContextCompat.getColor(ctx, getColor(user.rank)))
 
         }
         val lastRatingChange = user.ratingChanges.lastOrNull()
@@ -63,26 +61,21 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
             if (ratingDelta >= 0) {
                 holder.ivDelta.setImageResource(R.drawable.ic_rating_up)
                 holder.tvRatingChange.text = ratingDelta.toString()
-                holder.tvRatingChange.setTextColor(ctx.resources.getColor(bright_green))
+                holder.tvRatingChange.setTextColor(ContextCompat.getColor(ctx, bright_green))
             } else {
                 holder.ivDelta.setImageResource(R.drawable.ic_rating_down)
                 holder.tvRatingChange.text = (-ratingDelta).toString()
-                holder.tvRatingChange.setTextColor(ctx.resources.getColor(red))
+                holder.tvRatingChange.setTextColor(ContextCompat.getColor(ctx, red))
             }
         } else {
             holder.tvLastRatingUpdate.text = ctx.resources.getString(R.string.no_rating_update)
             holder.ivDelta.setImageResource(0)
             holder.tvRatingChange.text = null
         }
-
-        holder.itemView.setOnClickListener {
-            ctx.startActivity(TryActivity.newIntent(ctx, user.id))
-        }
     }
 
-    @SuppressLint("SimpleDateFormat")
     private fun getDateTime(seconds: Long): String {
-        return SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH).format(Date(seconds * 1000)).toString()
+        return SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(Date(seconds * 1000)).toString()
     }
 
     private fun getColor(rank: String): Int {
@@ -101,7 +94,7 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
         }
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, ctx: Context, items: List<User>) : RecyclerView.ViewHolder(view) {
 
         val tvHandle: TextView = view.tvHandle
         val tvRating: TextView = view.tvRating
@@ -109,7 +102,12 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
         val tvRatingChange: TextView = view.tvRatingChange
         val ivDelta: ImageView = view.ivDelta
 
+        init {
+            view.setOnClickListener {
+                ctx.startActivity(TryActivity.newIntent(ctx, items[adapterPosition].id))
+            }
+        }
+
     }
 
 }
-

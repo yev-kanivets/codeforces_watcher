@@ -15,7 +15,7 @@
     <string name="ratings_update">Оновлення рейтингу</string>
     <string name="user_already_added">Користувача вже додано</string>
     <string name="failed_to_fetch_users">Не вдалося оновити користувачiв! Перевiрте хендли…</string>
-    <string name="sort_by">Сортувати за</string>
+    <string name="sort_by">Сорт. за</string>
     <string name="by_default">замовчуванням</string>
     <string name="by_descending_rating">↓ рейтингу</string>
     <string name="by_ascending_rating">↑ рейтингу</string>
@@ -23,4 +23,15 @@
     <string name="by_ascending_update">↑ оновлення</string>
     <string name="add">Додати</string>
     <string name="enter_handle">Введіть хендл</string>
+
+    <string name="like_codeforces_watcher">Вам подобається Codeforces Watcher?</string>
+    <string name="rate_it_on_gp">Оцініть його на Google Play!</string>
+    <string name="maybe_later">Можливо пізніше</string>
+    <string name="no_thank_you">Ні, дякую</string>
+    <string name="yes_very">Так!</string>
+
+    <string name="google_play_not_found">Google Play не знайдено</string>
+
+    <string name="users">Користувачі</string>
+    <string name="contests">Контести</string>
 </resources>
