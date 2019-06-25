@@ -27,6 +27,7 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
     private var counterIcon: Int = 0
     private lateinit var spSort: AppCompatSpinner
     private var prefs = Prefs.get()
+    private var itemsOnScreen = 0
 
     override fun onRefresh() {
         UserLoader.loadUsers(shouldDisplayErrors = true) {
@@ -89,7 +90,18 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
 
         val liveData = CwApp.app.userDao.getAllLive()
         liveData.observe(this, Observer<List<User>> { userList ->
-            userList?.let { usersList -> updateList(usersList) }
+            userList?.let { usersList ->
+                updateList(usersList)
+                val firstVisiblePosition = (recyclerView.layoutManager as LinearLayoutManager)
+                        .findFirstVisibleItemPosition()
+                val lastVisiblePosition = (recyclerView.layoutManager as LinearLayoutManager)
+                        .findLastVisibleItemPosition()
+                if (lastVisiblePosition - firstVisiblePosition > itemsOnScreen) {
+                    itemsOnScreen = lastVisiblePosition - firstVisiblePosition
+                } else {
+                    fab.show()
+                }
+            }
         })
     }
 

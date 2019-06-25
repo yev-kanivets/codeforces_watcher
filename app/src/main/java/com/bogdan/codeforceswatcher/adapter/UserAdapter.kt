@@ -29,7 +29,7 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(ctx).inflate(R.layout.users_list_view, parent, false), ctx, items)
+        return ViewHolder(LayoutInflater.from(ctx).inflate(R.layout.users_list_view, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -72,6 +72,10 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
             holder.ivDelta.setImageResource(0)
             holder.tvRatingChange.text = null
         }
+
+        holder.itemView.setOnClickListener {
+            ctx.startActivity(TryActivity.newIntent(ctx, user.id))
+        }
     }
 
     private fun getDateTime(seconds: Long): String {
@@ -94,19 +98,13 @@ class UserAdapter(private var items: List<User>, private val ctx: Context) : Rec
         }
     }
 
-    class ViewHolder(view: View, ctx: Context, items: List<User>) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val tvHandle: TextView = view.tvHandle
         val tvRating: TextView = view.tvRating
         val tvLastRatingUpdate: TextView = view.tvLastRatingUpdate
         val tvRatingChange: TextView = view.tvRatingChange
         val ivDelta: ImageView = view.ivDelta
-
-        init {
-            view.setOnClickListener {
-                ctx.startActivity(TryActivity.newIntent(ctx, items[adapterPosition].id))
-            }
-        }
 
     }
 
