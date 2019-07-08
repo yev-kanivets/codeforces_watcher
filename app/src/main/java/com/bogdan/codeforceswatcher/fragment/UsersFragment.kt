@@ -31,7 +31,9 @@ class UsersFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRe
 
     override fun onRefresh() {
         UserLoader.loadUsers(shouldDisplayErrors = true) {
-            swipeToRefresh.isRefreshing = false
+            requireActivity().runOnUiThread {
+                swipeToRefresh.isRefreshing = false
+            }
         }
     }
 

@@ -14,29 +14,31 @@ import java.util.concurrent.CountDownLatch
 object UserLoader {
 
     fun loadUsers(roomUserList: List<User> = CwApp.app.userDao.getAll(), shouldDisplayErrors: Boolean, userLoaded: (MutableList<Pair<String, Int>>) -> Unit = {}) {
-        val userCall = CwApp.app.codeforcesApi.getUsers(getHandles(roomUserList))
-        userCall.enqueue(object : Callback<UserResponse> {
-            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                if (response.body() == null) {
-                    userLoaded(mutableListOf())
-                    if (shouldDisplayErrors)
-                        showError(CwApp.app.getString(R.string.failed_to_fetch_users))
-                } else {
-                    val userList = response.body()?.result
-                    if (userList != null) {
-                        loadRatingUpdates(roomUserList, userList, userLoaded)
-                    } else {
+        Thread {
+            val userCall = CwApp.app.codeforcesApi.getUsers(getHandles(roomUserList))
+            userCall.enqueue(object : Callback<UserResponse> {
+                override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                    if (response.body() == null) {
                         userLoaded(mutableListOf())
+                        if (shouldDisplayErrors)
+                            showError(CwApp.app.getString(R.string.failed_to_fetch_users))
+                    } else {
+                        val userList = response.body()?.result
+                        if (userList != null) {
+                            loadRatingUpdates(roomUserList, userList, userLoaded)
+                        } else {
+                            userLoaded(mutableListOf())
+                        }
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                userLoaded(mutableListOf())
-                if (shouldDisplayErrors)
-                    showError()
-            }
-        })
+                override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                    userLoaded(mutableListOf())
+                    if (shouldDisplayErrors)
+                        showError()
+                }
+            })
+        }.start()
     }
 
     private fun loadRatingUpdates(
@@ -44,44 +46,27 @@ object UserLoader {
             userList: List<User>,
             userLoaded: (MutableList<Pair<String, Int>>) -> Unit
     ) {
-        val result: MutableList<Pair<String, Int>> = mutableListOf()
-        val countDownLatch = CountDownLatch(userList.size)
-
         Thread {
-            countDownLatch.await()
-            userLoaded(result)
-        }.start()
+            val result: MutableList<Pair<String, Int>> = mutableListOf()
 
-        for ((counter, element) in userList.withIndex()) {
-            val ratingCall = CwApp.app.codeforcesApi.getRating(element.handle)
-            element.id = roomUserList[counter].id
-
-            ratingCall.enqueue(object : Callback<RatingChangeResponse> {
-                override fun onResponse(
-                        call: Call<RatingChangeResponse>,
-                        response: Response<RatingChangeResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        val ratingChanges = response.body()?.result
-                        if (ratingChanges != roomUserList[counter].ratingChanges) {
-                            val ratingChange = ratingChanges?.lastOrNull()
-                            ratingChange?.let {
-                                val delta = ratingChange.newRating - ratingChange.oldRating
-                                result.add(Pair(element.handle, delta))
-                                element.ratingChanges = ratingChanges
-                                CwApp.app.userDao.update(element)
-                            }
+            for ((counter, element) in userList.withIndex()) {
+                val response = CwApp.app.codeforcesApi.getRating(element.handle).execute()
+                element.id = roomUserList[counter].id
+                if (response.isSuccessful) {
+                    val ratingChanges = response.body()?.result
+                    if (ratingChanges != roomUserList[counter].ratingChanges) {
+                        val ratingChange = ratingChanges?.lastOrNull()
+                        ratingChange?.let {
+                            val delta = ratingChange.newRating - ratingChange.oldRating
+                            result.add(Pair(element.handle, delta))
+                            element.ratingChanges = ratingChanges
+                            CwApp.app.userDao.update(element)
                         }
                     }
-                    countDownLatch.countDown()
                 }
-
-                override fun onFailure(call: Call<RatingChangeResponse>, t: Throwable) {
-                    countDownLatch.countDown()
-                }
-            })
-        }
-
+            }
+            userLoaded(result)
+        }.start()
     }
 
     private fun getHandles(roomUserList: List<User>): String {
