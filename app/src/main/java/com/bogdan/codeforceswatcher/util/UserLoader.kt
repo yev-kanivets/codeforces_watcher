@@ -14,31 +14,29 @@ import java.util.concurrent.CountDownLatch
 object UserLoader {
 
     fun loadUsers(roomUserList: List<User> = CwApp.app.userDao.getAll(), shouldDisplayErrors: Boolean, userLoaded: (MutableList<Pair<String, Int>>) -> Unit = {}) {
-        Thread {
-            val userCall = CwApp.app.codeforcesApi.getUsers(getHandles(roomUserList))
-            userCall.enqueue(object : Callback<UserResponse> {
-                override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                    if (response.body() == null) {
-                        userLoaded(mutableListOf())
-                        if (shouldDisplayErrors)
-                            showError(CwApp.app.getString(R.string.failed_to_fetch_users))
-                    } else {
-                        val userList = response.body()?.result
-                        if (userList != null) {
-                            loadRatingUpdates(roomUserList, userList, userLoaded)
-                        } else {
-                            userLoaded(mutableListOf())
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+        val userCall = CwApp.app.codeforcesApi.getUsers(getHandles(roomUserList))
+        userCall.enqueue(object : Callback<UserResponse> {
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                if (response.body() == null) {
                     userLoaded(mutableListOf())
                     if (shouldDisplayErrors)
-                        showError()
+                        showError(CwApp.app.getString(R.string.failed_to_fetch_users))
+                } else {
+                    val userList = response.body()?.result
+                    if (userList != null) {
+                        loadRatingUpdates(roomUserList, userList, userLoaded)
+                    } else {
+                        userLoaded(mutableListOf())
+                    }
                 }
-            })
-        }.start()
+            }
+
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                userLoaded(mutableListOf())
+                if (shouldDisplayErrors)
+                    showError()
+            }
+        })
     }
 
     private fun loadRatingUpdates(
