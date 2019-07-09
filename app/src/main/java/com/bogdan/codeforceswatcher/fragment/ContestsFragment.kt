@@ -1,13 +1,14 @@
 package com.bogdan.codeforceswatcher.fragment
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.adapter.ContestAdapter
@@ -18,7 +19,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ContestsFragment : android.support.v4.app.Fragment(), SwipeRefreshLayout.OnRefreshListener {
+class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var contestAdapter: ContestAdapter
 

@@ -7,8 +7,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.support.annotation.RequiresApi
-import android.support.v4.app.NotificationCompat
+import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.activity.MainActivity
 import com.bogdan.codeforceswatcher.util.UserLoader

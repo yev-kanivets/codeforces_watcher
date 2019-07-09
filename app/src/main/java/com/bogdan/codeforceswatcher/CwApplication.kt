@@ -1,7 +1,7 @@
 package com.bogdan.codeforceswatcher
 
 import android.app.Application
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import com.bogdan.codeforceswatcher.room.AppDatabase
 import com.bogdan.codeforceswatcher.room.ContestDao
 import com.bogdan.codeforceswatcher.room.MIGRATION_1_2

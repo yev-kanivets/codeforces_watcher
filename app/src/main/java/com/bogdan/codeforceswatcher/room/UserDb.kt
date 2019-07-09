@@ -1,7 +1,7 @@
 package com.bogdan.codeforceswatcher.room
 
-import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.*
+import androidx.lifecycle.LiveData
+import androidx.room.*
 import com.bogdan.codeforceswatcher.model.User
 
 @Dao

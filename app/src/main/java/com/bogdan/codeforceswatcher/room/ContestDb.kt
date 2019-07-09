@@ -1,9 +1,9 @@
 package com.bogdan.codeforceswatcher.room
 
-import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.*
+import androidx.lifecycle.LiveData
+import androidx.room.*
 import com.bogdan.codeforceswatcher.model.Contest
-import android.arch.persistence.room.Delete
+import androidx.room.Delete
 
 @Dao
 interface ContestDao {
