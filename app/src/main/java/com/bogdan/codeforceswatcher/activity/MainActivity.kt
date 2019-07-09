@@ -65,11 +65,13 @@ class MainActivity : AppCompatActivity() {
                     0 -> {
                         bottomNavigation.selectedItemId = R.id.navUsers
                         llToolbar.visibility = View.VISIBLE
+                        fab.show()
                         tvTitle.text = getString(R.string.users)
                     }
                     1 -> {
                         bottomNavigation.selectedItemId = R.id.navContests
                         llToolbar.visibility = View.GONE
+                        fab.hide()
                         tvTitle.text = getString(R.string.contests)
                     }
                 }

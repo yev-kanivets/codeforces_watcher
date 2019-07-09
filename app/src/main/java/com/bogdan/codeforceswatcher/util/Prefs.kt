@@ -18,7 +18,7 @@ class Prefs constructor(private val context: Context) {
 
     fun readCounter(): String {
         val defaultPrefs = getDefaultPrefs()
-        return defaultPrefs.getString(KEY_COUNTER, "")
+        return defaultPrefs.getString(KEY_COUNTER, "")!!
     }
 
     fun writeCounter(counter: Int) {
@@ -30,7 +30,7 @@ class Prefs constructor(private val context: Context) {
 
     fun readAlarm(): String {
         val defaultPrefs = getDefaultPrefs()
-        return defaultPrefs.getString(KEY_COUNTER, "")
+        return defaultPrefs.getString(KEY_COUNTER, "")!!
     }
 
     fun writeAlarm(alarm: String) {

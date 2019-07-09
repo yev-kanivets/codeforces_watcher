@@ -20,6 +20,7 @@ import com.bogdan.codeforceswatcher.adapter.UserAdapter
 import com.bogdan.codeforceswatcher.model.User
 import com.bogdan.codeforceswatcher.util.Prefs
 import com.bogdan.codeforceswatcher.util.UserLoader
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_users.*
 
 class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -27,6 +28,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private lateinit var userAdapter: UserAdapter
     private var counterIcon: Int = 0
     private lateinit var spSort: AppCompatSpinner
+    private lateinit var fab: FloatingActionButton
     private var prefs = Prefs.get()
     private var itemsOnScreen = 0
 
@@ -54,6 +56,8 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun initViews() {
+        fab = requireActivity().findViewById(R.id.fab)
+
         fab.setOnClickListener { startActivity(Intent(requireContext(), AddUserActivity::class.java)) }
         swipeToRefresh.setOnRefreshListener(this)
 
