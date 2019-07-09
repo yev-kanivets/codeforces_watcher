@@ -44,44 +44,27 @@ object UserLoader {
             userList: List<User>,
             userLoaded: (MutableList<Pair<String, Int>>) -> Unit
     ) {
-        val result: MutableList<Pair<String, Int>> = mutableListOf()
-        val countDownLatch = CountDownLatch(userList.size)
-
         Thread {
-            countDownLatch.await()
-            userLoaded(result)
-        }.start()
+            val result: MutableList<Pair<String, Int>> = mutableListOf()
 
-        for ((counter, element) in userList.withIndex()) {
-            val ratingCall = CwApp.app.codeforcesApi.getRating(element.handle)
-            element.id = roomUserList[counter].id
-
-            ratingCall.enqueue(object : Callback<RatingChangeResponse> {
-                override fun onResponse(
-                        call: Call<RatingChangeResponse>,
-                        response: Response<RatingChangeResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        val ratingChanges = response.body()?.result
-                        if (ratingChanges != roomUserList[counter].ratingChanges) {
-                            val ratingChange = ratingChanges?.lastOrNull()
-                            ratingChange?.let {
-                                val delta = ratingChange.newRating - ratingChange.oldRating
-                                result.add(Pair(element.handle, delta))
-                                element.ratingChanges = ratingChanges
-                                CwApp.app.userDao.update(element)
-                            }
+            for ((counter, element) in userList.withIndex()) {
+                val response = CwApp.app.codeforcesApi.getRating(element.handle).execute()
+                element.id = roomUserList[counter].id
+                if (response.isSuccessful) {
+                    val ratingChanges = response.body()?.result
+                    if (ratingChanges != roomUserList[counter].ratingChanges) {
+                        val ratingChange = ratingChanges?.lastOrNull()
+                        ratingChange?.let {
+                            val delta = ratingChange.newRating - ratingChange.oldRating
+                            result.add(Pair(element.handle, delta))
+                            element.ratingChanges = ratingChanges
+                            CwApp.app.userDao.update(element)
                         }
                     }
-                    countDownLatch.countDown()
                 }
-
-                override fun onFailure(call: Call<RatingChangeResponse>, t: Throwable) {
-                    countDownLatch.countDown()
-                }
-            })
-        }
-
+            }
+            userLoaded(result)
+        }.start()
     }
 
     private fun getHandles(roomUserList: List<User>): String {
