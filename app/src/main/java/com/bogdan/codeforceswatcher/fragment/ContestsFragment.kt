@@ -1,14 +1,14 @@
 package com.bogdan.codeforceswatcher.fragment
 
-import androidx.lifecycle.Observer
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.adapter.ContestAdapter

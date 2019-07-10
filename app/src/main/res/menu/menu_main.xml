@@ -7,9 +7,12 @@
         android:title="" />
 
     <item
+        android:title=""
+        android:enabled="false"/>
+
+    <item
         android:id="@+id/navContests"
         android:icon="@drawable/ic_calendar"
         android:title="" />
-
 
 </menu>
