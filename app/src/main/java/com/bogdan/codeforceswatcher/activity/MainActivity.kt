@@ -2,14 +2,15 @@ package com.bogdan.codeforceswatcher.activity
 
 import android.content.Intent
 import android.graphics.PorterDuff
+import android.net.Uri
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
-import androidx.appcompat.app.AppCompatActivity
-import android.view.View
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.fragment.ContestsFragment
 import com.bogdan.codeforceswatcher.fragment.UsersFragment
@@ -65,14 +66,22 @@ class MainActivity : AppCompatActivity() {
                     0 -> {
                         bottomNavigation.selectedItemId = R.id.navUsers
                         llToolbar.visibility = View.VISIBLE
-                        fab.show()
                         tvTitle.text = getString(R.string.users)
+                        fab.setOnClickListener {
+                            val intent = Intent(this@MainActivity, AddUserActivity::class.java)
+                            startActivity(intent)
+                        }
+                        fab.setImageDrawable(getDrawable(R.drawable.ic_plus))
                     }
                     1 -> {
                         bottomNavigation.selectedItemId = R.id.navContests
                         llToolbar.visibility = View.GONE
-                        fab.hide()
                         tvTitle.text = getString(R.string.contests)
+                        fab.setOnClickListener {
+                            val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(CODEFORCES_LINK))
+                            startActivity(intent)
+                        }
+                        fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
                     }
                 }
             }
@@ -114,6 +123,10 @@ class MainActivity : AppCompatActivity() {
         override fun getPageTitle(position: Int): CharSequence {
             return mFragmentTitleList[position]
         }
+    }
+
+    companion object {
+        private const val CODEFORCES_LINK = "http://codeforces.com/contests"
     }
 
 }

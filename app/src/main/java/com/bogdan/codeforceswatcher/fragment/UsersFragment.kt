@@ -1,26 +1,22 @@
 package com.bogdan.codeforceswatcher.fragment
 
-import androidx.lifecycle.Observer
-import android.content.Intent
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.appcompat.widget.AppCompatSpinner
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.activity.AddUserActivity
 import com.bogdan.codeforceswatcher.adapter.UserAdapter
 import com.bogdan.codeforceswatcher.model.User
 import com.bogdan.codeforceswatcher.util.Prefs
 import com.bogdan.codeforceswatcher.util.UserLoader
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_users.*
 
 class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -28,9 +24,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private lateinit var userAdapter: UserAdapter
     private var counterIcon: Int = 0
     private lateinit var spSort: AppCompatSpinner
-    private lateinit var fab: FloatingActionButton
     private var prefs = Prefs.get()
-    private var itemsOnScreen = 0
 
     override fun onRefresh() {
         UserLoader.loadUsers(shouldDisplayErrors = true) {
@@ -56,24 +50,11 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun initViews() {
-        fab = requireActivity().findViewById(R.id.fab)
-
-        fab.setOnClickListener { startActivity(Intent(requireContext(), AddUserActivity::class.java)) }
         swipeToRefresh.setOnRefreshListener(this)
 
         userAdapter = UserAdapter(listOf(), requireContext())
         recyclerView.adapter = userAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (dy > 0 && fab.visibility == View.VISIBLE) {
-                    fab.hide()
-                } else if (dy < 0 && fab.visibility != View.VISIBLE) {
-                    fab.show()
-                }
-            }
-        })
 
         spSort = requireActivity().findViewById(R.id.spSort)
 
@@ -97,18 +78,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         val liveData = CwApp.app.userDao.getAllLive()
         liveData.observe(this, Observer<List<User>> { userList ->
-            userList?.let { usersList ->
-                updateList(usersList)
-                val firstVisiblePosition = (recyclerView.layoutManager as LinearLayoutManager)
-                        .findFirstVisibleItemPosition()
-                val lastVisiblePosition = (recyclerView.layoutManager as LinearLayoutManager)
-                        .findLastVisibleItemPosition()
-                if (lastVisiblePosition - firstVisiblePosition > itemsOnScreen) {
-                    itemsOnScreen = lastVisiblePosition - firstVisiblePosition
-                } else {
-                    fab.show()
-                }
-            }
+            userList?.let { usersList -> updateList(usersList) }
         })
     }
 
