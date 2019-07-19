@@ -51,14 +51,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = ViewPagerAdapter(supportFragmentManager)
         viewPager.adapter = adapter
 
-        fab.setOnClickListener {
-            val intent = Intent(this, AddUserActivity::class.java)
-            startActivity(intent)
-        }
-
-        spSort.background.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP)
-
-        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        val viewPagerListener = object : ViewPager.OnPageChangeListener {
 
             override fun onPageScrollStateChanged(state: Int) {
             }
@@ -89,7 +82,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-        })
+        }
+
+        viewPagerListener.onPageSelected(0)
+        viewPager.addOnPageChangeListener(viewPagerListener)
+
+        spSort.background.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP)
 
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
