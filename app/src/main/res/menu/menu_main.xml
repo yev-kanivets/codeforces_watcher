@@ -4,15 +4,15 @@
     <item
         android:id="@+id/navUsers"
         android:icon="@drawable/ic_poll"
-        android:title="" />
+        android:title="@string/users" />
 
     <item
-        android:title=""
-        android:enabled="false"/>
+        android:enabled="false"
+        android:title="" />
 
     <item
         android:id="@+id/navContests"
         android:icon="@drawable/ic_calendar"
-        android:title="" />
+        android:title="@string/contests" />
 
 </menu>

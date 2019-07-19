@@ -66,7 +66,6 @@ class MainActivity : AppCompatActivity() {
                     0 -> {
                         bottomNavigation.selectedItemId = R.id.navUsers
                         llToolbar.visibility = View.VISIBLE
-                        tvTitle.text = getString(R.string.users)
                         fab.setOnClickListener {
                             val intent = Intent(this@MainActivity, AddUserActivity::class.java)
                             startActivity(intent)
@@ -76,7 +75,6 @@ class MainActivity : AppCompatActivity() {
                     1 -> {
                         bottomNavigation.selectedItemId = R.id.navContests
                         llToolbar.visibility = View.GONE
-                        tvTitle.text = getString(R.string.contests)
                         fab.setOnClickListener {
                             val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(CODEFORCES_LINK))
                             startActivity(intent)
