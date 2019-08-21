@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.bogdan.codeforceswatcher.model.Contest
 import com.bogdan.codeforceswatcher.model.User
 
-@Database(entities = [User::class, Contest::class], version = 2, exportSchema = false)
+@Database(entities = [User::class, Contest::class], version = 3, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
