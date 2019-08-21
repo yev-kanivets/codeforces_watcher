@@ -33,14 +33,14 @@ class ContestAdapter(private var items: List<Contest>, private val ctx: Context)
 
     private fun addContestToCalendar(contest: Contest) {
         val timeStart = getCalendarTime(contest.time)
+        val encodedName = URLEncoder.encode(
+                contest.name,
+                java.nio.charset.StandardCharsets.UTF_8.toString()
+        ).toString()
         val timeEnd = getCalendarTime(contest.time + contest.duration)
-        val calendarEventLink = "$CALENDAR_LINK?action=TEMPLATE&text=${getEncodeString(contest.name)}&dates=$timeStart/$timeEnd&details=$CODEFORCES_LINK"
+        val calendarEventLink = "$CALENDAR_LINK?action=TEMPLATE&text=$encodedName&dates=$timeStart/$timeEnd&details=$CODEFORCES_LINK"
         val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(calendarEventLink))
         ctx.startActivity(intent)
-    }
-
-    private fun getEncodeString(text: String): String {
-        return URLEncoder.encode(text)
     }
 
     fun setItems(contestList: List<Contest>) {
