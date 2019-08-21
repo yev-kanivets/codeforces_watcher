@@ -12,12 +12,12 @@
     card_view:cardUseCompatPadding="true">
 
     <LinearLayout
+        style="@style/ListViewCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <LinearLayout
-            style="@style/ListViewCardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

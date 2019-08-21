@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.model.Contest
 import kotlinx.android.synthetic.main.contests_list_view.view.*
+import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,14 +32,15 @@ class ContestAdapter(private var items: List<Contest>, private val ctx: Context)
     }
 
     private fun addContestToCalendar(contest: Contest) {
-        val contestName = contest.name.replace(' ', '+')
-                .replace("#", "%23")
         val timeStart = getCalendarTime(contest.time)
         val timeEnd = getCalendarTime(contest.time + contest.duration)
-        val calendarEventLink = "$CALENDAR_LINK?action=TEMPLATE&text=$contestName&dates=$timeStart/$timeEnd&details=$CODEFORCES_LINK"
-
+        val calendarEventLink = "$CALENDAR_LINK?action=TEMPLATE&text=${getEncodeString(contest.name)}&dates=$timeStart/$timeEnd&details=$CODEFORCES_LINK"
         val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(calendarEventLink))
         ctx.startActivity(intent)
+    }
+
+    private fun getEncodeString(text: String): String {
+        return URLEncoder.encode(text)
     }
 
     fun setItems(contestList: List<Contest>) {
