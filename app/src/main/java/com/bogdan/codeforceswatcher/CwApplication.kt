@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.bogdan.codeforceswatcher.room.*
 import com.bogdan.codeforceswatcher.util.CodeforcesApi
+import com.google.firebase.analytics.FirebaseAnalytics
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -18,10 +19,8 @@ class CwApp : Application() {
 
     lateinit var userDao: UserDao
     lateinit var contestDao: ContestDao
-
-    private lateinit var retrofit: Retrofit
-
     lateinit var codeforcesApi: CodeforcesApi
+    private lateinit var retrofit: Retrofit
 
     override fun onCreate() {
         super.onCreate()
@@ -41,6 +40,8 @@ class CwApp : Application() {
                 .build()
 
         codeforcesApi = this.retrofit.create(CodeforcesApi::class.java)
+
+        FirebaseAnalytics.getInstance(this)
     }
 
     companion object {

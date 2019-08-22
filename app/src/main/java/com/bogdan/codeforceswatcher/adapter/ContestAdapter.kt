@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.model.Contest
+import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.contests_list_view.view.*
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
@@ -38,6 +39,8 @@ class ContestAdapter(private var items: List<Contest>, private val ctx: Context)
         val calendarEventLink = "$CALENDAR_LINK?action=TEMPLATE&text=$encodeName&dates=$timeStart/$timeEnd&details=$CODEFORCES_LINK"
         val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(calendarEventLink))
         ctx.startActivity(intent)
+
+        Analytics.logAddContestToCalendarEvent(contest.name)
     }
 
     fun setItems(contestList: List<Contest>) {
