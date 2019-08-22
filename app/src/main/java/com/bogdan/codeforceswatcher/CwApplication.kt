@@ -19,11 +19,8 @@ class CwApp : Application() {
 
     lateinit var userDao: UserDao
     lateinit var contestDao: ContestDao
-    lateinit var firebaseAnalytics: FirebaseAnalytics
-
-    private lateinit var retrofit: Retrofit
-
     lateinit var codeforcesApi: CodeforcesApi
+    private lateinit var retrofit: Retrofit
 
     override fun onCreate() {
         super.onCreate()
@@ -44,7 +41,7 @@ class CwApp : Application() {
 
         codeforcesApi = this.retrofit.create(CodeforcesApi::class.java)
 
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        FirebaseAnalytics.getInstance(this)
     }
 
     companion object {

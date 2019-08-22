@@ -13,7 +13,6 @@ android {
         targetSdkVersion 29
         versionCode 12
         versionName "1.2.1"
-        applicationIdSuffix ".debug"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
@@ -31,6 +30,7 @@ android {
             signingConfig signingConfigs.releaseConfig
         }
         debug {
+            applicationIdSuffix ".debug"
         }
     }
     lintOptions {
