@@ -3,18 +3,15 @@ package com.bogdan.codeforceswatcher.adapter
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.model.Contest
-import com.bogdan.codeforceswatcher.util.Logging
-import com.google.firebase.analytics.FirebaseAnalytics
+import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.contests_list_view.view.*
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
@@ -43,9 +40,7 @@ class ContestAdapter(private var items: List<Contest>, private val ctx: Context)
         val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(calendarEventLink))
         ctx.startActivity(intent)
 
-        val params = Bundle()
-        params.putString("contest_name", contest.name)
-        Logging.logEvent("add_contest_to_google_calendar", params)
+        Analytics.logAddContestToCalendarEvent(contest.name)
     }
 
     fun setItems(contestList: List<Contest>) {
