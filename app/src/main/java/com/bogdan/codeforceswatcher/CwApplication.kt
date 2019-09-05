@@ -5,8 +5,11 @@ import androidx.room.Room
 import com.bogdan.codeforceswatcher.room.*
 import com.bogdan.codeforceswatcher.util.CodeforcesApi
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.gson.GsonBuilder
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 /**
  * Custom Application class.
@@ -34,9 +37,17 @@ class CwApp : Application() {
         userDao = db.userDao()
         contestDao = db.contestDao()
 
+        val builder = OkHttpClient.Builder()
+        builder.connectTimeout(5, TimeUnit.MINUTES)
+                .writeTimeout(5, TimeUnit.MINUTES)
+                .readTimeout(5, TimeUnit.MINUTES)
+
+        val okHttpClient = builder.build()
+
         retrofit = Retrofit.Builder()
                 .baseUrl("http://www.codeforces.com/api/")
-                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
                 .build()
 
         codeforcesApi = this.retrofit.create(CodeforcesApi::class.java)
