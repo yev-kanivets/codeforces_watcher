@@ -64,9 +64,8 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             }
 
             override fun onFailure(call: Call<ContestResponse>, t: Throwable) {
-                activity?.let {
+                if (activity != null)
                     swipeToRefresh.isRefreshing = false
-                }
                 if (shouldDisplayError)
                     Toast.makeText(CwApp.app, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
             }
