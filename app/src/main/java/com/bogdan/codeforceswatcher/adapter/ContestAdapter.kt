@@ -1,5 +1,6 @@
 package com.bogdan.codeforceswatcher.adapter
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -8,7 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.model.Contest
 import com.bogdan.codeforceswatcher.util.Analytics
@@ -38,8 +41,11 @@ class ContestAdapter(private var items: List<Contest>, private val ctx: Context)
         val encodeName = URLEncoder.encode(contest.name)
         val calendarEventLink = "$CALENDAR_LINK?action=TEMPLATE&text=$encodeName&dates=$timeStart/$timeEnd&details=$CODEFORCES_LINK"
         val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(calendarEventLink))
-        ctx.startActivity(intent)
-
+        try {
+            ctx.startActivity(intent)
+        } catch (error: ActivityNotFoundException) {
+            Toast.makeText(CwApp.app, ctx.resources.getString(R.string.google_calendar_not_found), Toast.LENGTH_SHORT).show()
+        }
         Analytics.logAddContestToCalendarEvent(contest.name)
     }
 

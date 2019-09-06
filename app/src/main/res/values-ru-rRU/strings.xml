@@ -34,4 +34,6 @@
 
     <string name="users">Пользователи</string>
     <string name="contests">Контесты</string>
+
+    <string name="google_calendar_not_found">Извините, но на этом устройстве не найден Календарь Google</string>
 </resources>
