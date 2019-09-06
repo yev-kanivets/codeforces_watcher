@@ -28,7 +28,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onRefresh() {
         UserLoader.loadUsers(shouldDisplayErrors = true) {
-            requireActivity().runOnUiThread {
+            activity?.runOnUiThread {
                 swipeToRefresh.isRefreshing = false
             }
         }
