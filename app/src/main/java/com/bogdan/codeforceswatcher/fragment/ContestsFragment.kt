@@ -14,6 +14,7 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.adapter.ContestAdapter
 import com.bogdan.codeforceswatcher.model.Contest
 import com.bogdan.codeforceswatcher.model.ContestResponse
+import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.fragment_contests.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,7 +24,10 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var contestAdapter: ContestAdapter
 
-    override fun onRefresh() = updateContestList()
+    override fun onRefresh() {
+        updateContestList()
+        Analytics.logContestsListRefresh()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_contests, container, false)

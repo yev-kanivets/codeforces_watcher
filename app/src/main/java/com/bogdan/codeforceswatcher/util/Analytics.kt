@@ -16,4 +16,22 @@ object Analytics {
         }
     }
 
+    fun logUsersListRefresh() {
+        if (isEnabled) {
+            FirebaseAnalytics.getInstance(CwApp.app).logEvent("users_list_refresh", Bundle())
+        }
+    }
+
+    fun logContestsListRefresh() {
+        if (isEnabled) {
+            FirebaseAnalytics.getInstance(CwApp.app).logEvent("contests_list_refresh", Bundle())
+        }
+    }
+
+    fun logUserAdded() {
+        if (isEnabled) {
+            FirebaseAnalytics.getInstance(CwApp.app).logEvent("user_added", Bundle())
+        }
+    }
+
 }
