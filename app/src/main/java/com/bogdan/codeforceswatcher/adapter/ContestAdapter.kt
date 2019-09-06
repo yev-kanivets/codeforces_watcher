@@ -11,7 +11,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.model.Contest
 import com.bogdan.codeforceswatcher.util.Analytics
@@ -44,7 +43,7 @@ class ContestAdapter(private var items: List<Contest>, private val ctx: Context)
         try {
             ctx.startActivity(intent)
         } catch (error: ActivityNotFoundException) {
-            Toast.makeText(CwApp.app, ctx.resources.getString(R.string.google_calendar_not_found), Toast.LENGTH_SHORT).show()
+            Toast.makeText(ctx, ctx.resources.getString(R.string.google_calendar_not_found), Toast.LENGTH_SHORT).show()
         }
         Analytics.logAddContestToCalendarEvent(contest.name)
     }
