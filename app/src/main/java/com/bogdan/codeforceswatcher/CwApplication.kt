@@ -37,14 +37,19 @@ class CwApp : Application() {
         userDao = db.userDao()
         contestDao = db.contestDao()
 
+        val okHttpClient = OkHttpClient.Builder()
+                .connectTimeout(5, TimeUnit.MINUTES)
+                .writeTimeout(5, TimeUnit.MINUTES)
+                .readTimeout(5, TimeUnit.MINUTES)
+                .build()
+
+        val gsonConverterFactory = GsonConverterFactory
+                .create(GsonBuilder().setLenient().create())
+
         retrofit = Retrofit.Builder()
                 .baseUrl("http://www.codeforces.com/api/")
-                .client(OkHttpClient.Builder()
-                        .connectTimeout(5, TimeUnit.MINUTES)
-                        .writeTimeout(5, TimeUnit.MINUTES)
-                        .readTimeout(5, TimeUnit.MINUTES)
-                        .build())
-                .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
+                .client(okHttpClient)
+                .addConverterFactory(gsonConverterFactory)
                 .build()
 
         codeforcesApi = this.retrofit.create(CodeforcesApi::class.java)
