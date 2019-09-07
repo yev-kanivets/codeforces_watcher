@@ -19,12 +19,12 @@ import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ContestAdapter(private var items: List<Contest>, private val ctx: Context) : RecyclerView.Adapter<ContestAdapter.ViewHolder>() {
+class ContestAdapter(private var items: List<Contest>, private val context: Context) : RecyclerView.Adapter<ContestAdapter.ViewHolder>() {
 
     override fun getItemCount() = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(ctx).inflate(R.layout.contests_list_view, parent, false))
+        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.contests_list_view, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -41,9 +41,9 @@ class ContestAdapter(private var items: List<Contest>, private val ctx: Context)
         val calendarEventLink = "$CALENDAR_LINK?action=TEMPLATE&text=$encodeName&dates=$timeStart/$timeEnd&details=$CODEFORCES_LINK"
         val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(calendarEventLink))
         try {
-            ctx.startActivity(intent)
+            context.startActivity(intent)
         } catch (error: ActivityNotFoundException) {
-            Toast.makeText(ctx, ctx.resources.getString(R.string.google_calendar_not_found), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.resources.getString(R.string.google_calendar_not_found), Toast.LENGTH_SHORT).show()
         }
         Analytics.logAddContestToCalendarEvent(contest.name)
     }
