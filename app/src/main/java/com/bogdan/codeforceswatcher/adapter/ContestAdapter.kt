@@ -28,7 +28,7 @@ class ContestAdapter(private var items: List<Contest>, private val ctx: Context)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val contest = items[position]
         holder.tvContestName.text = contest.name
-        holder.tvContestTime.text = getDateFromSeconds(contest.time)
+        holder.tvContestTime.text = getDateTime(contest.time)
         holder.ivAddToCalendar.setOnClickListener { addContestToCalendar(items[position]) }
     }
 
@@ -48,7 +48,7 @@ class ContestAdapter(private var items: List<Contest>, private val ctx: Context)
         notifyDataSetChanged()
     }
 
-    private fun getDateFromSeconds(seconds: Long): String {
+    private fun getDateTime(seconds: Long): String {
         return SimpleDateFormat("kk:mm MMM d, EEEE", Locale.ENGLISH).format(Date(seconds * 1000)).toString()
     }
 
