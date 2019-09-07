@@ -8,29 +8,31 @@ object Analytics {
 
     var isEnabled: Boolean = true
 
+    private val instance = FirebaseAnalytics.getInstance(CwApp.app)
+
     fun logAddContestToCalendarEvent(contestName: String) {
         if (isEnabled) {
             val params = Bundle()
             params.putString("contest_name", contestName)
-            FirebaseAnalytics.getInstance(CwApp.app).logEvent("add_contest_to_google_calendar", params)
+            instance.logEvent("add_contest_to_google_calendar", params)
         }
     }
 
     fun logUsersListRefresh() {
         if (isEnabled) {
-            FirebaseAnalytics.getInstance(CwApp.app).logEvent("users_list_refresh", Bundle())
+            instance.logEvent("users_list_refresh", Bundle())
         }
     }
 
     fun logContestsListRefresh() {
         if (isEnabled) {
-            FirebaseAnalytics.getInstance(CwApp.app).logEvent("contests_list_refresh", Bundle())
+            instance.logEvent("contests_list_refresh", Bundle())
         }
     }
 
     fun logUserAdded() {
         if (isEnabled) {
-            FirebaseAnalytics.getInstance(CwApp.app).logEvent("user_added", Bundle())
+            instance.logEvent("user_added", Bundle())
         }
     }
 
