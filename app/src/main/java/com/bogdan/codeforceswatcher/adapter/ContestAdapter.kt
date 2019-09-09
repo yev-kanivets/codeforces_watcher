@@ -49,7 +49,7 @@ class ContestAdapter(private var items: List<Contest>, private val ctx: Context)
     }
 
     private fun getDateTime(seconds: Long): String {
-        return SimpleDateFormat("kk:mm MMM d, yyyy", Locale.ENGLISH).format(Date(seconds * 1000)).toString()
+        return SimpleDateFormat("kk:mm MMM d, EEEE", Locale.ENGLISH).format(Date(seconds * 1000)).toString()
     }
 
     private fun getCalendarTime(time: Long): String {
