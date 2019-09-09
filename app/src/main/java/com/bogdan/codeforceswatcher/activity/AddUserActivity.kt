@@ -9,6 +9,7 @@ import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.model.RatingChangeResponse
 import com.bogdan.codeforceswatcher.model.UserResponse
+import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.activity_add_user.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -90,7 +91,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
         when (v.id) {
             R.id.btnAdd -> {
                 loadUser(etHandle.text.toString())
-                etHandle.text = null
+                Analytics.logUserAdded()
             }
             else -> {
             }

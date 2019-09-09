@@ -15,6 +15,7 @@ import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.adapter.UserAdapter
 import com.bogdan.codeforceswatcher.model.User
+import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Prefs
 import com.bogdan.codeforceswatcher.util.UserLoader
 import kotlinx.android.synthetic.main.fragment_users.*
@@ -32,6 +33,8 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 swipeToRefresh.isRefreshing = false
             }
         }
+
+        Analytics.logUsersListRefresh()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
