@@ -11,13 +11,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-/**
- * Custom Application class.
- * Created on 14/06/18.
- *
- * @author Bogdan Evtushenko
- */
-
 class CwApp : Application() {
 
     lateinit var userDao: UserDao
