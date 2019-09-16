@@ -17,5 +17,4 @@ class Converters {
     fun fromList(list: List<RatingChange>): String {
         return Gson().toJson(list)
     }
-
 }

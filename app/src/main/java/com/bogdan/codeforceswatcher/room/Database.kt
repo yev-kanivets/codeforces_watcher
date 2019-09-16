@@ -11,6 +11,6 @@ import com.bogdan.codeforceswatcher.model.User
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
-    abstract fun contestDao(): ContestDao
 
+    abstract fun contestDao(): ContestDao
 }
