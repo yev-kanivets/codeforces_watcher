@@ -3,22 +3,27 @@ package com.bogdan.codeforceswatcher.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.util.Prefs
-import kotlinx.android.synthetic.main.dialog_rate.*
-import java.lang.Exception
+import kotlinx.android.synthetic.main.dialog_rate.btnMaybe
+import kotlinx.android.synthetic.main.dialog_rate.btnNo
+import kotlinx.android.synthetic.main.dialog_rate.btnYes
 
 class AppRateDialog : DialogFragment(), View.OnClickListener {
 
     private val prefs = Prefs.get()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return View.inflate(activity, R.layout.dialog_rate, container)
     }
 
@@ -39,9 +44,14 @@ class AppRateDialog : DialogFragment(), View.OnClickListener {
 
     private fun onClickYes() {
         try {
-            requireContext().startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(GP_MARKET + requireContext().packageName)))
+            val uri = Uri.parse(GP_MARKET + requireContext().packageName)
+            requireContext().startActivity(Intent(Intent.ACTION_VIEW, uri))
         } catch (e: Exception) {
-            Toast.makeText(requireContext(), getString(R.string.google_play_not_found), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.google_play_not_found),
+                Toast.LENGTH_SHORT
+            ).show()
             e.printStackTrace()
             dismiss()
         }
@@ -58,7 +68,10 @@ class AppRateDialog : DialogFragment(), View.OnClickListener {
 
     override fun onStart() {
         super.onStart()
-        dialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
     }
 
     companion object {
