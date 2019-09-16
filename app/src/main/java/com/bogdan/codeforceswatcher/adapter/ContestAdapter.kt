@@ -31,11 +31,7 @@ class ContestAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(context).inflate(
-                R.layout.contests_list_view,
-                parent,
-                false
-            )
+            LayoutInflater.from(context).inflate(R.layout.contests_list_view, parent, false)
         )
     }
 

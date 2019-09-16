@@ -23,20 +23,11 @@ object UserLoader {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.body() == null) {
                     userLoaded(mutableListOf())
-                    if (shouldDisplayErrors)
-                        showError(
-                            CwApp.app.getString(
-                                R.string.failed_to_fetch_users
-                            )
-                        )
+                    if (shouldDisplayErrors) showError(CwApp.app.getString(R.string.failed_to_fetch_users))
                 } else {
                     val userList = response.body()?.result
                     if (userList != null) {
-                        loadRatingUpdates(
-                            roomUserList,
-                            userList,
-                            userLoaded
-                        )
+                        loadRatingUpdates(roomUserList, userList, userLoaded)
                     } else {
                         userLoaded(mutableListOf())
                     }
@@ -45,8 +36,7 @@ object UserLoader {
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 userLoaded(mutableListOf())
-                if (shouldDisplayErrors)
-                    showError()
+                if (shouldDisplayErrors) showError()
             }
         })
     }
