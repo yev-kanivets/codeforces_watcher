@@ -15,6 +15,7 @@ import com.bogdan.codeforceswatcher.adapter.ContestAdapter
 import com.bogdan.codeforceswatcher.model.Contest
 import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.network.model.ContestResponse
+import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.fragment_contests.recyclerView
 import kotlinx.android.synthetic.main.fragment_contests.swipeToRefresh
@@ -50,7 +51,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         recyclerView.adapter = contestAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        val liveData = CwApp.app.contestDao.getUpcomingContests()
+        val liveData = DatabaseClient.contestDao.getUpcomingContests()
         liveData.observe(this, Observer<List<Contest>> { contestList ->
             contestList?.let { contestsList -> contestAdapter.setItems(contestsList.sortedBy(Contest::time)) }
         })
@@ -66,8 +67,8 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 if (response.body() != null) {
                     val contestList = response.body()?.result
                     if (contestList != null) {
-                        CwApp.app.contestDao.deleteAll(contestList)
-                        CwApp.app.contestDao.insert(contestList)
+                        DatabaseClient.contestDao.deleteAll(contestList)
+                        DatabaseClient.contestDao.insert(contestList)
                     }
                 }
                 if (activity != null) swipeToRefresh.isRefreshing = false

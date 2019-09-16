@@ -10,6 +10,7 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.network.model.RatingChangeResponse
 import com.bogdan.codeforceswatcher.network.model.UserResponse
+import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.activity_add_user.btnAdd
 import kotlinx.android.synthetic.main.activity_add_user.etHandle
@@ -59,10 +60,10 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
                             ) {
                                 if (response.isSuccessful) {
                                     localUser.ratingChanges = response.body()!!.result
-                                    val findUser = CwApp.app.userDao.getAll()
+                                    val findUser = DatabaseClient.userDao.getAll()
                                         .find { it.handle == localUser.handle }
                                     if (findUser == null) {
-                                        CwApp.app.userDao.insert(localUser)
+                                        DatabaseClient.userDao.insert(localUser)
                                         finish()
                                     } else {
                                         Toast.makeText(

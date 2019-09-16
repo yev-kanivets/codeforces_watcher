@@ -11,13 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.adapter.UserAdapter
 import com.bogdan.codeforceswatcher.model.User
+import com.bogdan.codeforceswatcher.network.UserLoader
+import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Prefs
-import com.bogdan.codeforceswatcher.network.UserLoader
 import kotlinx.android.synthetic.main.fragment_users.recyclerView
 import kotlinx.android.synthetic.main.fragment_users.swipeToRefresh
 
@@ -82,14 +82,14 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 id: Long
             ) {
                 counterIcon = position
-                updateList(CwApp.app.userDao.getAll())
+                updateList(DatabaseClient.userDao.getAll())
                 prefs.writeCounter(counterIcon)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
-        val liveData = CwApp.app.userDao.getAllLive()
+        val liveData = DatabaseClient.userDao.getAllLive()
         liveData.observe(this, Observer<List<User>> { userList ->
             userList?.let { usersList -> updateList(usersList) }
         })

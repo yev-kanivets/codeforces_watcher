@@ -7,9 +7,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.model.User
+import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.util.CustomMarkerView
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -42,7 +42,7 @@ class UserActivity : AppCompatActivity() {
 
         userId = intent.getLongExtra(ID, -1)
 
-        val user = CwApp.app.userDao.getById(userId)
+        val user = DatabaseClient.userDao.getById(userId)
         displayUser(user)
         if (user.ratingChanges.isNotEmpty()) {
             displayChart(user)
@@ -130,7 +130,7 @@ class UserActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_delete -> {
-                CwApp.app.userDao.delete(CwApp.app.userDao.getById(userId))
+                DatabaseClient.userDao.delete(DatabaseClient.userDao.getById(userId))
                 finish()
             }
         }

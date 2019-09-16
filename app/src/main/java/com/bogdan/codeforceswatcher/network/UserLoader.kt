@@ -5,6 +5,7 @@ import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.model.User
 import com.bogdan.codeforceswatcher.network.model.UserResponse
+import com.bogdan.codeforceswatcher.room.DatabaseClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -12,7 +13,7 @@ import retrofit2.Response
 object UserLoader {
 
     fun loadUsers(
-        roomUserList: List<User> = CwApp.app.userDao.getAll(),
+        roomUserList: List<User> = DatabaseClient.userDao.getAll(),
         shouldDisplayErrors: Boolean,
         userLoaded: (MutableList<Pair<String, Int>>) -> Unit = {}
     ) {
@@ -69,7 +70,7 @@ object UserLoader {
                             val delta = ratingChange.newRating - ratingChange.oldRating
                             result.add(Pair(element.handle, delta))
                             element.ratingChanges = ratingChanges
-                            CwApp.app.userDao.update(element)
+                            DatabaseClient.userDao.update(element)
                         }
                     }
                 }
