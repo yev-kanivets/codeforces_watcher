@@ -13,7 +13,8 @@ import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.adapter.ContestAdapter
 import com.bogdan.codeforceswatcher.model.Contest
-import com.bogdan.codeforceswatcher.model.ContestResponse
+import com.bogdan.codeforceswatcher.network.RestClient
+import com.bogdan.codeforceswatcher.network.model.ContestResponse
 import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.fragment_contests.recyclerView
 import kotlinx.android.synthetic.main.fragment_contests.swipeToRefresh
@@ -56,8 +57,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun updateContestList(shouldDisplayError: Boolean = true) {
-        val contestCall = CwApp.app.codeforcesApi.getContests()
-        contestCall.enqueue(object : Callback<ContestResponse> {
+        RestClient.getContests().enqueue(object : Callback<ContestResponse> {
 
             override fun onResponse(
                 call: Call<ContestResponse>,

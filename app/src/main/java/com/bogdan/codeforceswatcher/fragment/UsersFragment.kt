@@ -17,7 +17,7 @@ import com.bogdan.codeforceswatcher.adapter.UserAdapter
 import com.bogdan.codeforceswatcher.model.User
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Prefs
-import com.bogdan.codeforceswatcher.util.UserLoader
+import com.bogdan.codeforceswatcher.network.UserLoader
 import kotlinx.android.synthetic.main.fragment_users.recyclerView
 import kotlinx.android.synthetic.main.fragment_users.swipeToRefresh
 

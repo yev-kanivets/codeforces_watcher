@@ -1,10 +1,10 @@
-package com.bogdan.codeforceswatcher.util
+package com.bogdan.codeforceswatcher.network
 
 import android.widget.Toast
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.model.User
-import com.bogdan.codeforceswatcher.model.UserResponse
+import com.bogdan.codeforceswatcher.network.model.UserResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,18 +16,26 @@ object UserLoader {
         shouldDisplayErrors: Boolean,
         userLoaded: (MutableList<Pair<String, Int>>) -> Unit = {}
     ) {
-        val userCall = CwApp.app.codeforcesApi.getUsers(getHandles(roomUserList))
+        val userCall = RestClient.getUsers(getHandles(roomUserList))
         userCall.enqueue(object : Callback<UserResponse> {
 
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.body() == null) {
                     userLoaded(mutableListOf())
                     if (shouldDisplayErrors)
-                        showError(CwApp.app.getString(R.string.failed_to_fetch_users))
+                        showError(
+                            CwApp.app.getString(
+                                R.string.failed_to_fetch_users
+                            )
+                        )
                 } else {
                     val userList = response.body()?.result
                     if (userList != null) {
-                        loadRatingUpdates(roomUserList, userList, userLoaded)
+                        loadRatingUpdates(
+                            roomUserList,
+                            userList,
+                            userLoaded
+                        )
                     } else {
                         userLoaded(mutableListOf())
                     }
@@ -51,7 +59,7 @@ object UserLoader {
             val result: MutableList<Pair<String, Int>> = mutableListOf()
 
             for ((counter, element) in userList.withIndex()) {
-                val response = CwApp.app.codeforcesApi.getRating(element.handle).execute()
+                val response = RestClient.getRating(element.handle).execute()
                 element.id = roomUserList[counter].id
                 if (response.isSuccessful) {
                     val ratingChanges = response.body()?.result

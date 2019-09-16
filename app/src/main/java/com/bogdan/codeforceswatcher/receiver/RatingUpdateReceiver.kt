@@ -11,7 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.activity.MainActivity
-import com.bogdan.codeforceswatcher.util.UserLoader
+import com.bogdan.codeforceswatcher.network.UserLoader
 
 class RatingUpdateReceiver : BroadcastReceiver() {
 

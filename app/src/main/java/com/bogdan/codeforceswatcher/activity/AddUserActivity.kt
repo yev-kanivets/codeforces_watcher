@@ -7,8 +7,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.model.RatingChangeResponse
-import com.bogdan.codeforceswatcher.model.UserResponse
+import com.bogdan.codeforceswatcher.network.RestClient
+import com.bogdan.codeforceswatcher.network.model.RatingChangeResponse
+import com.bogdan.codeforceswatcher.network.model.UserResponse
 import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.activity_add_user.btnAdd
 import kotlinx.android.synthetic.main.activity_add_user.etHandle
@@ -38,8 +39,8 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
     private fun loadUser(handle: String) {
         progressBar.visibility = View.VISIBLE
 
-        val userCall = CwApp.app.codeforcesApi.getUsers(handle)
-        val ratingCall = CwApp.app.codeforcesApi.getRating(handle)
+        val userCall = RestClient.getUsers(handle)
+        val ratingCall = RestClient.getRating(handle)
 
         userCall.enqueue(object : Callback<UserResponse> {
 
