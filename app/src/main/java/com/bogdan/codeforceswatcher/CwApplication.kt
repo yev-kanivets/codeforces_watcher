@@ -2,7 +2,11 @@ package com.bogdan.codeforceswatcher
 
 import android.app.Application
 import androidx.room.Room
-import com.bogdan.codeforceswatcher.room.*
+import com.bogdan.codeforceswatcher.room.AppDatabase
+import com.bogdan.codeforceswatcher.room.ContestDao
+import com.bogdan.codeforceswatcher.room.MIGRATION_1_2
+import com.bogdan.codeforceswatcher.room.MIGRATION_2_3
+import com.bogdan.codeforceswatcher.room.UserDao
 import com.bogdan.codeforceswatcher.util.CodeforcesApi
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.GsonBuilder
@@ -23,27 +27,28 @@ class CwApp : Application() {
 
         app = this
 
-        val db = Room.databaseBuilder(applicationContext,
-                AppDatabase::class.java, "database").allowMainThreadQueries()
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3).build()
+        val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "database")
+            .allowMainThreadQueries()
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+            .build()
 
         userDao = db.userDao()
         contestDao = db.contestDao()
 
         val okHttpClient = OkHttpClient.Builder()
-                .connectTimeout(5, TimeUnit.MINUTES)
-                .writeTimeout(5, TimeUnit.MINUTES)
-                .readTimeout(5, TimeUnit.MINUTES)
-                .build()
+            .connectTimeout(5, TimeUnit.MINUTES)
+            .writeTimeout(5, TimeUnit.MINUTES)
+            .readTimeout(5, TimeUnit.MINUTES)
+            .build()
 
         val gsonConverterFactory = GsonConverterFactory
-                .create(GsonBuilder().setLenient().create())
+            .create(GsonBuilder().setLenient().create())
 
         retrofit = Retrofit.Builder()
-                .baseUrl("http://www.codeforces.com/api/")
-                .client(okHttpClient)
-                .addConverterFactory(gsonConverterFactory)
-                .build()
+            .baseUrl("http://www.codeforces.com/api/")
+            .client(okHttpClient)
+            .addConverterFactory(gsonConverterFactory)
+            .build()
 
         codeforcesApi = this.retrofit.create(CodeforcesApi::class.java)
 
@@ -51,8 +56,8 @@ class CwApp : Application() {
     }
 
     companion object {
+
         lateinit var app: CwApp
             private set
     }
-
 }
