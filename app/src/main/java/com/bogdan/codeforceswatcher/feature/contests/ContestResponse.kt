@@ -1,4 +1,4 @@
-package com.bogdan.codeforceswatcher.network.model
+package com.bogdan.codeforceswatcher.feature.contests
 
 import com.bogdan.codeforceswatcher.model.Contest
 

@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.fragment.ContestsFragment
+import com.bogdan.codeforceswatcher.feature.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.fragment.UsersFragment
 import com.bogdan.codeforceswatcher.receiver.StartAlarm
 import com.bogdan.codeforceswatcher.ui.AppRateDialog
@@ -122,7 +122,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
-        private val mFragmentList = listOf<Fragment>(UsersFragment(), ContestsFragment())
+        private val mFragmentList = listOf<Fragment>(UsersFragment(),
+            ContestsFragment()
+        )
         private val mFragmentTitleList = listOf("Users", "Contests")
 
         override fun getItem(position: Int): Fragment {

@@ -1,4 +1,4 @@
-package com.bogdan.codeforceswatcher.fragment
+package com.bogdan.codeforceswatcher.feature.contests
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,26 +6,42 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.adapter.ContestAdapter
+import com.bogdan.codeforceswatcher.feature.contests.redux.ContestsActions
+import com.bogdan.codeforceswatcher.feature.contests.redux.ContestsState
 import com.bogdan.codeforceswatcher.model.Contest
 import com.bogdan.codeforceswatcher.network.RestClient
-import com.bogdan.codeforceswatcher.network.model.ContestResponse
-import com.bogdan.codeforceswatcher.room.DatabaseClient
+import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.fragment_contests.recyclerView
 import kotlinx.android.synthetic.main.fragment_contests.swipeToRefresh
+import org.rekotlin.StoreSubscriber
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
+    StoreSubscriber<ContestsState> {
 
     private lateinit var contestAdapter: ContestAdapter
+
+    override fun onStart() {
+        super.onStart()
+        store.subscribe(this) { state -> state.select { it.contests } }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        store.unsubscribe(this)
+    }
+
+    override fun newState(state: ContestsState) {
+        contestAdapter.setItems(state.contests.sortedBy(Contest::time))
+    }
 
     override fun onRefresh() {
         updateContestList()
@@ -51,10 +67,10 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         recyclerView.adapter = contestAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        val liveData = DatabaseClient.contestDao.getUpcomingContests()
+        /*val liveData = DatabaseClient.contestDao.getUpcomingContests()
         liveData.observe(this, Observer<List<Contest>> { contestList ->
             contestList?.let { contestsList -> contestAdapter.setItems(contestsList.sortedBy(Contest::time)) }
-        })
+        })*/
     }
 
     private fun updateContestList(shouldDisplayError: Boolean = true) {
@@ -67,8 +83,9 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 if (response.body() != null) {
                     val contestList = response.body()?.result
                     if (contestList != null) {
-                        DatabaseClient.contestDao.deleteAll(contestList)
-                        DatabaseClient.contestDao.insert(contestList)
+                        store.dispatch(ContestsActions.ContestsLoaded(contestList))
+                        // DatabaseClient.contestDao.deleteAll(contestList)
+                        // DatabaseClient.contestDao.insert(contestList)
                     }
                 }
                 if (activity != null) swipeToRefresh.isRefreshing = false
