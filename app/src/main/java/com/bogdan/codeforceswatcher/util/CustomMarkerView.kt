@@ -7,9 +7,10 @@ import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF
-import kotlinx.android.synthetic.main.chart.view.*
+import kotlinx.android.synthetic.main.chart.view.tvContent
 
-class CustomMarkerView(context: Context, layoutResource: Int) : MarkerView(context, layoutResource) {
+class CustomMarkerView(context: Context, layoutResource: Int) :
+    MarkerView(context, layoutResource) {
 
     override fun getOffset(): MPPointF {
         return MPPointF((-(width * 0.95)).toFloat(), (-height).toFloat())
@@ -24,5 +25,4 @@ class CustomMarkerView(context: Context, layoutResource: Int) : MarkerView(conte
         }
         super.refreshContent(e, highlight)
     }
-
 }

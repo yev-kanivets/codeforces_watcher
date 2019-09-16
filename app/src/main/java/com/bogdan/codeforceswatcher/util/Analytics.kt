@@ -35,5 +35,4 @@ object Analytics {
             instance.logEvent("user_added", Bundle())
         }
     }
-
 }

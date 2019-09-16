@@ -3,19 +3,22 @@ package com.bogdan.codeforceswatcher.util
 import android.widget.Toast
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.model.RatingChangeResponse
 import com.bogdan.codeforceswatcher.model.User
 import com.bogdan.codeforceswatcher.model.UserResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.concurrent.CountDownLatch
 
 object UserLoader {
 
-    fun loadUsers(roomUserList: List<User> = CwApp.app.userDao.getAll(), shouldDisplayErrors: Boolean, userLoaded: (MutableList<Pair<String, Int>>) -> Unit = {}) {
+    fun loadUsers(
+        roomUserList: List<User> = CwApp.app.userDao.getAll(),
+        shouldDisplayErrors: Boolean,
+        userLoaded: (MutableList<Pair<String, Int>>) -> Unit = {}
+    ) {
         val userCall = CwApp.app.codeforcesApi.getUsers(getHandles(roomUserList))
         userCall.enqueue(object : Callback<UserResponse> {
+
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.body() == null) {
                     userLoaded(mutableListOf())
@@ -40,9 +43,9 @@ object UserLoader {
     }
 
     private fun loadRatingUpdates(
-            roomUserList: List<User>,
-            userList: List<User>,
-            userLoaded: (MutableList<Pair<String, Int>>) -> Unit
+        roomUserList: List<User>,
+        userList: List<User>,
+        userLoaded: (MutableList<Pair<String, Int>>) -> Unit
     ) {
         Thread {
             val result: MutableList<Pair<String, Int>> = mutableListOf()
@@ -78,5 +81,4 @@ object UserLoader {
     private fun showError(message: String = CwApp.app.resources.getString(R.string.no_internet_connection)) {
         Toast.makeText(CwApp.app, message, Toast.LENGTH_SHORT).show()
     }
-
 }

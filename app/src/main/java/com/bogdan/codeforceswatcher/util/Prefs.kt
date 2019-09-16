@@ -69,10 +69,6 @@ class Prefs constructor(private val context: Context) {
         @SuppressLint("StaticFieldLeak")
         private val prefs: Prefs = Prefs(CwApp.app)
 
-        fun get(): Prefs {
-            return prefs
-        }
-
+        fun get() = prefs
     }
-
 }

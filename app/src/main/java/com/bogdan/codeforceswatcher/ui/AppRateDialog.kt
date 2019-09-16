@@ -78,8 +78,5 @@ class AppRateDialog : DialogFragment(), View.OnClickListener {
 
         private const val GP_MARKET = "market://details?id="
         private const val BIG_PERIOD = 25
-
     }
-
 }
-

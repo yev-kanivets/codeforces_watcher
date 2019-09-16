@@ -17,5 +17,4 @@ interface CodeforcesApi {
 
     @GET("contest.list")
     fun getContests(): Call<ContestResponse>
-
 }
