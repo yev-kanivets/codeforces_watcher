@@ -15,7 +15,8 @@ import com.bogdan.codeforceswatcher.adapter.ContestAdapter
 import com.bogdan.codeforceswatcher.model.Contest
 import com.bogdan.codeforceswatcher.model.ContestResponse
 import com.bogdan.codeforceswatcher.util.Analytics
-import kotlinx.android.synthetic.main.fragment_contests.*
+import kotlinx.android.synthetic.main.fragment_contests.recyclerView
+import kotlinx.android.synthetic.main.fragment_contests.swipeToRefresh
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,9 +30,11 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         Analytics.logContestsListRefresh()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_contests, container, false)
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = inflater.inflate(R.layout.fragment_contests, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,7 +58,11 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun updateContestList(shouldDisplayError: Boolean = true) {
         val contestCall = CwApp.app.codeforcesApi.getContests()
         contestCall.enqueue(object : Callback<ContestResponse> {
-            override fun onResponse(call: Call<ContestResponse>, response: Response<ContestResponse>) {
+
+            override fun onResponse(
+                call: Call<ContestResponse>,
+                response: Response<ContestResponse>
+            ) {
                 if (response.body() != null) {
                     val contestList = response.body()?.result
                     if (contestList != null) {
@@ -63,17 +70,18 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                         CwApp.app.contestDao.insert(contestList)
                     }
                 }
-                if (activity != null)
-                    swipeToRefresh.isRefreshing = false
+                if (activity != null) swipeToRefresh.isRefreshing = false
             }
 
             override fun onFailure(call: Call<ContestResponse>, t: Throwable) {
-                if (activity != null)
-                    swipeToRefresh.isRefreshing = false
+                if (activity != null) swipeToRefresh.isRefreshing = false
                 if (shouldDisplayError)
-                    Toast.makeText(CwApp.app, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        CwApp.app,
+                        getString(R.string.no_internet_connection),
+                        Toast.LENGTH_SHORT
+                    ).show()
             }
         })
     }
-
 }

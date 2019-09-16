@@ -18,7 +18,8 @@ import com.bogdan.codeforceswatcher.model.User
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Prefs
 import com.bogdan.codeforceswatcher.util.UserLoader
-import kotlinx.android.synthetic.main.fragment_users.*
+import kotlinx.android.synthetic.main.fragment_users.recyclerView
+import kotlinx.android.synthetic.main.fragment_users.swipeToRefresh
 
 class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
@@ -43,9 +44,11 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         counterIcon = if (prefs.readCounter().isEmpty()) 0 else prefs.readCounter().toInt()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_users, container, false)
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = inflater.inflate(R.layout.fragment_users, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,22 +64,29 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         spSort = requireActivity().findViewById(R.id.spSort)
 
-        val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.spinner_item,
-                resources.getStringArray(R.array.array_sort))
+        val spinnerAdapter = ArrayAdapter(
+            requireContext(), R.layout.spinner_item,
+            resources.getStringArray(R.array.array_sort)
+        )
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spSort.adapter = spinnerAdapter
         spSort.setSelection(counterIcon)
 
         spSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 counterIcon = position
                 updateList(CwApp.app.userDao.getAll())
                 prefs.writeCounter(counterIcon)
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
         val liveData = CwApp.app.userDao.getAllLive()
@@ -90,9 +100,12 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             0 -> userAdapter.setItems(users.reversed())
             1 -> userAdapter.setItems(users.sortedByDescending(User::rating))
             2 -> userAdapter.setItems(users.sortedBy(User::rating))
-            3 -> userAdapter.setItems(users.sortedByDescending { user -> user.ratingChanges.lastOrNull()?.ratingUpdateTimeSeconds })
-            4 -> userAdapter.setItems(users.sortedBy { user -> user.ratingChanges.lastOrNull()?.ratingUpdateTimeSeconds })
+            3 -> userAdapter.setItems(users.sortedByDescending { user ->
+                user.ratingChanges.lastOrNull()?.ratingUpdateTimeSeconds
+            })
+            4 -> userAdapter.setItems(users.sortedBy { user ->
+                user.ratingChanges.lastOrNull()?.ratingUpdateTimeSeconds
+            })
         }
     }
-
 }
