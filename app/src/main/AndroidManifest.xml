@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.TryActivity" />
+        <activity android:name=".activity.UserActivity" />
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize"

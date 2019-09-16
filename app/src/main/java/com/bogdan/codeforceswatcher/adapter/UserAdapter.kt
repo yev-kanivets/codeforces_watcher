@@ -11,7 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.R.color.*
-import com.bogdan.codeforceswatcher.activity.TryActivity
+import com.bogdan.codeforceswatcher.activity.UserActivity
 import com.bogdan.codeforceswatcher.model.User
 import kotlinx.android.synthetic.main.users_list_view.view.*
 import java.text.SimpleDateFormat
@@ -74,7 +74,7 @@ class UserAdapter(private var items: List<User>, private val context: Context) :
         }
 
         holder.itemView.setOnClickListener {
-            context.startActivity(TryActivity.newIntent(context, user.id))
+            context.startActivity(UserActivity.newIntent(context, user.id))
         }
     }
 

@@ -17,25 +17,25 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_try.chart
-import kotlinx.android.synthetic.main.activity_try.ivAvatar
-import kotlinx.android.synthetic.main.activity_try.tvCurrentRating
-import kotlinx.android.synthetic.main.activity_try.tvHandle
-import kotlinx.android.synthetic.main.activity_try.tvMaxRating
-import kotlinx.android.synthetic.main.activity_try.tvRank
-import kotlinx.android.synthetic.main.activity_try.tvRatingChanges
+import kotlinx.android.synthetic.main.activity_user.chart
+import kotlinx.android.synthetic.main.activity_user.ivAvatar
+import kotlinx.android.synthetic.main.activity_user.tvCurrentRating
+import kotlinx.android.synthetic.main.activity_user.tvHandle
+import kotlinx.android.synthetic.main.activity_user.tvMaxRating
+import kotlinx.android.synthetic.main.activity_user.tvRank
+import kotlinx.android.synthetic.main.activity_user.tvRatingChanges
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 @Suppress("DEPRECATION")
-class TryActivity : AppCompatActivity() {
+class UserActivity : AppCompatActivity() {
 
     private var userId: Long = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_try)
+        setContentView(R.layout.activity_user)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -142,7 +142,7 @@ class TryActivity : AppCompatActivity() {
         private const val ID = "id"
 
         fun newIntent(context: Context, userId: Long): Intent {
-            val intent = Intent(context, TryActivity::class.java)
+            val intent = Intent(context, UserActivity::class.java)
             intent.putExtra(ID, userId)
             return intent
         }
