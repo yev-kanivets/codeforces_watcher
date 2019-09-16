@@ -14,17 +14,29 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.model.Contest
 import com.bogdan.codeforceswatcher.util.Analytics
-import kotlinx.android.synthetic.main.contests_list_view.view.*
+import kotlinx.android.synthetic.main.contests_list_view.view.ivAddToCalendar
+import kotlinx.android.synthetic.main.contests_list_view.view.tvContestName
+import kotlinx.android.synthetic.main.contests_list_view.view.tvContestTime
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
-class ContestAdapter(private var items: List<Contest>, private val context: Context) : RecyclerView.Adapter<ContestAdapter.ViewHolder>() {
+class ContestAdapter(
+    private var items: List<Contest>,
+    private val context: Context
+) : RecyclerView.Adapter<ContestAdapter.ViewHolder>() {
 
     override fun getItemCount() = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.contests_list_view, parent, false))
+        return ViewHolder(
+            LayoutInflater.from(context).inflate(
+                R.layout.contests_list_view,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -38,12 +50,17 @@ class ContestAdapter(private var items: List<Contest>, private val context: Cont
         val timeStart = getCalendarTime(contest.time)
         val timeEnd = getCalendarTime(contest.time + contest.duration)
         val encodeName = URLEncoder.encode(contest.name)
-        val calendarEventLink = "$CALENDAR_LINK?action=TEMPLATE&text=$encodeName&dates=$timeStart/$timeEnd&details=$CODEFORCES_LINK"
+        val calendarEventLink =
+            "$CALENDAR_LINK?action=TEMPLATE&text=$encodeName&dates=$timeStart/$timeEnd&details=$CODEFORCES_LINK"
         val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(calendarEventLink))
         try {
             context.startActivity(intent)
         } catch (error: ActivityNotFoundException) {
-            Toast.makeText(context, context.resources.getString(R.string.google_calendar_not_found), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                context.resources.getString(R.string.google_calendar_not_found),
+                Toast.LENGTH_SHORT
+            ).show()
         }
         Analytics.logAddContestToCalendarEvent(contest.name)
     }
@@ -54,11 +71,13 @@ class ContestAdapter(private var items: List<Contest>, private val context: Cont
     }
 
     private fun getDateTime(seconds: Long): String {
-        return SimpleDateFormat("kk:mm MMM d, EEEE", Locale.ENGLISH).format(Date(seconds * 1000)).toString()
+        val dateFormat = SimpleDateFormat("kk:mm MMM d, EEEE", Locale.ENGLISH)
+        return dateFormat.format(Date(seconds * 1000)).toString()
     }
 
     private fun getCalendarTime(time: Long): String {
-        return SimpleDateFormat("yyyyMMd'T'HHmmss", Locale.ENGLISH).format(Date(time * 1000)).toString()
+        val dateFormat = SimpleDateFormat("yyyyMMd'T'HHmmss", Locale.ENGLISH)
+        return dateFormat.format(Date(time * 1000)).toString()
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
