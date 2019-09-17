@@ -1,6 +1,5 @@
-package com.bogdan.codeforceswatcher.feature.contests.redux
+package com.bogdan.codeforceswatcher.feature.contests.redux.request
 
-import com.bogdan.codeforceswatcher.feature.contests.ContestResponse
 import com.bogdan.codeforceswatcher.model.Contest
 import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.redux.Request
@@ -22,12 +21,20 @@ class ContestsRequests {
                     response: Response<ContestResponse>
                 ) {
                     response.body()?.result?.let { contests ->
-                        store.dispatch(Success(contests))
+                        store.dispatch(
+                            Success(
+                                contests
+                            )
+                        )
                     } ?: store.dispatch(Failure())
                 }
 
                 override fun onFailure(call: Call<ContestResponse>, t: Throwable) {
-                    store.dispatch(Failure(t))
+                    store.dispatch(
+                        Failure(
+                            t
+                        )
+                    )
                 }
             })
         }

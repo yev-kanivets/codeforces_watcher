@@ -1,6 +1,5 @@
-package com.bogdan.codeforceswatcher.feature.contests
+package com.bogdan.codeforceswatcher.feature.contests.room
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -11,8 +10,8 @@ import com.bogdan.codeforceswatcher.model.Contest
 @Dao
 interface ContestDao {
 
-    @Query("SELECT * FROM contest WHERE phase = 'BEFORE'")
-    fun getUpcomingContests(): LiveData<List<Contest>>
+    @Query("SELECT * FROM contest")
+    fun getUpcomingContests(): List<Contest>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(contests: List<Contest>)

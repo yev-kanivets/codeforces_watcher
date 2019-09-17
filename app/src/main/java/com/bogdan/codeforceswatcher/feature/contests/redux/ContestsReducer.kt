@@ -1,5 +1,6 @@
 package com.bogdan.codeforceswatcher.feature.contests.redux
 
+import com.bogdan.codeforceswatcher.feature.contests.redux.request.ContestsRequests
 import com.bogdan.codeforceswatcher.model.Contest
 import com.bogdan.codeforceswatcher.redux.AppState
 import org.rekotlin.Action
