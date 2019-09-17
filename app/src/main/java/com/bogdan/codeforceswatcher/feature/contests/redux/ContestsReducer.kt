@@ -1,5 +1,6 @@
 package com.bogdan.codeforceswatcher.feature.contests.redux
 
+import com.bogdan.codeforceswatcher.model.Contest
 import com.bogdan.codeforceswatcher.redux.AppState
 import org.rekotlin.Action
 
@@ -15,7 +16,7 @@ fun contestsReducer(action: Action, state: AppState): ContestsState {
         is ContestsRequests.FetchContests.Success -> {
             newState = newState.copy(
                 status = ContestsState.Status.IDLE,
-                contests = action.contests
+                contests = action.contests.filter { it.phase == "BEFORE" }.sortedBy(Contest::time)
             )
         }
         is ContestsRequests.FetchContests.Failure -> {
