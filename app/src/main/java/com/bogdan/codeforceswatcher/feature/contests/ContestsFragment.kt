@@ -34,6 +34,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     }
 
     override fun newState(state: ContestsState) {
+        swipeToRefresh.isRefreshing = (state.status == ContestsState.Status.PENDING)
         contestAdapter.setItems(state.contests.sortedBy(Contest::time))
     }
 
@@ -50,12 +51,14 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initViews()
+
+        store.dispatch(ContestsRequests.FetchContests())
     }
 
     private fun initViews() {
         swipeToRefresh.setOnRefreshListener(this)
-        store.dispatch(ContestsRequests.FetchContests())
 
         contestAdapter = ContestAdapter(listOf(), requireContext())
         recyclerView.adapter = contestAdapter

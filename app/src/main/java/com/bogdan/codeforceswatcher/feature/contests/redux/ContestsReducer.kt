@@ -7,13 +7,21 @@ fun contestsReducer(action: Action, state: AppState): ContestsState {
     var newState = state.contests
 
     when (action) {
+        is ContestsRequests.FetchContests -> {
+            newState = newState.copy(
+                status = ContestsState.Status.PENDING
+            )
+        }
         is ContestsRequests.FetchContests.Success -> {
             newState = newState.copy(
+                status = ContestsState.Status.IDLE,
                 contests = action.contests
             )
         }
         is ContestsRequests.FetchContests.Failure -> {
-            // TODO: Handle failure
+            newState = newState.copy(
+                status = ContestsState.Status.IDLE
+            )
         }
     }
 
