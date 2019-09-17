@@ -17,8 +17,13 @@ import com.bogdan.codeforceswatcher.fragment.UsersFragment
 import com.bogdan.codeforceswatcher.receiver.StartAlarm
 import com.bogdan.codeforceswatcher.ui.AppRateDialog
 import com.bogdan.codeforceswatcher.util.Prefs
-import com.bogdan.codeforceswatcher.util.UserLoader
-import kotlinx.android.synthetic.main.activity_main.*
+import com.bogdan.codeforceswatcher.network.UserLoader
+import kotlinx.android.synthetic.main.activity_main.bottomNavigation
+import kotlinx.android.synthetic.main.activity_main.fab
+import kotlinx.android.synthetic.main.activity_main.llToolbar
+import kotlinx.android.synthetic.main.activity_main.spSort
+import kotlinx.android.synthetic.main.activity_main.toolbar
+import kotlinx.android.synthetic.main.activity_main.viewPager
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,10 +58,13 @@ class MainActivity : AppCompatActivity() {
 
         val viewPagerListener = object : ViewPager.OnPageChangeListener {
 
-            override fun onPageScrollStateChanged(state: Int) {
-            }
+            override fun onPageScrollStateChanged(state: Int) {}
 
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
             }
 
             override fun onPageSelected(position: Int) {
@@ -74,7 +82,8 @@ class MainActivity : AppCompatActivity() {
                         bottomNavigation.selectedItemId = R.id.navContests
                         llToolbar.visibility = View.GONE
                         fab.setOnClickListener {
-                            val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(CODEFORCES_LINK))
+                            val intent =
+                                Intent(Intent.ACTION_VIEW).setData(Uri.parse(CODEFORCES_LINK))
                             startActivity(intent)
                         }
                         fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
@@ -87,7 +96,10 @@ class MainActivity : AppCompatActivity() {
         viewPagerListener.onPageSelected(0)
         viewPager.addOnPageChangeListener(viewPagerListener)
 
-        spSort.background.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP)
+        spSort.background.setColorFilter(
+            ContextCompat.getColor(this, R.color.white),
+            PorterDuff.Mode.SRC_ATOP
+        )
 
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -129,5 +141,4 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val CODEFORCES_LINK = "http://codeforces.com/contests"
     }
-
 }

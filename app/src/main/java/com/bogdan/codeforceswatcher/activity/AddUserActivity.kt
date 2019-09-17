@@ -1,16 +1,21 @@
 package com.bogdan.codeforceswatcher.activity
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.model.RatingChangeResponse
-import com.bogdan.codeforceswatcher.model.UserResponse
+import com.bogdan.codeforceswatcher.network.RestClient
+import com.bogdan.codeforceswatcher.network.model.RatingChangeResponse
+import com.bogdan.codeforceswatcher.network.model.UserResponse
+import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.util.Analytics
-import kotlinx.android.synthetic.main.activity_add_user.*
+import kotlinx.android.synthetic.main.activity_add_user.btnAdd
+import kotlinx.android.synthetic.main.activity_add_user.etHandle
+import kotlinx.android.synthetic.main.activity_add_user.progressBar
+import kotlinx.android.synthetic.main.activity_add_user.toolbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,11 +40,11 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
     private fun loadUser(handle: String) {
         progressBar.visibility = View.VISIBLE
 
-        val userCall = CwApp.app.codeforcesApi.getUsers(handle)
-
-        val ratingCall = CwApp.app.codeforcesApi.getRating(handle)
+        val userCall = RestClient.getUsers(handle)
+        val ratingCall = RestClient.getRating(handle)
 
         userCall.enqueue(object : Callback<UserResponse> {
+
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
                     if (response.body()!!.result.firstOrNull() == null) {
@@ -48,15 +53,24 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
                     } else {
                         val localUser = response.body()!!.result.firstOrNull()!!
                         ratingCall.enqueue(object : Callback<RatingChangeResponse> {
-                            override fun onResponse(call: Call<RatingChangeResponse>, response: Response<RatingChangeResponse>) {
+
+                            override fun onResponse(
+                                call: Call<RatingChangeResponse>,
+                                response: Response<RatingChangeResponse>
+                            ) {
                                 if (response.isSuccessful) {
                                     localUser.ratingChanges = response.body()!!.result
-                                    val findUser = CwApp.app.userDao.getAll().find { it.handle == localUser.handle }
+                                    val findUser = DatabaseClient.userDao.getAll()
+                                        .find { it.handle == localUser.handle }
                                     if (findUser == null) {
-                                        CwApp.app.userDao.insert(localUser)
+                                        DatabaseClient.userDao.insert(localUser)
                                         finish()
                                     } else {
-                                        Toast.makeText(applicationContext, getString(R.string.user_already_added), Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(
+                                            applicationContext,
+                                            getString(R.string.user_already_added),
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     }
                                 } else {
                                     showError(getString(R.string.wrong))
@@ -97,5 +111,4 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
             }
         }
     }
-
 }

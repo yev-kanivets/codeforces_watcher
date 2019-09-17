@@ -1,26 +1,29 @@
-package com.bogdan.codeforceswatcher.util
+package com.bogdan.codeforceswatcher.network
 
 import android.widget.Toast
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.model.RatingChangeResponse
 import com.bogdan.codeforceswatcher.model.User
-import com.bogdan.codeforceswatcher.model.UserResponse
+import com.bogdan.codeforceswatcher.network.model.UserResponse
+import com.bogdan.codeforceswatcher.room.DatabaseClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.concurrent.CountDownLatch
 
 object UserLoader {
 
-    fun loadUsers(roomUserList: List<User> = CwApp.app.userDao.getAll(), shouldDisplayErrors: Boolean, userLoaded: (MutableList<Pair<String, Int>>) -> Unit = {}) {
-        val userCall = CwApp.app.codeforcesApi.getUsers(getHandles(roomUserList))
+    fun loadUsers(
+        roomUserList: List<User> = DatabaseClient.userDao.getAll(),
+        shouldDisplayErrors: Boolean,
+        userLoaded: (MutableList<Pair<String, Int>>) -> Unit = {}
+    ) {
+        val userCall = RestClient.getUsers(getHandles(roomUserList))
         userCall.enqueue(object : Callback<UserResponse> {
+
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.body() == null) {
                     userLoaded(mutableListOf())
-                    if (shouldDisplayErrors)
-                        showError(CwApp.app.getString(R.string.failed_to_fetch_users))
+                    if (shouldDisplayErrors) showError(CwApp.app.getString(R.string.failed_to_fetch_users))
                 } else {
                     val userList = response.body()?.result
                     if (userList != null) {
@@ -33,22 +36,21 @@ object UserLoader {
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 userLoaded(mutableListOf())
-                if (shouldDisplayErrors)
-                    showError()
+                if (shouldDisplayErrors) showError()
             }
         })
     }
 
     private fun loadRatingUpdates(
-            roomUserList: List<User>,
-            userList: List<User>,
-            userLoaded: (MutableList<Pair<String, Int>>) -> Unit
+        roomUserList: List<User>,
+        userList: List<User>,
+        userLoaded: (MutableList<Pair<String, Int>>) -> Unit
     ) {
         Thread {
             val result: MutableList<Pair<String, Int>> = mutableListOf()
 
             for ((counter, element) in userList.withIndex()) {
-                val response = CwApp.app.codeforcesApi.getRating(element.handle).execute()
+                val response = RestClient.getRating(element.handle).execute()
                 element.id = roomUserList[counter].id
                 if (response.isSuccessful) {
                     val ratingChanges = response.body()?.result
@@ -58,7 +60,7 @@ object UserLoader {
                             val delta = ratingChange.newRating - ratingChange.oldRating
                             result.add(Pair(element.handle, delta))
                             element.ratingChanges = ratingChanges
-                            CwApp.app.userDao.update(element)
+                            DatabaseClient.userDao.update(element)
                         }
                     }
                 }
@@ -78,5 +80,4 @@ object UserLoader {
     private fun showError(message: String = CwApp.app.resources.getString(R.string.no_internet_connection)) {
         Toast.makeText(CwApp.app, message, Toast.LENGTH_SHORT).show()
     }
-
 }

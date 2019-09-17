@@ -1,8 +1,8 @@
-package com.bogdan.codeforceswatcher.util
+package com.bogdan.codeforceswatcher.network
 
-import com.bogdan.codeforceswatcher.model.ContestResponse
-import com.bogdan.codeforceswatcher.model.RatingChangeResponse
-import com.bogdan.codeforceswatcher.model.UserResponse
+import com.bogdan.codeforceswatcher.network.model.ContestResponse
+import com.bogdan.codeforceswatcher.network.model.RatingChangeResponse
+import com.bogdan.codeforceswatcher.network.model.UserResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -17,5 +17,4 @@ interface CodeforcesApi {
 
     @GET("contest.list")
     fun getContests(): Call<ContestResponse>
-
 }

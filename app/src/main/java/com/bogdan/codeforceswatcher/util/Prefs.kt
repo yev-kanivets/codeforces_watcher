@@ -5,13 +5,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.bogdan.codeforceswatcher.CwApp
 
-/**
- * Util class to encapsulate Shared Preferences handling logic.
- * Created 14/08/17.
- *
- * @author Bogdan Evtushenko
- */
-
 class Prefs constructor(private val context: Context) {
 
     var ratePeriod = 5
@@ -76,10 +69,6 @@ class Prefs constructor(private val context: Context) {
         @SuppressLint("StaticFieldLeak")
         private val prefs: Prefs = Prefs(CwApp.app)
 
-        fun get(): Prefs {
-            return prefs
-        }
-
+        fun get() = prefs
     }
-
 }

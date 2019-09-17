@@ -1,9 +1,12 @@
 package com.bogdan.codeforceswatcher.room
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
-import com.bogdan.codeforceswatcher.model.Contest
+import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.bogdan.codeforceswatcher.model.Contest
 
 @Dao
 interface ContestDao {
@@ -16,5 +19,4 @@ interface ContestDao {
 
     @Delete
     fun deleteAll(contests: List<Contest>)
-
 }
