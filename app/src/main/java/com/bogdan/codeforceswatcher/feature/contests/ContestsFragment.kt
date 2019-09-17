@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.adapter.ContestAdapter
-import com.bogdan.codeforceswatcher.feature.contests.redux.request.ContestsRequests
 import com.bogdan.codeforceswatcher.feature.contests.redux.ContestsState
+import com.bogdan.codeforceswatcher.feature.contests.redux.request.ContestsRequests
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.fragment_contests.recyclerView
@@ -20,7 +20,7 @@ import org.rekotlin.StoreSubscriber
 class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     StoreSubscriber<ContestsState> {
 
-    private lateinit var contestAdapter: ContestAdapter
+    private val contestAdapter by lazy { ContestAdapter(listOf(), requireContext()) }
 
     override fun onStart() {
         super.onStart()
@@ -59,7 +59,6 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     private fun initViews() {
         swipeToRefresh.setOnRefreshListener(this)
 
-        contestAdapter = ContestAdapter(listOf(), requireContext())
         recyclerView.adapter = contestAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
