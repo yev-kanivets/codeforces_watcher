@@ -21,24 +21,19 @@ class ContestsRequests {
                     call: Call<ContestResponse>,
                     response: Response<ContestResponse>
                 ) {
-                    if (response.body() != null) {
-                        val contestList = response.body()?.result
-                        if (contestList != null) {
-                            store.dispatch(Success(contestList))
-                            // DatabaseClient.contestDao.deleteAll(contestList)
-                            // DatabaseClient.contestDao.insert(contestList)
-                        }
-                    }
+                    response.body()?.result?.let { contests ->
+                        store.dispatch(Success(contests))
+                    } ?: store.dispatch(Failure())
                 }
 
                 override fun onFailure(call: Call<ContestResponse>, t: Throwable) {
-
+                    store.dispatch(Failure(t))
                 }
             })
         }
 
         data class Success(val contests: List<Contest>) : Action
 
-        data class Failure(val t: Throwable) : Action
+        data class Failure(val t: Throwable? = null) : Action
     }
 }

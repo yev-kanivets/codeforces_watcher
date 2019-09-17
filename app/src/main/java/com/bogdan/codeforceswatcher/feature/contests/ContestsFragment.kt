@@ -63,10 +63,5 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         contestAdapter = ContestAdapter(listOf(), requireContext())
         recyclerView.adapter = contestAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        /*val liveData = DatabaseClient.contestDao.getUpcomingContests()
-        liveData.observe(this, Observer<List<Contest>> { contestList ->
-            contestList?.let { contestsList -> contestAdapter.setItems(contestsList.sortedBy(Contest::time)) }
-        })*/
     }
 }
