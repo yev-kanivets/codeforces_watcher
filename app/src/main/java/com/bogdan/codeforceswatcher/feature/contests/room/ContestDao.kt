@@ -1,7 +1,6 @@
 package com.bogdan.codeforceswatcher.feature.contests.room
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -16,6 +15,6 @@ interface ContestDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(contests: List<Contest>)
 
-    @Delete
-    fun deleteAll(contests: List<Contest>)
+    @Query("DELETE FROM contest")
+    fun deleteAll()
 }
