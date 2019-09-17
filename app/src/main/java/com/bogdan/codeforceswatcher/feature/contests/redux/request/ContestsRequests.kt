@@ -21,20 +21,12 @@ class ContestsRequests {
                     response: Response<ContestResponse>
                 ) {
                     response.body()?.result?.let { contests ->
-                        store.dispatch(
-                            Success(
-                                contests
-                            )
-                        )
+                        store.dispatch(Success(contests))
                     } ?: store.dispatch(Failure())
                 }
 
                 override fun onFailure(call: Call<ContestResponse>, t: Throwable) {
-                    store.dispatch(
-                        Failure(
-                            t
-                        )
-                    )
+                    store.dispatch(Failure(t))
                 }
             })
         }
