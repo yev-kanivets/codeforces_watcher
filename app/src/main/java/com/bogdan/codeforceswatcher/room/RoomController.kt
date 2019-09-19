@@ -1,6 +1,7 @@
 package com.bogdan.codeforceswatcher.room
 
 import com.bogdan.codeforceswatcher.feature.contests.redux.ContestsState
+import com.bogdan.codeforceswatcher.feature.users.redux.UsersState
 import com.bogdan.codeforceswatcher.redux.AppState
 import com.bogdan.codeforceswatcher.store
 import org.rekotlin.StoreSubscriber
@@ -16,7 +17,8 @@ object RoomController : StoreSubscriber<AppState> {
     }
 
     fun fetchAppState() = AppState(
-        contests = ContestsState(contests = DatabaseClient.contestDao.getUpcomingContests())
+        contests = ContestsState(contests = DatabaseClient.contestDao.getUpcomingContests()),
+        users = UsersState(users = DatabaseClient.userDao.getAll())
     )
 
     override fun newState(state: AppState) {

@@ -1,4 +1,4 @@
-package com.bogdan.codeforceswatcher.fragment
+package com.bogdan.codeforceswatcher.feature.users
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,8 +1,8 @@
 package com.bogdan.codeforceswatcher.network
 
-import com.bogdan.codeforceswatcher.feature.contests.redux.request.ContestResponse
+import com.bogdan.codeforceswatcher.feature.contests.redux.request.ContestsResponse
+import com.bogdan.codeforceswatcher.feature.users.redux.request.UsersResponse
 import com.bogdan.codeforceswatcher.network.model.RatingChangeResponse
-import com.bogdan.codeforceswatcher.network.model.UserResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -13,8 +13,8 @@ interface CodeforcesApi {
     fun getRating(@Query("handle") handle: String): Call<RatingChangeResponse>
 
     @GET("user.info")
-    fun getUsers(@Query("handles") handles: String): Call<UserResponse>
+    fun getUsers(@Query("handles") handles: String): Call<UsersResponse>
 
     @GET("contest.list")
-    fun getContests(): Call<ContestResponse>
+    fun getContests(): Call<ContestsResponse>
 }

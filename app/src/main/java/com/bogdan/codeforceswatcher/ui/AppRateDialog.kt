@@ -68,7 +68,7 @@ class AppRateDialog : DialogFragment(), View.OnClickListener {
 
     override fun onStart() {
         super.onStart()
-        dialog.window?.setLayout(
+        dialog?.window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
