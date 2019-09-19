@@ -1,4 +1,4 @@
-package com.bogdan.codeforceswatcher.room
+package com.bogdan.codeforceswatcher.feature.users.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

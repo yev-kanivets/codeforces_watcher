@@ -3,8 +3,8 @@ package com.bogdan.codeforceswatcher.network
 import android.widget.Toast
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.feature.users.redux.request.UsersResponse
 import com.bogdan.codeforceswatcher.model.User
-import com.bogdan.codeforceswatcher.network.model.UserResponse
 import com.bogdan.codeforceswatcher.room.DatabaseClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,9 +18,9 @@ object UserLoader {
         userLoaded: (MutableList<Pair<String, Int>>) -> Unit = {}
     ) {
         val userCall = RestClient.getUsers(getHandles(roomUserList))
-        userCall.enqueue(object : Callback<UserResponse> {
+        userCall.enqueue(object : Callback<UsersResponse> {
 
-            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+            override fun onResponse(call: Call<UsersResponse>, response: Response<UsersResponse>) {
                 if (response.body() == null) {
                     userLoaded(mutableListOf())
                     if (shouldDisplayErrors) showError(CwApp.app.getString(R.string.failed_to_fetch_users))
@@ -34,7 +34,7 @@ object UserLoader {
                 }
             }
 
-            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+            override fun onFailure(call: Call<UsersResponse>, t: Throwable) {
                 userLoaded(mutableListOf())
                 if (shouldDisplayErrors) showError()
             }

@@ -14,18 +14,18 @@ class ContestsRequests {
     class FetchContests : Request() {
 
         override fun execute() {
-            RestClient.getContests().enqueue(object : Callback<ContestResponse> {
+            RestClient.getContests().enqueue(object : Callback<ContestsResponse> {
 
                 override fun onResponse(
-                    call: Call<ContestResponse>,
-                    response: Response<ContestResponse>
+                        call: Call<ContestsResponse>,
+                        response: Response<ContestsResponse>
                 ) {
                     response.body()?.result?.let { contests ->
                         store.dispatch(Success(contests))
                     } ?: store.dispatch(Failure())
                 }
 
-                override fun onFailure(call: Call<ContestResponse>, t: Throwable) {
+                override fun onFailure(call: Call<ContestsResponse>, t: Throwable) {
                     store.dispatch(Failure(t))
                 }
             })

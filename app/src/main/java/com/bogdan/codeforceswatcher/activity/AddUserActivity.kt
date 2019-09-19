@@ -5,11 +5,10 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.feature.users.redux.request.UsersResponse
 import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.network.model.RatingChangeResponse
-import com.bogdan.codeforceswatcher.network.model.UserResponse
 import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.activity_add_user.btnAdd
@@ -43,9 +42,9 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
         val userCall = RestClient.getUsers(handle)
         val ratingCall = RestClient.getRating(handle)
 
-        userCall.enqueue(object : Callback<UserResponse> {
+        userCall.enqueue(object : Callback<UsersResponse> {
 
-            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+            override fun onResponse(call: Call<UsersResponse>, response: Response<UsersResponse>) {
                 if (response.isSuccessful) {
                     if (response.body()!!.result.firstOrNull() == null) {
                         progressBar.visibility = View.INVISIBLE
@@ -90,7 +89,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
                 }
             }
 
-            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+            override fun onFailure(call: Call<UsersResponse>, t: Throwable) {
                 progressBar.visibility = View.INVISIBLE
                 showError()
             }

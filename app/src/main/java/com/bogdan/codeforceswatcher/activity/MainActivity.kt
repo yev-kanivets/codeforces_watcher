@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.feature.contests.ContestsFragment
-import com.bogdan.codeforceswatcher.fragment.UsersFragment
+import com.bogdan.codeforceswatcher.feature.users.UsersFragment
 import com.bogdan.codeforceswatcher.network.UserLoader
 import com.bogdan.codeforceswatcher.receiver.StartAlarm
 import com.bogdan.codeforceswatcher.ui.AppRateDialog
