@@ -69,6 +69,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.firebase:firebase-analytics:17.1.0'
+    implementation 'org.rekotlin:rekotlin:1.0.4'
 }
 
 apply plugin: 'com.google.gms.google-services'

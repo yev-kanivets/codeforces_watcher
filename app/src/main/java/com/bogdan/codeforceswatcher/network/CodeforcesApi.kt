@@ -1,6 +1,6 @@
 package com.bogdan.codeforceswatcher.network
 
-import com.bogdan.codeforceswatcher.network.model.ContestResponse
+import com.bogdan.codeforceswatcher.feature.contests.redux.request.ContestResponse
 import com.bogdan.codeforceswatcher.network.model.RatingChangeResponse
 import com.bogdan.codeforceswatcher.network.model.UserResponse
 import retrofit2.Call
