@@ -11,6 +11,7 @@ class StartAlarm : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
         val intentReceiver = Intent(context, RatingUpdateReceiver::class.java)
+
         val pendingIntent = PendingIntent.getBroadcast(context, 0, intentReceiver, 0)
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
