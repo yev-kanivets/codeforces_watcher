@@ -9,21 +9,20 @@ class Prefs constructor(private val context: Context) {
 
     var ratePeriod = 5
 
-    fun readCounter(): String {
+    fun readSpinnerSortPosition(): String {
         val defaultPrefs = getDefaultPrefs()
-        return defaultPrefs.getString(KEY_COUNTER, "0") ?: "0"
+        return defaultPrefs.getString(KEY_SPINNER_SORT_POSITION, "0") ?: "0"
     }
 
-    fun writeCounter(counter: Int) {
-        val counterString = counter.toString()
+    fun writeSpinnerSortPosition(spinnerSortPosition: Int) {
         val editor = getDefaultPrefs().edit()
-        editor.putString(KEY_COUNTER, counterString)
+        editor.putString(KEY_SPINNER_SORT_POSITION, spinnerSortPosition.toString())
         editor.apply()
     }
 
     fun readAlarm(): String {
         val defaultPrefs = getDefaultPrefs()
-        return defaultPrefs.getString(KEY_COUNTER, "") ?: ""
+        return defaultPrefs.getString(KEY_SPINNER_SORT_POSITION, "") ?: ""
     }
 
     fun writeAlarm(alarm: String) {
@@ -61,7 +60,7 @@ class Prefs constructor(private val context: Context) {
 
     companion object {
 
-        private const val KEY_COUNTER = "key_counter"
+        private const val KEY_SPINNER_SORT_POSITION = "key_counter"
         private const val KEY_ALARM = "key_alarm"
         private const val APP_RATED = "app_rated"
         private const val LAUNCH_COUNT = "launch_count"

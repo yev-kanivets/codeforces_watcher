@@ -6,7 +6,7 @@ import org.rekotlin.Action
 class SortActions {
 
     data class Sort(
-        val sortType: UsersState.Sort
+        val sortType: UsersState.SortType
     ) : Action
 
 }

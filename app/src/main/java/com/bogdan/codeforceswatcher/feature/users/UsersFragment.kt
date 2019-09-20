@@ -26,7 +26,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     private val userAdapter by lazy { UserAdapter(listOf(), requireContext()) }
 
-    private var sortPosition: Int = 0
+    private var spinnerSortPosition: Int = 0
     private lateinit var spSort: AppCompatSpinner
     private var prefs = Prefs.get()
 
@@ -54,7 +54,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        sortPosition = prefs.readCounter().toInt()
+        spinnerSortPosition = prefs.readSpinnerSortPosition().toInt()
     }
 
     override fun onCreateView(
@@ -83,7 +83,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spSort.adapter = spinnerAdapter
-        spSort.setSelection(sortPosition)
+        spSort.setSelection(spinnerSortPosition)
 
         spSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
@@ -93,8 +93,8 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                 position: Int,
                 id: Long
             ) {
-                sortPosition = position
-                prefs.writeCounter(position)
+                spinnerSortPosition = position
+                prefs.writeSpinnerSortPosition(position)
                 store.dispatch(SortActions.Sort(getSortTypeFromPosition(position)))
             }
 
@@ -104,11 +104,11 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     private fun getSortTypeFromPosition(sortType: Int) =
         when (sortType) {
-            0 -> UsersState.Sort.DEFAULT
-            1 -> UsersState.Sort.RATING_DOWN
-            2 -> UsersState.Sort.RATING_UP
-            3 -> UsersState.Sort.UPDATE_DOWN
-            4 -> UsersState.Sort.UPDATE_UP
-            else -> UsersState.Sort.DEFAULT
+            0 -> UsersState.SortType.DEFAULT
+            1 -> UsersState.SortType.RATING_DOWN
+            2 -> UsersState.SortType.RATING_UP
+            3 -> UsersState.SortType.UPDATE_DOWN
+            4 -> UsersState.SortType.UPDATE_UP
+            else -> UsersState.SortType.DEFAULT
         }
 }
