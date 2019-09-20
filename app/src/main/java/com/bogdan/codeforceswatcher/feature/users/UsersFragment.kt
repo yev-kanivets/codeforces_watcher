@@ -13,6 +13,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.adapter.UserAdapter
 import com.bogdan.codeforceswatcher.feature.users.redux.UsersState
+import com.bogdan.codeforceswatcher.feature.users.redux.UsersState.SortType.Companion.getSortTypeFromPosition
 import com.bogdan.codeforceswatcher.feature.users.redux.actions.SortActions
 import com.bogdan.codeforceswatcher.feature.users.redux.request.UsersRequests
 import com.bogdan.codeforceswatcher.store
@@ -96,21 +97,10 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                 id: Long
             ) {
                 spinnerSortPosition = position
-                prefs.writeSpinnerSortPosition(position)
-                store.dispatch(SortActions.Sort(getSortTypeFromPosition(position)))
+                store.dispatch(SortActions.Sort(getSortTypeFromPosition(spinnerSortPosition)))
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
-
-    private fun getSortTypeFromPosition(sortType: Int) =
-        when (sortType) {
-            0 -> UsersState.SortType.DEFAULT
-            1 -> UsersState.SortType.RATING_DOWN
-            2 -> UsersState.SortType.RATING_UP
-            3 -> UsersState.SortType.UPDATE_DOWN
-            4 -> UsersState.SortType.UPDATE_UP
-            else -> UsersState.SortType.DEFAULT
-        }
 }
