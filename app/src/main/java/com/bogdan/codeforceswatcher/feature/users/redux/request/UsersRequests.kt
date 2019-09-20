@@ -43,7 +43,7 @@ class UsersRequests {
 
                 override fun onFailure(call: Call<UsersResponse>, t: Throwable) {
                     store.dispatch(Failure())
-                        //if (isUser) showError()
+                    //if (isUser) showError()
                 }
             })
         }
