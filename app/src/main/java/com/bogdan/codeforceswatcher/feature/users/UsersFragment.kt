@@ -66,6 +66,8 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
+
+        store.dispatch(UsersRequests.FetchUsers(isUser = true))
     }
 
     private fun initViews() {
