@@ -1,5 +1,6 @@
-package com.bogdan.codeforceswatcher.redux
+package com.bogdan.codeforceswatcher.redux.middlewares
 
+import com.bogdan.codeforceswatcher.redux.Request
 import org.rekotlin.Middleware
 import org.rekotlin.StateType
 
