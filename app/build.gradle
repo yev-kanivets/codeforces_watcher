@@ -70,6 +70,9 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
     implementation 'org.rekotlin:rekotlin:1.0.4'
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -17,8 +17,8 @@ class ContestsRequests {
             RestClient.getContests().enqueue(object : Callback<ContestsResponse> {
 
                 override fun onResponse(
-                        call: Call<ContestsResponse>,
-                        response: Response<ContestsResponse>
+                    call: Call<ContestsResponse>,
+                    response: Response<ContestsResponse>
                 ) {
                     response.body()?.result?.let { contests ->
                         store.dispatch(Success(contests))

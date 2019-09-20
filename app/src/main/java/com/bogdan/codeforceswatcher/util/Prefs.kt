@@ -11,7 +11,7 @@ class Prefs constructor(private val context: Context) {
 
     fun readCounter(): String {
         val defaultPrefs = getDefaultPrefs()
-        return defaultPrefs.getString(KEY_COUNTER, "") ?: ""
+        return defaultPrefs.getString(KEY_COUNTER, "0") ?: "0"
     }
 
     fun writeCounter(counter: Int) {
