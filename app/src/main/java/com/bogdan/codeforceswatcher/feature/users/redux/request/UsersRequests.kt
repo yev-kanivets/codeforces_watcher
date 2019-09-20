@@ -8,6 +8,9 @@ import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.store
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.rekotlin.Action
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,7 +43,7 @@ class UsersRequests {
 
                 override fun onFailure(call: Call<UsersResponse>, t: Throwable) {
                     store.dispatch(Failure())
-                    if (isUser) showError()
+                        //if (isUser) showError()
                 }
             })
         }
@@ -55,6 +58,7 @@ class UsersRequests {
                 for ((counter, element) in userList.withIndex()) {
                     val response = RestClient.getRating(element.handle).execute()
                     element.id = roomUserList[counter].id
+                    element.ratingChanges = roomUserList[counter].ratingChanges
                     if (response.isSuccessful) {
                         val ratingChanges = response.body()?.result
                         if (ratingChanges != roomUserList[counter].ratingChanges) {
@@ -68,8 +72,13 @@ class UsersRequests {
                         }
                     }
                 }
-                store.dispatch(Success(userList, result, isUser))
+                runBlocking {
+                    withContext(Dispatchers.Main) {
+                        store.dispatch(Success(userList, result, isUser))
+                    }
+                }
             }.start()
+
         }
 
         private fun getHandles(roomUserList: List<User>): String {

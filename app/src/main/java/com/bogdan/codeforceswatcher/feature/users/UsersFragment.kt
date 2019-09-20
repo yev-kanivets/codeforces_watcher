@@ -8,40 +8,53 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.adapter.UserAdapter
-import com.bogdan.codeforceswatcher.model.User
-import com.bogdan.codeforceswatcher.network.UserLoader
-import com.bogdan.codeforceswatcher.room.DatabaseClient
+import com.bogdan.codeforceswatcher.feature.users.redux.UsersState
+import com.bogdan.codeforceswatcher.feature.users.redux.actions.SortActions
+import com.bogdan.codeforceswatcher.feature.users.redux.request.UsersRequests
+import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Prefs
-import kotlinx.android.synthetic.main.fragment_users.recyclerView
-import kotlinx.android.synthetic.main.fragment_users.swipeToRefresh
+import kotlinx.android.synthetic.main.fragment_users.*
+import org.rekotlin.StoreSubscriber
 
-class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
+    StoreSubscriber<UsersState> {
 
-    private lateinit var userAdapter: UserAdapter
-    private var counterIcon: Int = 0
+    private val userAdapter by lazy { UserAdapter(listOf(), requireContext()) }
+
+    private var sortPosition: Int = 0
     private lateinit var spSort: AppCompatSpinner
     private var prefs = Prefs.get()
 
     override fun onRefresh() {
-        UserLoader.loadUsers(shouldDisplayErrors = true) {
-            activity?.runOnUiThread {
-                swipeToRefresh.isRefreshing = false
-            }
-        }
+        store.dispatch(UsersRequests.FetchUsers(isUser = true))
 
         Analytics.logUsersListRefresh()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        store.subscribe(this) { state -> state.select { it.users } }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        store.unsubscribe(this)
+    }
+
+    override fun newState(state: UsersState) {
+        swipeToRefresh.isRefreshing = (state.status == UsersState.Status.PENDING)
+        userAdapter.setItems(state.users)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        counterIcon = if (prefs.readCounter().isEmpty()) 0 else prefs.readCounter().toInt()
+        sortPosition = prefs.readCounter().toInt()
     }
 
     override fun onCreateView(
@@ -58,7 +71,6 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun initViews() {
         swipeToRefresh.setOnRefreshListener(this)
 
-        userAdapter = UserAdapter(listOf(), requireContext())
         recyclerView.adapter = userAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -71,7 +83,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spSort.adapter = spinnerAdapter
-        spSort.setSelection(counterIcon)
+        spSort.setSelection(sortPosition)
 
         spSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
@@ -81,31 +93,22 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 position: Int,
                 id: Long
             ) {
-                counterIcon = position
-                updateList(DatabaseClient.userDao.getAll())
-                prefs.writeCounter(counterIcon)
+                sortPosition = position
+                prefs.writeCounter(position)
+                store.dispatch(SortActions.Sort(getSortTypeFromPosition(position)))
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
-
-        val liveData = DatabaseClient.userDao.getAllLive()
-        liveData.observe(this, Observer<List<User>> { userList ->
-            userList?.let { usersList -> updateList(usersList) }
-        })
     }
 
-    fun updateList(users: List<User>) {
-        when (counterIcon) {
-            0 -> userAdapter.setItems(users.reversed())
-            1 -> userAdapter.setItems(users.sortedByDescending(User::rating))
-            2 -> userAdapter.setItems(users.sortedBy(User::rating))
-            3 -> userAdapter.setItems(users.sortedByDescending { user ->
-                user.ratingChanges.lastOrNull()?.ratingUpdateTimeSeconds
-            })
-            4 -> userAdapter.setItems(users.sortedBy { user ->
-                user.ratingChanges.lastOrNull()?.ratingUpdateTimeSeconds
-            })
+    private fun getSortTypeFromPosition(sortType: Int) =
+        when (sortType) {
+            0 -> UsersState.Sort.DEFAULT
+            1 -> UsersState.Sort.RATING_DOWN
+            2 -> UsersState.Sort.RATING_UP
+            3 -> UsersState.Sort.UPDATE_DOWN
+            4 -> UsersState.Sort.UPDATE_UP
+            else -> UsersState.Sort.DEFAULT
         }
-    }
 }
