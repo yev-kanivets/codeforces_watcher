@@ -14,7 +14,6 @@ import androidx.viewpager.widget.ViewPager
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.feature.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.feature.users.UsersFragment
-import com.bogdan.codeforceswatcher.network.UserLoader
 import com.bogdan.codeforceswatcher.receiver.StartAlarm
 import com.bogdan.codeforceswatcher.ui.AppRateDialog
 import com.bogdan.codeforceswatcher.util.Prefs
@@ -43,8 +42,6 @@ class MainActivity : AppCompatActivity() {
             prefs.writeAlarm("alarm")
         }
 
-        UserLoader.loadUsers(shouldDisplayErrors = false)
-
         prefs.addLaunchCount()
         if (prefs.checkRateDialog()) showAppRateDialog()
     }
@@ -64,8 +61,7 @@ class MainActivity : AppCompatActivity() {
                 position: Int,
                 positionOffset: Float,
                 positionOffsetPixels: Int
-            ) {
-            }
+            ) {}
 
             override fun onPageSelected(position: Int) {
                 when (position) {

@@ -22,7 +22,6 @@ class UsersRequests {
         private val isInitiatedByUser: Boolean
     ) : Request() {
 
-
         override fun execute() {
             val users: List<User> = DatabaseClient.userDao.getAll()
 
@@ -35,7 +34,7 @@ class UsersRequests {
                     if (response.body() == null) {
                         store.dispatch(Failure(if (isInitiatedByUser) failedToFetchUsersError else null))
                     } else {
-                        val userList = response.body()?.result
+                        val userList = response.body()?.users
                         if (userList != null) {
                             loadRatingUpdates(users, userList)
                         } else {
@@ -55,7 +54,7 @@ class UsersRequests {
             userList: List<User>
         ) {
             Thread {
-                val result: MutableList<Pair<String, Int>> = mutableListOf()
+                val notificationData: MutableList<Pair<String, Int>> = mutableListOf()
 
                 for ((counter, element) in userList.withIndex()) {
                     val response = RestClient.getRating(element.handle).execute()
@@ -67,7 +66,7 @@ class UsersRequests {
                             val ratingChange = ratingChanges?.lastOrNull()
                             ratingChange?.let {
                                 val delta = ratingChange.newRating - ratingChange.oldRating
-                                result.add(Pair(element.handle, delta))
+                                notificationData.add(Pair(element.handle, delta))
                                 element.ratingChanges = ratingChanges
                                 DatabaseClient.userDao.update(element)
                             }
@@ -75,7 +74,7 @@ class UsersRequests {
                     }
                 }
 
-                dispatchSuccess(userList, result)
+                dispatchSuccess(userList, notificationData)
             }.start()
 
         }
@@ -96,7 +95,7 @@ class UsersRequests {
             return handles
         }
 
-        data class Success(val users: List<User>, val result: List<Pair<String, Int>>, val isUserInitiated: Boolean) : Action
+        data class Success(val users: List<User>, val notificationData: List<Pair<String, Int>>, val isUserInitiated: Boolean) : Action
 
         data class Failure(override val message: String?) : ToastAction
     }
