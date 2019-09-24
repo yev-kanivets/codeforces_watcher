@@ -3,7 +3,7 @@ package com.bogdan.codeforceswatcher
 import android.app.Application
 import com.bogdan.codeforceswatcher.redux.middlewares.appMiddleware
 import com.bogdan.codeforceswatcher.redux.appReducer
-import com.bogdan.codeforceswatcher.redux.middlewares.errorMiddleware
+import com.bogdan.codeforceswatcher.redux.middlewares.toastMiddleware
 import com.bogdan.codeforceswatcher.redux.middlewares.notificationMiddleware
 import com.bogdan.codeforceswatcher.room.RoomController
 import com.bogdan.codeforceswatcher.util.PersistenceController
@@ -14,7 +14,7 @@ val store = Store(
     reducer = ::appReducer,
     state = RoomController.fetchAppState(),
     middleware = listOf(
-        appMiddleware, notificationMiddleware, errorMiddleware
+        appMiddleware, notificationMiddleware, toastMiddleware
     )
 )
 

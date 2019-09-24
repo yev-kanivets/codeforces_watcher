@@ -20,11 +20,9 @@ val notificationMiddleware: Middleware<StateType> = { _, _ ->
         { action ->
             when (action) {
                 is UsersRequests.FetchUsers.Success -> if (!action.isUserInitiated) {
-                    val notificationText = action.result.joinToString(separator = "\n") { ratingChange ->
-                        ratingChange.first + " " +
-                            if (ratingChange.second < 0) ratingChange.second else "+${ratingChange.second}"
-                    }
 
+                    val notificationText = formNotificationText(action.result)
+                    
                     if (notificationText.isNotEmpty()) {
                         showNotification(CwApp.app, notificationText)
                     }
@@ -35,6 +33,12 @@ val notificationMiddleware: Middleware<StateType> = { _, _ ->
         }
     }
 }
+
+private fun formNotificationText(notificationData: List<Pair<String, Int>>) =
+    notificationData.joinToString(separator = "\n") { ratingChange ->
+        ratingChange.first + " " +
+            if (ratingChange.second < 0) ratingChange.second else "+${ratingChange.second}"
+    }
 
 const val CHANNEL_ID = "1234"
 

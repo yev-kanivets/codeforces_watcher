@@ -4,7 +4,7 @@ import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.model.Contest
 import com.bogdan.codeforceswatcher.network.RestClient
-import com.bogdan.codeforceswatcher.redux.ErrorAction
+import com.bogdan.codeforceswatcher.redux.ToastAction
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.store
 import org.rekotlin.Action
@@ -19,21 +19,22 @@ class ContestsRequests {
         override fun execute() {
             RestClient.getContests().enqueue(object : Callback<ContestsResponse> {
 
+                val noInternetConnectionError = CwApp.app.getString(R.string.no_internet_connection)
+
                 override fun onResponse(
                     call: Call<ContestsResponse>,
                     response: Response<ContestsResponse>
                 ) {
                     response.body()?.result?.let { contests ->
                         store.dispatch(Success(contests))
-                    }
-                        ?: store.dispatch(
-                            Failure(if (isInitiatedByUser) CwApp.app.getString(R.string.no_internet_connection) else null)
-                        )
+                    } ?: store.dispatch(
+                        Failure(if (isInitiatedByUser) noInternetConnectionError else null)
+                    )
                 }
 
                 override fun onFailure(call: Call<ContestsResponse>, t: Throwable) {
                     store.dispatch(
-                        Failure(if (isInitiatedByUser) CwApp.app.getString(R.string.no_internet_connection) else null)
+                        Failure(if (isInitiatedByUser) noInternetConnectionError else null)
                     )
                 }
             })
@@ -43,6 +44,6 @@ class ContestsRequests {
 
         data class Failure(
             override val message: String?
-        ) : ErrorAction
+        ) : ToastAction
     }
 }
