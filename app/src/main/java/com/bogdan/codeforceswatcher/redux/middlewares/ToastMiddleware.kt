@@ -2,23 +2,21 @@ package com.bogdan.codeforceswatcher.redux.middlewares
 
 import android.widget.Toast
 import com.bogdan.codeforceswatcher.CwApp
-import com.bogdan.codeforceswatcher.redux.ErrorAction
+import com.bogdan.codeforceswatcher.redux.ToastAction
 import org.rekotlin.Middleware
 import org.rekotlin.StateType
 
-val errorMiddleware: Middleware<StateType> = { _, _ ->
+val toastMiddleware: Middleware<StateType> = { _, _ ->
     { next ->
         { action ->
-            if (action is ErrorAction) {
-                action.message?.let {
-                    showError(it)
-                }
+            if (action is ToastAction) {
+                action.message?.let { showToast(it) }
             }
             next(action)
         }
     }
 }
 
-private fun showError(message: String) {
+private fun showToast(message: String) {
     Toast.makeText(CwApp.app, message, Toast.LENGTH_SHORT).show()
 }

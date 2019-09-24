@@ -4,7 +4,7 @@ import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.model.User
 import com.bogdan.codeforceswatcher.network.RestClient
-import com.bogdan.codeforceswatcher.redux.ErrorAction
+import com.bogdan.codeforceswatcher.redux.ToastAction
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.store
@@ -22,21 +22,24 @@ class UsersRequests {
         private val isInitiatedByUser: Boolean
     ) : Request() {
 
-        private val users: List<User> = DatabaseClient.userDao.getAll()
 
         override fun execute() {
+            val users: List<User> = DatabaseClient.userDao.getAll()
+
             val userCall = RestClient.getUsers(getHandles(users))
             userCall.enqueue(object : Callback<UsersResponse> {
 
+                val failedToFetchUsersError = CwApp.app.getString(R.string.failed_to_fetch_users)
+
                 override fun onResponse(call: Call<UsersResponse>, response: Response<UsersResponse>) {
                     if (response.body() == null) {
-                        store.dispatch(Failure(if (isInitiatedByUser) CwApp.app.getString(R.string.failed_to_fetch_users) else null))
+                        store.dispatch(Failure(if (isInitiatedByUser) failedToFetchUsersError else null))
                     } else {
                         val userList = response.body()?.result
                         if (userList != null) {
                             loadRatingUpdates(users, userList)
                         } else {
-                            store.dispatch(Failure(if (isInitiatedByUser) CwApp.app.getString(R.string.failed_to_fetch_users) else null))
+                            store.dispatch(Failure(if (isInitiatedByUser) failedToFetchUsersError else null))
                         }
                     }
                 }
@@ -95,6 +98,6 @@ class UsersRequests {
 
         data class Success(val users: List<User>, val result: List<Pair<String, Int>>, val isUserInitiated: Boolean) : Action
 
-        data class Failure(override val message: String?) : ErrorAction
+        data class Failure(override val message: String?) : ToastAction
     }
 }
