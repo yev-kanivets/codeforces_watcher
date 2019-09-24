@@ -21,8 +21,8 @@ val notificationMiddleware: Middleware<StateType> = { _, _ ->
             when (action) {
                 is UsersRequests.FetchUsers.Success -> if (!action.isUserInitiated) {
 
-                    val notificationText = formNotificationText(action.result)
-                    
+                    val notificationText = formNotificationText(action.notificationData)
+
                     if (notificationText.isNotEmpty()) {
                         showNotification(CwApp.app, notificationText)
                     }

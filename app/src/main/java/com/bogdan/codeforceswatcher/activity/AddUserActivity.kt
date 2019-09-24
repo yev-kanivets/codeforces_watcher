@@ -46,11 +46,11 @@ class AddUserActivity : AppCompatActivity(), OnClickListener {
 
             override fun onResponse(call: Call<UsersResponse>, response: Response<UsersResponse>) {
                 if (response.isSuccessful) {
-                    if (response.body()!!.result.firstOrNull() == null) {
+                    if (response.body()!!.users.firstOrNull() == null) {
                         progressBar.visibility = View.INVISIBLE
                         showError(getString(R.string.wrong))
                     } else {
-                        val localUser = response.body()!!.result.firstOrNull()!!
+                        val localUser = response.body()!!.users.firstOrNull()!!
                         ratingCall.enqueue(object : Callback<RatingChangeResponse> {
 
                             override fun onResponse(

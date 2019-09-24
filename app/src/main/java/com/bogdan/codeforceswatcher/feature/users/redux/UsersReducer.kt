@@ -17,8 +17,7 @@ fun usersReducer(action: Action, state: AppState): UsersState {
         is UsersRequests.FetchUsers.Success -> {
             newState = newState.copy(
                 status = UsersState.Status.IDLE,
-                users = action.users,
-                result = action.result
+                users = action.users
             )
         }
         is UsersRequests.FetchUsers.Failure -> {

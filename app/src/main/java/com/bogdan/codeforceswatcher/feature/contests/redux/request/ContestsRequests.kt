@@ -25,7 +25,7 @@ class ContestsRequests {
                     call: Call<ContestsResponse>,
                     response: Response<ContestsResponse>
                 ) {
-                    response.body()?.result?.let { contests ->
+                    response.body()?.contests?.let { contests ->
                         store.dispatch(Success(contests))
                     } ?: store.dispatch(
                         Failure(if (isInitiatedByUser) noInternetConnectionError else null)
