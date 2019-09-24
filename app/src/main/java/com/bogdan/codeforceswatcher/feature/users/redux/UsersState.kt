@@ -14,25 +14,25 @@ data class UsersState(
     enum class SortType {
         DEFAULT, RATING_UP, RATING_DOWN, UPDATE_UP, UPDATE_DOWN;
 
-        companion object {
-            fun getPositionFromSortType(sortType: SortType) =
-                when (sortType) {
-                    DEFAULT -> 0
-                    RATING_DOWN -> 1
-                    RATING_UP -> 2
-                    UPDATE_DOWN -> 3
-                    UPDATE_UP -> 4
-                }
+        val position: Int
+            get() = when (this) {
+                DEFAULT -> 0
+                RATING_DOWN -> 1
+                RATING_UP -> 2
+                UPDATE_DOWN -> 3
+                UPDATE_UP -> 4
+            }
 
-            fun getSortTypeFromPosition(sortType: Int) =
-                when (sortType) {
-                    0 -> DEFAULT
-                    1 -> RATING_DOWN
-                    2 -> RATING_UP
-                    3 -> UPDATE_DOWN
-                    4 -> UPDATE_UP
-                    else -> DEFAULT
-                }
+        companion object {
+            fun getSortType(sortType: Int) = when (sortType) {
+                0 -> DEFAULT
+                1 -> RATING_DOWN
+                2 -> RATING_UP
+                3 -> UPDATE_DOWN
+                4 -> UPDATE_UP
+                else -> DEFAULT
+            }
         }
+
     }
 }

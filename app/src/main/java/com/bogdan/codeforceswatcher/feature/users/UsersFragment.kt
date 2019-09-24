@@ -13,12 +13,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.adapter.UserAdapter
 import com.bogdan.codeforceswatcher.feature.users.redux.UsersState
-import com.bogdan.codeforceswatcher.feature.users.redux.UsersState.SortType.Companion.getSortTypeFromPosition
+import com.bogdan.codeforceswatcher.feature.users.redux.UsersState.SortType.Companion.getSortType
 import com.bogdan.codeforceswatcher.feature.users.redux.actions.SortActions
 import com.bogdan.codeforceswatcher.feature.users.redux.request.UsersRequests
+import com.bogdan.codeforceswatcher.feature.users.redux.sort
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
-import com.bogdan.codeforceswatcher.util.Prefs
 import kotlinx.android.synthetic.main.fragment_users.*
 import org.rekotlin.StoreSubscriber
 
@@ -27,12 +27,10 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     private val userAdapter by lazy { UserAdapter(listOf(), requireContext()) }
 
-    private var spinnerSortPosition: Int = 0
     private lateinit var spSort: AppCompatSpinner
-    private var prefs = Prefs.get()
 
     override fun onRefresh() {
-        store.dispatch(UsersRequests.FetchUsers(isUser = true))
+        store.dispatch(UsersRequests.FetchUsers(isInitiatedByUser = true))
 
         Analytics.logUsersListRefresh()
     }
@@ -49,13 +47,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun newState(state: UsersState) {
         swipeToRefresh.isRefreshing = (state.status == UsersState.Status.PENDING)
-        userAdapter.setItems(state.users)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        spinnerSortPosition = prefs.readSpinnerSortPosition().toInt()
+        userAdapter.setItems(state.users.sort(state.sortType))
     }
 
     override fun onCreateView(
@@ -68,7 +60,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         super.onViewCreated(view, savedInstanceState)
         initViews()
 
-        store.dispatch(UsersRequests.FetchUsers(isUser = true))
+        store.dispatch(UsersRequests.FetchUsers(isInitiatedByUser = false))
     }
 
     private fun initViews() {
@@ -86,7 +78,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spSort.adapter = spinnerAdapter
-        spSort.setSelection(spinnerSortPosition)
+        spSort.setSelection(store.state.users.sortType.position)
 
         spSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
@@ -96,8 +88,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                 position: Int,
                 id: Long
             ) {
-                spinnerSortPosition = position
-                store.dispatch(SortActions.Sort(getSortTypeFromPosition(spinnerSortPosition)))
+                store.dispatch(SortActions.Sort(getSortType(position)))
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}

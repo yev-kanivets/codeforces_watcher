@@ -1,10 +1,10 @@
 package com.bogdan.codeforceswatcher.feature.users.redux.request
 
-import android.widget.Toast
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.model.User
 import com.bogdan.codeforceswatcher.network.RestClient
+import com.bogdan.codeforceswatcher.redux.ErrorAction
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.store
@@ -19,9 +19,10 @@ import retrofit2.Response
 class UsersRequests {
 
     class FetchUsers(
-        private val users: List<User> = DatabaseClient.userDao.getAll(),
-        private val isUser: Boolean
+        private val isInitiatedByUser: Boolean
     ) : Request() {
+
+        private val users: List<User> = DatabaseClient.userDao.getAll()
 
         override fun execute() {
             val userCall = RestClient.getUsers(getHandles(users))
@@ -29,21 +30,19 @@ class UsersRequests {
 
                 override fun onResponse(call: Call<UsersResponse>, response: Response<UsersResponse>) {
                     if (response.body() == null) {
-                        store.dispatch(Success(listOf(), listOf(), isUser))
-                        //if (isUser) showError(CwApp.app.getString(R.string.failed_to_fetch_users))
+                        store.dispatch(Failure(if (isInitiatedByUser) CwApp.app.getString(R.string.failed_to_fetch_users) else null))
                     } else {
                         val userList = response.body()?.result
                         if (userList != null) {
                             loadRatingUpdates(users, userList)
                         } else {
-                            store.dispatch(Success(listOf(), listOf(), isUser))
+                            store.dispatch(Failure(if (isInitiatedByUser) CwApp.app.getString(R.string.failed_to_fetch_users) else null))
                         }
                     }
                 }
 
                 override fun onFailure(call: Call<UsersResponse>, t: Throwable) {
-                    store.dispatch(Failure())
-                    //if (isUser) showError()
+                    store.dispatch(Failure(if (isInitiatedByUser) CwApp.app.resources.getString(R.string.no_internet_connection) else null))
                 }
             })
         }
@@ -72,13 +71,18 @@ class UsersRequests {
                         }
                     }
                 }
-                runBlocking {
-                    withContext(Dispatchers.Main) {
-                        store.dispatch(Success(userList, result, isUser))
-                    }
-                }
+
+                dispatchSuccess(userList, result)
             }.start()
 
+        }
+
+        private fun dispatchSuccess(userList: List<User>, result: List<Pair<String, Int>>) {
+            runBlocking {
+                withContext(Dispatchers.Main) {
+                    store.dispatch(Success(userList, result, isInitiatedByUser))
+                }
+            }
         }
 
         private fun getHandles(roomUserList: List<User>): String {
@@ -89,12 +93,8 @@ class UsersRequests {
             return handles
         }
 
-        private fun showError(message: String = CwApp.app.resources.getString(R.string.no_internet_connection)) {
-            Toast.makeText(CwApp.app, message, Toast.LENGTH_SHORT).show()
-        }
+        data class Success(val users: List<User>, val result: List<Pair<String, Int>>, val isUserInitiated: Boolean) : Action
 
-        data class Success(val users: List<User>, val result: List<Pair<String, Int>>, val isUser: Boolean) : Action
-
-        data class Failure(val t: Throwable? = null) : Action
+        data class Failure(override val message: String?) : ErrorAction
     }
 }

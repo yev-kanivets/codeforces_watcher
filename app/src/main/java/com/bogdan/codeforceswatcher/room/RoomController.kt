@@ -1,7 +1,6 @@
 package com.bogdan.codeforceswatcher.room
 
 import com.bogdan.codeforceswatcher.feature.contests.redux.ContestsState
-import com.bogdan.codeforceswatcher.feature.users.redux.Sorting
 import com.bogdan.codeforceswatcher.feature.users.redux.UsersState
 import com.bogdan.codeforceswatcher.redux.AppState
 import com.bogdan.codeforceswatcher.store
@@ -13,20 +12,18 @@ object RoomController : StoreSubscriber<AppState> {
     fun onAppCreated() {
         store.subscribe(this) {
             it.skipRepeats { oldState, newState ->
-                oldState.contests == newState.contests &&
-                    oldState.users == newState.users
+                oldState.contests == newState.contests
             }
         }
     }
 
     fun fetchAppState(): AppState {
-        val sortType = UsersState.SortType.getSortTypeFromPosition(Prefs.get().readSpinnerSortPosition().toInt())
-
         return AppState(
             contests = ContestsState(contests = DatabaseClient.contestDao.getUpcomingContests()),
             users = UsersState(
-                users = Sorting.sort(DatabaseClient.userDao.getAll(), sortType),
-                sortType = sortType)
+                users = DatabaseClient.userDao.getAll(),
+                sortType = UsersState.SortType.getSortType(Prefs.get().readSpinnerSortPosition().toInt())
+            )
         )
     }
 

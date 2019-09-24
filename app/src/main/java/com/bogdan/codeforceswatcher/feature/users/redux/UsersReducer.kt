@@ -17,7 +17,7 @@ fun usersReducer(action: Action, state: AppState): UsersState {
         is UsersRequests.FetchUsers.Success -> {
             newState = newState.copy(
                 status = UsersState.Status.IDLE,
-                users = Sorting.sort(action.users, newState.sortType),
+                users = action.users,
                 result = action.result
             )
         }
@@ -28,7 +28,6 @@ fun usersReducer(action: Action, state: AppState): UsersState {
         }
         is SortActions.Sort -> {
             newState = newState.copy(
-                users = Sorting.sort(newState.users, action.sortType),
                 sortType = action.sortType
             )
         }

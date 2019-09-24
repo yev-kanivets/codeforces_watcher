@@ -18,22 +18,11 @@ import org.rekotlin.StateType
 val notificationMiddleware: Middleware<StateType> = { _, _ ->
     { next ->
         { action ->
-
-            if (action is UsersRequests.FetchUsers.Success) {
-                if (!action.isUser) {
-                    var notificationText = ""
-                    var flag = 0
-
-                    for (ratingChange in action.result) {
-                        if (flag == 1) {
-                            notificationText += "\n"
-                        }
-                        flag = 1
-                        notificationText += ratingChange.first + " " + if (ratingChange.second < 0) {
-                            "${ratingChange.second}"
-                        } else {
-                            "+${ratingChange.second}"
-                        }
+            when (action) {
+                is UsersRequests.FetchUsers.Success -> if (!action.isUserInitiated) {
+                    val notificationText = action.result.joinToString(separator = "\n") { ratingChange ->
+                        ratingChange.first + " " +
+                            if (ratingChange.second < 0) ratingChange.second else "+${ratingChange.second}"
                     }
 
                     if (notificationText.isNotEmpty()) {
