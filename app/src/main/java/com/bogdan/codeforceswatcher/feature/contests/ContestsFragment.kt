@@ -38,7 +38,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     }
 
     override fun onRefresh() {
-        store.dispatch(ContestsRequests.FetchContests())
+        store.dispatch(ContestsRequests.FetchContests(isInitiatedByUser = true))
         Analytics.logContestsListRefresh()
     }
 
@@ -53,7 +53,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
         initViews()
 
-        store.dispatch(ContestsRequests.FetchContests())
+        store.dispatch(ContestsRequests.FetchContests(isInitiatedByUser = false))
     }
 
     private fun initViews() {
