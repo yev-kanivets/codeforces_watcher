@@ -46,6 +46,7 @@ class AppRateDialog : DialogFragment(), View.OnClickListener {
         try {
             val uri = Uri.parse(GP_MARKET + requireContext().packageName)
             requireContext().startActivity(Intent(Intent.ACTION_VIEW, uri))
+            prefs.appRated()
         } catch (e: Exception) {
             Toast.makeText(
                 requireContext(),
@@ -55,15 +56,10 @@ class AppRateDialog : DialogFragment(), View.OnClickListener {
             e.printStackTrace()
             dismiss()
         }
-        prefs.appRated()
     }
 
     private fun onClickNo() {
-        if (prefs.ratePeriod == BIG_PERIOD) {
-            prefs.appRated()
-        } else {
-            prefs.ratePeriod = BIG_PERIOD
-        }
+        prefs.appRated()
     }
 
     override fun onStart() {
@@ -77,6 +73,5 @@ class AppRateDialog : DialogFragment(), View.OnClickListener {
     companion object {
 
         private const val GP_MARKET = "market://details?id="
-        private const val BIG_PERIOD = 25
     }
 }
