@@ -1,17 +1,21 @@
 package com.bogdan.codeforceswatcher
 
 import android.app.Application
-import com.bogdan.codeforceswatcher.redux.AppState
-import com.bogdan.codeforceswatcher.redux.appMiddleware
+import com.bogdan.codeforceswatcher.redux.middlewares.appMiddleware
 import com.bogdan.codeforceswatcher.redux.appReducer
+import com.bogdan.codeforceswatcher.redux.middlewares.toastMiddleware
+import com.bogdan.codeforceswatcher.redux.middlewares.notificationMiddleware
 import com.bogdan.codeforceswatcher.room.RoomController
+import com.bogdan.codeforceswatcher.util.PersistenceController
 import com.google.firebase.analytics.FirebaseAnalytics
 import org.rekotlin.Store
 
 val store = Store(
     reducer = ::appReducer,
     state = RoomController.fetchAppState(),
-    middleware = listOf(appMiddleware)
+    middleware = listOf(
+        appMiddleware, notificationMiddleware, toastMiddleware
+    )
 )
 
 class CwApp : Application() {
@@ -22,6 +26,7 @@ class CwApp : Application() {
         app = this
 
         RoomController.onAppCreated()
+        PersistenceController.onAppCreated()
         FirebaseAnalytics.getInstance(this)
     }
 
