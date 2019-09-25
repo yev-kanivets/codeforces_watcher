@@ -105,7 +105,7 @@ class UserActivity : AppCompatActivity() {
         xAxis.labelCount = 3
 
         xAxis.valueFormatter = IAxisValueFormatter { value, _ ->
-            val dateFormat = SimpleDateFormat("MMM yyyy", Locale.ENGLISH)
+            val dateFormat = SimpleDateFormat("MMM yyyy", Locale.getDefault())
             dateFormat.format(Date(value.toLong() * 1000)).toString()
         }
 
