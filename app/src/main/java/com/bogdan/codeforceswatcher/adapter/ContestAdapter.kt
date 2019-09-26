@@ -23,9 +23,10 @@ import java.util.Date
 import java.util.Locale
 
 class ContestAdapter(
-    private var items: List<Contest>,
     private val context: Context
 ) : RecyclerView.Adapter<ContestAdapter.ViewHolder>() {
+
+    private var items: List<Contest> = listOf()
 
     override fun getItemCount() = items.size
 

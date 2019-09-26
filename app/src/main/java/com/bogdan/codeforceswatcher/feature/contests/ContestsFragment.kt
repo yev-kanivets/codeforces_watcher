@@ -20,7 +20,7 @@ import org.rekotlin.StoreSubscriber
 class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     StoreSubscriber<ContestsState> {
 
-    private val contestAdapter by lazy { ContestAdapter(listOf(), requireContext()) }
+    private val contestAdapter by lazy { ContestAdapter(requireContext()) }
 
     override fun onStart() {
         super.onStart()
