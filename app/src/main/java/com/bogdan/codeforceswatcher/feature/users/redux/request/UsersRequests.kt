@@ -2,7 +2,6 @@ package com.bogdan.codeforceswatcher.feature.users.redux.request
 
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.model.RatingChange
 import com.bogdan.codeforceswatcher.model.User
 import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.redux.Request
@@ -137,6 +136,7 @@ class UsersRequests {
 
                         if (foundUser == null) {
                             DatabaseClient.userDao.insert(user)
+                            store.dispatch(Success(user))
                         } else
                             store.dispatch(Failure(CwApp.app.getString(R.string.user_already_added)))
                     }
@@ -150,7 +150,7 @@ class UsersRequests {
             })
         }
 
-        object Success : Action
+        data class Success(val user: User) : Action
 
         data class Failure(override val message: String) : ToastAction
     }

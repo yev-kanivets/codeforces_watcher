@@ -1,18 +1,10 @@
 package com.bogdan.codeforceswatcher.feature.users.room
 
-import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.bogdan.codeforceswatcher.model.User
 
 @Dao
 interface UserDao {
-
-    @Query("SELECT * FROM user")
-    fun getAllLive(): LiveData<List<User>>
 
     @Query("SELECT * FROM user")
     fun getAll(): List<User>
