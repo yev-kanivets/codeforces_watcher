@@ -30,9 +30,10 @@ import java.util.Date
 import java.util.Locale
 
 class UserAdapter(
-    private var items: List<User>,
     private val context: Context
 ) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+
+    private var items: List<User> = listOf()
 
     override fun getItemCount() = items.size
 
@@ -63,7 +64,7 @@ class UserAdapter(
                         1,
                         user.handle.lastIndex + 1
                     )}</font>"
-                holder.tvHandle.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY);
+                holder.tvHandle.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
             } else {
                 holder.tvHandle.setTextColor(ContextCompat.getColor(context, getColor(user.rank)))
             }
