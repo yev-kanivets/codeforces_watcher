@@ -31,7 +31,6 @@
             android:label="Add User"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible" />
-
         <receiver
             android:name="com.bogdan.codeforceswatcher.receiver.RatingUpdateReceiver"
             android:enabled="true"
