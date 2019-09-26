@@ -25,7 +25,7 @@ import org.rekotlin.StoreSubscriber
 class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     StoreSubscriber<UsersState> {
 
-    private val userAdapter by lazy { UserAdapter(listOf(), requireContext()) }
+    private val userAdapter by lazy { UserAdapter(requireContext()) }
 
     private lateinit var spSort: AppCompatSpinner
 

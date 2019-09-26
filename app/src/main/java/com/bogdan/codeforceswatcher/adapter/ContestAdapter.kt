@@ -23,9 +23,10 @@ import java.util.Date
 import java.util.Locale
 
 class ContestAdapter(
-    private var items: List<Contest>,
     private val context: Context
 ) : RecyclerView.Adapter<ContestAdapter.ViewHolder>() {
+
+    private var items: List<Contest> = listOf()
 
     override fun getItemCount() = items.size
 
@@ -67,12 +68,12 @@ class ContestAdapter(
     }
 
     private fun getDateTime(seconds: Long): String {
-        val dateFormat = SimpleDateFormat("kk:mm MMM d, EEEE", Locale.ENGLISH)
+        val dateFormat = SimpleDateFormat("kk:mm MMM d, EEEE", Locale.getDefault())
         return dateFormat.format(Date(seconds * 1000)).toString()
     }
 
     private fun getCalendarTime(time: Long): String {
-        val dateFormat = SimpleDateFormat("yyyyMMd'T'HHmmss", Locale.ENGLISH)
+        val dateFormat = SimpleDateFormat("yyyyMMd'T'HHmmss", Locale.getDefault())
         return dateFormat.format(Date(time * 1000)).toString()
     }
 
