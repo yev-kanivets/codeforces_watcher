@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.adapter.UserAdapter
-import com.bogdan.codeforceswatcher.feature.users.redux.UsersState
-import com.bogdan.codeforceswatcher.feature.users.redux.UsersState.SortType.Companion.getSortType
+import com.bogdan.codeforceswatcher.feature.users.states.UsersState
+import com.bogdan.codeforceswatcher.feature.users.states.UsersState.SortType.Companion.getSortType
 import com.bogdan.codeforceswatcher.feature.users.redux.actions.SortActions
 import com.bogdan.codeforceswatcher.feature.users.redux.request.UsersRequests
 import com.bogdan.codeforceswatcher.feature.users.redux.sort

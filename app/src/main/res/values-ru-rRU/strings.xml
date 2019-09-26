@@ -5,7 +5,7 @@
     <string name="name">Имя: %1$s</string>
     <string name="cur_rating">Текущий рейтинг: %1$s</string>
     <string name="max_rating">Макс. рейтинг: %1$s</string>
-    <string name="wrong">Неправильный хэндл!</string>
+    <string name="wrong_handle">Неправильный хэндл!</string>
     <string name="last_rating_update">Последнее обновление рейтинга: %1$s</string>
     <string name="no_rating_update">Нет обновления рейтинга</string>
     <string name="none">Нет</string>

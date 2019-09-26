@@ -1,7 +1,8 @@
-package com.bogdan.codeforceswatcher.feature.users.redux
+package com.bogdan.codeforceswatcher.feature.users.redux.reducers
 
 import com.bogdan.codeforceswatcher.feature.users.redux.actions.SortActions
 import com.bogdan.codeforceswatcher.feature.users.redux.request.UsersRequests
+import com.bogdan.codeforceswatcher.feature.users.states.UsersState
 import com.bogdan.codeforceswatcher.redux.AppState
 import org.rekotlin.Action
 

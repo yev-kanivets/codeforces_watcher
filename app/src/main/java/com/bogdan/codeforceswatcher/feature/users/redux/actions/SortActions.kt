@@ -1,6 +1,6 @@
 package com.bogdan.codeforceswatcher.feature.users.redux.actions
 
-import com.bogdan.codeforceswatcher.feature.users.redux.UsersState
+import com.bogdan.codeforceswatcher.feature.users.states.UsersState
 import org.rekotlin.Action
 
 class SortActions {

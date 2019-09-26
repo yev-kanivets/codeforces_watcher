@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 
 data class ContestsResponse(
     val status: String,
-    @SerializedName("result") val contests: List<Contest>
+    @SerializedName("ratingChanges") val contests: List<Contest>
 )
