@@ -1,5 +1,6 @@
 package com.bogdan.codeforceswatcher.feature.users.redux
 
+import com.bogdan.codeforceswatcher.feature.users.states.UsersState
 import com.bogdan.codeforceswatcher.model.User
 
 fun List<User>.sort(sortType: UsersState.SortType) = when (sortType) {

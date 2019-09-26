@@ -2,7 +2,7 @@ package com.bogdan.codeforceswatcher.network
 
 import com.bogdan.codeforceswatcher.feature.contests.redux.request.ContestsResponse
 import com.bogdan.codeforceswatcher.feature.users.redux.request.UsersResponse
-import com.bogdan.codeforceswatcher.network.model.RatingChangeResponse
+import com.bogdan.codeforceswatcher.feature.users.redux.request.RatingChangeResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
