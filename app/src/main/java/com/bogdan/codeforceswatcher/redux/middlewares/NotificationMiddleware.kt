@@ -11,7 +11,7 @@ import androidx.core.app.NotificationCompat
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.activity.MainActivity
-import com.bogdan.codeforceswatcher.feature.users.redux.request.UsersRequests
+import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersRequests
 import org.rekotlin.Middleware
 import org.rekotlin.StateType
 

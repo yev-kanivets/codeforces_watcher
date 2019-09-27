@@ -12,8 +12,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.feature.contests.ContestsFragment
-import com.bogdan.codeforceswatcher.feature.users.UsersFragment
+import com.bogdan.codeforceswatcher.features.add_user.AddUserActivity
+import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
+import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.receiver.StartAlarm
 import com.bogdan.codeforceswatcher.ui.AppRateDialog
 import com.bogdan.codeforceswatcher.util.Prefs

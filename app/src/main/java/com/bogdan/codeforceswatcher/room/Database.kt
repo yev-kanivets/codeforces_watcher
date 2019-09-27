@@ -3,8 +3,8 @@ package com.bogdan.codeforceswatcher.room
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.bogdan.codeforceswatcher.feature.contests.room.ContestDao
-import com.bogdan.codeforceswatcher.feature.users.room.UserDao
+import com.bogdan.codeforceswatcher.features.contests.room.ContestDao
+import com.bogdan.codeforceswatcher.features.users.room.UserDao
 import com.bogdan.codeforceswatcher.model.Contest
 import com.bogdan.codeforceswatcher.model.User
 
