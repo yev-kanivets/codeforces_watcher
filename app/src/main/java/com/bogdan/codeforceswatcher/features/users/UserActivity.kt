@@ -1,6 +1,5 @@
-package com.bogdan.codeforceswatcher.activity
+package com.bogdan.codeforceswatcher.features.users
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,8 +7,10 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.features.users.redux.actions.UsersActions
 import com.bogdan.codeforceswatcher.model.User
 import com.bogdan.codeforceswatcher.room.DatabaseClient
+import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.CustomMarkerView
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -17,18 +18,10 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_user.chart
-import kotlinx.android.synthetic.main.activity_user.ivAvatar
-import kotlinx.android.synthetic.main.activity_user.tvCurrentRating
-import kotlinx.android.synthetic.main.activity_user.tvHandle
-import kotlinx.android.synthetic.main.activity_user.tvMaxRating
-import kotlinx.android.synthetic.main.activity_user.tvRank
-import kotlinx.android.synthetic.main.activity_user.tvRatingChanges
+import kotlinx.android.synthetic.main.activity_user.*
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
-@Suppress("DEPRECATION")
 class UserActivity : AppCompatActivity() {
 
     private var userId: Long = -1
@@ -42,12 +35,14 @@ class UserActivity : AppCompatActivity() {
 
         userId = intent.getLongExtra(ID, -1)
 
-        val user = DatabaseClient.userDao.getById(userId)
-        displayUser(user)
-        if (user.ratingChanges.isNotEmpty()) {
-            displayChart(user)
-        } else {
-            tvRatingChanges.text = ""
+        val user = store.state.users.users.find { it.id == userId }
+        user?.let { foundUser ->
+            displayUser(foundUser)
+            if (foundUser.ratingChanges.isNotEmpty()) {
+                displayChart(foundUser)
+            } else {
+                tvRatingChanges.text = ""
+            }
         }
     }
 
@@ -56,7 +51,6 @@ class UserActivity : AppCompatActivity() {
         return true
     }
 
-    @SuppressLint("SetTextI18n")
     private fun displayUser(user: User) {
         if (user.rank == null) {
             tvRank.text = getString(R.string.rank, getString(R.string.none))
@@ -68,25 +62,30 @@ class UserActivity : AppCompatActivity() {
         } else {
             tvCurrentRating.text = getString(R.string.cur_rating, user.rating.toString())
         }
+
         val handle = if (user.firstName == null && user.lastName == null) {
             getString(R.string.none)
         } else if (user.firstName == null) {
             user.lastName
         } else if (user.lastName == null) {
             user.firstName
-        } else
+        } else {
             user.firstName + " " + user.lastName
+        }
+
         tvHandle.text = getString(R.string.name, handle)
+
         if (user.maxRating == null) {
             tvMaxRating.text = getString(R.string.max_rating, getString(R.string.none))
         } else {
             tvMaxRating.text = getString(R.string.max_rating, user.maxRating.toString())
         }
-        if (user.avatar.substring(0, 6) != "https:") {
+        if (user.avatar.startsWith("https:")) {
             Picasso.get().load("https:" + user.avatar).into(ivAvatar)
         } else {
             Picasso.get().load(user.avatar).into(ivAvatar)
         }
+
         title = user.handle
     }
 
@@ -131,6 +130,8 @@ class UserActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_delete -> {
                 DatabaseClient.userDao.delete(DatabaseClient.userDao.getById(userId))
+                val user = store.state.users.users.find { it.id == userId }
+                user?.let { store.dispatch(UsersActions.DeleteUser(it)) }
                 finish()
             }
         }
