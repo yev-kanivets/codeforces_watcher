@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.adapter.ContestAdapter
-import com.bogdan.codeforceswatcher.features.contests.redux.ContestsState
+import com.bogdan.codeforceswatcher.features.contests.redux.states.ContestsState
 import com.bogdan.codeforceswatcher.features.contests.redux.requests.ContestsRequests
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
