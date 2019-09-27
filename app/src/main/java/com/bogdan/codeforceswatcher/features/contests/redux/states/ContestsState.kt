@@ -1,4 +1,4 @@
-package com.bogdan.codeforceswatcher.features.contests.redux
+package com.bogdan.codeforceswatcher.features.contests.redux.states
 
 import com.bogdan.codeforceswatcher.model.Contest
 import org.rekotlin.StateType
