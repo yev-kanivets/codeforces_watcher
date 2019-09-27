@@ -1,7 +1,7 @@
 package com.bogdan.codeforceswatcher.room
 
-import com.bogdan.codeforceswatcher.feature.contests.redux.ContestsState
-import com.bogdan.codeforceswatcher.feature.users.redux.UsersState
+import com.bogdan.codeforceswatcher.features.contests.redux.states.ContestsState
+import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState
 import com.bogdan.codeforceswatcher.redux.AppState
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Prefs

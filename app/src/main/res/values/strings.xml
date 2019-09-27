@@ -4,7 +4,7 @@
     <string name="name">Name: %1$s</string>
     <string name="cur_rating">Current Rating: %1$s</string>
     <string name="max_rating">Max Rating: %1$s</string>
-    <string name="wrong">Wrong handle!</string>
+    <string name="wrong_handle">Wrong handle!</string>
     <string name="last_rating_update">Last rating update: %1$s</string>
     <string name="no_rating_update">No rating update</string>
     <string name="none">None</string>
