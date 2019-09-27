@@ -4,6 +4,7 @@ import com.bogdan.codeforceswatcher.features.add_user.redux.requests.AddUserRequ
 import com.bogdan.codeforceswatcher.features.users.redux.actions.UsersActions
 import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersRequests
 import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState
+import com.bogdan.codeforceswatcher.model.User
 import com.bogdan.codeforceswatcher.redux.AppState
 import org.rekotlin.Action
 
@@ -31,6 +32,12 @@ fun usersReducer(action: Action, state: AppState): UsersState {
         is AddUserRequests.AddUser.Success -> {
             newState = newState.copy(
                 users = state.users.users.plus(action.user)
+            )
+        }
+
+        is UsersActions.DeleteUser -> {
+            newState = newState.copy(
+                users = state.users.users.minus(action.user)
             )
         }
 
