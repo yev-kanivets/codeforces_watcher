@@ -1,4 +1,4 @@
-package com.bogdan.codeforceswatcher.activity
+package com.bogdan.codeforceswatcher.features
 
 import android.content.Intent
 import android.graphics.PorterDuff
@@ -16,6 +16,9 @@ import com.bogdan.codeforceswatcher.features.add_user.AddUserActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.receiver.StartAlarm
+import com.bogdan.codeforceswatcher.redux.actions.UIActions
+import com.bogdan.codeforceswatcher.redux.states.UIState
+import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.ui.AppRateDialog
 import com.bogdan.codeforceswatcher.util.Prefs
 import kotlinx.android.synthetic.main.activity_main.bottomNavigation
@@ -24,8 +27,9 @@ import kotlinx.android.synthetic.main.activity_main.llToolbar
 import kotlinx.android.synthetic.main.activity_main.spSort
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.activity_main.viewPager
+import org.rekotlin.StoreSubscriber
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     private val prefs = Prefs.get()
 
@@ -35,6 +39,41 @@ class MainActivity : AppCompatActivity() {
 
         initData()
         initViews()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        store.subscribe(this) { state -> state.select { it.ui } }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        store.unsubscribe(this)
+    }
+
+    override fun newState(state: UIState) {
+        when (state.selectedHomeTab) {
+            UIState.HomeTab.USERS -> {
+                viewPager.currentItem = 0
+                llToolbar.visibility = View.VISIBLE
+                fab.setOnClickListener {
+                    val intent =
+                        Intent(this@MainActivity, AddUserActivity::class.java)
+                    startActivity(intent)
+                }
+                fab.setImageDrawable(getDrawable(R.drawable.ic_plus))
+            }
+            UIState.HomeTab.CONTESTS -> {
+                viewPager.currentItem = 1
+                llToolbar.visibility = View.GONE
+                fab.setOnClickListener {
+                    val intent =
+                        Intent(Intent.ACTION_VIEW).setData(Uri.parse(CODEFORCES_LINK))
+                    startActivity(intent)
+                }
+                fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
+            }
+        }
     }
 
     private fun initData() {
@@ -62,32 +101,15 @@ class MainActivity : AppCompatActivity() {
                 position: Int,
                 positionOffset: Float,
                 positionOffsetPixels: Int
-            ) {}
+            ) {
+            }
 
             override fun onPageSelected(position: Int) {
                 when (position) {
-                    0 -> {
-                        bottomNavigation.selectedItemId = R.id.navUsers
-                        llToolbar.visibility = View.VISIBLE
-                        fab.setOnClickListener {
-                            val intent = Intent(this@MainActivity, AddUserActivity::class.java)
-                            startActivity(intent)
-                        }
-                        fab.setImageDrawable(getDrawable(R.drawable.ic_plus))
-                    }
-                    1 -> {
-                        bottomNavigation.selectedItemId = R.id.navContests
-                        llToolbar.visibility = View.GONE
-                        fab.setOnClickListener {
-                            val intent =
-                                Intent(Intent.ACTION_VIEW).setData(Uri.parse(CODEFORCES_LINK))
-                            startActivity(intent)
-                        }
-                        fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
-                    }
+                    0 -> bottomNavigation.selectedItemId = R.id.navUsers
+                    1 -> bottomNavigation.selectedItemId = R.id.navContests
                 }
             }
-
         }
 
         viewPagerListener.onPageSelected(0)
@@ -99,9 +121,9 @@ class MainActivity : AppCompatActivity() {
         )
 
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navUsers -> viewPager.currentItem = 0
-                R.id.navContests -> viewPager.currentItem = 1
+            val homeTab = UIState.HomeTab.fromMenuItemId(item.itemId)
+            if (homeTab != store.state.ui.selectedHomeTab) {
+                store.dispatch(UIActions.SelectHomeTab(homeTab))
             }
             true
         }
@@ -118,7 +140,7 @@ class MainActivity : AppCompatActivity() {
         rateDialog.show(supportFragmentManager, "progressDialog")
     }
 
-    class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
+    class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         private val mFragmentList = listOf<Fragment>(UsersFragment(), ContestsFragment())
         private val mFragmentTitleList = listOf("Users", "Contests")
 
