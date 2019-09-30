@@ -2,7 +2,7 @@ package com.bogdan.codeforceswatcher
 
 import android.app.Application
 import com.bogdan.codeforceswatcher.redux.middlewares.appMiddleware
-import com.bogdan.codeforceswatcher.redux.appReducer
+import com.bogdan.codeforceswatcher.redux.reducers.appReducer
 import com.bogdan.codeforceswatcher.redux.middlewares.toastMiddleware
 import com.bogdan.codeforceswatcher.redux.middlewares.notificationMiddleware
 import com.bogdan.codeforceswatcher.room.RoomController

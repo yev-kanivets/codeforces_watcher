@@ -4,8 +4,7 @@ import com.bogdan.codeforceswatcher.features.add_user.redux.requests.AddUserRequ
 import com.bogdan.codeforceswatcher.features.users.redux.actions.UsersActions
 import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersRequests
 import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState
-import com.bogdan.codeforceswatcher.model.User
-import com.bogdan.codeforceswatcher.redux.AppState
+import com.bogdan.codeforceswatcher.redux.states.AppState
 import org.rekotlin.Action
 
 fun usersReducer(action: Action, state: AppState): UsersState {

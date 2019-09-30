@@ -5,7 +5,7 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.model.User
 import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.redux.Request
-import com.bogdan.codeforceswatcher.redux.ToastAction
+import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.store
 import kotlinx.coroutines.Dispatchers
