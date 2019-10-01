@@ -10,7 +10,9 @@ data class UIState(
 
     enum class HomeTab {
         USERS,
-        CONTESTS;
+        CONTESTS,
+        ACTIONS,
+        PROBLEMS;
 
         companion object {
 
@@ -22,6 +24,8 @@ data class UIState(
             get() = when (this) {
                 USERS -> R.id.navUsers
                 CONTESTS -> R.id.navContests
+                ACTIONS -> R.id.navActions
+                PROBLEMS -> R.id.navProblems
             }
     }
 
