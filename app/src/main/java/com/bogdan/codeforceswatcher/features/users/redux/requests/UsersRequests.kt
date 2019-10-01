@@ -34,8 +34,9 @@ class UsersRequests {
                 override fun onResponse(call: Call<UsersResponse>, response: Response<UsersResponse>) {
                     response.body()?.users?.let { userList ->
                         loadRatingUpdates(users, userList)
-                    }
-                        ?: store.dispatch(Failure(if (isInitiatedByUser) failedToFetchUsersError else null))
+                    } ?: store.dispatch(
+                        Failure(if (isInitiatedByUser) failedToFetchUsersError else null)
+                    )
                 }
 
                 override fun onFailure(call: Call<UsersResponse>, t: Throwable) =

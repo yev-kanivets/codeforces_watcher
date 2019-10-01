@@ -22,8 +22,6 @@ import org.rekotlin.StoreSubscriber
 
 class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
-    private val prefs = Prefs.get()
-
     private val currentTabFragment: Fragment?
         get() = supportFragmentManager.fragments.lastOrNull()
 
@@ -31,7 +29,7 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (prefs.checkRateDialog()) showAppRateDialog()
+        if (Prefs.get().checkRateDialog()) showAppRateDialog()
         initViews()
     }
 
@@ -46,7 +44,6 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     override fun newState(state: UIState) {
-
         val fragment: Fragment = when (state.selectedHomeTab) {
             UIState.HomeTab.USERS -> {
                 currentTabFragment as? UsersFragment ?: UsersFragment()
@@ -74,24 +71,32 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
         when (state.selectedHomeTab) {
             UIState.HomeTab.USERS -> {
-                llToolbar.visibility = View.VISIBLE
-                fab.setOnClickListener {
-                    val intent =
-                        Intent(this@MainActivity, AddUserActivity::class.java)
-                    startActivity(intent)
-                }
-                fab.setImageDrawable(getDrawable(R.drawable.ic_plus))
+                onUsersTabSelected()
             }
             UIState.HomeTab.CONTESTS -> {
-                llToolbar.visibility = View.GONE
-                fab.setOnClickListener {
-                    val intent =
-                        Intent(Intent.ACTION_VIEW).setData(Uri.parse(CODEFORCES_LINK))
-                    startActivity(intent)
-                }
-                fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
+                onContestsTabSelected()
             }
         }
+    }
+
+    private fun onUsersTabSelected() {
+        llToolbar.visibility = View.VISIBLE
+        fab.setOnClickListener {
+            val intent =
+                Intent(this@MainActivity, AddUserActivity::class.java)
+            startActivity(intent)
+        }
+        fab.setImageDrawable(getDrawable(R.drawable.ic_plus))
+    }
+
+    private fun onContestsTabSelected() {
+        llToolbar.visibility = View.GONE
+        fab.setOnClickListener {
+            val intent =
+                Intent(Intent.ACTION_VIEW).setData(Uri.parse(CODEFORCES_LINK))
+            startActivity(intent)
+        }
+        fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
     }
 
     private fun initViews() {
