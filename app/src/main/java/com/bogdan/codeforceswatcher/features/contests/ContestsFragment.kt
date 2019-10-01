@@ -52,8 +52,6 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
-
-        store.dispatch(ContestsRequests.FetchContests(isInitiatedByUser = false))
     }
 
     private fun initViews() {

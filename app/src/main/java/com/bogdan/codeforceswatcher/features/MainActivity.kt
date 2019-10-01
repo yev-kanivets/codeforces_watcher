@@ -8,36 +8,30 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.add_user.AddUserActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
-import com.bogdan.codeforceswatcher.receiver.StartAlarm
 import com.bogdan.codeforceswatcher.redux.actions.UIActions
 import com.bogdan.codeforceswatcher.redux.states.UIState
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.ui.AppRateDialog
 import com.bogdan.codeforceswatcher.util.Prefs
-import kotlinx.android.synthetic.main.activity_main.bottomNavigation
-import kotlinx.android.synthetic.main.activity_main.fab
-import kotlinx.android.synthetic.main.activity_main.llToolbar
-import kotlinx.android.synthetic.main.activity_main.spSort
-import kotlinx.android.synthetic.main.activity_main.toolbar
-import kotlinx.android.synthetic.main.activity_main.viewPager
+import kotlinx.android.synthetic.main.activity_main.*
 import org.rekotlin.StoreSubscriber
 
 class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     private val prefs = Prefs.get()
 
+    private val currentTabFragment: Fragment?
+        get() = supportFragmentManager.fragments.lastOrNull()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initData()
+        if (prefs.checkRateDialog()) showAppRateDialog()
         initViews()
     }
 
@@ -52,9 +46,34 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     override fun newState(state: UIState) {
+
+        val fragment: Fragment = when (state.selectedHomeTab) {
+            UIState.HomeTab.USERS -> {
+                currentTabFragment as? UsersFragment ?: UsersFragment()
+            }
+            UIState.HomeTab.CONTESTS -> {
+                currentTabFragment as? ContestsFragment ?: ContestsFragment()
+            }
+        }
+
+        if (fragment != currentTabFragment) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit()
+        }
+
+        val bottomNavSelectedItemId = when (state.selectedHomeTab) {
+            UIState.HomeTab.USERS -> R.id.navUsers
+            UIState.HomeTab.CONTESTS -> R.id.navContests
+        }
+
+        if (bottomNavigation.selectedItemId != bottomNavSelectedItemId) {
+            bottomNavigation.selectedItemId = bottomNavSelectedItemId
+        }
+
         when (state.selectedHomeTab) {
             UIState.HomeTab.USERS -> {
-                viewPager.currentItem = 0
                 llToolbar.visibility = View.VISIBLE
                 fab.setOnClickListener {
                     val intent =
@@ -64,7 +83,6 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
                 fab.setImageDrawable(getDrawable(R.drawable.ic_plus))
             }
             UIState.HomeTab.CONTESTS -> {
-                viewPager.currentItem = 1
                 llToolbar.visibility = View.GONE
                 fab.setOnClickListener {
                     val intent =
@@ -76,44 +94,9 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
         }
     }
 
-    private fun initData() {
-        if (prefs.readAlarm().isEmpty()) {
-            startAlarm()
-            prefs.writeAlarm("alarm")
-        }
-
-        prefs.addLaunchCount()
-        if (prefs.checkRateDialog()) showAppRateDialog()
-    }
-
     private fun initViews() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-
-        val adapter = ViewPagerAdapter(supportFragmentManager)
-        viewPager.adapter = adapter
-
-        val viewPagerListener = object : ViewPager.OnPageChangeListener {
-
-            override fun onPageScrollStateChanged(state: Int) {}
-
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-            }
-
-            override fun onPageSelected(position: Int) {
-                when (position) {
-                    0 -> bottomNavigation.selectedItemId = R.id.navUsers
-                    1 -> bottomNavigation.selectedItemId = R.id.navContests
-                }
-            }
-        }
-
-        viewPagerListener.onPageSelected(0)
-        viewPager.addOnPageChangeListener(viewPagerListener)
 
         spSort.background.setColorFilter(
             ContextCompat.getColor(this, R.color.white),
@@ -129,32 +112,10 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
         }
     }
 
-    private fun startAlarm() {
-        val intent = Intent(this, StartAlarm::class.java)
-        sendBroadcast(intent)
-    }
-
     private fun showAppRateDialog() {
         val rateDialog = AppRateDialog()
         rateDialog.isCancelable = false
         rateDialog.show(supportFragmentManager, "progressDialog")
-    }
-
-    class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        private val mFragmentList = listOf<Fragment>(UsersFragment(), ContestsFragment())
-        private val mFragmentTitleList = listOf("Users", "Contests")
-
-        override fun getItem(position: Int): Fragment {
-            return mFragmentList[position]
-        }
-
-        override fun getCount(): Int {
-            return mFragmentList.size
-        }
-
-        override fun getPageTitle(position: Int): CharSequence {
-            return mFragmentTitleList[position]
-        }
     }
 
     companion object {

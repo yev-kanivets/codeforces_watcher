@@ -1,6 +1,7 @@
 package com.bogdan.codeforceswatcher.redux.states
 
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.model.Contest
 import org.rekotlin.StateType
 
 data class UIState(
