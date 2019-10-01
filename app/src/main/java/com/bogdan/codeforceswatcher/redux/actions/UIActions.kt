@@ -6,5 +6,5 @@ import org.rekotlin.Action
 class UIActions {
 
     data class SelectHomeTab(val homeTab: UIState.HomeTab) : Action
-    
+
 }

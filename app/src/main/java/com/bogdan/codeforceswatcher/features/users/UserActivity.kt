@@ -80,7 +80,7 @@ class UserActivity : AppCompatActivity() {
         } else {
             tvMaxRating.text = getString(R.string.max_rating, user.maxRating.toString())
         }
-        if (user.avatar.startsWith("https:")) {
+        if (!user.avatar.startsWith("https:")) {
             Picasso.get().load("https:" + user.avatar).into(ivAvatar)
         } else {
             Picasso.get().load(user.avatar).into(ivAvatar)
