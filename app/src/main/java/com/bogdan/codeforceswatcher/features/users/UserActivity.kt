@@ -80,10 +80,11 @@ class UserActivity : AppCompatActivity() {
         } else {
             tvMaxRating.text = getString(R.string.max_rating, user.maxRating.toString())
         }
-        if (!user.avatar.startsWith("https:")) {
-            Picasso.get().load("https:" + user.avatar).into(ivAvatar)
-        } else {
+
+        if (user.avatar.startsWith("https:")) {
             Picasso.get().load(user.avatar).into(ivAvatar)
+        } else {
+            Picasso.get().load("https:" + user.avatar).into(ivAvatar)
         }
 
         title = user.handle
@@ -108,10 +109,10 @@ class UserActivity : AppCompatActivity() {
             dateFormat.format(Date(value.toLong() * 1000)).toString()
         }
 
-        for (element in user.ratingChanges) {
-            val ratingUpdateTime = element.ratingUpdateTimeSeconds.toFloat()
-            val newRating = element.newRating.toFloat()
-            val data = element.contestName
+        for (ratingChange in user.ratingChanges) {
+            val ratingUpdateTime = ratingChange.ratingUpdateTimeSeconds.toFloat()
+            val newRating = ratingChange.newRating.toFloat()
+            val data = ratingChange.contestName
 
             entries.add(Entry(ratingUpdateTime, newRating, data))
         }
