@@ -1,4 +1,4 @@
-package com.bogdan.codeforceswatcher.redux
+package com.bogdan.codeforceswatcher.redux.actions
 
 import org.rekotlin.Action
 

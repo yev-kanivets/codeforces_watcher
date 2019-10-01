@@ -2,7 +2,7 @@ package com.bogdan.codeforceswatcher.redux.middlewares
 
 import android.widget.Toast
 import com.bogdan.codeforceswatcher.CwApp
-import com.bogdan.codeforceswatcher.redux.ToastAction
+import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import org.rekotlin.Middleware
 import org.rekotlin.StateType
 

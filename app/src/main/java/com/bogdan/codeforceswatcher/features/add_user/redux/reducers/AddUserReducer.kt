@@ -3,7 +3,7 @@ package com.bogdan.codeforceswatcher.features.add_user.redux.reducers
 import com.bogdan.codeforceswatcher.features.add_user.redux.actions.AddUserActions
 import com.bogdan.codeforceswatcher.features.add_user.redux.requests.AddUserRequests
 import com.bogdan.codeforceswatcher.features.add_user.redux.states.AddUserState
-import com.bogdan.codeforceswatcher.redux.AppState
+import com.bogdan.codeforceswatcher.redux.states.AppState
 import org.rekotlin.Action
 
 fun addUserReducer(action: Action, state: AppState): AddUserState {
