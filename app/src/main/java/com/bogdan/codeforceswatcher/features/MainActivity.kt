@@ -9,8 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.features.actions.ActionsFragment
 import com.bogdan.codeforceswatcher.features.add_user.AddUserActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
+import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.redux.actions.UIActions
 import com.bogdan.codeforceswatcher.redux.states.UIState
@@ -51,6 +53,12 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
             UIState.HomeTab.CONTESTS -> {
                 currentTabFragment as? ContestsFragment ?: ContestsFragment()
             }
+            UIState.HomeTab.ACTIONS -> {
+                currentTabFragment as? ActionsFragment ?: ActionsFragment()
+            }
+            UIState.HomeTab.PROBLEMS -> {
+                currentTabFragment as? ProblemsFragment ?: ProblemsFragment()
+            }
         }
 
         if (fragment != currentTabFragment) {
@@ -63,6 +71,8 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
         val bottomNavSelectedItemId = when (state.selectedHomeTab) {
             UIState.HomeTab.USERS -> R.id.navUsers
             UIState.HomeTab.CONTESTS -> R.id.navContests
+            UIState.HomeTab.ACTIONS -> R.id.navActions
+            UIState.HomeTab.PROBLEMS -> R.id.navProblems
         }
 
         if (bottomNavigation.selectedItemId != bottomNavSelectedItemId) {
@@ -75,6 +85,10 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
             }
             UIState.HomeTab.CONTESTS -> {
                 onContestsTabSelected()
+            }
+            UIState.HomeTab.ACTIONS -> {
+            }
+            UIState.HomeTab.PROBLEMS -> {
             }
         }
     }

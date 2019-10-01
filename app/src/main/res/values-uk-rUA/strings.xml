@@ -34,6 +34,8 @@
 
     <string name="users">Користувачі</string>
     <string name="contests">Контести</string>
+    <string name="actions">Дії</string>
+    <string name="problems">Задачі</string>
 
     <string name="google_calendar_not_found">На жаль, на цьому пристрої не знайдено Google Calendar</string>
 </resources>
