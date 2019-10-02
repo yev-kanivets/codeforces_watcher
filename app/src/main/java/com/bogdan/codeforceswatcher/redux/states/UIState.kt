@@ -20,6 +20,14 @@ data class UIState(
                 enumValues<HomeTab>().find { it.menuItemId == menuItemId } ?: USERS
         }
 
+        val titleId: Int
+            get() = when (this) {
+                USERS -> R.string.empty
+                CONTESTS -> R.string.contests
+                ACTIONS -> R.string.actions
+                PROBLEMS -> R.string.problems
+            }
+
         val menuItemId: Int
             get() = when (this) {
                 USERS -> R.id.navUsers
