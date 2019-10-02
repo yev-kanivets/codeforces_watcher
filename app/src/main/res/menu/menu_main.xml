@@ -3,16 +3,26 @@
 
     <item
         android:id="@+id/navUsers"
-        android:icon="@drawable/ic_poll"
+        android:icon="@drawable/ic_users"
         android:title="@string/users" />
+
+    <item
+        android:id="@+id/navContests"
+        android:icon="@drawable/ic_contests"
+        android:title="@string/contests" />
 
     <item
         android:enabled="false"
         android:title="" />
 
     <item
-        android:id="@+id/navContests"
-        android:icon="@drawable/ic_calendar"
-        android:title="@string/contests" />
+        android:id="@+id/navActions"
+        android:icon="@drawable/ic_actions"
+        android:title="@string/actions" />
+
+    <item
+        android:id="@+id/navProblems"
+        android:icon="@drawable/ic_problems"
+        android:title="@string/problems" />
 
 </menu>
