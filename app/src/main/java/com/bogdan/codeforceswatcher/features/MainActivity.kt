@@ -75,6 +75,8 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
             UIState.HomeTab.PROBLEMS -> R.id.navProblems
         }
 
+        tvPageTitle.text = getString(state.selectedHomeTab.titleId)
+
         if (bottomNavigation.selectedItemId != bottomNavSelectedItemId) {
             bottomNavigation.selectedItemId = bottomNavSelectedItemId
         }
@@ -87,14 +89,16 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
                 onContestsTabSelected()
             }
             UIState.HomeTab.ACTIONS -> {
+                onActionsTabSelected()
             }
             UIState.HomeTab.PROBLEMS -> {
+                onProblemsTabSelected()
             }
         }
     }
 
     private fun onUsersTabSelected() {
-        llToolbar.visibility = View.VISIBLE
+        llSorting.visibility = View.VISIBLE
         fab.setOnClickListener {
             val intent =
                 Intent(this@MainActivity, AddUserActivity::class.java)
@@ -104,13 +108,21 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     private fun onContestsTabSelected() {
-        llToolbar.visibility = View.GONE
+        llSorting.visibility = View.GONE
         fab.setOnClickListener {
             val intent =
                 Intent(Intent.ACTION_VIEW).setData(Uri.parse(CODEFORCES_LINK))
             startActivity(intent)
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
+    }
+
+    private fun onActionsTabSelected() {
+        llSorting.visibility = View.GONE
+    }
+
+    private fun onProblemsTabSelected() {
+        llSorting.visibility = View.GONE
     }
 
     private fun initViews() {
