@@ -32,5 +32,6 @@
     <string name="contests">Contests</string>
     <string name="actions">Actions</string>
     <string name="problems">Problems</string>
+    <string name="empty" translatable="false" />
     <string name="google_calendar_not_found">Sorry, but no Google Calendar found on this device</string>
 </resources>
