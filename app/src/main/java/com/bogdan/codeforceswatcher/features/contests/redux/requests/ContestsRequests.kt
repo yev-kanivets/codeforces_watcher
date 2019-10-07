@@ -2,7 +2,7 @@ package com.bogdan.codeforceswatcher.features.contests.redux.requests
 
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.model.Contest
+import com.bogdan.codeforceswatcher.features.contests.models.Contest
 import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.redux.Request
@@ -19,7 +19,7 @@ class ContestsRequests {
         override fun execute() {
             RestClient.getContests().enqueue(object : Callback<ContestsResponse> {
 
-                val noInternetConnectionError = CwApp.app.getString(R.string.no_internet_connection)
+                val noInternetConnectionError = CwApp.app.getString(R.string.no_connection)
 
                 override fun onResponse(
                     call: Call<ContestsResponse>,

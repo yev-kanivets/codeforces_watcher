@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.bogdan.codeforceswatcher.model.Contest
+import com.bogdan.codeforceswatcher.features.contests.models.Contest
 
 @Dao
 interface ContestDao {

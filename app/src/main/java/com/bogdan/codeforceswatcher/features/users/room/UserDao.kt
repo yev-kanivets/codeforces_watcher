@@ -1,7 +1,7 @@
 package com.bogdan.codeforceswatcher.features.users.room
 
 import androidx.room.*
-import com.bogdan.codeforceswatcher.model.User
+import com.bogdan.codeforceswatcher.features.users.models.User
 
 @Dao
 interface UserDao {

@@ -1,4 +1,4 @@
-package com.bogdan.codeforceswatcher.model
+package com.bogdan.codeforceswatcher.features.contests.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

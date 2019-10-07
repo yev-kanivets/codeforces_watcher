@@ -12,7 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.model.Contest
+import com.bogdan.codeforceswatcher.features.contests.models.Contest
 import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.contests_list_view.view.ivAddToCalendar
 import kotlinx.android.synthetic.main.contests_list_view.view.tvContestName

@@ -1,6 +1,6 @@
 package com.bogdan.codeforceswatcher.features.users.redux.states
 
-import com.bogdan.codeforceswatcher.model.User
+import com.bogdan.codeforceswatcher.features.users.models.User
 import org.rekotlin.StateType
 
 data class UsersState(

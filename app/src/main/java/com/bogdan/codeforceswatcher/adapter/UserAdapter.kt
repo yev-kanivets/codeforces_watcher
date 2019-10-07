@@ -19,7 +19,7 @@ import com.bogdan.codeforceswatcher.R.color.orange
 import com.bogdan.codeforceswatcher.R.color.purple
 import com.bogdan.codeforceswatcher.R.color.red
 import com.bogdan.codeforceswatcher.features.users.UserActivity
-import com.bogdan.codeforceswatcher.model.User
+import com.bogdan.codeforceswatcher.features.users.models.User
 import kotlinx.android.synthetic.main.users_list_view.view.ivDelta
 import kotlinx.android.synthetic.main.users_list_view.view.tvHandle
 import kotlinx.android.synthetic.main.users_list_view.view.tvLastRatingUpdate

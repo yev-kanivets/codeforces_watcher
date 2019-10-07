@@ -2,20 +2,14 @@ package com.bogdan.codeforceswatcher.features.users.redux.requests
 
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.add_user.redux.requests.AddUserRequests
-import com.bogdan.codeforceswatcher.model.User
-import com.bogdan.codeforceswatcher.network.RestClient
+import com.bogdan.codeforceswatcher.features.users.models.User
+import com.bogdan.codeforceswatcher.network.Error
+import com.bogdan.codeforceswatcher.network.getUsers
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.store
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import org.rekotlin.Action
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class UsersRequests {
 
@@ -25,63 +19,56 @@ class UsersRequests {
 
         override fun execute() {
             val users: List<User> = DatabaseClient.userDao.getAll()
-
-            val userCall = RestClient.getUsers(getHandles(users))
-            userCall.enqueue(object : Callback<UsersResponse> {
-
-                val failedToFetchUsersError = CwApp.app.getString(R.string.failed_to_fetch_users)
-
-                override fun onResponse(call: Call<UsersResponse>, response: Response<UsersResponse>) {
-                    response.body()?.users?.let { userList ->
-                        loadRatingUpdates(users, userList)
-                    } ?: store.dispatch(
-                        Failure(if (isInitiatedByUser) failedToFetchUsersError else null)
-                    )
-                }
-
-                override fun onFailure(call: Call<UsersResponse>, t: Throwable) =
-                    store.dispatch(Failure(if (isInitiatedByUser) CwApp.app.resources.getString(R.string.no_internet_connection) else null))
-
-            })
-        }
-
-        private fun loadRatingUpdates(
-            roomUserList: List<User>,
-            userList: List<User>
-        ) {
-            Thread {
-                val notificationData: MutableList<Pair<String, Int>> = mutableListOf()
-
-                for ((indexOfUser, user) in userList.withIndex()) {
-                    val response = RestClient.getRating(user.handle).execute()
-                    user.id = roomUserList[indexOfUser].id
-                    user.ratingChanges = roomUserList[indexOfUser].ratingChanges
-
-                    response.body()?.ratingChanges?.let { ratingChanges ->
-                        if (ratingChanges != user.ratingChanges) {
-                            user.ratingChanges = ratingChanges
-                            DatabaseClient.userDao.update(user)
-
-                            val ratingChange = ratingChanges.lastOrNull()
-                            ratingChange?.let {
-                                val delta = ratingChange.newRating - ratingChange.oldRating
-                                notificationData.add(Pair(user.handle, delta))
-                            }
-                        }
+            getUsers(getHandles(users)) {
+                val updatedUsers = it.first
+                val error = it.second
+                if (error != null) {
+                    when (error) {
+                        Error.INTERNET ->
+                            store.dispatch(
+                                Failure(
+                                    if (isInitiatedByUser)
+                                        CwApp.app.resources.getString(R.string.no_connection)
+                                    else
+                                        null
+                                )
+                            )
+                        Error.RESPONSE ->
+                            store.dispatch(
+                                Failure(
+                                    if (isInitiatedByUser)
+                                        CwApp.app.resources.getString(R.string.failed_to_fetch_users)
+                                    else
+                                        null
+                                )
+                            )
+                    }
+                } else {
+                    if (updatedUsers != null) {
+                        store.dispatch(
+                            Success(updatedUsers, getDifferenceAndUpdate(users, updatedUsers), isInitiatedByUser)
+                        )
                     }
                 }
-
-                dispatchSuccess(userList, notificationData)
-            }.start()
-
+            }
         }
 
-        private fun dispatchSuccess(userList: List<User>, result: List<Pair<String, Int>>) {
-            runBlocking {
-                withContext(Dispatchers.Main) {
-                    store.dispatch(Success(userList, result, isInitiatedByUser))
+        private fun getDifferenceAndUpdate(users: List<User>, updatedUsers: List<User>): List<Pair<String, Int>> {
+            val difference: MutableList<Pair<String, Int>> = mutableListOf()
+            for (user in updatedUsers) {
+                users.find { it.handle == user.handle }?.let { foundUser ->
+                    user.id = foundUser.id
+
+                    if (foundUser.ratingChanges != user.ratingChanges) {
+                        foundUser.ratingChanges.lastOrNull()?.let { ratingChange ->
+                            val delta = ratingChange.newRating - ratingChange.oldRating
+                            difference.add(Pair(user.handle, delta))
+                        }
+                    }
+                    DatabaseClient.userDao.update(user)
                 }
             }
+            return difference
         }
 
         private fun getHandles(roomUserList: List<User>): String {
@@ -92,7 +79,10 @@ class UsersRequests {
             return handles
         }
 
-        data class Success(val users: List<User>, val notificationData: List<Pair<String, Int>>, val isUserInitiated: Boolean) : Action
+        data class Success(
+            val users: List<User>,
+            val notificationData: List<Pair<String, Int>>, val isUserInitiated: Boolean
+        ) : Action
 
         data class Failure(override val message: String?) : ToastAction
     }

@@ -16,7 +16,7 @@ import com.bogdan.codeforceswatcher.features.users.redux.actions.UsersActions
 import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState
 import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState.SortType.Companion.getSortType
 import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersRequests
-import com.bogdan.codeforceswatcher.model.User
+import com.bogdan.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.fragment_users.*

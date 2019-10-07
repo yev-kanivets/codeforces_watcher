@@ -1,8 +1,8 @@
-package com.bogdan.codeforceswatcher.features.contests.redux
+package com.bogdan.codeforceswatcher.features.contests.redux.reducers
 
 import com.bogdan.codeforceswatcher.features.contests.redux.requests.ContestsRequests
 import com.bogdan.codeforceswatcher.features.contests.redux.states.ContestsState
-import com.bogdan.codeforceswatcher.model.Contest
+import com.bogdan.codeforceswatcher.features.contests.models.Contest
 import com.bogdan.codeforceswatcher.redux.states.AppState
 import org.rekotlin.Action
 
