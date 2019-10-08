@@ -37,7 +37,10 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     override fun onStart() {
         super.onStart()
-        store.subscribe(this) { state -> state.select { it.ui } }
+        store.subscribe(this) { state ->
+            state.skipRepeats { oldState, newState -> oldState.ui == newState.ui }
+                .select { it.ui }
+        }
     }
 
     override fun onStop() {

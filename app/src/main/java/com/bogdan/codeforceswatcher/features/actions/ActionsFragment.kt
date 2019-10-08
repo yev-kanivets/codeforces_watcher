@@ -10,7 +10,10 @@ class ActionsFragment : Fragment(), StoreSubscriber<ActionsState> {
 
     override fun onStart() {
         super.onStart()
-        store.subscribe(this) { state -> state.select { it.actions } }
+        store.subscribe(this) { state ->
+            state.skipRepeats { oldState, newState -> oldState.actions == newState.actions }
+                .select { it.actions }
+        }
         store.dispatch(ActionsRequests.FetchActions())
     }
 

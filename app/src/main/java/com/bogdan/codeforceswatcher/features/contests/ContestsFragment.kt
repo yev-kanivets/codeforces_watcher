@@ -24,7 +24,10 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun onStart() {
         super.onStart()
-        store.subscribe(this) { state -> state.select { it.contests } }
+        store.subscribe(this) { state ->
+            state.skipRepeats { oldState, newState -> oldState.contests == newState.contests }
+                .select { it.contests }
+        }
     }
 
     override fun onStop() {

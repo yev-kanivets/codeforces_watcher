@@ -37,7 +37,10 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun onStart() {
         super.onStart()
-        store.subscribe(this) { state -> state.select { it.users } }
+        store.subscribe(this) { state ->
+            state.skipRepeats { oldState, newState -> oldState.users == newState.users }
+                .select { it.users }
+        }
     }
 
     override fun onStop() {
