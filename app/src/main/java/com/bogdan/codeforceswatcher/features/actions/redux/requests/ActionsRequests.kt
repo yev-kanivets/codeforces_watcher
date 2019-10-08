@@ -3,7 +3,9 @@ package com.bogdan.codeforceswatcher.features.actions.redux.requests
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.actions.models.Action
+import com.bogdan.codeforceswatcher.network.Error
 import com.bogdan.codeforceswatcher.network.RestClient
+import com.bogdan.codeforceswatcher.network.getUsers
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
@@ -18,25 +20,60 @@ class ActionsRequests {
         override fun execute() {
             RestClient.getActions().enqueue(object : Callback<ActionsResponse> {
 
-                val noInternetConnectionError = CwApp.app.getString(R.string.no_connection)
+                val noConnection = CwApp.app.getString(R.string.no_connection)
 
                 override fun onResponse(
                     call: Call<ActionsResponse>,
                     response: Response<ActionsResponse>
                 ) {
                     response.body()?.actions?.let { actions ->
-
-                        //TODO upload content blogEntry and user's images
-                        store.dispatch(Success(actions))
-                    } ?: store.dispatch(Failure(noInternetConnectionError))
+                        formUIDataAndDispatch(actions)
+                    } ?: store.dispatch(Failure(noConnection))
                 }
 
                 override fun onFailure(call: Call<ActionsResponse>, t: Throwable) {
-                    store.dispatch(Failure(noInternetConnectionError))
+                    store.dispatch(Failure(noConnection))
                 }
             })
         }
 
+        private fun formUIDataAndDispatch(actions: List<Action>) {
+            val uiData: MutableList<Action> = mutableListOf()
+            var commentatorsHandles = ""
+            for (action in actions) {
+                if (action.comment != null) {
+                    commentatorsHandles += "${action.comment.commentatorHandle};"
+                }
+            }
+
+            getUsers(commentatorsHandles) {
+                val error = it.second
+                val users = it.first
+                if (error != null) {
+                    when (error) {
+                        Error.INTERNET ->
+                            store.dispatch(
+                                Failure(CwApp.app.resources.getString(R.string.no_connection))
+                            )
+                        Error.RESPONSE ->
+                            store.dispatch(
+                                Failure(CwApp.app.resources.getString(R.string.no_connection))
+                            )
+                    }
+                } else {
+                    for (action in actions) {
+                        if (action.comment != null) {
+                            users?.find { user -> user.handle == action.comment.commentatorHandle }
+                                ?.let { foundUser ->
+                                    action.comment.commentatorAvatar = foundUser.avatar
+                                    uiData.add(action)
+                                }
+                        }
+                    }
+                    store.dispatch(Success(uiData))
+                }
+            }
+        }
 
         data class Success(val actions: List<Action>) : org.rekotlin.Action
 

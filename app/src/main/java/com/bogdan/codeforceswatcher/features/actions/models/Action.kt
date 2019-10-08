@@ -6,5 +6,5 @@ data class Action(
     @SerializedName("timeSeconds")
     val time: Long,
     val blogEntry: BlogEntry,
-    val comment: Comment
+    val comment: Comment?
 )

@@ -15,6 +15,9 @@ fun actionsReducer(action: Action, state: AppState): ActionsState {
         is ActionsRequests.FetchActions -> {
             newState = newState.copy(status = ActionsState.Status.PENDING)
         }
+        is ActionsRequests.FetchActions.Failure -> {
+            newState = newState.copy(status = ActionsState.Status.IDLE)
+        }
     }
 
     return newState
