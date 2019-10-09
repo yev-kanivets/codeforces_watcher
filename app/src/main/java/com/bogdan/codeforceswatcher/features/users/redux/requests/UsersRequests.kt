@@ -19,7 +19,7 @@ class UsersRequests {
 
         override fun execute() {
             val users: List<User> = DatabaseClient.userDao.getAll()
-            getUsers(getHandles(users)) {
+            getUsers(getHandles(users), true) {
                 val updatedUsers = it.first
                 val error = it.second
                 if (error != null) {

@@ -14,6 +14,7 @@ class ActionsFragment : Fragment(), StoreSubscriber<ActionsState> {
             state.skipRepeats { oldState, newState -> oldState.actions == newState.actions }
                 .select { it.actions }
         }
+
         store.dispatch(ActionsRequests.FetchActions())
     }
 

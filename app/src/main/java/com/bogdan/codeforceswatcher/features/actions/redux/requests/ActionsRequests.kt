@@ -46,7 +46,7 @@ class ActionsRequests {
                 }
             }
 
-            getUsers(commentatorsHandles) {
+            getUsers(commentatorsHandles, false) {
                 val error = it.second
                 val users = it.first
                 if (error != null) {

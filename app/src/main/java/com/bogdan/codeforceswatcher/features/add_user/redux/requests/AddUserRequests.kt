@@ -17,7 +17,7 @@ class AddUserRequests {
         val handle: String
     ) : Request() {
         override fun execute() {
-            getUsers(handle) {
+            getUsers(handle, true) {
                 val updatedUsers = it.first
                 val error = it.second
 

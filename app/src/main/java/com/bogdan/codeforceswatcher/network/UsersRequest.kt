@@ -11,14 +11,17 @@ import retrofit2.Response
 
 enum class Error { INTERNET, RESPONSE }
 
-fun getUsers(handles: String, giveUsers: (Pair<List<User>?, Error?>) -> Unit) {
+fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean, giveUsers: (Pair<List<User>?, Error?>) -> Unit) {
     val userCall = RestClient.getUsers(handles)
     userCall.enqueue(object : Callback<UsersResponse> {
 
         override fun onResponse(call: Call<UsersResponse>, response: Response<UsersResponse>) {
             response.body()?.users?.let { users ->
                 println("in in")
-                loadRatingUpdates(users, giveUsers)
+                if (isRatingUpdatesNeeded)
+                    loadRatingUpdates(users, giveUsers)
+                else
+                    giveUsers(Pair(users, null))
             } ?: giveUsers(Pair(null, Error.RESPONSE))
         }
 
