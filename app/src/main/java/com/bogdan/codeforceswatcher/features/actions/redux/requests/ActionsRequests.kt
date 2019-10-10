@@ -49,29 +49,29 @@ class ActionsRequests {
             getUsers(commentatorsHandles, false) {
                 val error = it.second
                 val users = it.first
-                if (error != null) {
-                    when (error) {
-                        Error.INTERNET ->
-                            store.dispatch(
-                                Failure(CwApp.app.resources.getString(R.string.no_connection))
-                            )
-                        Error.RESPONSE ->
-                            store.dispatch(
-                                Failure(CwApp.app.resources.getString(R.string.no_connection))
-                            )
-                    }
-                } else {
+                if (error == null) {
                     for (action in actions) {
-                        if (action.comment != null) {
-                            users?.find { user -> user.handle == action.comment.commentatorHandle }
-                                ?.let { foundUser ->
-                                    action.comment.commentatorAvatar = foundUser.avatar
-                                    uiData.add(action)
-                                }
-                        }
+                        action.comment?.commentatorAvatar =
+                            users?.find { user -> user.handle == action.comment?.commentatorHandle }?.avatar
+                        if (action.comment != null) uiData.add(action)
                     }
                     store.dispatch(Success(uiData))
+                } else {
+                    dispatchError(error)
                 }
+            }
+        }
+
+        private fun dispatchError(error: Error) {
+            when (error) {
+                Error.INTERNET ->
+                    store.dispatch(
+                        Failure(CwApp.app.resources.getString(R.string.no_connection))
+                    )
+                Error.RESPONSE ->
+                    store.dispatch(
+                        Failure(CwApp.app.resources.getString(R.string.no_connection))
+                    )
             }
         }
 

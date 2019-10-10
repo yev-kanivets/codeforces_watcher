@@ -23,26 +23,7 @@ class UsersRequests {
                 val updatedUsers = it.first
                 val error = it.second
                 if (error != null) {
-                    when (error) {
-                        Error.INTERNET ->
-                            store.dispatch(
-                                Failure(
-                                    if (isInitiatedByUser)
-                                        CwApp.app.resources.getString(R.string.no_connection)
-                                    else
-                                        null
-                                )
-                            )
-                        Error.RESPONSE ->
-                            store.dispatch(
-                                Failure(
-                                    if (isInitiatedByUser)
-                                        CwApp.app.resources.getString(R.string.failed_to_fetch_users)
-                                    else
-                                        null
-                                )
-                            )
-                    }
+                    dispatchError(error)
                 } else {
                     if (updatedUsers != null) {
                         store.dispatch(
@@ -50,6 +31,29 @@ class UsersRequests {
                         )
                     }
                 }
+            }
+        }
+
+        private fun dispatchError(error: Error) {
+            when (error) {
+                Error.INTERNET ->
+                    store.dispatch(
+                        Failure(
+                            if (isInitiatedByUser)
+                                CwApp.app.resources.getString(R.string.no_connection)
+                            else
+                                null
+                        )
+                    )
+                Error.RESPONSE ->
+                    store.dispatch(
+                        Failure(
+                            if (isInitiatedByUser)
+                                CwApp.app.resources.getString(R.string.failed_to_fetch_users)
+                            else
+                                null
+                        )
+                    )
             }
         }
 

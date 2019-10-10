@@ -22,21 +22,25 @@ class AddUserRequests {
                 val error = it.second
 
                 if (error != null) {
-                    when (error) {
-                        Error.INTERNET ->
-                            store.dispatch(
-                                Failure(CwApp.app.resources.getString(R.string.no_connection))
-                            )
-                        Error.RESPONSE ->
-                            store.dispatch(
-                                Failure(CwApp.app.resources.getString(R.string.failed_to_fetch_users))
-                            )
-                    }
+                    dispatchError(error)
                 } else {
                     if (updatedUsers != null) {
                         updatedUsers.firstOrNull()?.let { user -> addUser(user) }
                     }
                 }
+            }
+        }
+
+        private fun dispatchError(error: Error) {
+            when (error) {
+                Error.INTERNET ->
+                    store.dispatch(
+                        Failure(CwApp.app.resources.getString(R.string.no_connection))
+                    )
+                Error.RESPONSE ->
+                    store.dispatch(
+                        Failure(CwApp.app.resources.getString(R.string.failed_to_fetch_users))
+                    )
             }
         }
 
