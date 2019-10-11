@@ -1,12 +1,23 @@
 package com.bogdan.codeforceswatcher.features.actions
 
+import android.content.Intent
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.actions.redux.requests.ActionsRequests
 import com.bogdan.codeforceswatcher.features.actions.redux.states.ActionsState
 import com.bogdan.codeforceswatcher.store
+import kotlinx.android.synthetic.main.fragment_users.*
 import org.rekotlin.StoreSubscriber
 
-class ActionsFragment : Fragment(), StoreSubscriber<ActionsState> {
+class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
+    StoreSubscriber<ActionsState> {
+
+    private lateinit var actionsAdapter: ActionsAdapter
 
     override fun onStart() {
         super.onStart()
@@ -14,8 +25,6 @@ class ActionsFragment : Fragment(), StoreSubscriber<ActionsState> {
             state.skipRepeats { oldState, newState -> oldState.actions == newState.actions }
                 .select { it.actions }
         }
-
-        store.dispatch(ActionsRequests.FetchActions())
     }
 
     override fun onStop() {
@@ -24,7 +33,31 @@ class ActionsFragment : Fragment(), StoreSubscriber<ActionsState> {
     }
 
     override fun newState(state: ActionsState) {
-        println(state.status)
-        println(state.actions)
+        swipeToRefresh.isRefreshing = (state.status == ActionsState.Status.PENDING)
+        actionsAdapter.setItems(state.actions)
+    }
+
+    override fun onRefresh() {
+        store.dispatch(ActionsRequests.FetchActions(true))
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = inflater.inflate(R.layout.fragment_actions, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViews()
+    }
+
+    private fun initViews() {
+        swipeToRefresh.setOnRefreshListener(this)
+        actionsAdapter = ActionsAdapter(requireContext()) { position ->
+            val action = store.state.actions.actions[position]
+            startActivity(Intent(context, ActionActivity::class.java))
+        }
+        recyclerView.adapter = actionsAdapter
     }
 }

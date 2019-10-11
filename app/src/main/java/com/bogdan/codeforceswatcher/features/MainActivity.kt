@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.features.actions.ActionActivity
 import com.bogdan.codeforceswatcher.features.actions.ActionsFragment
 import com.bogdan.codeforceswatcher.features.add_user.AddUserActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
@@ -103,9 +104,7 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     private fun onUsersTabSelected() {
         llSorting.visibility = View.VISIBLE
         fab.setOnClickListener {
-            val intent =
-                Intent(this@MainActivity, AddUserActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this@MainActivity, AddUserActivity::class.java))
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_plus))
     }
@@ -122,10 +121,14 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     private fun onActionsTabSelected() {
         llSorting.visibility = View.GONE
+        fab.setOnClickListener(null)
+        fab.setImageDrawable(getDrawable(R.drawable.ic_share))
     }
 
     private fun onProblemsTabSelected() {
         llSorting.visibility = View.GONE
+        fab.setOnClickListener(null)
+        fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
     }
 
     private fun initViews() {

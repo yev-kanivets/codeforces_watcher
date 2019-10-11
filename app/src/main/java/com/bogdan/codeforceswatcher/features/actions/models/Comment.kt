@@ -5,5 +5,6 @@ data class Comment(
     val text: String,
     val commentatorHandle: String,
     val creationTimeSeconds: Long,
-    var commentatorAvatar: String?
+    var commentatorAvatar: String,
+    var commentatorRank: String?
 )

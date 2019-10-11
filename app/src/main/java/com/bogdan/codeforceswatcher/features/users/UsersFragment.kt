@@ -25,7 +25,7 @@ import org.rekotlin.StoreSubscriber
 class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     StoreSubscriber<UsersState> {
 
-    private val userAdapter by lazy { UserAdapter(requireContext()) }
+    private val usersAdapter by lazy { UserAdapter(requireContext()) }
 
     private lateinit var spSort: AppCompatSpinner
 
@@ -50,7 +50,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun newState(state: UsersState) {
         swipeToRefresh.isRefreshing = (state.status == UsersState.Status.PENDING)
-        userAdapter.setItems(state.users.sort(state.sortType))
+        usersAdapter.setItems(state.users.sort(state.sortType))
     }
 
     override fun onCreateView(
@@ -67,7 +67,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     private fun initViews() {
         swipeToRefresh.setOnRefreshListener(this)
 
-        recyclerView.adapter = userAdapter
+        recyclerView.adapter = usersAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         spSort = requireActivity().findViewById(R.id.spSort)

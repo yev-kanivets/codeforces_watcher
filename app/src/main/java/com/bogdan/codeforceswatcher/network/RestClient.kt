@@ -36,7 +36,7 @@ object RestClient {
 
     fun getRating(handle: String) = codeforcesApi.getRating(handle)
 
-    fun getActions(maxCount: Int = 30) = codeforcesApi.getActions(maxCount)
+    fun getActions(maxCount: Int = 100) = codeforcesApi.getActions(maxCount)
 
     fun getContests() = codeforcesApi.getContests()
 }

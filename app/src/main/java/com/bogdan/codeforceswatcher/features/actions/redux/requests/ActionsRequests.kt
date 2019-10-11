@@ -15,7 +15,9 @@ import retrofit2.Response
 
 class ActionsRequests {
 
-    class FetchActions : Request() {
+    class FetchActions(
+        val isInitializedByUser: Boolean
+    ) : Request() {
 
         override fun execute() {
             RestClient.getActions().enqueue(object : Callback<ActionsResponse> {
@@ -28,11 +30,11 @@ class ActionsRequests {
                 ) {
                     response.body()?.actions?.let { actions ->
                         formUIDataAndDispatch(actions)
-                    } ?: store.dispatch(Failure(noConnection))
+                    } ?: store.dispatch(Failure(if (isInitializedByUser) noConnection else null))
                 }
 
                 override fun onFailure(call: Call<ActionsResponse>, t: Throwable) {
-                    store.dispatch(Failure(noConnection))
+                    store.dispatch(Failure(if (isInitializedByUser) noConnection else null))
                 }
             })
         }
@@ -51,9 +53,13 @@ class ActionsRequests {
                 val users = it.first
                 if (error == null) {
                     for (action in actions) {
-                        action.comment?.commentatorAvatar =
-                            users?.find { user -> user.handle == action.comment?.commentatorHandle }?.avatar
-                        if (action.comment != null) uiData.add(action)
+                        if (action.comment != null) {
+                            users?.find { user -> user.handle == action.comment.commentatorHandle }?.let { foundUser ->
+                                action.comment.commentatorAvatar = foundUser.avatar
+                                action.comment.commentatorRank = foundUser.rank
+                            }
+                            uiData.add(action)
+                        }
                     }
                     store.dispatch(Success(uiData))
                 } else {
@@ -66,11 +72,21 @@ class ActionsRequests {
             when (error) {
                 Error.INTERNET ->
                     store.dispatch(
-                        Failure(CwApp.app.resources.getString(R.string.no_connection))
+                        Failure(
+                            if (isInitializedByUser)
+                                CwApp.app.resources.getString(R.string.no_connection)
+                            else
+                                null
+                        )
                     )
                 Error.RESPONSE ->
                     store.dispatch(
-                        Failure(CwApp.app.resources.getString(R.string.no_connection))
+                        Failure(
+                            if (isInitializedByUser)
+                                CwApp.app.resources.getString(R.string.no_connection)
+                            else
+                                null
+                        )
                     )
             }
         }

@@ -17,7 +17,6 @@ fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean, giveUsers: (Pair<L
 
         override fun onResponse(call: Call<UsersResponse>, response: Response<UsersResponse>) {
             response.body()?.users?.let { users ->
-                println("in in")
                 if (isRatingUpdatesNeeded)
                     loadRatingUpdates(users, giveUsers)
                 else
@@ -44,7 +43,6 @@ private fun loadRatingUpdates(
             } ?: break
             countTrueUsers++
         }
-        println("Counter = $countTrueUsers")
 
         giveUsersOnMainThread(if (countTrueUsers < userList.size) {
             Pair(null, Error.RESPONSE)
