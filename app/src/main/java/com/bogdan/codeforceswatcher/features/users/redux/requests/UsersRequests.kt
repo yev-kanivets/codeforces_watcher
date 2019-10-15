@@ -35,24 +35,17 @@ class UsersRequests {
         }
 
         private fun dispatchError(error: Error) {
+            val noConnectionError = CwApp.app.resources.getString(R.string.no_connection)
+            val fetchingUsersError = CwApp.app.resources.getString(R.string.failed_to_fetch_users)
+
             when (error) {
                 Error.INTERNET ->
                     store.dispatch(
-                        Failure(
-                            if (isInitiatedByUser)
-                                CwApp.app.resources.getString(R.string.no_connection)
-                            else
-                                null
-                        )
+                        Failure(if (isInitiatedByUser) noConnectionError else null)
                     )
                 Error.RESPONSE ->
                     store.dispatch(
-                        Failure(
-                            if (isInitiatedByUser)
-                                CwApp.app.resources.getString(R.string.failed_to_fetch_users)
-                            else
-                                null
-                        )
+                        Failure(if (isInitiatedByUser) fetchingUsersError else null)
                     )
             }
         }

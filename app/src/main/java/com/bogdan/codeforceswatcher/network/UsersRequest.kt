@@ -11,28 +11,29 @@ import retrofit2.Response
 
 enum class Error { INTERNET, RESPONSE }
 
-fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean, giveUsers: (Pair<List<User>?, Error?>) -> Unit) {
+fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean, onCompleted: (Pair<List<User>?, Error?>) -> Unit) {
     val userCall = RestClient.getUsers(handles)
     userCall.enqueue(object : Callback<UsersResponse> {
 
         override fun onResponse(call: Call<UsersResponse>, response: Response<UsersResponse>) {
             response.body()?.users?.let { users ->
-                if (isRatingUpdatesNeeded)
-                    loadRatingUpdates(users, giveUsers)
-                else
-                    giveUsers(Pair(users, null))
-            } ?: giveUsers(Pair(null, Error.RESPONSE))
+                if (isRatingUpdatesNeeded) {
+                    loadRatingUpdates(users, onCompleted)
+                } else {
+                    onCompleted(Pair(users, null))
+                }
+            } ?: onCompleted(Pair(null, Error.RESPONSE))
         }
 
         override fun onFailure(call: Call<UsersResponse>, t: Throwable) {
-            giveUsers(Pair(null, Error.INTERNET))
+            onCompleted(Pair(null, Error.INTERNET))
         }
     })
 }
 
 private fun loadRatingUpdates(
     userList: List<User>,
-    giveUsers: (Pair<List<User>?, Error?>) -> Unit
+    onCompleted: (Pair<List<User>?, Error?>) -> Unit
 ) {
     Thread {
         var countTrueUsers = 0
@@ -44,19 +45,19 @@ private fun loadRatingUpdates(
             countTrueUsers++
         }
 
-        giveUsersOnMainThread(if (countTrueUsers < userList.size) {
+        returnUsersOnMainThread(if (countTrueUsers < userList.size) {
             Pair(null, Error.RESPONSE)
         } else {
             Pair(userList, null)
-        }, giveUsers)
+        }, onCompleted)
     }.start()
 
 }
 
-private fun giveUsersOnMainThread(result: Pair<List<User>?, Error?>, giveUsers: (Pair<List<User>?, Error?>) -> Unit) {
+private fun returnUsersOnMainThread(result: Pair<List<User>?, Error?>, onCompleted: (Pair<List<User>?, Error?>) -> Unit) {
     runBlocking {
         withContext(Dispatchers.Main) {
-            giveUsers(result)
+            onCompleted(result)
         }
     }
 }

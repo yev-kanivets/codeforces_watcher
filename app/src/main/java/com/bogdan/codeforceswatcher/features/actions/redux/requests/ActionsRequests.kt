@@ -2,7 +2,7 @@ package com.bogdan.codeforceswatcher.features.actions.redux.requests
 
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.actions.models.Action
+import com.bogdan.codeforceswatcher.features.actions.models.CFAction
 import com.bogdan.codeforceswatcher.network.Error
 import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.network.getUsers
@@ -21,7 +21,6 @@ class ActionsRequests {
 
         override fun execute() {
             RestClient.getActions().enqueue(object : Callback<ActionsResponse> {
-
                 val noConnection = CwApp.app.getString(R.string.no_connection)
 
                 override fun onResponse(
@@ -39,8 +38,8 @@ class ActionsRequests {
             })
         }
 
-        private fun formUIDataAndDispatch(actions: List<Action>) {
-            val uiData: MutableList<Action> = mutableListOf()
+        private fun formUIDataAndDispatch(actions: List<CFAction>) {
+            val uiData: MutableList<CFAction> = mutableListOf()
             var commentatorsHandles = ""
             for (action in actions) {
                 if (action.comment != null) {
@@ -54,10 +53,11 @@ class ActionsRequests {
                 if (error == null) {
                     for (action in actions) {
                         if (action.comment != null) {
-                            users?.find { user -> user.handle == action.comment.commentatorHandle }?.let { foundUser ->
-                                action.comment.commentatorAvatar = foundUser.avatar
-                                action.comment.commentatorRank = foundUser.rank
-                            }
+                            users?.find { user -> user.handle == action.comment.commentatorHandle }
+                                ?.let { foundUser ->
+                                    action.comment.commentatorAvatar = foundUser.avatar
+                                    action.comment.commentatorRank = foundUser.rank
+                                }
                             uiData.add(action)
                         }
                     }
@@ -69,29 +69,16 @@ class ActionsRequests {
         }
 
         private fun dispatchError(error: Error) {
+            val noConnectionError = CwApp.app.resources.getString(R.string.no_connection)
             when (error) {
-                Error.INTERNET ->
+                Error.INTERNET, Error.RESPONSE ->
                     store.dispatch(
-                        Failure(
-                            if (isInitializedByUser)
-                                CwApp.app.resources.getString(R.string.no_connection)
-                            else
-                                null
-                        )
-                    )
-                Error.RESPONSE ->
-                    store.dispatch(
-                        Failure(
-                            if (isInitializedByUser)
-                                CwApp.app.resources.getString(R.string.no_connection)
-                            else
-                                null
-                        )
+                        Failure(if (isInitializedByUser) noConnectionError else null)
                     )
             }
         }
 
-        data class Success(val actions: List<Action>) : org.rekotlin.Action
+        data class Success(val actions: List<CFAction>) : org.rekotlin.Action
 
         data class Failure(override val message: String?) : ToastAction
     }

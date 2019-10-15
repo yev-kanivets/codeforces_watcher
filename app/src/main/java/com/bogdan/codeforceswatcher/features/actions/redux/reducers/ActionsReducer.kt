@@ -10,7 +10,9 @@ fun actionsReducer(action: Action, state: AppState): ActionsState {
 
     when (action) {
         is ActionsRequests.FetchActions.Success -> {
-            newState = newState.copy(actions = action.actions, status = ActionsState.Status.IDLE)
+            newState = newState.copy(
+                actions = action.actions, status = ActionsState.Status.IDLE
+            )
         }
         is ActionsRequests.FetchActions -> {
             newState = newState.copy(status = ActionsState.Status.PENDING)

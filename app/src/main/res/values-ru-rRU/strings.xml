@@ -37,26 +37,5 @@
     <string name="problems">Задачи</string>
 
     <string name="google_calendar_not_found">Извините, но на этом устройстве не найден Google Calendar</string>
-    <string name="commented_by">"Прокомментировал "</string>
-
-    <string name="days_ago">" - %1$d %2$s назад"</string>
-    <string name="hours_ago">" - %1$d %2$s назад"</string>
-    <string name="minutes_ago">" - %1$d %2$s назад"</string>
-    <string name="seconds_ago">" - %1$d %2$s назад</string>
-
-    <string name="one_second_ending">секунду</string>
-    <string name="from_5_until_20_seconds_endings">секунд</string>
-    <string name="from_2_until_4_seconds_endings">секунды</string>
-
-    <string name="one_minute_ending">минуту</string>
-    <string name="from_5_until_20_minutes_endings">минут</string>
-    <string name="from_2_until_4_minutes_endings">минуты</string>
-
-    <string name="one_hour_ending">час</string>
-    <string name="from_5_until_20_hours_endings">часов</string>
-    <string name="from_2_until_4_hours_endings">часа</string>
-
-    <string name="one_day_ending">день</string>
-    <string name="from_5_until_20_days_endings">дней</string>
-    <string name="from_2_until_4_days_endings">дня</string>
+    <string name="commented_by">"Прокомментировал %1$s - "</string>
 </resources>

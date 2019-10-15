@@ -23,7 +23,7 @@ data class User(
     var ratingChanges: List<RatingChange>
 )
 
-fun getColorTextByUserRank(text: String, rank: String?, context: Context): SpannableString {
+fun colorTextByUserRank(text: String, rank: String?, context: Context): SpannableString {
     val color = when (rank) {
         null -> R.color.black
         "newbie" -> R.color.grey

@@ -16,7 +16,6 @@ object RestClient {
             .build()
 
         val gsonBuilder = GsonBuilder()
-            //.excludeFieldsWithoutExposeAnnotation()
             .setLenient()
             .create()
 

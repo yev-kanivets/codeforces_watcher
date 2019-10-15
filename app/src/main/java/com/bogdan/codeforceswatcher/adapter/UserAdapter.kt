@@ -13,7 +13,7 @@ import com.bogdan.codeforceswatcher.R.color.bright_green
 import com.bogdan.codeforceswatcher.R.color.red
 import com.bogdan.codeforceswatcher.features.users.UserActivity
 import com.bogdan.codeforceswatcher.features.users.models.User
-import com.bogdan.codeforceswatcher.features.users.models.getColorTextByUserRank
+import com.bogdan.codeforceswatcher.features.users.models.colorTextByUserRank
 import kotlinx.android.synthetic.main.view_user_item.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -39,8 +39,8 @@ class UserAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = items[position]
-        holder.tvHandle.text = getColorTextByUserRank(user.handle, user.rank, context)
-        holder.tvRating.text = getColorTextByUserRank(user.rating?.toString().orEmpty(), user.rank, context)
+        holder.tvHandle.text = colorTextByUserRank(user.handle, user.rank, context)
+        holder.tvRating.text = colorTextByUserRank(user.rating?.toString().orEmpty(), user.rank, context)
 
         val lastRatingChange = user.ratingChanges.lastOrNull()
         if (lastRatingChange != null) {

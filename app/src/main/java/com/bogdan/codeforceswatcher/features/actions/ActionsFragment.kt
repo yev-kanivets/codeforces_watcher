@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.features.actions.models.ActionItem
 import com.bogdan.codeforceswatcher.features.actions.redux.requests.ActionsRequests
 import com.bogdan.codeforceswatcher.features.actions.redux.states.ActionsState
 import com.bogdan.codeforceswatcher.store
@@ -34,7 +35,7 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun newState(state: ActionsState) {
         swipeToRefresh.isRefreshing = (state.status == ActionsState.Status.PENDING)
-        actionsAdapter.setItems(state.actions)
+        actionsAdapter.setItems(state.actions.map { ActionItem(it) })
     }
 
     override fun onRefresh() {
@@ -54,8 +55,7 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     private fun initViews() {
         swipeToRefresh.setOnRefreshListener(this)
-        actionsAdapter = ActionsAdapter(requireContext()) { position ->
-            val action = store.state.actions.actions[position]
+        actionsAdapter = ActionsAdapter(requireContext()) {
             startActivity(Intent(context, ActionActivity::class.java))
         }
         recyclerView.adapter = actionsAdapter

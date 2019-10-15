@@ -33,25 +33,5 @@
     <string name="problems">Problems</string>
     <string name="empty" translatable="false" />
     <string name="google_calendar_not_found">Sorry, but no Google Calendar found on this device</string>
-    <string name="commented_by">"Commented by "</string>
-    <string name="days_ago">" - %1$d %2$s ago"</string>
-    <string name="hours_ago">" - %1$d %2$s ago"</string>
-    <string name="minutes_ago">" - %1$d %2$s ago"</string>
-    <string name="seconds_ago">" - %1$d %2$s ago"</string>
-
-    <string name="one_second_ending">second</string>
-    <string name="from_5_until_20_seconds_endings">seconds</string>
-    <string name="from_2_until_4_seconds_endings">seconds</string>
-
-    <string name="one_minute_ending">minute</string>
-    <string name="from_5_until_20_minutes_endings">minutes</string>
-    <string name="from_2_until_4_minutes_endings">minutes</string>
-
-    <string name="one_hour_ending">hour</string>
-    <string name="from_5_until_20_hours_endings">hours</string>
-    <string name="from_2_until_4_hours_endings">hours</string>
-
-    <string name="one_day_ending">day</string>
-    <string name="from_5_until_20_days_endings">days</string>
-    <string name="from_2_until_4_days_endings">days</string>
+    <string name="commented_by">"Commented by %1$s - "</string>
 </resources>
