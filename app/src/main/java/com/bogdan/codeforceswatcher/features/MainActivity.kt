@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.actions.ActionActivity
 import com.bogdan.codeforceswatcher.features.actions.ActionsFragment
 import com.bogdan.codeforceswatcher.features.add_user.AddUserActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment

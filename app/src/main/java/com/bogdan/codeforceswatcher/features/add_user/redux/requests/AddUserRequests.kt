@@ -26,7 +26,6 @@ class AddUserRequests {
             }
         }
 
-
         private fun dispatchError(error: Error) {
             when (error) {
                 Error.INTERNET ->
