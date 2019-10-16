@@ -3,9 +3,11 @@ package com.bogdan.codeforceswatcher.features.actions.redux.requests
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.actions.models.CFAction
-import com.bogdan.codeforceswatcher.network.Error
+import com.bogdan.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.network.getUsers
+import com.bogdan.codeforceswatcher.network.models.Error
+import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
@@ -28,7 +30,7 @@ class ActionsRequests {
                     response: Response<ActionsResponse>
                 ) {
                     response.body()?.actions?.let { actions ->
-                        formUIDataAndDispatch(actions)
+                        buildUiDataAndDispatch(actions)
                     } ?: store.dispatch(Failure(if (isInitializedByUser) noConnection else null))
                 }
 
@@ -38,34 +40,46 @@ class ActionsRequests {
             })
         }
 
-        private fun formUIDataAndDispatch(actions: List<CFAction>) {
-            val uiData: MutableList<CFAction> = mutableListOf()
+        private fun buildUiDataAndDispatch(actions: List<CFAction>) {
+            val commentatorsHandles = buildCommentatorsHandles(actions)
+
+            getUsers(commentatorsHandles, false) { result ->
+                when (result) {
+                    is UsersRequestResult.Success ->
+                        store.dispatch(Success(buildUiData(actions, result.users)))
+                    is UsersRequestResult.Failure -> dispatchError(result.error)
+                }
+            }
+        }
+
+        private fun buildCommentatorsHandles(actions: List<CFAction>): String {
             var commentatorsHandles = ""
+
             for (action in actions) {
                 if (action.comment != null) {
                     commentatorsHandles += "${action.comment.commentatorHandle};"
                 }
             }
 
-            getUsers(commentatorsHandles, false) {
-                val error = it.second
-                val users = it.first
-                if (error == null) {
-                    for (action in actions) {
-                        if (action.comment != null) {
-                            users?.find { user -> user.handle == action.comment.commentatorHandle }
-                                ?.let { foundUser ->
-                                    action.comment.commentatorAvatar = foundUser.avatar
-                                    action.comment.commentatorRank = foundUser.rank
-                                }
-                            uiData.add(action)
-                        }
+            return commentatorsHandles
+        }
+
+        private fun buildUiData(actions: List<CFAction>, users: List<User>?): List<CFAction> {
+            val uiData: MutableList<CFAction> = mutableListOf()
+
+            for (action in actions) {
+                if (action.comment == null) continue
+
+                users?.find { user -> user.handle == action.comment.commentatorHandle }
+                    ?.let { foundUser ->
+                        action.comment.commentatorAvatar = foundUser.avatar
+                        action.comment.commentatorRank = foundUser.rank
                     }
-                    store.dispatch(Success(uiData))
-                } else {
-                    dispatchError(error)
-                }
+
+                uiData.add(action)
             }
+
+            return uiData
         }
 
         private fun dispatchError(error: Error) {

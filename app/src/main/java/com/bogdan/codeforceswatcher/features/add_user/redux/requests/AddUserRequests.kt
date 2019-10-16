@@ -3,11 +3,12 @@ package com.bogdan.codeforceswatcher.features.add_user.redux.requests
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.users.models.User
-import com.bogdan.codeforceswatcher.network.Error
 import com.bogdan.codeforceswatcher.network.getUsers
+import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.room.DatabaseClient
+import com.bogdan.codeforceswatcher.network.models.Error
 import com.bogdan.codeforceswatcher.store
 import org.rekotlin.Action
 
@@ -17,19 +18,14 @@ class AddUserRequests {
         val handle: String
     ) : Request() {
         override fun execute() {
-            getUsers(handle, true) {
-                val updatedUsers = it.first
-                val error = it.second
-
-                if (error != null) {
-                    dispatchError(error)
-                } else {
-                    if (updatedUsers != null) {
-                        updatedUsers.firstOrNull()?.let { user -> addUser(user) }
-                    }
+            getUsers(handle, true) { result ->
+                when (result) {
+                    is UsersRequestResult.Failure -> dispatchError(result.error)
+                    is UsersRequestResult.Success -> result.users.firstOrNull()?.let { user -> addUser(user) }
                 }
             }
         }
+
 
         private fun dispatchError(error: Error) {
             when (error) {
@@ -55,9 +51,9 @@ class AddUserRequests {
                 store.dispatch(Failure(CwApp.app.getString(R.string.user_already_added)))
         }
 
+
         data class Success(val user: User) : Action
 
         data class Failure(override val message: String) : ToastAction
     }
-
 }

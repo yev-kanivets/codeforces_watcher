@@ -3,8 +3,9 @@ package com.bogdan.codeforceswatcher.features.users.redux.requests
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.users.models.User
-import com.bogdan.codeforceswatcher.network.Error
+import com.bogdan.codeforceswatcher.network.models.Error
 import com.bogdan.codeforceswatcher.network.getUsers
+import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.room.DatabaseClient
@@ -19,17 +20,13 @@ class UsersRequests {
 
         override fun execute() {
             val users: List<User> = DatabaseClient.userDao.getAll()
-            getUsers(getHandles(users), true) {
-                val updatedUsers = it.first
-                val error = it.second
-                if (error != null) {
-                    dispatchError(error)
-                } else {
-                    if (updatedUsers != null) {
+            getUsers(getHandles(users), true) { result ->
+                when (result) {
+                    is UsersRequestResult.Failure -> dispatchError(result.error)
+                    is UsersRequestResult.Success ->
                         store.dispatch(
-                            Success(updatedUsers, getDifferenceAndUpdate(users, updatedUsers), isInitiatedByUser)
+                            Success(result.users, getDifferenceAndUpdate(users, result.users), isInitiatedByUser)
                         )
-                    }
                 }
             }
         }

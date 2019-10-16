@@ -23,21 +23,19 @@ class ActionsAdapter(
     override fun getItemCount() = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val actionItem = R.layout.view_action_item
-        return ViewHolder(
-            LayoutInflater.from(context).inflate(actionItem, parent, false), itemClickListener
-        )
+        val layoutInflater = LayoutInflater.from(context).inflate(R.layout.view_action_item, parent, false)
+        return ViewHolder(layoutInflater, itemClickListener)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val actionItem = items[position]
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = with(items[position]) {
+        holder.apply {
+            tvTitle.text = title
+            tvHandle.text = commentatorHandle
+            tvTimeAgo.text = timeAgo
+            tvContent.text = content
+        }
 
-        holder.tvTitle.text = actionItem.title
-        Picasso.get().load(actionItem.commentatorAvatar).into(holder.ivAvatar)
-        holder.tvTitle.text = actionItem.title
-        holder.tvHandle.text = actionItem.commentatorHandle
-        holder.tvTimeAgo.text = actionItem.timeAgo
-        holder.tvContent.text = actionItem.content
+        Picasso.get().load(commentatorAvatar).into(holder.ivAvatar)
     }
 
     fun setItems(actionsList: List<ActionItem>) {

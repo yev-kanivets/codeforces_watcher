@@ -12,29 +12,31 @@ import java.util.*
 
 class ActionItem(action: CFAction) {
 
-    lateinit var commentatorHandle: CharSequence
-    lateinit var title: CharSequence
-    lateinit var content: CharSequence
-    lateinit var commentatorAvatar: String
-    lateinit var timeAgo: String
+    var commentatorHandle: CharSequence
+    var title: CharSequence
+    var content: CharSequence
+    var commentatorAvatar: String
+    var timeAgo: String
 
     init {
-        if (action.comment != null) {
-            this.commentatorAvatar = (if (action.comment.commentatorAvatar.startsWith("https:")) {
-                action.comment.commentatorAvatar
-            } else {
-                "https:${action.comment.commentatorAvatar}"
-            })
+        val comment = action.comment ?: throw NullPointerException()
+        commentatorAvatar = (getRightAvatarLink(comment.commentatorAvatar))
 
-            this.commentatorHandle = formatCommentatorHandle(
-                action.comment.commentatorHandle, action.comment.commentatorRank
-            )
+        commentatorHandle = formatCommentatorHandle(
+            comment.commentatorHandle, comment.commentatorRank
+        )
 
-            this.title = underlineTitle(action.blogEntry.title)
-            this.timeAgo = PrettyTime().format(Date(action.comment.creationTimeSeconds * 1000))
-            this.content = convertFromHtml(action.comment.text)
-        }
+        title = convertFromHtml(action.blogEntry.title)
+        timeAgo = PrettyTime().format(Date(comment.creationTimeSeconds * 1000))
+        content = convertFromHtml(comment.text)
     }
+
+    private fun getRightAvatarLink(avatarLink: String) =
+        if (avatarLink.startsWith("https:")) {
+            avatarLink
+        } else {
+            "https:$avatarLink"
+        }
 
     private fun formatCommentatorHandle(handle: String, rank: String?): CharSequence {
         val colorHandle = colorTextByUserRank(handle, rank, CwApp.app)
@@ -43,13 +45,6 @@ class ActionItem(action: CFAction) {
 
         return SpannableStringBuilder(commentedByString)
             .replace(handlePosition, handlePosition + "%1\$s".length, colorHandle)
-    }
-
-    private fun underlineTitle(title: String): SpannableString {
-        val convertedTitle = convertFromHtml(title)
-        val underlinedTitle = SpannableString(convertedTitle)
-        underlinedTitle.setSpan(UnderlineSpan(), 0, convertedTitle.length, 0)
-        return underlinedTitle
     }
 
     private fun convertFromHtml(text: String) =

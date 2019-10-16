@@ -5,13 +5,13 @@ import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import com.bogdan.codeforceswatcher.network.models.Error
+import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-enum class Error { INTERNET, RESPONSE }
-
-fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean, onCompleted: (Pair<List<User>?, Error?>) -> Unit) {
+fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean, onCompleted: (UsersRequestResult) -> Unit) {
     val userCall = RestClient.getUsers(handles)
     userCall.enqueue(object : Callback<UsersResponse> {
 
@@ -20,20 +20,20 @@ fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean, onCompleted: (Pair
                 if (isRatingUpdatesNeeded) {
                     loadRatingUpdates(users, onCompleted)
                 } else {
-                    onCompleted(Pair(users, null))
+                    onCompleted(UsersRequestResult.Success(users))
                 }
-            } ?: onCompleted(Pair(null, Error.RESPONSE))
+            } ?: onCompleted(UsersRequestResult.Failure(Error.RESPONSE))
         }
 
         override fun onFailure(call: Call<UsersResponse>, t: Throwable) {
-            onCompleted(Pair(null, Error.INTERNET))
+            onCompleted(UsersRequestResult.Failure(Error.INTERNET))
         }
     })
 }
 
 private fun loadRatingUpdates(
     userList: List<User>,
-    onCompleted: (Pair<List<User>?, Error?>) -> Unit
+    onCompleted: (UsersRequestResult) -> Unit
 ) {
     Thread {
         var countTrueUsers = 0
@@ -45,16 +45,15 @@ private fun loadRatingUpdates(
             countTrueUsers++
         }
 
-        returnUsersOnMainThread(if (countTrueUsers < userList.size) {
-            Pair(null, Error.RESPONSE)
+        returnResultOnMainThread(if (countTrueUsers < userList.size) {
+            UsersRequestResult.Failure(Error.RESPONSE)
         } else {
-            Pair(userList, null)
+            UsersRequestResult.Success(userList)
         }, onCompleted)
     }.start()
-
 }
 
-private fun returnUsersOnMainThread(result: Pair<List<User>?, Error?>, onCompleted: (Pair<List<User>?, Error?>) -> Unit) {
+private fun returnResultOnMainThread(result: UsersRequestResult, onCompleted: (UsersRequestResult) -> Unit) {
     runBlocking {
         withContext(Dispatchers.Main) {
             onCompleted(result)
