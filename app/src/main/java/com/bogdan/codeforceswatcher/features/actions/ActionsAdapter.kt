@@ -35,7 +35,9 @@ class ActionsAdapter(
             tvContent.text = content
         }
 
-        Picasso.get().load(commentatorAvatar).into(holder.ivAvatar)
+        Picasso.get().load(commentatorAvatar)
+            .placeholder(R.drawable.no_avatar)
+            .into(holder.ivAvatar)
     }
 
     fun setItems(actionsList: List<ActionItem>) {
