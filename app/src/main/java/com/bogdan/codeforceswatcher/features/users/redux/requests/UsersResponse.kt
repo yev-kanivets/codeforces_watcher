@@ -1,6 +1,6 @@
 package com.bogdan.codeforceswatcher.features.users.redux.requests
 
-import com.bogdan.codeforceswatcher.model.User
+import com.bogdan.codeforceswatcher.features.users.models.User
 import com.google.gson.annotations.SerializedName
 
 data class UsersResponse(

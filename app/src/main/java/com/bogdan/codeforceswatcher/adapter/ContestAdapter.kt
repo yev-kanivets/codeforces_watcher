@@ -12,11 +12,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.model.Contest
+import com.bogdan.codeforceswatcher.features.contests.models.Contest
 import com.bogdan.codeforceswatcher.util.Analytics
-import kotlinx.android.synthetic.main.contests_list_view.view.ivAddToCalendar
-import kotlinx.android.synthetic.main.contests_list_view.view.tvContestName
-import kotlinx.android.synthetic.main.contests_list_view.view.tvContestTime
+import kotlinx.android.synthetic.main.view_contest_item.view.ivAddToCalendar
+import kotlinx.android.synthetic.main.view_contest_item.view.tvContestName
+import kotlinx.android.synthetic.main.view_contest_item.view.tvContestTime
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -32,7 +32,7 @@ class ContestAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.contests_list_view, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.view_contest_item, parent, false)
         )
     }
 

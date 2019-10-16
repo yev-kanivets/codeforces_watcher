@@ -5,16 +5,15 @@
     <string name="name">Имя: %1$s</string>
     <string name="cur_rating">Текущий рейтинг: %1$s</string>
     <string name="max_rating">Макс. рейтинг: %1$s</string>
-    <string name="wrong_handle">Неправильный хэндл!</string>
     <string name="last_rating_update">Последнее обновление рейтинга: %1$s</string>
     <string name="no_rating_update">Нет обновления рейтинга</string>
     <string name="none">Нет</string>
-    <string name="no_internet_connection">Нет соединения с интернетом</string>
+    <string name="no_connection">Нет соединения</string>
     <string name="rating_changes">Изменения рейтинга</string>
     <string name="ratings_have_been_updated">Рейтинги обновлены</string>
     <string name="ratings_update">Обновление рейтинга</string>
     <string name="user_already_added">Пользователь уже добавлен</string>
-    <string name="failed_to_fetch_users">Не получилось обновить пользователей! Проверьте хэндлы…</string>
+    <string name="failed_to_fetch_users">Не получилось загрузить пользователя(ей)! Подождите или проверьте хэндл(ы)…</string>
     <string name="sort_by">Сорт. по</string>
     <string name="by_default">умолчанию</string>
     <string name="by_descending_rating">↓ рейтинга</string>
@@ -38,5 +37,6 @@
     <string name="problems">Задачи</string>
 
     <string name="google_calendar_not_found">Извините, но на этом устройстве не найден Google Calendar</string>
+    <string name="commented_by">"Прокомментировал %1$s - "</string>
     <string name="feature_isn_t_available_yet">Эта функция еще не доступна.</string>
 </resources>

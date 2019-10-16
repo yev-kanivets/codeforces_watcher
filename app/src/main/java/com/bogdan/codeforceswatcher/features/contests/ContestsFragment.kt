@@ -20,11 +20,14 @@ import org.rekotlin.StoreSubscriber
 class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     StoreSubscriber<ContestsState> {
 
-    private val contestAdapter by lazy { ContestAdapter(requireContext()) }
+    private val contestsAdapter by lazy { ContestAdapter(requireContext()) }
 
     override fun onStart() {
         super.onStart()
-        store.subscribe(this) { state -> state.select { it.contests } }
+        store.subscribe(this) { state ->
+            state.skipRepeats { oldState, newState -> oldState.contests == newState.contests }
+                .select { it.contests }
+        }
     }
 
     override fun onStop() {
@@ -34,7 +37,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun newState(state: ContestsState) {
         swipeToRefresh.isRefreshing = (state.status == ContestsState.Status.PENDING)
-        contestAdapter.setItems(state.contests)
+        contestsAdapter.setItems(state.contests)
     }
 
     override fun onRefresh() {
@@ -57,7 +60,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     private fun initViews() {
         swipeToRefresh.setOnRefreshListener(this)
 
-        recyclerView.adapter = contestAdapter
+        recyclerView.adapter = contestsAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 }

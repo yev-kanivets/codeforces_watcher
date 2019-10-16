@@ -1,4 +1,4 @@
-package com.bogdan.codeforceswatcher.model
+package com.bogdan.codeforceswatcher.features.users.models
 
 data class RatingChange(
     val contestId: Int,

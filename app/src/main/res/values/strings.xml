@@ -4,16 +4,15 @@
     <string name="name">Name: %1$s</string>
     <string name="cur_rating">Current Rating: %1$s</string>
     <string name="max_rating">Max Rating: %1$s</string>
-    <string name="wrong_handle">Wrong handle!</string>
     <string name="last_rating_update">Last rating update: %1$s</string>
     <string name="no_rating_update">No rating update</string>
     <string name="none">None</string>
-    <string name="no_internet_connection">No internet connection</string>
+    <string name="no_connection">No connection</string>
     <string name="rating_changes">Rating Changes</string>
     <string name="ratings_have_been_updated">Ratings have been updated</string>
     <string name="ratings_update">Rating updates</string>
     <string name="user_already_added">User already added</string>
-    <string name="failed_to_fetch_users">Failed to fetch users! Check handles…</string>
+    <string name="failed_to_fetch_users">Failed to fetch user(s)! Wait or check handle(s)…</string>
     <string name="sort_by">Sort by</string>
     <string name="by_default">default</string>
     <string name="by_descending_rating">↓ rating</string>
@@ -34,5 +33,6 @@
     <string name="problems">Problems</string>
     <string name="empty" translatable="false" />
     <string name="google_calendar_not_found">Sorry, but no Google Calendar found on this device</string>
+    <string name="commented_by">"Commented by %1$s - "</string>
     <string name="feature_isn_t_available_yet">This feature isn’t available yet.</string>
 </resources>

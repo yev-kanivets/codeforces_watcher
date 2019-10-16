@@ -7,6 +7,7 @@
     <color name="green">#008000</color>
     <color name="blue_green">#0D98BA</color>
     <color name="blue">#0000FF</color>
+    <color name="bright_blue">#3333ff</color>
     <color name="purple">#9B1EA4</color>
     <color name="orange">#FFA500</color>
     <color name="red">#FF0000</color>
@@ -14,4 +15,5 @@
     <color name="white">#FFFFFF</color>
     <color name="bright_black">#212121</color>
     <color name="divider_grey">#20000000</color>
+    <color name="black">#000</color>
 </resources>

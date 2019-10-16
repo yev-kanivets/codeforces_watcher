@@ -16,7 +16,7 @@ import com.bogdan.codeforceswatcher.features.users.redux.actions.UsersActions
 import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState
 import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState.SortType.Companion.getSortType
 import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersRequests
-import com.bogdan.codeforceswatcher.model.User
+import com.bogdan.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.fragment_users.*
@@ -25,7 +25,7 @@ import org.rekotlin.StoreSubscriber
 class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     StoreSubscriber<UsersState> {
 
-    private val userAdapter by lazy { UserAdapter(requireContext()) }
+    private val usersAdapter by lazy { UserAdapter(requireContext()) }
 
     private lateinit var spSort: AppCompatSpinner
 
@@ -37,7 +37,10 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun onStart() {
         super.onStart()
-        store.subscribe(this) { state -> state.select { it.users } }
+        store.subscribe(this) { state ->
+            state.skipRepeats { oldState, newState -> oldState.users == newState.users }
+                .select { it.users }
+        }
     }
 
     override fun onStop() {
@@ -47,7 +50,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun newState(state: UsersState) {
         swipeToRefresh.isRefreshing = (state.status == UsersState.Status.PENDING)
-        userAdapter.setItems(state.users.sort(state.sortType))
+        usersAdapter.setItems(state.users.sort(state.sortType))
     }
 
     override fun onCreateView(
@@ -64,7 +67,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     private fun initViews() {
         swipeToRefresh.setOnRefreshListener(this)
 
-        recyclerView.adapter = userAdapter
+        recyclerView.adapter = usersAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         spSort = requireActivity().findViewById(R.id.spSort)

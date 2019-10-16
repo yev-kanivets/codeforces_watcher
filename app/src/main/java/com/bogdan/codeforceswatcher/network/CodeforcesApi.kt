@@ -1,8 +1,9 @@
 package com.bogdan.codeforceswatcher.network
 
+import com.bogdan.codeforceswatcher.features.actions.redux.requests.ActionsResponse
 import com.bogdan.codeforceswatcher.features.contests.redux.requests.ContestsResponse
-import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersResponse
 import com.bogdan.codeforceswatcher.features.users.redux.requests.RatingChangeResponse
+import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -17,4 +18,7 @@ interface CodeforcesApi {
 
     @GET("contest.list")
     fun getContests(): Call<ContestsResponse>
+
+    @GET("recentActions")
+    fun getActions(@Query("maxCount") maxCount: Int): Call<ActionsResponse>
 }

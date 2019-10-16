@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".features.users.UserActivity" />
+        <activity android:name=".features.actions.ActionActivity" />
         <activity
             android:name=".features.MainActivity"
             android:configChanges="orientation|screenSize"

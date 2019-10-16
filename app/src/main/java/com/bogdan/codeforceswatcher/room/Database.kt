@@ -5,8 +5,8 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.bogdan.codeforceswatcher.features.contests.room.ContestDao
 import com.bogdan.codeforceswatcher.features.users.room.UserDao
-import com.bogdan.codeforceswatcher.model.Contest
-import com.bogdan.codeforceswatcher.model.User
+import com.bogdan.codeforceswatcher.features.contests.models.Contest
+import com.bogdan.codeforceswatcher.features.users.models.User
 
 @Database(entities = [User::class, Contest::class], version = 3, exportSchema = false)
 @TypeConverters(Converters::class)

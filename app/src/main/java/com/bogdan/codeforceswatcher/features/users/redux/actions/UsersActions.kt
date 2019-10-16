@@ -1,7 +1,7 @@
 package com.bogdan.codeforceswatcher.features.users.redux.actions
 
 import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState
-import com.bogdan.codeforceswatcher.model.User
+import com.bogdan.codeforceswatcher.features.users.models.User
 import org.rekotlin.Action
 
 class UsersActions {

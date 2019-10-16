@@ -7,27 +7,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.R.color.blue
-import com.bogdan.codeforceswatcher.R.color.blue_green
 import com.bogdan.codeforceswatcher.R.color.bright_green
-import com.bogdan.codeforceswatcher.R.color.green
-import com.bogdan.codeforceswatcher.R.color.grey
-import com.bogdan.codeforceswatcher.R.color.orange
-import com.bogdan.codeforceswatcher.R.color.purple
 import com.bogdan.codeforceswatcher.R.color.red
 import com.bogdan.codeforceswatcher.features.users.UserActivity
-import com.bogdan.codeforceswatcher.model.User
-import kotlinx.android.synthetic.main.users_list_view.view.ivDelta
-import kotlinx.android.synthetic.main.users_list_view.view.tvHandle
-import kotlinx.android.synthetic.main.users_list_view.view.tvLastRatingUpdate
-import kotlinx.android.synthetic.main.users_list_view.view.tvRating
-import kotlinx.android.synthetic.main.users_list_view.view.tvRatingChange
+import com.bogdan.codeforceswatcher.features.users.models.User
+import com.bogdan.codeforceswatcher.features.users.models.colorTextByUserRank
+import kotlinx.android.synthetic.main.view_user_item.view.*
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 class UserAdapter(
     private val context: Context
@@ -44,33 +33,15 @@ class UserAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.users_list_view, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.view_user_item, parent, false)
         )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = items[position]
-        holder.tvHandle.text = user.handle
-        if (user.rating == null) {
-            holder.tvRating.text = null
-        } else holder.tvRating.text = user.rating.toString()
-        if (user.rank == null) {
-            holder.tvHandle.setTextColor(ContextCompat.getColor(context, grey))
-            holder.tvRating.setTextColor(ContextCompat.getColor(context, grey))
-        } else {
-            if (user.rank == "legendary grandmaster") {
-                val text =
-                    "<font color=black>${user.handle[0]}</font><font color=red>${user.handle.subSequence(
-                        1,
-                        user.handle.lastIndex + 1
-                    )}</font>"
-                holder.tvHandle.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
-            } else {
-                holder.tvHandle.setTextColor(ContextCompat.getColor(context, getColor(user.rank)))
-            }
-            holder.tvRating.setTextColor(ContextCompat.getColor(context, getColor(user.rank)))
+        holder.tvHandle.text = colorTextByUserRank(user.handle, user.rank, context)
+        holder.tvRating.text = colorTextByUserRank(user.rating?.toString().orEmpty(), user.rank, context)
 
-        }
         val lastRatingChange = user.ratingChanges.lastOrNull()
         if (lastRatingChange != null) {
             val ratingDelta = lastRatingChange.newRating - lastRatingChange.oldRating
@@ -103,24 +74,7 @@ class UserAdapter(
         return dateFormat.format(Date(seconds * 1000)).toString()
     }
 
-    private fun getColor(rank: String): Int {
-        return when (rank) {
-            "newbie" -> grey
-            "pupil" -> green
-            "specialist" -> blue_green
-            "expert" -> blue
-            "candidate master" -> purple
-            "master" -> orange
-            "international master" -> orange
-            "grandmaster" -> red
-            "international grandmaster" -> red
-            "legendary grandmaster" -> red
-            else -> grey
-        }
-    }
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         val tvHandle: TextView = view.tvHandle
         val tvRating: TextView = view.tvRating
         val tvLastRatingUpdate: TextView = view.tvLastRatingUpdate

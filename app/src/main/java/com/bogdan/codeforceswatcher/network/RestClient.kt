@@ -15,8 +15,12 @@ object RestClient {
             .readTimeout(5, TimeUnit.MINUTES)
             .build()
 
+        val gsonBuilder = GsonBuilder()
+            .setLenient()
+            .create()
+
         val gsonConverterFactory = GsonConverterFactory
-            .create(GsonBuilder().setLenient().create())
+            .create(gsonBuilder)
 
         return@lazy Retrofit.Builder()
             .baseUrl("http://www.codeforces.com/api/")
@@ -30,6 +34,8 @@ object RestClient {
     fun getUsers(handle: String) = codeforcesApi.getUsers(handle)
 
     fun getRating(handle: String) = codeforcesApi.getRating(handle)
+
+    fun getActions(maxCount: Int = 100) = codeforcesApi.getActions(maxCount)
 
     fun getContests() = codeforcesApi.getContests()
 }

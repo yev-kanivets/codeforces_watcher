@@ -1,40 +1,24 @@
 package com.bogdan.codeforceswatcher.redux.states
 
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.model.Contest
 import org.rekotlin.StateType
 
 data class UIState(
     val selectedHomeTab: HomeTab = HomeTab.USERS
 ) : StateType {
 
-    enum class HomeTab {
-        USERS,
-        CONTESTS,
-        ACTIONS,
-        PROBLEMS;
+    enum class HomeTab(val titleId: Int, val menuItemId: Int) {
+
+        USERS(R.string.empty, R.id.navUsers),
+        CONTESTS(R.string.contests, R.id.navContests),
+        ACTIONS(R.string.actions, R.id.navActions),
+        PROBLEMS(R.string.problems, R.id.navProblems);
 
         companion object {
 
             fun fromMenuItemId(menuItemId: Int): HomeTab =
                 enumValues<HomeTab>().find { it.menuItemId == menuItemId } ?: USERS
         }
-
-        val titleId: Int
-            get() = when (this) {
-                USERS -> R.string.empty
-                CONTESTS -> R.string.contests
-                ACTIONS -> R.string.actions
-                PROBLEMS -> R.string.problems
-            }
-
-        val menuItemId: Int
-            get() = when (this) {
-                USERS -> R.id.navUsers
-                CONTESTS -> R.id.navContests
-                ACTIONS -> R.id.navActions
-                PROBLEMS -> R.id.navProblems
-            }
     }
 
 }

@@ -1,7 +1,7 @@
 package com.bogdan.codeforceswatcher.room
 
 import androidx.room.TypeConverter
-import com.bogdan.codeforceswatcher.model.RatingChange
+import com.bogdan.codeforceswatcher.features.users.models.RatingChange
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

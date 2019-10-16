@@ -37,7 +37,10 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     override fun onStart() {
         super.onStart()
-        store.subscribe(this) { state -> state.select { it.ui } }
+        store.subscribe(this) { state ->
+            state.skipRepeats { oldState, newState -> oldState.ui == newState.ui }
+                .select { it.ui }
+        }
     }
 
     override fun onStop() {
@@ -100,9 +103,7 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     private fun onUsersTabSelected() {
         llSorting.visibility = View.VISIBLE
         fab.setOnClickListener {
-            val intent =
-                Intent(this@MainActivity, AddUserActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this@MainActivity, AddUserActivity::class.java))
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_plus))
     }
@@ -119,10 +120,14 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     private fun onActionsTabSelected() {
         llSorting.visibility = View.GONE
+        fab.setOnClickListener(null)
+        fab.setImageDrawable(getDrawable(R.drawable.ic_share))
     }
 
     private fun onProblemsTabSelected() {
         llSorting.visibility = View.GONE
+        fab.setOnClickListener(null)
+        fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
     }
 
     private fun initViews() {
