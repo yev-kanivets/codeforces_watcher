@@ -1,5 +1,6 @@
 package com.bogdan.codeforceswatcher.features.actions.redux.requests
 
+import androidx.core.text.HtmlCompat
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.actions.models.CFAction
@@ -75,12 +76,22 @@ class ActionsRequests {
                         action.comment.commentatorAvatar = foundUser.avatar
                         action.comment.commentatorRank = foundUser.rank
                     }
+                action.blogEntry.title = convertFromHtml(action.blogEntry.title)
+                action.comment.text = convertFromHtml(action.comment.text)
 
                 uiData.add(action)
             }
 
             return uiData
         }
+
+        private fun convertFromHtml(text: String) =
+            HtmlCompat.fromHtml(text
+                .replace("\n", "<br>")
+                .replace("\t", "<tl>")
+                .replace("$", ""),
+                HtmlCompat.FROM_HTML_MODE_LEGACY)
+                .trim().toString()
 
         private fun dispatchError(error: Error) {
             val noConnectionError = CwApp.app.resources.getString(R.string.no_connection)

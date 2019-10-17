@@ -1,6 +1,5 @@
 package com.bogdan.codeforceswatcher.features.actions
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -56,7 +55,9 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     private fun initViews() {
         swipeToRefresh.setOnRefreshListener(this)
         actionsAdapter = ActionsAdapter(requireContext()) {
-            startActivity(Intent(context, ActionActivity::class.java))
+            store.state.actions.actions[it].comment?.let { comment ->
+                startActivity(ActionActivity.newIntent(requireContext(), comment.id))
+            }
         }
         recyclerView.adapter = actionsAdapter
     }
