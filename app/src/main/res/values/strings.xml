@@ -35,5 +35,7 @@
     <string name="google_calendar_not_found">Sorry, but no Google Calendar found on this device</string>
     <string name="commented_by">"Commented by %1$s - "</string>
     <string name="feature_isn_t_available_yet">This feature isn’t available yet.</string>
-    <string name="comment_url" translatable="false">https://codeforces.com/blog/entry/%1$d?&amp;mobile=true#comment-%2$d</string>
+    <string name="comment_url" translatable="false">https://codeforces.com/blog/entry/%1$d?#comment-%2$d</string>
+    <string name="share_with_friends">Share with friends</string>
+    <string name="shared_through_cw">Shared through Codeforces Watcher. Find it on Google Play.</string>
 </resources>

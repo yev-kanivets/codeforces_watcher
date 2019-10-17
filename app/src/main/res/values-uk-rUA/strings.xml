@@ -39,4 +39,6 @@
     <string name="google_calendar_not_found">На жаль, на цьому пристрої не знайдено Google Calendar</string>
     <string name="commented_by">"Прокоментував %1$s - "</string>
     <string name="feature_isn_t_available_yet">Ця функція ще не доступна.</string>
+    <string name="share_with_friends">Поділитися з друзями</string>
+    <string name="shared_through_cw">Відправлено через Codeforces Watcher. Знайдіть його в Google Play.</string>
 </resources>

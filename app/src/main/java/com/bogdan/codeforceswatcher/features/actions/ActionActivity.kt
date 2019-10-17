@@ -35,8 +35,19 @@ class ActionActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        pageTitle.text = cfAction?.blogEntry?.title
-        setupWebView(getString(R.string.comment_url, cfAction?.blogEntry?.id, cfAction?.comment?.id))
+        val pageTitle = cfAction?.blogEntry?.title.orEmpty()
+        val link = getString(R.string.comment_url, cfAction?.blogEntry?.id, cfAction?.comment?.id)
+        tvPageTitle.text = pageTitle
+        btnShare.setOnClickListener { share(link, pageTitle) }
+        setupWebView(link)
+    }
+
+    private fun share(link: String, pageTitle: String) {
+        val share = Intent(Intent.ACTION_SEND)
+        share.type = "text/plain"
+        val shareText = "$pageTitle - $link\n\n${getString(R.string.shared_through_cw)}"
+        share.putExtra(Intent.EXTRA_TEXT, shareText)
+        startActivity(Intent.createChooser(share, getString(R.string.share_with_friends)))
     }
 
     @SuppressLint("SetJavaScriptEnabled")
