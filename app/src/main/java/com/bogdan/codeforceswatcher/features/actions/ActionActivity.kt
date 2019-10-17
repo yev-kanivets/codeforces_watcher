@@ -57,7 +57,7 @@ class ActionActivity : AppCompatActivity() {
             }
 
             override fun onPageFinished(view: WebView, url: String) {
-                spinner?.visibility = View.GONE
+                progressBarHorizontal?.visibility = View.GONE
                 webView?.visibility = View.VISIBLE
             }
         }
