@@ -6,6 +6,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_BACK
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -17,30 +19,49 @@ import kotlinx.android.synthetic.main.activity_action.*
 
 class ActionActivity : AppCompatActivity() {
 
+    private lateinit var pageTitle: String
+    private lateinit var link: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_action)
 
-        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
+        initData()
         initViews()
     }
 
-    private fun initViews() {
+    private fun initData() {
         val commentId = intent.getLongExtra(COMMENT_ID, -1)
         val cfAction = store.state.actions.actions.find { it.comment?.id == commentId }
             ?: throw NullPointerException()
 
-        val pageTitle = cfAction.blogEntry.title
-        val link = getString(R.string.comment_url, cfAction.blogEntry.id, cfAction.comment?.id)
-        tvPageTitle.text = pageTitle
-        btnShare.setOnClickListener { share(link, pageTitle) }
-        setupWebView(link)
+        pageTitle = cfAction.blogEntry.title
+        link = getString(R.string.comment_url, cfAction.blogEntry.id, cfAction.comment?.id)
+        title = pageTitle
     }
 
-    private fun share(link: String, pageTitle: String) {
+    private fun initViews() {
+        setupWebView()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_action_activity, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_share -> {
+                share()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun share() {
         val share = Intent(Intent.ACTION_SEND)
         share.type = "text/plain"
         val shareText = "$pageTitle - $link\n\n${getString(R.string.shared_through_cw)}"
@@ -49,8 +70,8 @@ class ActionActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private fun setupWebView(url: String) = with(webView) {
-        loadUrl(url)
+    private fun setupWebView() = with(webView) {
+        loadUrl(link)
         settings.apply {
             javaScriptEnabled = true
             layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
