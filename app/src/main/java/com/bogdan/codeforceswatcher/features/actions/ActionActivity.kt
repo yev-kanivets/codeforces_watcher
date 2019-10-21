@@ -12,13 +12,10 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.actions.models.CFAction
 import com.bogdan.codeforceswatcher.store
 import kotlinx.android.synthetic.main.activity_action.*
 
 class ActionActivity : AppCompatActivity() {
-
-    private var cfAction: CFAction? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,15 +25,16 @@ class ActionActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        val commentId = intent.getLongExtra(COMMENT_ID, -1)
-        cfAction = store.state.actions.actions.find { it.comment?.id == commentId }
-
         initViews()
     }
 
     private fun initViews() {
-        val pageTitle = cfAction?.blogEntry?.title.orEmpty()
-        val link = getString(R.string.comment_url, cfAction?.blogEntry?.id, cfAction?.comment?.id)
+        val commentId = intent.getLongExtra(COMMENT_ID, -1)
+        val cfAction = store.state.actions.actions.find { it.comment?.id == commentId }
+            ?: throw NullPointerException()
+
+        val pageTitle = cfAction.blogEntry.title
+        val link = getString(R.string.comment_url, cfAction.blogEntry.id, cfAction.comment?.id)
         tvPageTitle.text = pageTitle
         btnShare.setOnClickListener { share(link, pageTitle) }
         setupWebView(link)
@@ -51,19 +49,19 @@ class ActionActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private fun setupWebView(url: String) {
-        webView.loadUrl(url)
-
-        webView.settings.javaScriptEnabled = true
-        webView.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
-        webView.settings.useWideViewPort = true
-        webView.settings.builtInZoomControls = true
-        webView.settings.displayZoomControls = false
-
-        webView.webViewClient = object : WebViewClient() {
+    private fun setupWebView(url: String) = with(webView) {
+        loadUrl(url)
+        settings.apply {
+            javaScriptEnabled = true
+            layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+            useWideViewPort = true
+            builtInZoomControls = true
+            displayZoomControls = false
+        }
+        webViewClient = object : WebViewClient() {
 
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                webView.loadUrl(url)
+                loadUrl(url)
                 return true
             }
 

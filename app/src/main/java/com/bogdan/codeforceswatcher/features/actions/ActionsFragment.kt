@@ -54,8 +54,8 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     private fun initViews() {
         swipeToRefresh.setOnRefreshListener(this)
-        actionsAdapter = ActionsAdapter(requireContext()) {
-            store.state.actions.actions[it].comment?.let { comment ->
+        actionsAdapter = ActionsAdapter(requireContext()) { actionIndex ->
+            store.state.actions.actions[actionIndex].comment?.let { comment ->
                 startActivity(ActionActivity.newIntent(requireContext(), comment.id))
             }
         }
