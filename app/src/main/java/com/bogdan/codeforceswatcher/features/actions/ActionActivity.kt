@@ -40,10 +40,10 @@ class ActionActivity : AppCompatActivity() {
 
         pageTitle = cfAction.blogEntry.title
         link = getString(R.string.comment_url, cfAction.blogEntry.id, cfAction.comment?.id)
-        title = pageTitle
     }
 
     private fun initViews() {
+        title = pageTitle
         setupWebView()
     }
 
@@ -54,9 +54,7 @@ class ActionActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_share -> {
-                share()
-            }
+            R.id.action_share -> share()
         }
         return super.onOptionsItemSelected(item)
     }
