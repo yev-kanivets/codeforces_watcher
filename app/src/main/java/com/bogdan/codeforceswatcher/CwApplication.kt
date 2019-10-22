@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Intent
 import com.bogdan.codeforceswatcher.features.actions.redux.requests.ActionsRequests
 import com.bogdan.codeforceswatcher.features.contests.redux.requests.ContestsRequests
+import com.bogdan.codeforceswatcher.features.users.redux.requests.Source
 import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersRequests
 import com.bogdan.codeforceswatcher.receiver.StartAlarm
 import com.bogdan.codeforceswatcher.redux.middlewares.appMiddleware
@@ -48,9 +49,9 @@ class CwApp : Application() {
     }
 
     private fun fetchData() {
-        store.dispatch(UsersRequests.FetchUsers(false))
-        store.dispatch(ContestsRequests.FetchContests(false))
         store.dispatch(ActionsRequests.FetchActions(false))
+        store.dispatch(ContestsRequests.FetchContests(false))
+        store.dispatch(UsersRequests.FetchUsers(false, Source.USER))
     }
 
     private fun startAlarm() {

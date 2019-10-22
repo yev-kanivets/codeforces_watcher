@@ -2,11 +2,9 @@ package com.bogdan.codeforceswatcher.network
 
 import com.bogdan.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersResponse
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import com.bogdan.codeforceswatcher.network.models.Error
 import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,6 +41,7 @@ private fun loadRatingUpdates(
                 user.ratingChanges = ratingChanges
             } ?: break
             countTrueUsers++
+            Thread.sleep(250)
         }
 
         returnResultOnMainThread(if (countTrueUsers < userList.size) {
