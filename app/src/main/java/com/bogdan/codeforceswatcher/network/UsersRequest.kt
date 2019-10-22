@@ -1,6 +1,7 @@
 package com.bogdan.codeforceswatcher.network
 
 import com.bogdan.codeforceswatcher.features.users.models.User
+import com.bogdan.codeforceswatcher.features.users.redux.requests.RatingChangeResponse
 import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersResponse
 import com.bogdan.codeforceswatcher.network.models.Error
 import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
@@ -36,14 +37,19 @@ private fun loadRatingUpdates(
     Thread {
         var countTrueUsers = 0
         for (user in userList) {
-            val response = RestClient.getRating(user.handle).execute()
+            lateinit var response: Response<RatingChangeResponse>
+            try {
+                response = RestClient.getRating(user.handle).execute()
+            } catch (error: java.net.SocketTimeoutException) {
+                break
+            }
             response.body()?.ratingChanges?.let { ratingChanges ->
                 user.ratingChanges = ratingChanges
             } ?: break
-            countTrueUsers++
-            Thread.sleep(250)
-        }
 
+            countTrueUsers++
+            Thread.sleep(250) // Because Codeforces blocks frequent queries
+        }
         returnResultOnMainThread(if (countTrueUsers < userList.size) {
             UsersRequestResult.Failure(Error.RESPONSE)
         } else {

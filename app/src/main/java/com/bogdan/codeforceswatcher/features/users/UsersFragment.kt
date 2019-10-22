@@ -31,7 +31,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     private lateinit var spSort: AppCompatSpinner
 
     override fun onRefresh() {
-        store.dispatch(UsersRequests.FetchUsers(true, Source.USER))
+        store.dispatch(UsersRequests.FetchUsers(Source.USER))
 
         Analytics.logUsersListRefresh()
     }

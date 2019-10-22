@@ -10,7 +10,7 @@ import com.bogdan.codeforceswatcher.store
 class RatingUpdateReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
-        store.dispatch(UsersRequests.FetchUsers(false, Source.BROADCAST))
+        store.dispatch(UsersRequests.FetchUsers(Source.BROADCAST))
     }
 
 }

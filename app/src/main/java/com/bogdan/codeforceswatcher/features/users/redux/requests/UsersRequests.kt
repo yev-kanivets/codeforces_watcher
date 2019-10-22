@@ -12,12 +12,11 @@ import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.store
 import org.rekotlin.Action
 
-enum class Source { USER, BROADCAST }
+enum class Source { USER, BROADCAST, BACKGROUND }
 
 class UsersRequests {
 
     class FetchUsers(
-        private val isToastNeeded: Boolean,
         private val source: Source
     ) : Request() {
 
@@ -37,7 +36,11 @@ class UsersRequests {
         private fun dispatchError(error: Error) {
             val noConnectionError = CwApp.app.resources.getString(R.string.no_connection)
             val fetchingUsersError = CwApp.app.resources.getString(R.string.failed_to_fetch_users)
-
+            val isToastNeeded = when (source) {
+                Source.USER -> true
+                Source.BACKGROUND -> false
+                Source.BROADCAST -> false
+            }
             when (error) {
                 Error.INTERNET ->
                     store.dispatch(

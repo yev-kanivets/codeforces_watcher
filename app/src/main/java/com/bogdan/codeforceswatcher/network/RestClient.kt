@@ -10,9 +10,6 @@ object RestClient {
 
     private val retrofit by lazy {
         val okHttpClient = OkHttpClient.Builder()
-            .connectTimeout(5, TimeUnit.MINUTES)
-            .writeTimeout(5, TimeUnit.MINUTES)
-            .readTimeout(5, TimeUnit.MINUTES)
             .build()
 
         val gsonBuilder = GsonBuilder()
