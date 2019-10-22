@@ -28,8 +28,8 @@
             android:background="@color/white"
             app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/menu_main" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -60,11 +60,10 @@
 
                 <TextView
                     android:id="@+id/tvPageTitle"
-                    style="@style/HeaderText"
+                    style="@style/TextPageTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="@color/white"
                     tools:text="Users" />
 
                 <LinearLayout
