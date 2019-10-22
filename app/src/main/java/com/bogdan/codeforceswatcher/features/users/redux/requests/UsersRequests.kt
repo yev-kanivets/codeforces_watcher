@@ -12,10 +12,14 @@ import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.store
 import org.rekotlin.Action
 
+enum class Source(val isToastNeeded: Boolean) {
+    USER(true), BROADCAST(false), BACKGROUND(false)
+}
+
 class UsersRequests {
 
     class FetchUsers(
-        private val isInitiatedByUser: Boolean
+        private val source: Source
     ) : Request() {
 
         override fun execute() {
@@ -25,7 +29,7 @@ class UsersRequests {
                     is UsersRequestResult.Failure -> dispatchError(result.error)
                     is UsersRequestResult.Success ->
                         store.dispatch(
-                            Success(result.users, getDifferenceAndUpdate(users, result.users), isInitiatedByUser)
+                            Success(result.users, getDifferenceAndUpdate(users, result.users), source)
                         )
                 }
             }
@@ -38,11 +42,11 @@ class UsersRequests {
             when (error) {
                 Error.INTERNET ->
                     store.dispatch(
-                        Failure(if (isInitiatedByUser) noConnectionError else null)
+                        Failure(if (source.isToastNeeded) noConnectionError else null)
                     )
                 Error.RESPONSE ->
                     store.dispatch(
-                        Failure(if (isInitiatedByUser) fetchingUsersError else null)
+                        Failure(if (source.isToastNeeded) fetchingUsersError else null)
                     )
             }
         }
@@ -54,7 +58,7 @@ class UsersRequests {
                     user.id = foundUser.id
 
                     if (foundUser.ratingChanges != user.ratingChanges) {
-                        foundUser.ratingChanges.lastOrNull()?.let { ratingChange ->
+                        user.ratingChanges.lastOrNull()?.let { ratingChange ->
                             val delta = ratingChange.newRating - ratingChange.oldRating
                             difference.add(Pair(user.handle, delta))
                         }
@@ -75,7 +79,8 @@ class UsersRequests {
 
         data class Success(
             val users: List<User>,
-            val notificationData: List<Pair<String, Int>>, val isUserInitiated: Boolean
+            val notificationData: List<Pair<String, Int>>,
+            val source: Source
         ) : Action
 
         data class Failure(override val message: String?) : ToastAction

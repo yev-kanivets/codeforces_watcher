@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.MainActivity
+import com.bogdan.codeforceswatcher.features.users.redux.requests.Source
 import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersRequests
 import org.rekotlin.Middleware
 import org.rekotlin.StateType
@@ -19,8 +20,7 @@ val notificationMiddleware: Middleware<StateType> = { _, _ ->
     { next ->
         { action ->
             when (action) {
-                is UsersRequests.FetchUsers.Success -> if (!action.isUserInitiated) {
-
+                is UsersRequests.FetchUsers.Success -> if (action.source == Source.BROADCAST) {
                     val notificationText = formNotificationText(action.notificationData)
 
                     if (notificationText.isNotEmpty()) {
@@ -42,7 +42,7 @@ private fun formNotificationText(notificationData: List<Pair<String, Int>>) =
 
 const val CHANNEL_ID = "1234"
 
-fun showNotification(context: Context, text: String) {
+private fun showNotification(context: Context, text: String) {
     val notificationManager =
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 

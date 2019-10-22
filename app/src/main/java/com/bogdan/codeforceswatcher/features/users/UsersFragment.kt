@@ -17,6 +17,7 @@ import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState
 import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState.SortType.Companion.getSortType
 import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersRequests
 import com.bogdan.codeforceswatcher.features.users.models.User
+import com.bogdan.codeforceswatcher.features.users.redux.requests.Source
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.fragment_users.*
@@ -30,7 +31,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     private lateinit var spSort: AppCompatSpinner
 
     override fun onRefresh() {
-        store.dispatch(UsersRequests.FetchUsers(isInitiatedByUser = true))
+        store.dispatch(UsersRequests.FetchUsers(Source.USER))
 
         Analytics.logUsersListRefresh()
     }

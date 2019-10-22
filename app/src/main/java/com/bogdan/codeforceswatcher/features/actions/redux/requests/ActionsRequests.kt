@@ -12,6 +12,7 @@ import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
+import org.rekotlin.Action
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -103,7 +104,7 @@ class ActionsRequests {
             }
         }
 
-        data class Success(val actions: List<CFAction>) : org.rekotlin.Action
+        data class Success(val actions: List<CFAction>) : Action
 
         data class Failure(override val message: String?) : ToastAction
     }

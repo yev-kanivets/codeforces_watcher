@@ -1,12 +1,11 @@
 package com.bogdan.codeforceswatcher.network
 
 import com.bogdan.codeforceswatcher.features.users.models.User
+import com.bogdan.codeforceswatcher.features.users.redux.requests.RatingChangeResponse
 import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersResponse
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import com.bogdan.codeforceswatcher.network.models.Error
 import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,16 +35,21 @@ private fun loadRatingUpdates(
     onCompleted: (UsersRequestResult) -> Unit
 ) {
     Thread {
-        var countTrueUsers = 0
+        var countFetchedUsers = 0
         for (user in userList) {
-            val response = RestClient.getRating(user.handle).execute()
-            response.body()?.ratingChanges?.let { ratingChanges ->
+            val response = try {
+                RestClient.getRating(user.handle).execute()
+            } catch (error: java.net.SocketTimeoutException) {
+                null
+            }
+            response?.body()?.ratingChanges?.let { ratingChanges ->
                 user.ratingChanges = ratingChanges
             } ?: break
-            countTrueUsers++
-        }
 
-        returnResultOnMainThread(if (countTrueUsers < userList.size) {
+            countFetchedUsers++
+            Thread.sleep(250) // Because Codeforces blocks frequent queries
+        }
+        returnResultOnMainThread(if (countFetchedUsers < userList.size) {
             UsersRequestResult.Failure(Error.RESPONSE)
         } else {
             UsersRequestResult.Success(userList)
