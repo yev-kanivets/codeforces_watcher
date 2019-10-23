@@ -20,6 +20,7 @@ import com.bogdan.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.features.users.redux.requests.Source
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
+import kotlinx.android.synthetic.main.fragment_users_stub.*
 import kotlinx.android.synthetic.main.fragment_users.*
 import org.rekotlin.StoreSubscriber
 
@@ -52,10 +53,10 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     override fun newState(state: UsersState) {
         swipeToRefresh.isRefreshing = (state.status == UsersState.Status.PENDING)
         usersAdapter.setItems(state.users.sort(state.sortType))
-        showOrHideNoUsersStub(state.users.isEmpty())
+        adjustNoUsersStubVisibility(state.users.isEmpty())
     }
 
-    private fun showOrHideNoUsersStub(isUsersListEmpty: Boolean) {
+    private fun adjustNoUsersStubVisibility(isUsersListEmpty: Boolean) {
         ivAlien.visibility = if (isUsersListEmpty) View.VISIBLE else View.GONE
         tvNoUsers.visibility = if (isUsersListEmpty) View.VISIBLE else View.GONE
     }

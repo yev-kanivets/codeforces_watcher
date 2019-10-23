@@ -41,5 +41,5 @@
     <string name="feature_isn_t_available_yet">Эта функция еще не доступна.</string>
     <string name="share_with_friends">Поделиться с друзьями</string>
     <string name="shared_through_cw">Отправлено через Codeforces Watcher. Найдите его в Google Play.</string>
-    <string name="no_users">У Вас еще нет пользователей для отслеживания. Добавьте первого воспользовавшись кнопкой "+" внизу экрана.</string>
+    <string name="no_users">У Вас еще нет пользователей для отслеживания.\nДобавьте первого воспользовавшись кнопкой "+" внизу экрана.</string>
 </resources>
