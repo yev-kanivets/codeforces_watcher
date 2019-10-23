@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,7 @@ import com.bogdan.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.features.users.redux.requests.Source
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
+import kotlinx.android.synthetic.main.fragment_users_stub.*
 import kotlinx.android.synthetic.main.fragment_users.*
 import org.rekotlin.StoreSubscriber
 
@@ -50,8 +52,19 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     }
 
     override fun newState(state: UsersState) {
-        swipeToRefresh.isRefreshing = (state.status == UsersState.Status.PENDING)
+        swipeRefreshLayout.isRefreshing = (state.status == UsersState.Status.PENDING)
         usersAdapter.setItems(state.users.sort(state.sortType))
+        adjustNoUsersStubVisibility(state.users.isEmpty())
+    }
+
+    private fun adjustNoUsersStubVisibility(isUsersListEmpty: Boolean) {
+        ivAlien.visibility = if (isUsersListEmpty) View.VISIBLE else View.GONE
+        tvNoUsers.visibility = if (isUsersListEmpty) View.VISIBLE else View.GONE
+        spSort.visibility = if (isUsersListEmpty) View.GONE else View.VISIBLE
+        requireActivity().findViewById<TextView>(R.id.tvSortBy).visibility =
+            if (isUsersListEmpty) View.GONE else View.VISIBLE
+
+        swipeRefreshLayout.isEnabled = !isUsersListEmpty
     }
 
     override fun onCreateView(
@@ -66,7 +79,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     }
 
     private fun initViews() {
-        swipeToRefresh.setOnRefreshListener(this)
+        swipeRefreshLayout.setOnRefreshListener(this)
 
         recyclerView.adapter = usersAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

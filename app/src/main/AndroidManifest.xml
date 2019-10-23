@@ -30,8 +30,7 @@
         <activity
             android:name=".features.add_user.AddUserActivity"
             android:label="Add User"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateVisible" />
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver
             android:name="com.bogdan.codeforceswatcher.receiver.RatingUpdateReceiver"
