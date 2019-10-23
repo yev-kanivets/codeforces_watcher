@@ -52,6 +52,12 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     override fun newState(state: UsersState) {
         swipeToRefresh.isRefreshing = (state.status == UsersState.Status.PENDING)
         usersAdapter.setItems(state.users.sort(state.sortType))
+        showOrHideNoUsersStub(state.users.isEmpty())
+    }
+
+    private fun showOrHideNoUsersStub(isUsersListEmpty: Boolean) {
+        ivAlien.visibility = if (isUsersListEmpty) View.VISIBLE else View.GONE
+        tvNoUsers.visibility = if (isUsersListEmpty) View.VISIBLE else View.GONE
     }
 
     override fun onCreateView(

@@ -1,8 +1,10 @@
 package com.bogdan.codeforceswatcher.features.add_user
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.View.*
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.add_user.redux.actions.AddUserActions
@@ -22,6 +24,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener, StoreSubscriber<Ad
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
+        showKeyboard()
         btnAdd.setOnClickListener(this)
     }
 
@@ -40,6 +43,17 @@ class AddUserActivity : AppCompatActivity(), OnClickListener, StoreSubscriber<Ad
         store.unsubscribe(this)
     }
 
+    private fun showKeyboard() {
+        etHandle.requestFocus()
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        imm?.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+    }
+
+    private fun hideKeyboard() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(etHandle.windowToken, 0)
+    }
+
     override fun newState(state: AddUserState) {
         progressBar.visibility = when (state.status) {
             AddUserState.Status.IDLE -> INVISIBLE
@@ -52,6 +66,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener, StoreSubscriber<Ad
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        hideKeyboard()
         onBackPressed()
         return true
     }
