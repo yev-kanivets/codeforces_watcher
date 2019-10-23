@@ -13,8 +13,7 @@ import com.bogdan.codeforceswatcher.features.contests.redux.states.ContestsState
 import com.bogdan.codeforceswatcher.features.contests.redux.requests.ContestsRequests
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
-import kotlinx.android.synthetic.main.fragment_contests.recyclerView
-import kotlinx.android.synthetic.main.fragment_contests.swipeToRefresh
+import kotlinx.android.synthetic.main.fragment_contests.*
 import org.rekotlin.StoreSubscriber
 
 class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
@@ -36,7 +35,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     }
 
     override fun newState(state: ContestsState) {
-        swipeToRefresh.isRefreshing = (state.status == ContestsState.Status.PENDING)
+        swipeRefreshLayout.isRefreshing = (state.status == ContestsState.Status.PENDING)
         contestsAdapter.setItems(state.contests)
     }
 
@@ -58,7 +57,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     }
 
     private fun initViews() {
-        swipeToRefresh.setOnRefreshListener(this)
+        swipeRefreshLayout.setOnRefreshListener(this)
 
         recyclerView.adapter = contestsAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

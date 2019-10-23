@@ -44,7 +44,7 @@ class AddUserRequests {
                 .find { currentUser -> currentUser.handle == user.handle }
 
             if (foundUser == null) {
-                DatabaseClient.userDao.insert(user)
+                user.id = DatabaseClient.userDao.insert(user)
                 store.dispatch(Success(user))
             } else
                 store.dispatch(Failure(CwApp.app.getString(R.string.user_already_added)))

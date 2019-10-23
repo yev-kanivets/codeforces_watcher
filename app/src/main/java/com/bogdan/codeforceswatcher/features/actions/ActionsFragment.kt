@@ -33,7 +33,7 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     }
 
     override fun newState(state: ActionsState) {
-        swipeToRefresh.isRefreshing = (state.status == ActionsState.Status.PENDING)
+        swipeRefreshLayout.isRefreshing = (state.status == ActionsState.Status.PENDING)
         actionsAdapter.setItems(state.actions.map { ActionItem(it) })
     }
 
@@ -53,7 +53,7 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     }
 
     private fun initViews() {
-        swipeToRefresh.setOnRefreshListener(this)
+        swipeRefreshLayout.setOnRefreshListener(this)
         actionsAdapter = ActionsAdapter(requireContext()) { actionIndex ->
             store.state.actions.actions[actionIndex].comment?.let { comment ->
                 startActivity(ActionActivity.newIntent(requireContext(), comment.id))
