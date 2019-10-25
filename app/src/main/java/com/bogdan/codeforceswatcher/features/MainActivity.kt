@@ -1,5 +1,6 @@
 package com.bogdan.codeforceswatcher.features
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.net.Uri
@@ -120,9 +121,26 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     private fun onActionsTabSelected() {
         llSorting.visibility = View.GONE
-        fab.setOnClickListener(null)
+        fab.setOnClickListener { showShareDialog() }
         fab.setImageDrawable(getDrawable(R.drawable.ic_share))
     }
+
+    private fun showShareDialog() {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.share_cw))
+            .setMessage(getString(R.string.help_cw_make_more_social))
+            .setCancelable(false)
+            .setPositiveButton(getString(R.string.share)) { _, _ -> share() }
+            .setNegativeButton(getString(R.string.cancel), null)
+            .create()
+            .show()
+    }
+
+    private fun share() = startActivity(Intent().apply {
+        action = Intent.ACTION_SEND
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, getString(R.string.share_cw_message))
+    })
 
     private fun onProblemsTabSelected() {
         llSorting.visibility = View.GONE

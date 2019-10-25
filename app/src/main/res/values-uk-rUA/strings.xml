@@ -42,4 +42,18 @@
     <string name="share_with_friends">Поділитися з друзями</string>
     <string name="shared_through_cw">Відправлено через Codeforces Watcher. Знайдіть його в Google Play.</string>
     <string name="no_users">Ви ще не маєте користувачів для відслідковування.\nДодайте першого скориставшись кнопкою "+" знизу екрану.</string>
+
+    <string name="share_cw">Поділитися Codeforces Watcher</string>
+    <string name="help_cw_make_more_social">Допоможіть зробити Codeforces та Codeforces Watcher більш соціальними, поділившися ними з вашими друзями.</string>
+    <string name="share">Поділитися</string>
+    <string name="cancel">Скасувати</string>
+    <string name="share_cw_message">"Я користуюся Codeforces Watcher - безкоштовним Android додатком з відкритими сирцями, що використовую Codeforces API для того щоб принести більше олімпіадного програмування на ваш Android пристрій.
+Codeforces Watcher дозволяє:
+1. Слідкувати за активністю будь-якого користувача Codeforces.
+2. Сортувати користувачів за рейтингом та датою останньої участі у змаганнях.
+3. Бути у курсі контестів на Codeforces.
+4. Стежити за недавніми подіями на Codeforces.
+5. Задачі також стануть доступні у найближчому майбутньому…
+
+Завантажуйте прямо зараз на Google Play - https://play.google.com/store/apps/details?id=com.bogdan.codeforceswatcher"</string>
 </resources>

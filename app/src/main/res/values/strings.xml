@@ -39,4 +39,17 @@
     <string name="share_with_friends">Share with friends</string>
     <string name="shared_through_cw">Shared through Codeforces Watcher. Find it on Google Play.</string>
     <string name="no_users">You don’t have any users to watch yet.\nAdd the first one using «+» at the bottom of the screen.</string>
+    <string name="share_cw">Share Codeforces Watcher</string>
+    <string name="help_cw_make_more_social">Help us make Codeforces and Codeforces Watcher more social by sharing it with your friends.</string>
+    <string name="share">Share</string>
+    <string name="cancel">Cancel</string>
+    <string name="share_cw_message">"I'm using Codeforces Watcher - open-source, free Android application, which leverages Codeforces API to bring more competitive programming to your Android device.
+Codeforces Watcher allows:
+1. Watch for activity of any Codeforces user.
+2. Sort users by rating and last participation date.
+3. Shortlist upcoming Codeforces contests.
+4. Watch for Recent Actions on Codeforces.
+5. Problems are coming soon…
+
+Download it now on Google Play - https://play.google.com/store/apps/details?id=com.bogdan.codeforceswatcher"</string>
 </resources>
