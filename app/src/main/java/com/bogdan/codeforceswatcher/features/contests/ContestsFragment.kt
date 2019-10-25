@@ -13,6 +13,7 @@ import com.bogdan.codeforceswatcher.features.contests.redux.states.ContestsState
 import com.bogdan.codeforceswatcher.features.contests.redux.requests.ContestsRequests
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
+import com.bogdan.codeforceswatcher.util.Refresh
 import kotlinx.android.synthetic.main.fragment_contests.*
 import org.rekotlin.StoreSubscriber
 
@@ -41,7 +42,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun onRefresh() {
         store.dispatch(ContestsRequests.FetchContests(isInitiatedByUser = true))
-        Analytics.logContestsListRefresh()
+        Analytics.logRefreshingData(Refresh.CONTESTS)
     }
 
     override fun onCreateView(

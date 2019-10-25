@@ -19,6 +19,7 @@ import com.bogdan.codeforceswatcher.redux.actions.UIActions
 import com.bogdan.codeforceswatcher.redux.states.UIState
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.ui.AppRateDialog
+import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Prefs
 import kotlinx.android.synthetic.main.activity_main.*
 import org.rekotlin.StoreSubscriber
@@ -121,7 +122,10 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     private fun onActionsTabSelected() {
         llSorting.visibility = View.GONE
-        fab.setOnClickListener { showShareDialog() }
+        fab.setOnClickListener {
+            showShareDialog()
+            Analytics.logShareApp()
+        }
         fab.setImageDrawable(getDrawable(R.drawable.ic_share))
     }
 
@@ -130,7 +134,10 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
             .setTitle(getString(R.string.share_cw))
             .setMessage(getString(R.string.help_cw_make_more_social))
             .setCancelable(false)
-            .setPositiveButton(getString(R.string.share)) { _, _ -> share() }
+            .setPositiveButton(getString(R.string.share)) { _, _ ->
+                share()
+                Analytics.logAppShared()
+            }
             .setNegativeButton(getString(R.string.cancel), null)
             .create()
             .show()
