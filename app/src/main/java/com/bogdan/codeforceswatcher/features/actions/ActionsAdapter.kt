@@ -1,7 +1,6 @@
 package com.bogdan.codeforceswatcher.features.actions
 
 import android.content.Context
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,28 +15,42 @@ import kotlinx.android.synthetic.main.view_action_item.view.*
 class ActionsAdapter(
     private val context: Context,
     private val itemClickListener: (Int) -> Unit
-) : RecyclerView.Adapter<ActionsAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items: List<ActionItem> = listOf()
 
     override fun getItemCount() = items.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layoutInflater = LayoutInflater.from(context).inflate(R.layout.view_action_item, parent, false)
-        return ViewHolder(layoutInflater, itemClickListener)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val layoutInflater = when (viewType) {
+            STUB_VIEW_TYPE -> LayoutInflater.from(context).inflate(R.layout.view_action_stub, parent, false)
+            else -> LayoutInflater.from(context).inflate(R.layout.view_action_item, parent, false)
+        }
+        return when (viewType) {
+            STUB_VIEW_TYPE -> StubViewHolder(layoutInflater)
+            else -> ActionViewHolder(layoutInflater, itemClickListener)
+        }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = with(items[position]) {
-        holder.apply {
-            tvTitle.text = title
-            tvHandle.text = commentatorHandle
-            tvTimeAgo.text = timeAgo
-            tvContent.text = content
-        }
+    override fun getItemViewType(position: Int): Int {
+        return if (items[position] is ActionItem.Stub) STUB_VIEW_TYPE
+        else ACTION_VIEW_TYPE
+    }
 
-        Picasso.get().load(commentatorAvatar)
-            .placeholder(R.drawable.no_avatar)
-            .into(holder.ivAvatar)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (items[position] is ActionItem.Stub) return
+        with(items[position] as ActionItem.Action) {
+            (holder as ActionViewHolder).apply {
+                tvTitle.text = title
+                tvHandle.text = commentatorHandle
+                tvTimeAgo.text = timeAgo
+                tvContent.text = content
+            }
+
+            Picasso.get().load(commentatorAvatar)
+                .placeholder(R.drawable.no_avatar)
+                .into(holder.ivAvatar)
+        }
     }
 
     fun setItems(actionsList: List<ActionItem>) {
@@ -45,7 +58,7 @@ class ActionsAdapter(
         notifyDataSetChanged()
     }
 
-    class ViewHolder(view: View, itemClickListener: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
+    class ActionViewHolder(view: View, itemClickListener: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
         val tvHandle: TextView = view.tvHandle
         val tvTitle: TextView = view.tvTitle
         val tvTimeAgo: TextView = view.tvTimeAgo
@@ -57,5 +70,12 @@ class ActionsAdapter(
                 itemClickListener.invoke(adapterPosition)
             }
         }
+    }
+
+    data class StubViewHolder(val view: View) : RecyclerView.ViewHolder(view)
+
+    companion object {
+        const val STUB_VIEW_TYPE = 0
+        const val ACTION_VIEW_TYPE = 1
     }
 }
