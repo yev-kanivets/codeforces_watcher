@@ -136,11 +136,11 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
             .show()
     }
 
-    private fun share() = Intent(Intent.ACTION_SEND).apply {
+    private fun share() = startActivity(Intent().apply {
+        action = Intent.ACTION_SEND
         type = "text/plain"
         putExtra(Intent.EXTRA_TEXT, getString(R.string.share_cw_message))
-        startActivity(this)
-    }
+    })
 
     private fun onProblemsTabSelected() {
         llSorting.visibility = View.GONE
