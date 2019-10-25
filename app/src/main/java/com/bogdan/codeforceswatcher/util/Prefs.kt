@@ -7,7 +7,7 @@ import com.bogdan.codeforceswatcher.CwApp
 
 class Prefs constructor(private val context: Context) {
 
-    var ratePeriod = 5
+    private val ratePeriod = 5
 
     fun readSpinnerSortPosition(): String {
         val defaultPrefs = getDefaultPrefs()
