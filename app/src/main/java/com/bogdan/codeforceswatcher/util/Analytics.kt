@@ -2,9 +2,9 @@ package com.bogdan.codeforceswatcher.util
 
 import android.os.Bundle
 import com.bogdan.codeforceswatcher.CwApp
-import com.bogdan.codeforceswatcher.redux.states.UIState
-import com.bogdan.codeforceswatcher.store
 import com.google.firebase.analytics.FirebaseAnalytics
+
+enum class Refresh { USERS, CONTESTS, ACTIONS }
 
 object Analytics {
 
@@ -20,13 +20,12 @@ object Analytics {
         }
     }
 
-    fun logSwipeToRefresh() {
+    fun logRefreshingData(refresh: Refresh) {
         if (isEnabled) {
-            instance.logEvent(when (store.state.ui.selectedHomeTab) {
-                UIState.HomeTab.USERS -> "users_list_refresh"
-                UIState.HomeTab.CONTESTS -> "contests_list_refresh"
-                UIState.HomeTab.ACTIONS -> "actions_list_refresh"
-                else -> return
+            instance.logEvent(when (refresh) {
+                Refresh.USERS -> "users_list_refresh"
+                Refresh.CONTESTS -> "contests_list_refresh"
+                Refresh.ACTIONS -> "actions_list_refresh"
             }, Bundle())
         }
     }

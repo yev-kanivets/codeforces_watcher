@@ -21,6 +21,7 @@ import com.bogdan.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.features.users.redux.requests.Source
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
+import com.bogdan.codeforceswatcher.util.Refresh
 import kotlinx.android.synthetic.main.fragment_users_stub.*
 import kotlinx.android.synthetic.main.fragment_users.*
 import org.rekotlin.StoreSubscriber
@@ -34,8 +35,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun onRefresh() {
         store.dispatch(UsersRequests.FetchUsers(Source.USER))
-
-        Analytics.logSwipeToRefresh()
+        Analytics.logRefreshingData(Refresh.USERS)
     }
 
     override fun onStart() {

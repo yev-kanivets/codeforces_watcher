@@ -12,6 +12,7 @@ import com.bogdan.codeforceswatcher.features.actions.redux.requests.ActionsReque
 import com.bogdan.codeforceswatcher.features.actions.redux.states.ActionsState
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
+import com.bogdan.codeforceswatcher.util.Refresh
 import kotlinx.android.synthetic.main.fragment_users.*
 import org.rekotlin.StoreSubscriber
 
@@ -40,7 +41,7 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun onRefresh() {
         store.dispatch(ActionsRequests.FetchActions(true))
-        Analytics.logSwipeToRefresh()
+        Analytics.logRefreshingData(Refresh.ACTIONS)
     }
 
     override fun onCreateView(
