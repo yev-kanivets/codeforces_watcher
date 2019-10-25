@@ -35,7 +35,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     override fun onRefresh() {
         store.dispatch(UsersRequests.FetchUsers(Source.USER))
 
-        Analytics.logUsersListRefresh()
+        Analytics.logSwipeToRefresh()
     }
 
     override fun onStart() {

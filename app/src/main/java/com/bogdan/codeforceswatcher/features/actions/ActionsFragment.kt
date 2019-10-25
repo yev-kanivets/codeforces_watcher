@@ -40,7 +40,7 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun onRefresh() {
         store.dispatch(ActionsRequests.FetchActions(true))
-        Analytics.logActionsListRefresh()
+        Analytics.logSwipeToRefresh()
     }
 
     override fun onCreateView(

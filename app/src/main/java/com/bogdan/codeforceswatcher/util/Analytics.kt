@@ -2,6 +2,8 @@ package com.bogdan.codeforceswatcher.util
 
 import android.os.Bundle
 import com.bogdan.codeforceswatcher.CwApp
+import com.bogdan.codeforceswatcher.redux.states.UIState
+import com.bogdan.codeforceswatcher.store
 import com.google.firebase.analytics.FirebaseAnalytics
 
 object Analytics {
@@ -18,27 +20,20 @@ object Analytics {
         }
     }
 
-    fun logUsersListRefresh() {
+    fun logSwipeToRefresh() {
         if (isEnabled) {
-            instance.logEvent("users_list_refresh", Bundle())
-        }
-    }
-
-    fun logContestsListRefresh() {
-        if (isEnabled) {
-            instance.logEvent("contests_list_refresh", Bundle())
+            instance.logEvent(when (store.state.ui.selectedHomeTab) {
+                UIState.HomeTab.USERS -> "users_list_refresh"
+                UIState.HomeTab.CONTESTS -> "contests_list_refresh"
+                UIState.HomeTab.ACTIONS -> "actions_list_refresh"
+                else -> return
+            }, Bundle())
         }
     }
 
     fun logUserAdded() {
         if (isEnabled) {
             instance.logEvent("user_added", Bundle())
-        }
-    }
-
-    fun logActionsListRefresh() {
-        if (isEnabled) {
-            instance.logEvent("actions_list_refresh", Bundle())
         }
     }
 

@@ -41,7 +41,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun onRefresh() {
         store.dispatch(ContestsRequests.FetchContests(isInitiatedByUser = true))
-        Analytics.logContestsListRefresh()
+        Analytics.logSwipeToRefresh()
     }
 
     override fun onCreateView(
