@@ -15,6 +15,7 @@ import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.store
+import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.activity_action.*
 
 class ActionActivity : AppCompatActivity() {
@@ -31,6 +32,7 @@ class ActionActivity : AppCompatActivity() {
 
         initData()
         initViews()
+        Analytics.logActionOpened()
     }
 
     private fun initData() {
@@ -54,7 +56,10 @@ class ActionActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_share -> share()
+            R.id.action_share -> {
+                share()
+                Analytics.logShareComment()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
