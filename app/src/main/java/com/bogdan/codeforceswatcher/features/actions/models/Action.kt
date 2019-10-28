@@ -8,6 +8,7 @@ import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
 sealed class ActionItem {
+
     class Action(action: CFAction) : ActionItem() {
 
         var commentatorHandle: CharSequence

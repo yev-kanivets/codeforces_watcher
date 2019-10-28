@@ -21,16 +21,17 @@ class ActionsAdapter(
 
     override fun getItemCount() = items.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val layoutInflater = when (viewType) {
-            STUB_VIEW_TYPE -> LayoutInflater.from(context).inflate(R.layout.view_action_stub, parent, false)
-            else -> LayoutInflater.from(context).inflate(R.layout.view_action_item, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        when (viewType) {
+            STUB_VIEW_TYPE -> {
+                val layout = LayoutInflater.from(context).inflate(R.layout.view_action_stub, parent, false)
+                StubViewHolder(layout)
+            }
+            else -> {
+                val layout = LayoutInflater.from(context).inflate(R.layout.view_action_item, parent, false)
+                ActionViewHolder(layout, itemClickListener)
+            }
         }
-        return when (viewType) {
-            STUB_VIEW_TYPE -> StubViewHolder(layoutInflater)
-            else -> ActionViewHolder(layoutInflater, itemClickListener)
-        }
-    }
 
     override fun getItemViewType(position: Int): Int {
         return if (items[position] is ActionItem.Stub) STUB_VIEW_TYPE
@@ -54,7 +55,8 @@ class ActionsAdapter(
     }
 
     fun setItems(actionsList: List<ActionItem>) {
-        items = actionsList
+        items = if (actionsList.isEmpty()) listOf(ActionItem.Stub)
+        else actionsList
         notifyDataSetChanged()
     }
 
