@@ -36,7 +36,7 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun newState(state: ActionsState) {
         swipeRefreshLayout.isRefreshing = (state.status == ActionsState.Status.PENDING)
-        actionsAdapter.setItems(state.actions.map { ActionItem(it) })
+        actionsAdapter.setItems(state.actions.map { ActionItem.Action(it) })
     }
 
     override fun onRefresh() {
