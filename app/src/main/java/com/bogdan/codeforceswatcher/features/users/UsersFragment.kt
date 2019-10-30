@@ -28,9 +28,8 @@ import org.rekotlin.StoreSubscriber
 class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     StoreSubscriber<UsersState> {
 
-    private val usersAdapter by lazy { UsersAdapter(requireContext()) }
-
     private lateinit var spSort: AppCompatSpinner
+    private lateinit var usersAdapter: UsersAdapter
 
     override fun onRefresh() {
         store.dispatch(UsersRequests.FetchUsers(Source.USER))
@@ -76,6 +75,11 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
+
+        usersAdapter = UsersAdapter(requireContext()) { userIndex ->
+            val userId = store.state.users.users.sort(store.state.users.sortType)[userIndex].id
+            startActivity(UserActivity.newIntent(requireContext(), userId))
+        }
 
         recyclerView.adapter = usersAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

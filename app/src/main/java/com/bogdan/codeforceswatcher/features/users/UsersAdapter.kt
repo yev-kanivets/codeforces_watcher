@@ -16,7 +16,8 @@ import com.bogdan.codeforceswatcher.features.users.models.UserItem
 import kotlinx.android.synthetic.main.view_user_item.view.*
 
 class UsersAdapter(
-    private val context: Context
+    private val context: Context,
+    private val itemClickListener: (Int) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items: List<UserItem> = listOf()
@@ -41,7 +42,7 @@ class UsersAdapter(
             }
             else -> {
                 val layout = LayoutInflater.from(context).inflate(R.layout.view_user_item, parent, false)
-                UsersAdapter.UserViewHolder(layout)
+                UsersAdapter.UserViewHolder(layout, itemClickListener)
             }
         }
 
@@ -56,10 +57,6 @@ class UsersAdapter(
                 tvLastRatingUpdate.text = lastRatingUpdate
 
                 showLastRatingUpdate(update, holder)
-
-                itemView.setOnClickListener {
-                    context.startActivity(UserActivity.newIntent(context, id))
-                }
             }
         }
     }
@@ -81,12 +78,18 @@ class UsersAdapter(
         }
     }
 
-    class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class UserViewHolder(view: View, itemClickListener: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
         val tvHandle: TextView = view.tvHandle
         val tvRating: TextView = view.tvRating
         val tvDateLastRatingUpdate: TextView = view.tvDateLastRatingUpdate
         val tvLastRatingUpdate: TextView = view.tvLastRatingUpdate
         val ivDelta: ImageView = view.ivDelta
+
+        init {
+            view.setOnClickListener {
+                itemClickListener.invoke(adapterPosition)
+            }
+        }
     }
 
     data class StubViewHolder(val view: View) : RecyclerView.ViewHolder(view)
