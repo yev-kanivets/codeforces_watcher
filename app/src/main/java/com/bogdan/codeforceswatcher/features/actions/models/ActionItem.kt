@@ -38,7 +38,7 @@ sealed class ActionItem {
             }
 
         private fun formatCommentatorHandle(handle: String, rank: String?): CharSequence {
-            val colorHandle = colorTextByUserRank(handle, rank, CwApp.app)
+            val colorHandle = colorTextByUserRank(handle, rank)
             val commentedByString = CwApp.app.getString(R.string.commented_by)
             val handlePosition = commentedByString.indexOf("%1\$s")
 

@@ -12,12 +12,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.adapter.UserAdapter
 import com.bogdan.codeforceswatcher.features.users.redux.actions.UsersActions
 import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState
 import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState.SortType.Companion.getSortType
 import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersRequests
 import com.bogdan.codeforceswatcher.features.users.models.User
+import com.bogdan.codeforceswatcher.features.users.models.UserItem
 import com.bogdan.codeforceswatcher.features.users.redux.requests.Source
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
@@ -53,7 +53,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun newState(state: UsersState) {
         swipeRefreshLayout.isRefreshing = (state.status == UsersState.Status.PENDING)
-        usersAdapter.setItems(state.users.sort(state.sortType))
+        usersAdapter.setItems(state.users.sort(state.sortType).map { UserItem(it) })
         adjustNoUsersStubVisibility(state.users.isEmpty())
     }
 
