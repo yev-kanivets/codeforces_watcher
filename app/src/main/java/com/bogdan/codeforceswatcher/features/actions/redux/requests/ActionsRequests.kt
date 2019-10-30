@@ -16,6 +16,7 @@ import org.rekotlin.Action
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class ActionsRequests {
 
@@ -24,7 +25,7 @@ class ActionsRequests {
     ) : Request() {
 
         override fun execute() {
-            RestClient.getActions().enqueue(object : Callback<ActionsResponse> {
+            RestClient.getActions(lang = defineLang(Locale.getDefault().language)).enqueue(object : Callback<ActionsResponse> {
                 val noConnection = CwApp.app.getString(R.string.no_connection)
 
                 override fun onResponse(
@@ -103,6 +104,9 @@ class ActionsRequests {
                     )
             }
         }
+
+        private fun defineLang(locale: String) =
+            if (locale == "ru" || locale == "uk") "ru" else "en"
 
         data class Success(val actions: List<CFAction>) : Action
 

@@ -20,5 +20,8 @@ interface CodeforcesApi {
     fun getContests(): Call<ContestsResponse>
 
     @GET("recentActions")
-    fun getActions(@Query("maxCount") maxCount: Int): Call<ActionsResponse>
+    fun getActions(
+        @Query("maxCount") maxCount: Int,
+        @Query("lang") lang: String
+    ): Call<ActionsResponse>
 }
