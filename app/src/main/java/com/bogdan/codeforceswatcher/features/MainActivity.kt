@@ -5,7 +5,9 @@ import android.content.Intent
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -21,6 +23,7 @@ import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.ui.AppRateDialog
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Prefs
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.rekotlin.StoreSubscriber
 
@@ -170,6 +173,15 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
                 store.dispatch(UIActions.SelectHomeTab(homeTab))
             }
             true
+        }
+
+        val menuView = bottomNavigation.getChildAt(0) as? BottomNavigationMenuView ?: return
+
+        for (i in 0 until menuView.childCount) {
+            val activeLabel = menuView.getChildAt(i).findViewById<View>(R.id.largeLabel)
+            if (activeLabel is TextView) {
+                activeLabel.setPadding(0, 0, 0, 0)
+            }
         }
     }
 
