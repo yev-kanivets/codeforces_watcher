@@ -12,24 +12,23 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.users.redux.actions.UsersActions
-import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState
-import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState.SortType.Companion.getSortType
-import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersRequests
 import com.bogdan.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.features.users.models.UserItem
+import com.bogdan.codeforceswatcher.features.users.redux.actions.UsersActions
 import com.bogdan.codeforceswatcher.features.users.redux.requests.Source
+import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersRequests
+import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState
+import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState.SortType.Companion.getSortType
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Refresh
-import kotlinx.android.synthetic.main.fragment_users_stub.*
 import kotlinx.android.synthetic.main.fragment_users.*
 import org.rekotlin.StoreSubscriber
 
 class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     StoreSubscriber<UsersState> {
 
-    private val usersAdapter by lazy { UserAdapter(requireContext()) }
+    private val usersAdapter by lazy { UsersAdapter(requireContext()) }
 
     private lateinit var spSort: AppCompatSpinner
 
@@ -53,17 +52,14 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun newState(state: UsersState) {
         swipeRefreshLayout.isRefreshing = (state.status == UsersState.Status.PENDING)
-        usersAdapter.setItems(state.users.sort(state.sortType).map { UserItem(it) })
-        adjustNoUsersStubVisibility(state.users.isEmpty())
+        usersAdapter.setItems(state.users.sort(state.sortType).map { UserItem.User(it) })
+        adjustSpinnerSortVisibility(state.users.isEmpty())
     }
 
-    private fun adjustNoUsersStubVisibility(isUsersListEmpty: Boolean) {
-        ivAlien.visibility = if (isUsersListEmpty) View.VISIBLE else View.GONE
-        tvNoUsers.visibility = if (isUsersListEmpty) View.VISIBLE else View.GONE
+    private fun adjustSpinnerSortVisibility(isUsersListEmpty: Boolean) {
         spSort.visibility = if (isUsersListEmpty) View.GONE else View.VISIBLE
         requireActivity().findViewById<TextView>(R.id.tvSortBy).visibility =
             if (isUsersListEmpty) View.GONE else View.VISIBLE
-
         swipeRefreshLayout.isEnabled = !isUsersListEmpty
     }
 
