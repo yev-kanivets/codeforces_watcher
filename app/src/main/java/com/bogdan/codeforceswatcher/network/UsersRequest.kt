@@ -37,6 +37,7 @@ private fun loadRatingUpdates(
     Thread {
         var countFetchedUsers = 0
         for (user in userList) {
+            Thread.sleep(250) // Because Codeforces blocks frequent queries
             val response = try {
                 RestClient.getRating(user.handle).execute()
             } catch (error: java.net.SocketTimeoutException) {
@@ -45,9 +46,7 @@ private fun loadRatingUpdates(
             response?.body()?.ratingChanges?.let { ratingChanges ->
                 user.ratingChanges = ratingChanges
             } ?: break
-
             countFetchedUsers++
-            Thread.sleep(250) // Because Codeforces blocks frequent queries
         }
         returnResultOnMainThread(if (countFetchedUsers < userList.size) {
             UsersRequestResult.Failure(Error.RESPONSE)

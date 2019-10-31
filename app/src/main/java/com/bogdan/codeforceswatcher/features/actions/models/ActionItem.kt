@@ -15,18 +15,16 @@ sealed class ActionItem {
         var title: String
         var content: String
         var commentatorAvatar: String
-        var timeAgo: String
+        var creationTimeSeconds: Long
 
         init {
             val comment = action.comment ?: throw NullPointerException()
             commentatorAvatar = (getRightAvatarLink(comment.commentatorAvatar))
-
             commentatorHandle = formatCommentatorHandle(
                 comment.commentatorHandle, comment.commentatorRank
             )
-
             title = action.blogEntry.title
-            timeAgo = PrettyTime().format(Date(comment.creationTimeSeconds * 1000))
+            creationTimeSeconds = comment.creationTimeSeconds
             content = comment.text
         }
 
