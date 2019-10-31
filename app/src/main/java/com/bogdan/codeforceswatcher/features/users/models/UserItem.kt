@@ -18,11 +18,9 @@ sealed class UserItem {
         val handle: SpannableString = colorTextByUserRank(user.handle, user.rank)
         val rating: SpannableString = colorTextByUserRank(user.rating?.toString().orEmpty(), user.rank)
         var lastRatingUpdate: String = ""
-        var dateOfLastRatingUpdate: String
+        var dateOfLastRatingUpdate: String = CwApp.app.getString(R.string.no_rating_update)
 
         init {
-            dateOfLastRatingUpdate = CwApp.app.getString(R.string.no_rating_update)
-
             user.ratingChanges.lastOrNull()?.let { ratingChange ->
                 dateOfLastRatingUpdate = CwApp.app.getString(
                     R.string.last_rating_update,

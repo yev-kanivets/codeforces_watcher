@@ -30,19 +30,19 @@ class UsersAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (items[position] is UserItem.Stub) UsersAdapter.STUB_VIEW_TYPE
-        else UsersAdapter.USER_VIEW_TYPE
+        return if (items[position] is UserItem.Stub) STUB_VIEW_TYPE
+        else USER_VIEW_TYPE
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         when (viewType) {
-            UsersAdapter.STUB_VIEW_TYPE -> {
+            STUB_VIEW_TYPE -> {
                 val layout = LayoutInflater.from(context).inflate(R.layout.view_user_stub, parent, false)
-                UsersAdapter.StubViewHolder(layout)
+                StubViewHolder(layout)
             }
             else -> {
                 val layout = LayoutInflater.from(context).inflate(R.layout.view_user_item, parent, false)
-                UsersAdapter.UserViewHolder(layout, itemClickListener)
+                UserViewHolder(layout, itemClickListener)
             }
         }
 
