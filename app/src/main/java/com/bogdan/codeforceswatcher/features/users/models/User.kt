@@ -1,6 +1,5 @@
 package com.bogdan.codeforceswatcher.features.users.models
 
-import android.content.Context
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -8,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 
 @Entity
@@ -23,7 +23,7 @@ data class User(
     var ratingChanges: List<RatingChange>
 )
 
-fun colorTextByUserRank(text: String, rank: String?, context: Context): SpannableString {
+fun colorTextByUserRank(text: String, rank: String?): SpannableString {
     val color = when (rank) {
         null -> R.color.black
         "newbie" -> R.color.grey
@@ -45,7 +45,7 @@ fun colorTextByUserRank(text: String, rank: String?, context: Context): Spannabl
         SpannableString(HtmlCompat.fromHtml(colorText, HtmlCompat.FROM_HTML_MODE_LEGACY))
     } else {
         val colorText = SpannableString(text)
-        val foregroundColorSpan = ForegroundColorSpan(ContextCompat.getColor(context, color))
+        val foregroundColorSpan = ForegroundColorSpan(ContextCompat.getColor(CwApp.app, color))
         colorText.setSpan(foregroundColorSpan, 0, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         colorText
     }

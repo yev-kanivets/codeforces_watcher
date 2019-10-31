@@ -12,6 +12,9 @@ import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.rekotlin.Action
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,6 +36,7 @@ class ActionsRequests {
                     response: Response<ActionsResponse>
                 ) {
                     response.body()?.actions?.let { actions ->
+                        println("build ui data and dispatch")
                         buildUiDataAndDispatch(actions)
                     } ?: store.dispatch(Failure(if (isInitializedByUser) noConnection else null))
                 }
@@ -49,7 +53,14 @@ class ActionsRequests {
             getUsers(commentatorsHandles, false) { result ->
                 when (result) {
                     is UsersRequestResult.Success ->
-                        store.dispatch(Success(buildUiData(actions, result.users)))
+                        Thread {
+                            val uiData = buildUiData(actions, result.users)
+                            runBlocking {
+                                withContext(Dispatchers.Main) {
+                                    store.dispatch(Success(uiData))
+                                }
+                            }
+                        }.start()
                     is UsersRequestResult.Failure -> dispatchError(result.error)
                 }
             }
@@ -100,7 +111,7 @@ class ActionsRequests {
             when (error) {
                 Error.INTERNET, Error.RESPONSE ->
                     store.dispatch(
-                        Failure(if (isInitializedByUser) noConnectionError else null)
+                        Failure(noConnectionError)
                     )
             }
         }

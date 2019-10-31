@@ -11,6 +11,8 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.actions.models.ActionItem
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.view_action_item.view.*
+import org.ocpsoft.prettytime.PrettyTime
+import java.util.*
 
 class ActionsAdapter(
     private val context: Context,
@@ -44,7 +46,7 @@ class ActionsAdapter(
             (holder as ActionViewHolder).apply {
                 tvTitle.text = title
                 tvHandle.text = commentatorHandle
-                tvTimeAgo.text = timeAgo
+                tvTimeAgo.text = PrettyTime().format(Date(creationTimeSeconds * 1000))
                 tvContent.text = content
             }
 

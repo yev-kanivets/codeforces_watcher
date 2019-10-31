@@ -1,14 +1,18 @@
 package com.bogdan.codeforceswatcher.features.contests
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.adapter.ContestAdapter
+import com.bogdan.codeforceswatcher.features.contests.models.Contest
 import com.bogdan.codeforceswatcher.features.contests.redux.states.ContestsState
 import com.bogdan.codeforceswatcher.features.contests.redux.requests.ContestsRequests
 import com.bogdan.codeforceswatcher.store
@@ -16,11 +20,14 @@ import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Refresh
 import kotlinx.android.synthetic.main.fragment_contests.*
 import org.rekotlin.StoreSubscriber
+import java.net.URLEncoder
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     StoreSubscriber<ContestsState> {
 
-    private val contestsAdapter by lazy { ContestAdapter(requireContext()) }
+    private lateinit var contestsAdapter: ContestsAdapter
 
     override fun onStart() {
         super.onStart()
@@ -59,8 +66,40 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
-
+        contestsAdapter = ContestsAdapter(requireContext()) { contestIndex ->
+            val contest = store.state.contests.contests[contestIndex]
+            addContestToCalendar(contest)
+        }
         recyclerView.adapter = contestsAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun addContestToCalendar(contest: Contest) {
+        val timeStart = getCalendarTime(contest.time)
+        val timeEnd = getCalendarTime(contest.time + contest.duration)
+        val encodeName = URLEncoder.encode(contest.name)
+        val calendarEventLink =
+            "${CALENDAR_LINK}?action=TEMPLATE&text=$encodeName&dates=$timeStart/$timeEnd&details=${CODEFORCES_LINK}"
+        val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(calendarEventLink))
+        try {
+            context?.startActivity(intent)
+        } catch (error: ActivityNotFoundException) {
+            Toast.makeText(
+                context,
+                context?.resources?.getString(R.string.google_calendar_not_found),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        Analytics.logAddContestToCalendarEvent(contest.name)
+    }
+
+    private fun getCalendarTime(time: Long): String {
+        val dateFormat = SimpleDateFormat("yyyyMMd'T'HHmmss", Locale.getDefault())
+        return dateFormat.format(Date(time * 1000)).toString()
+    }
+
+    companion object {
+        private const val CALENDAR_LINK = "https://calendar.google.com/calendar/render"
+        private const val CODEFORCES_LINK = "http://codeforces.com/contests"
     }
 }
