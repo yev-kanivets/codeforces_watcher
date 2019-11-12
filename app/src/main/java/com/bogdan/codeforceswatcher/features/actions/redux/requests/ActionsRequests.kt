@@ -106,7 +106,7 @@ class ActionsRequests {
             when (error) {
                 Error.INTERNET, Error.RESPONSE ->
                     store.dispatch(
-                        Failure(noConnectionError)
+                        Failure(if (isInitializedByUser) noConnectionError else null)
                     )
             }
         }
