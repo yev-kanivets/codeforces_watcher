@@ -47,6 +47,7 @@ class ActionActivity : AppCompatActivity() {
     private fun initViews() {
         title = pageTitle
         setupWebView()
+        swipeRefreshLayout.setOnRefreshListener { webView.reload() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -92,6 +93,7 @@ class ActionActivity : AppCompatActivity() {
             override fun onPageFinished(view: WebView, url: String) {
                 progressBarHorizontal?.visibility = View.GONE
                 webView?.visibility = View.VISIBLE
+                swipeRefreshLayout.isRefreshing = false
             }
         }
     }
