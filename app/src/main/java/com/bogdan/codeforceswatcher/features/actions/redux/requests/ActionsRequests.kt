@@ -14,34 +14,27 @@ import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
 import kotlinx.coroutines.*
 import org.rekotlin.Action
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.util.*
 
 class ActionsRequests {
 
     class FetchActions(
-        val isInitializedByUser: Boolean
+        private val isInitializedByUser: Boolean
     ) : Request() {
 
         override fun execute() {
-            RestClient.getActions(lang = defineLang(Locale.getDefault().language)).enqueue(object : Callback<ActionsResponse> {
-                val noConnection = CwApp.app.getString(R.string.no_connection)
-
-                override fun onResponse(
-                    call: Call<ActionsResponse>,
-                    response: Response<ActionsResponse>
-                ) {
+            CoroutineScope(Dispatchers.Main).launch {
+                val noConnectionError = CwApp.app.getString(R.string.no_connection)
+                try {
+                    val response = RestClient.getActions(lang = defineLang(Locale.getDefault().language))
                     response.body()?.actions?.let { actions ->
                         buildUiDataAndDispatch(actions)
-                    } ?: store.dispatch(Failure(if (isInitializedByUser) noConnection else null))
+                    }
+                        ?: store.dispatch(Failure(if (isInitializedByUser) noConnectionError else null))
+                } catch (t: Throwable) {
+                    store.dispatch(Failure(if (isInitializedByUser) noConnectionError else null))
                 }
-
-                override fun onFailure(call: Call<ActionsResponse>, t: Throwable) {
-                    store.dispatch(Failure(if (isInitializedByUser) noConnection else null))
-                }
-            })
+            }
         }
 
         private fun buildUiDataAndDispatch(actions: List<CFAction>) {

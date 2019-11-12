@@ -19,7 +19,7 @@ object RoomController : StoreSubscriber<AppState> {
 
     fun fetchAppState(): AppState {
         return AppState(
-            contests = ContestsState(contests = DatabaseClient.contestDao.getUpcomingContests()),
+            contests = ContestsState(contests = DatabaseClient.contestDao.getUpcomingContests().reversed()),
             users = UsersState(
                 users = DatabaseClient.userDao.getAll(),
                 sortType = UsersState.SortType.getSortType(Prefs.get().readSpinnerSortPosition().toInt())

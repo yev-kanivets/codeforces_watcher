@@ -6,34 +6,28 @@ import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
 import kotlinx.coroutines.*
 
 fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean, onCompleted: (UsersRequestResult) -> Unit) {
-    GlobalScope.launch {
+    CoroutineScope(Dispatchers.Main).launch {
         try {
             val response = RestClient.getUsers(handles)
             response.body()?.users?.let { users ->
                 if (isRatingUpdatesNeeded) {
-                    returnResultOnMainThread(loadRatingUpdates(users), onCompleted)
+                    onCompleted(loadRatingUpdates(users))
                 } else {
-                    returnResultOnMainThread(UsersRequestResult.Success(users), onCompleted)
+                    onCompleted(UsersRequestResult.Success(users))
                 }
-            }
-                ?: returnResultOnMainThread(UsersRequestResult.Failure(Error.RESPONSE), onCompleted)
+            } ?: onCompleted(UsersRequestResult.Failure(Error.RESPONSE))
         } catch (t: Throwable) {
-            returnResultOnMainThread(UsersRequestResult.Failure(Error.INTERNET), onCompleted)
+            onCompleted(UsersRequestResult.Failure(Error.INTERNET))
         }
     }
 }
-
-suspend fun returnResultOnMainThread(result: UsersRequestResult, onCompleted: (UsersRequestResult) -> Unit) =
-    withContext(Dispatchers.Main) {
-        onCompleted(result)
-    }
 
 suspend fun loadRatingUpdates(userList: List<User>): UsersRequestResult {
     var countFetchedUsers = 0
     for (user in userList) {
         delay(250) // Because Codeforces blocks frequent queries
         val response = try {
-            RestClient.getRating(user.handle).execute()
+            RestClient.getRating(user.handle)
         } catch (error: java.net.SocketTimeoutException) {
             null
         }
