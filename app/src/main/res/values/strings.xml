@@ -45,6 +45,7 @@
     <string name="cancel">Cancel</string>
     <string name="share_cw_message">"I'm using Codeforces Watcher - open-source, free Android application, which leverages Codeforces API to bring more competitive programming to your Android device.
 Codeforces Watcher allows:
+
 1. Watch for activity of any Codeforces user.
 2. Sort users by rating and last participation date.
 3. Shortlist upcoming Codeforces contests.
