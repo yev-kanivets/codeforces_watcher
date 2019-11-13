@@ -4,24 +4,24 @@ import com.bogdan.codeforceswatcher.features.actions.redux.requests.ActionsRespo
 import com.bogdan.codeforceswatcher.features.contests.redux.requests.ContestsResponse
 import com.bogdan.codeforceswatcher.features.users.redux.requests.RatingChangeResponse
 import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersResponse
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface CodeforcesApi {
 
     @GET("user.rating")
-    fun getRating(@Query("handle") handle: String): Call<RatingChangeResponse>
+    suspend fun getRating(@Query("handle") handle: String): Response<RatingChangeResponse>
 
     @GET("user.info")
-    fun getUsers(@Query("handles") handles: String): Call<UsersResponse>
+    suspend fun getUsers(@Query("handles") handles: String): Response<UsersResponse>
 
     @GET("contest.list")
-    fun getContests(): Call<ContestsResponse>
+    suspend fun getContests(): Response<ContestsResponse>
 
     @GET("recentActions")
-    fun getActions(
+    suspend fun getActions(
         @Query("maxCount") maxCount: Int,
         @Query("lang") lang: String
-    ): Call<ActionsResponse>
+    ): Response<ActionsResponse>
 }

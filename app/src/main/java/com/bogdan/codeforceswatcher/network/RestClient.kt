@@ -28,11 +28,11 @@ object RestClient {
 
     private val codeforcesApi by lazy { retrofit.create(CodeforcesApi::class.java) }
 
-    fun getUsers(handle: String) = codeforcesApi.getUsers(handle)
+    suspend fun getUsers(handle: String) = codeforcesApi.getUsers(handle)
 
-    fun getRating(handle: String) = codeforcesApi.getRating(handle)
+    suspend fun getRating(handle: String) = codeforcesApi.getRating(handle)
 
-    fun getActions(maxCount: Int = 100, lang: String) = codeforcesApi.getActions(maxCount, lang)
+    suspend fun getActions(maxCount: Int = 100, lang: String) = codeforcesApi.getActions(maxCount, lang)
 
-    fun getContests() = codeforcesApi.getContests()
+    suspend fun getContests() = codeforcesApi.getContests()
 }

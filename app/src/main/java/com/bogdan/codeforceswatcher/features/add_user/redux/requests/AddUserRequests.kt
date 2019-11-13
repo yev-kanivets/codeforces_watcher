@@ -17,12 +17,11 @@ class AddUserRequests {
     class AddUser(
         val handle: String
     ) : Request() {
-        override fun execute() {
-            getUsers(handle, true) { result ->
-                when (result) {
-                    is UsersRequestResult.Failure -> dispatchError(result.error)
-                    is UsersRequestResult.Success -> result.users.firstOrNull()?.let { user -> addUser(user) }
-                }
+
+        override suspend fun execute() {
+            when (val result = getUsers(handle, true)) {
+                is UsersRequestResult.Failure -> dispatchError(result.error)
+                is UsersRequestResult.Success -> result.users.firstOrNull()?.let { user -> addUser(user) }
             }
         }
 

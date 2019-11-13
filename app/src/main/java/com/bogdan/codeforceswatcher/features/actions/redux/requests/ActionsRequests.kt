@@ -7,63 +7,51 @@ import com.bogdan.codeforceswatcher.features.actions.models.CFAction
 import com.bogdan.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.network.getUsers
-import com.bogdan.codeforceswatcher.network.models.Error
 import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.rekotlin.Action
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.util.*
+import java.util.Locale
 
 class ActionsRequests {
 
     class FetchActions(
-        val isInitializedByUser: Boolean
+        private val isInitializedByUser: Boolean
     ) : Request() {
 
-        override fun execute() {
-            RestClient.getActions(lang = defineLang(Locale.getDefault().language)).enqueue(object : Callback<ActionsResponse> {
-                val noConnection = CwApp.app.getString(R.string.no_connection)
-
-                override fun onResponse(
-                    call: Call<ActionsResponse>,
-                    response: Response<ActionsResponse>
-                ) {
-                    response.body()?.actions?.let { actions ->
-                        println("build ui data and dispatch")
-                        buildUiDataAndDispatch(actions)
-                    } ?: store.dispatch(Failure(if (isInitializedByUser) noConnection else null))
-                }
-
-                override fun onFailure(call: Call<ActionsResponse>, t: Throwable) {
-                    store.dispatch(Failure(if (isInitializedByUser) noConnection else null))
-                }
-            })
+        override suspend fun execute() {
+            try {
+                val response = RestClient.getActions(lang = defineLang())
+                response.body()?.actions?.let { actions ->
+                    buildUiDataAndDispatch(actions)
+                } ?: dispatchFailure()
+            } catch (t: Throwable) {
+                dispatchFailure()
+            }
         }
 
-        private fun buildUiDataAndDispatch(actions: List<CFAction>) {
+        private suspend fun buildUiDataAndDispatch(actions: List<CFAction>) {
             val commentatorsHandles = buildCommentatorsHandles(actions)
 
-            getUsers(commentatorsHandles, false) { result ->
-                when (result) {
-                    is UsersRequestResult.Success ->
-                        Thread {
-                            val uiData = buildUiData(actions, result.users)
-                            runBlocking {
-                                withContext(Dispatchers.Main) {
-                                    store.dispatch(Success(uiData))
-                                }
-                            }
-                        }.start()
-                    is UsersRequestResult.Failure -> dispatchError(result.error)
+            when (val result = getUsers(commentatorsHandles, false)) {
+                is UsersRequestResult.Success -> {
+                    store.dispatch(Success(buildUiData(actions, result.users)))
                 }
+                is UsersRequestResult.Failure -> dispatchFailure()
             }
+        }
+
+        private fun dispatchFailure() {
+            val noConnectionError = if (isInitializedByUser) {
+                CwApp.app.getString(R.string.no_connection)
+            } else {
+                null
+            }
+
+            store.dispatch(Failure(noConnectionError))
         }
 
         private fun buildCommentatorsHandles(actions: List<CFAction>): String {
@@ -78,7 +66,10 @@ class ActionsRequests {
             return commentatorsHandles
         }
 
-        private fun buildUiData(actions: List<CFAction>, users: List<User>?): List<CFAction> {
+        private suspend fun buildUiData(
+            actions: List<CFAction>,
+            users: List<User>?
+        ): List<CFAction> = withContext(Dispatchers.IO) {
             val uiData: MutableList<CFAction> = mutableListOf()
 
             for (action in actions) {
@@ -95,29 +86,20 @@ class ActionsRequests {
                 uiData.add(action)
             }
 
-            return uiData
+            uiData
         }
 
         private fun convertFromHtml(text: String) =
-            HtmlCompat.fromHtml(text
-                .replace("\n", "<br>")
-                .replace("\t", "<tl>")
-                .replace("$", ""),
-                HtmlCompat.FROM_HTML_MODE_LEGACY)
-                .trim().toString()
+            HtmlCompat.fromHtml(
+                text.replace("\n", "<br>")
+                    .replace("\t", "<tl>")
+                    .replace("$", ""), HtmlCompat.FROM_HTML_MODE_LEGACY
+            ).trim().toString()
 
-        private fun dispatchError(error: Error) {
-            val noConnectionError = CwApp.app.resources.getString(R.string.no_connection)
-            when (error) {
-                Error.INTERNET, Error.RESPONSE ->
-                    store.dispatch(
-                        Failure(noConnectionError)
-                    )
-            }
+        private fun defineLang(): String {
+            val locale = Locale.getDefault().language
+            return if (locale == "ru" || locale == "uk") "ru" else "en"
         }
-
-        private fun defineLang(locale: String) =
-            if (locale == "ru" || locale == "uk") "ru" else "en"
 
         data class Success(val actions: List<CFAction>) : Action
 

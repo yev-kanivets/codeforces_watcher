@@ -4,5 +4,5 @@ import org.rekotlin.Action
 
 abstract class Request : Action {
 
-    abstract fun execute()
+    abstract suspend fun execute()
 }

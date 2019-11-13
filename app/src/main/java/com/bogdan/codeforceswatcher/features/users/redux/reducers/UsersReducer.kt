@@ -9,7 +9,6 @@ import org.rekotlin.Action
 
 fun usersReducer(action: Action, state: AppState): UsersState {
     var newState = state.users
-
     when (action) {
         is UsersRequests.FetchUsers -> {
             newState = newState.copy(
