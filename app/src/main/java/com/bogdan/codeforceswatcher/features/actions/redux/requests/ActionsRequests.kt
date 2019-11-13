@@ -40,11 +40,7 @@ class ActionsRequests {
 
             when (val result = getUsers(commentatorsHandles, false)) {
                 is UsersRequestResult.Success -> {
-                    lateinit var uiData: List<CFAction>
-                    withContext(Dispatchers.IO) {
-                        uiData = buildUiData(actions, result.users)
-                    }
-                    store.dispatch(Success(uiData))
+                    store.dispatch(Success(buildUiData(actions, result.users)))
                 }
                 is UsersRequestResult.Failure -> dispatchError(result.error)
             }
@@ -62,7 +58,7 @@ class ActionsRequests {
             return commentatorsHandles
         }
 
-        private fun buildUiData(actions: List<CFAction>, users: List<User>?): List<CFAction> {
+        private suspend fun buildUiData(actions: List<CFAction>, users: List<User>?): List<CFAction> = withContext(Dispatchers.IO) {
             val uiData: MutableList<CFAction> = mutableListOf()
 
             for (action in actions) {
@@ -79,7 +75,7 @@ class ActionsRequests {
                 uiData.add(action)
             }
 
-            return uiData
+            uiData
         }
 
         private fun convertFromHtml(text: String) =
