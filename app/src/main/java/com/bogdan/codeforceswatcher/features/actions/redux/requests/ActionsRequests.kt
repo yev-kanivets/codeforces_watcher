@@ -23,14 +23,10 @@ class ActionsRequests {
     ) : Request() {
 
         override suspend fun execute() {
-            try {
-                val response = RestClient.getActions(lang = defineLang())
-                response.body()?.actions?.let { actions ->
-                    buildUiDataAndDispatch(actions)
-                } ?: dispatchFailure()
-            } catch (t: Throwable) {
-                dispatchFailure()
-            }
+            val response = RestClient.getActions(lang = defineLang())
+            response?.body()?.actions?.let { actions ->
+                buildUiDataAndDispatch(actions)
+            } ?: dispatchFailure()
         }
 
         private suspend fun buildUiDataAndDispatch(actions: List<CFAction>) {
