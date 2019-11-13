@@ -7,14 +7,14 @@ import com.bogdan.codeforceswatcher.features.actions.models.CFAction
 import com.bogdan.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.network.getUsers
-import com.bogdan.codeforceswatcher.network.models.Error
 import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.rekotlin.Action
-import java.util.*
+import java.util.Locale
 
 class ActionsRequests {
 
@@ -23,15 +23,13 @@ class ActionsRequests {
     ) : Request() {
 
         override suspend fun execute() {
-            val noConnectionError = CwApp.app.getString(R.string.no_connection)
             try {
-                val response = RestClient.getActions(lang = defineLang(Locale.getDefault().language))
+                val response = RestClient.getActions(lang = defineLang())
                 response.body()?.actions?.let { actions ->
                     buildUiDataAndDispatch(actions)
-                }
-                    ?: store.dispatch(Failure(if (isInitializedByUser) noConnectionError else null))
+                } ?: dispatchFailure()
             } catch (t: Throwable) {
-                store.dispatch(Failure(if (isInitializedByUser) noConnectionError else null))
+                dispatchFailure()
             }
         }
 
@@ -42,8 +40,18 @@ class ActionsRequests {
                 is UsersRequestResult.Success -> {
                     store.dispatch(Success(buildUiData(actions, result.users)))
                 }
-                is UsersRequestResult.Failure -> dispatchError(result.error)
+                is UsersRequestResult.Failure -> dispatchFailure()
             }
+        }
+
+        private fun dispatchFailure() {
+            val noConnectionError = if (isInitializedByUser) {
+                CwApp.app.getString(R.string.no_connection)
+            } else {
+                null
+            }
+
+            store.dispatch(Failure(noConnectionError))
         }
 
         private fun buildCommentatorsHandles(actions: List<CFAction>): String {
@@ -58,7 +66,10 @@ class ActionsRequests {
             return commentatorsHandles
         }
 
-        private suspend fun buildUiData(actions: List<CFAction>, users: List<User>?): List<CFAction> = withContext(Dispatchers.IO) {
+        private suspend fun buildUiData(
+            actions: List<CFAction>,
+            users: List<User>?
+        ): List<CFAction> = withContext(Dispatchers.IO) {
             val uiData: MutableList<CFAction> = mutableListOf()
 
             for (action in actions) {
@@ -79,25 +90,16 @@ class ActionsRequests {
         }
 
         private fun convertFromHtml(text: String) =
-            HtmlCompat.fromHtml(text
-                .replace("\n", "<br>")
-                .replace("\t", "<tl>")
-                .replace("$", ""),
-                HtmlCompat.FROM_HTML_MODE_LEGACY)
-                .trim().toString()
+            HtmlCompat.fromHtml(
+                text.replace("\n", "<br>")
+                    .replace("\t", "<tl>")
+                    .replace("$", ""), HtmlCompat.FROM_HTML_MODE_LEGACY
+            ).trim().toString()
 
-        private fun dispatchError(error: Error) {
-            val noConnectionError = CwApp.app.resources.getString(R.string.no_connection)
-            when (error) {
-                Error.INTERNET, Error.RESPONSE ->
-                    store.dispatch(
-                        Failure(if (isInitializedByUser) noConnectionError else null)
-                    )
-            }
+        private fun defineLang(): String {
+            val locale = Locale.getDefault().language
+            return if (locale == "ru" || locale == "uk") "ru" else "en"
         }
-
-        private fun defineLang(locale: String) =
-            if (locale == "ru" || locale == "uk") "ru" else "en"
 
         data class Success(val actions: List<CFAction>) : Action
 
