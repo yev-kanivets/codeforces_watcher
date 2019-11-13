@@ -5,20 +5,18 @@ import com.bogdan.codeforceswatcher.network.models.Error
 import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
 import kotlinx.coroutines.*
 
-fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean, onCompleted: (UsersRequestResult) -> Unit) {
-    CoroutineScope(Dispatchers.Main).launch {
-        try {
-            val response = RestClient.getUsers(handles)
-            response.body()?.users?.let { users ->
-                if (isRatingUpdatesNeeded) {
-                    onCompleted(loadRatingUpdates(users))
-                } else {
-                    onCompleted(UsersRequestResult.Success(users))
-                }
-            } ?: onCompleted(UsersRequestResult.Failure(Error.RESPONSE))
-        } catch (t: Throwable) {
-            onCompleted(UsersRequestResult.Failure(Error.INTERNET))
-        }
+suspend fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean): UsersRequestResult {
+    try {
+        val response = RestClient.getUsers(handles)
+        response.body()?.users?.let { users ->
+            return if (isRatingUpdatesNeeded) {
+                loadRatingUpdates(users)
+            } else {
+                UsersRequestResult.Success(users)
+            }
+        } ?: return UsersRequestResult.Failure(Error.RESPONSE)
+    } catch (t: Throwable) {
+        return UsersRequestResult.Failure(Error.INTERNET)
     }
 }
 

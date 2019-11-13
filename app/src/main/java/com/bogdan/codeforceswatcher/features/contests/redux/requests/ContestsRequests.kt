@@ -7,31 +7,25 @@ import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.rekotlin.Action
 
 class ContestsRequests {
 
     class FetchContests(val isInitiatedByUser: Boolean) : Request() {
 
-        override fun execute() {
-            CoroutineScope(Dispatchers.Main).launch {
-                val noInternetConnectionError = CwApp.app.getString(R.string.no_connection)
-                try {
-                    val response = RestClient.getContests()
-
-                    response.body()?.contests?.let { contests ->
-                        store.dispatch(Success(contests))
-                    } ?: store.dispatch(
-                        Failure(if (isInitiatedByUser) noInternetConnectionError else null)
-                    )
-                } catch (t: Throwable) {
-                    store.dispatch(
-                        Failure(if (isInitiatedByUser) noInternetConnectionError else null)
-                    )
-                }
+        override suspend fun execute() {
+            val noInternetConnectionError = CwApp.app.getString(R.string.no_connection)
+            try {
+                val response = RestClient.getContests()
+                response.body()?.contests?.let { contests ->
+                    store.dispatch(Success(contests))
+                } ?: store.dispatch(
+                    Failure(if (isInitiatedByUser) noInternetConnectionError else null)
+                )
+            } catch (t: Throwable) {
+                store.dispatch(
+                    Failure(if (isInitiatedByUser) noInternetConnectionError else null)
+                )
             }
         }
 

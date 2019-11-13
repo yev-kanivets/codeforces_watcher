@@ -22,35 +22,31 @@ class ActionsRequests {
         private val isInitializedByUser: Boolean
     ) : Request() {
 
-        override fun execute() {
-            CoroutineScope(Dispatchers.Main).launch {
-                val noConnectionError = CwApp.app.getString(R.string.no_connection)
-                try {
-                    val response = RestClient.getActions(lang = defineLang(Locale.getDefault().language))
-                    response.body()?.actions?.let { actions ->
-                        buildUiDataAndDispatch(actions)
-                    }
-                        ?: store.dispatch(Failure(if (isInitializedByUser) noConnectionError else null))
-                } catch (t: Throwable) {
-                    store.dispatch(Failure(if (isInitializedByUser) noConnectionError else null))
+        override suspend fun execute() {
+            val noConnectionError = CwApp.app.getString(R.string.no_connection)
+            try {
+                val response = RestClient.getActions(lang = defineLang(Locale.getDefault().language))
+                response.body()?.actions?.let { actions ->
+                    buildUiDataAndDispatch(actions)
                 }
+                    ?: store.dispatch(Failure(if (isInitializedByUser) noConnectionError else null))
+            } catch (t: Throwable) {
+                store.dispatch(Failure(if (isInitializedByUser) noConnectionError else null))
             }
         }
 
-        private fun buildUiDataAndDispatch(actions: List<CFAction>) {
+        private suspend fun buildUiDataAndDispatch(actions: List<CFAction>) {
             val commentatorsHandles = buildCommentatorsHandles(actions)
 
-            getUsers(commentatorsHandles, false) { result ->
-                when (result) {
-                    is UsersRequestResult.Success ->
-                        GlobalScope.launch {
-                            val uiData = buildUiData(actions, result.users)
-                            withContext(Dispatchers.Main) {
-                                store.dispatch(Success(uiData))
-                            }
-                        }.start()
-                    is UsersRequestResult.Failure -> dispatchError(result.error)
+            when (val result = getUsers(commentatorsHandles, false)) {
+                is UsersRequestResult.Success -> {
+                    lateinit var uiData: List<CFAction>
+                    withContext(Dispatchers.IO) {
+                        uiData = buildUiData(actions, result.users)
+                    }
+                    store.dispatch(Success(uiData))
                 }
+                is UsersRequestResult.Failure -> dispatchError(result.error)
             }
         }
 
