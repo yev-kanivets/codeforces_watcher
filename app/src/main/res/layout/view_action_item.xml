@@ -42,22 +42,33 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Mirror of Bubble Cup sadsdglkja;sdgj sfad;jjasdfka;lkdjg;aslkjdg;lsadg;kj" />
 
-        <TextView
-            android:id="@+id/tvHandle"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/llSubHeader"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivAvatar"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle"
-            tools:text="Commented by denmen0207 - " />
+            app:layout_constraintTop_toBottomOf="@id/tvTitle">
 
-        <TextView
-            android:id="@+id/tvTimeAgo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/tvHandle"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle"
-            tools:text="7 minutes ago" />
+            <TextView
+                android:id="@+id/tvHandle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:ellipsize="start"
+                android:singleLine="true"
+                tools:text="Commented by denmen0207" />
+
+            <TextView
+                android:id="@+id/tvTimeAgo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:singleLine="true"
+                tools:text="7 minutes ago" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvContent"
@@ -70,6 +81,6 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvHandle" />
+            app:layout_constraintTop_toBottomOf="@id/llSubHeader" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
