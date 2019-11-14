@@ -4,8 +4,6 @@ import android.text.SpannableStringBuilder
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.users.models.colorTextByUserRank
-import org.ocpsoft.prettytime.PrettyTime
-import java.util.*
 
 sealed class ActionItem {
 
