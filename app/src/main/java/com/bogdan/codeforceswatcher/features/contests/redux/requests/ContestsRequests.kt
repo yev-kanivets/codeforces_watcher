@@ -14,19 +14,13 @@ class ContestsRequests {
     class FetchContests(val isInitiatedByUser: Boolean) : Request() {
 
         override suspend fun execute() {
-            val noInternetConnectionError = CwApp.app.getString(R.string.no_connection)
-            try {
-                val response = RestClient.getContests()
-                response.body()?.contests?.let { contests ->
-                    store.dispatch(Success(contests))
-                } ?: store.dispatch(
-                    Failure(if (isInitiatedByUser) noInternetConnectionError else null)
-                )
-            } catch (t: Throwable) {
-                store.dispatch(
-                    Failure(if (isInitiatedByUser) noInternetConnectionError else null)
-                )
-            }
+            val noConnectionError = CwApp.app.getString(R.string.no_connection)
+            val response = RestClient.getContests()
+            response?.body()?.contests?.let { contests ->
+                store.dispatch(Success(contests))
+            } ?: store.dispatch(
+                Failure(if (isInitiatedByUser) noConnectionError else null)
+            )
         }
 
         data class Success(val contests: List<Contest>) : Action

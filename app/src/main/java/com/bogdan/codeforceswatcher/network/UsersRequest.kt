@@ -6,34 +6,33 @@ import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
 import kotlinx.coroutines.*
 
 suspend fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean): UsersRequestResult {
-    try {
-        val response = RestClient.getUsers(handles)
+    val response = RestClient.getUsers(handles)
+    return if (response == null) {
+        UsersRequestResult.Failure(Error.INTERNET)
+    } else {
         response.body()?.users?.let { users ->
-            return if (isRatingUpdatesNeeded) {
+            if (isRatingUpdatesNeeded) {
                 loadRatingUpdates(users)
             } else {
                 UsersRequestResult.Success(users)
             }
-        } ?: return UsersRequestResult.Failure(Error.RESPONSE)
-    } catch (t: Throwable) {
-        return UsersRequestResult.Failure(Error.INTERNET)
+        } ?: UsersRequestResult.Failure(Error.RESPONSE)
     }
 }
 
 suspend fun loadRatingUpdates(userList: List<User>): UsersRequestResult {
     var countFetchedUsers = 0
+
     for (user in userList) {
         delay(250) // Because Codeforces blocks frequent queries
-        val response = try {
-            RestClient.getRating(user.handle)
-        } catch (error: java.net.SocketTimeoutException) {
-            null
-        }
+        val response = RestClient.getRating(user.handle)
         response?.body()?.ratingChanges?.let { ratingChanges ->
             user.ratingChanges = ratingChanges
         } ?: break
+
         countFetchedUsers++
     }
+
     return if (countFetchedUsers < userList.size) {
         UsersRequestResult.Failure(Error.RESPONSE)
     } else {

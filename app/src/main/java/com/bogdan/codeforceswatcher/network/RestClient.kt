@@ -4,7 +4,6 @@ import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
 object RestClient {
 
@@ -28,11 +27,27 @@ object RestClient {
 
     private val codeforcesApi by lazy { retrofit.create(CodeforcesApi::class.java) }
 
-    suspend fun getUsers(handle: String) = codeforcesApi.getUsers(handle)
+    suspend fun getUsers(handle: String) = try {
+        codeforcesApi.getUsers(handle)
+    } catch (t: Throwable) {
+        null
+    }
 
-    suspend fun getRating(handle: String) = codeforcesApi.getRating(handle)
+    suspend fun getRating(handle: String) = try {
+        codeforcesApi.getRating(handle)
+    } catch (t: Throwable) {
+        null
+    }
 
-    suspend fun getActions(maxCount: Int = 100, lang: String) = codeforcesApi.getActions(maxCount, lang)
+    suspend fun getActions(maxCount: Int = 100, lang: String) = try {
+        codeforcesApi.getActions(maxCount, lang)
+    } catch (t: Throwable) {
+        null
+    }
 
-    suspend fun getContests() = codeforcesApi.getContests()
+    suspend fun getContests() = try {
+        codeforcesApi.getContests()
+    } catch (t: Throwable) {
+        null
+    }
 }
