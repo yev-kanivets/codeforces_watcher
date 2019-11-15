@@ -4,6 +4,7 @@ import android.text.SpannableStringBuilder
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.users.models.colorTextByUserRank
+import com.bogdan.codeforceswatcher.util.Validator
 
 sealed class ActionItem {
 
@@ -17,7 +18,7 @@ sealed class ActionItem {
 
         init {
             val comment = action.comment ?: throw NullPointerException()
-            commentatorAvatar = (getRightAvatarLink(comment.commentatorAvatar))
+            commentatorAvatar = Validator.validateAvatarLink(comment.commentatorAvatar)
             commentatorHandle = formHandle(
                 comment.commentatorHandle, comment.commentatorRank
             )
@@ -25,13 +26,6 @@ sealed class ActionItem {
             creationTimeSeconds = action.timeInMillisecond
             content = comment.text
         }
-
-        private fun getRightAvatarLink(avatarLink: String) =
-            if (avatarLink.startsWith("https:")) {
-                avatarLink
-            } else {
-                "https:$avatarLink"
-            }
 
         private fun formHandle(handle: String, rank: String?): CharSequence {
             val colorHandle = colorTextByUserRank(handle, rank)
@@ -52,7 +46,7 @@ sealed class ActionItem {
 
         init {
             with(action) {
-                authorAvatar = (getRightAvatarLink(blogEntry.authorAvatar))
+                authorAvatar = Validator.validateAvatarLink(blogEntry.authorAvatar)
                 authorHandle = colorTextByUserRank(
                     blogEntry.authorHandle, blogEntry.authorRank
                 )
@@ -60,13 +54,6 @@ sealed class ActionItem {
                 time = timeInMillisecond
             }
         }
-
-        private fun getRightAvatarLink(avatarLink: String) =
-            if (avatarLink.startsWith("https:")) {
-                avatarLink
-            } else {
-                "https:$avatarLink"
-            }
     }
 
     object Stub : ActionItem()
