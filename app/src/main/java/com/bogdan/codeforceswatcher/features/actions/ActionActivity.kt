@@ -14,7 +14,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.store
+import com.bogdan.codeforceswatcher.features.actions.models.CFAction
 import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.activity_action.*
 
@@ -36,12 +36,15 @@ class ActionActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        val commentId = intent.getLongExtra(COMMENT_ID, -1)
-        val cfAction = store.state.actions.actions.find { it.comment?.id == commentId }
+        val cfAction = intent.getSerializableExtra(ACTION_ID) as? CFAction
             ?: throw NullPointerException()
 
         pageTitle = cfAction.blogEntry.title
-        link = getString(R.string.comment_url, cfAction.blogEntry.id, cfAction.comment?.id)
+        link = if (cfAction.comment != null) {
+            getString(R.string.comment_url, cfAction.blogEntry.id, cfAction.comment.id)
+        } else {
+            getString(R.string.blog_entry_url, cfAction.blogEntry.id)
+        }
     }
 
     private fun initViews() {
@@ -118,11 +121,11 @@ class ActionActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val COMMENT_ID = "comment_id"
+        private const val ACTION_ID = "action_id"
 
-        fun newIntent(context: Context, commentId: Long): Intent {
+        fun newIntent(context: Context, action: CFAction): Intent {
             val intent = Intent(context, ActionActivity::class.java)
-            intent.putExtra(COMMENT_ID, commentId)
+            intent.putExtra(ACTION_ID, action)
             return intent
         }
     }

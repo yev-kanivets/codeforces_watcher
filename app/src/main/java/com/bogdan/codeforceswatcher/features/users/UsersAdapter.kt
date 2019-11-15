@@ -79,7 +79,7 @@ class UsersAdapter(
     }
 
     class UserViewHolder(view: View, itemClickListener: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
-        val tvHandle: TextView = view.tvHandle
+        val tvHandle: TextView = view.tvUserHandle
         val tvRating: TextView = view.tvRating
         val tvDateLastRatingUpdate: TextView = view.tvDateLastRatingUpdate
         val tvLastRatingUpdate: TextView = view.tvLastRatingUpdate

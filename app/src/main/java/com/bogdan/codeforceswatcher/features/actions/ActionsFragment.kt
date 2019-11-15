@@ -36,7 +36,13 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun newState(state: ActionsState) {
         swipeRefreshLayout.isRefreshing = (state.status == ActionsState.Status.PENDING)
-        actionsAdapter.setItems(state.actions.map { ActionItem.Action(it) })
+        actionsAdapter.setItems(state.actions.map {
+            if (it.comment != null) {
+                ActionItem.CommentItem(it)
+            } else {
+                ActionItem.BlogEntryItem(it)
+            }
+        })
     }
 
     override fun onRefresh() {
@@ -58,9 +64,7 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
         actionsAdapter = ActionsAdapter(requireContext()) { actionIndex ->
-            store.state.actions.actions[actionIndex].comment?.let { comment ->
-                startActivity(ActionActivity.newIntent(requireContext(), comment.id))
-            }
+            startActivity(ActionActivity.newIntent(requireContext(), store.state.actions.actions[actionIndex]))
         }
         recyclerView.adapter = actionsAdapter
     }

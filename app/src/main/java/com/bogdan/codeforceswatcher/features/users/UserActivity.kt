@@ -73,7 +73,7 @@ class UserActivity : AppCompatActivity() {
             user.firstName + " " + user.lastName
         }
 
-        tvHandle.text = getString(R.string.name, handle)
+        tvUserHandle.text = getString(R.string.name, handle)
 
         if (user.maxRating == null) {
             tvMaxRating.text = getString(R.string.max_rating, getString(R.string.none))
@@ -82,9 +82,9 @@ class UserActivity : AppCompatActivity() {
         }
 
         if (user.avatar.startsWith("https:")) {
-            Picasso.get().load(user.avatar).into(ivAvatar)
+            Picasso.get().load(user.avatar).into(ivUserAvatar)
         } else {
-            Picasso.get().load("https:" + user.avatar).into(ivAvatar)
+            Picasso.get().load("https:" + user.avatar).into(ivUserAvatar)
         }
 
         title = user.handle
