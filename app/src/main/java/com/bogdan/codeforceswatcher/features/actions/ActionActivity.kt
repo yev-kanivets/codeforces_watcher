@@ -40,10 +40,10 @@ class ActionActivity : AppCompatActivity() {
             ?: throw NullPointerException()
 
         pageTitle = cfAction.blogEntry.title
-        link = formPageLink(cfAction)
+        link = buildPageLink(cfAction)
     }
 
-    private fun formPageLink(cfAction: CFAction) =
+    private fun buildPageLink(cfAction: CFAction) =
         if (cfAction.comment != null) {
             getString(R.string.comment_url, cfAction.blogEntry.id, cfAction.comment.id)
         } else {

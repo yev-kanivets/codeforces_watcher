@@ -19,7 +19,7 @@ sealed class ActionItem {
         init {
             val comment = action.comment ?: throw NullPointerException()
             commentatorAvatar = LinkValidator.avatar(comment.commentatorAvatar)
-            commentatorHandle = formHandle(
+            commentatorHandle = buildHandle(
                 comment.commentatorHandle, comment.commentatorRank
             )
             title = action.blogEntry.title
@@ -27,7 +27,7 @@ sealed class ActionItem {
             content = comment.text
         }
 
-        private fun formHandle(handle: String, rank: String?): CharSequence {
+        private fun buildHandle(handle: String, rank: String?): CharSequence {
             val colorHandle = colorTextByUserRank(handle, rank)
             val commentedByString = CwApp.app.getString(R.string.commented_by)
             val handlePosition = commentedByString.indexOf("%1\$s")

@@ -37,10 +37,10 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun newState(state: ActionsState) {
         swipeRefreshLayout.isRefreshing = (state.status == ActionsState.Status.PENDING)
-        actionsAdapter.setItems(formActionItems(state.actions))
+        actionsAdapter.setItems(buildActionItems(state.actions))
     }
 
-    private fun formActionItems(actions: List<CFAction>) =
+    private fun buildActionItems(actions: List<CFAction>) =
         actions.map {
             if (it.comment != null) {
                 ActionItem.CommentItem(it)

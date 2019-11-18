@@ -21,7 +21,7 @@ val notificationMiddleware: Middleware<StateType> = { _, _ ->
         { action ->
             when (action) {
                 is UsersRequests.FetchUsers.Success -> if (action.source == Source.BROADCAST) {
-                    val notificationText = formNotificationText(action.notificationData)
+                    val notificationText = buildNotificationText(action.notificationData)
 
                     if (notificationText.isNotEmpty()) {
                         showNotification(CwApp.app, notificationText)
@@ -34,7 +34,7 @@ val notificationMiddleware: Middleware<StateType> = { _, _ ->
     }
 }
 
-private fun formNotificationText(notificationData: List<Pair<String, Int>>) =
+private fun buildNotificationText(notificationData: List<Pair<String, Int>>) =
     notificationData.joinToString(separator = "\n") { ratingChange ->
         ratingChange.first + " " +
             if (ratingChange.second < 0) ratingChange.second else "+${ratingChange.second}"
