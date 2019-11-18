@@ -39,35 +39,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivAuthorAvatar"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Mirror of Bubble Cup sadsdglkja;sdgj sfad;jjasdfka;lkdjg;aslkjdg;lsadg;kj" />
+            tools:text="Mirror of Bubble Cup" />
 
-        <LinearLayout
-            android:id="@+id/llSubHeader"
+        <TextView
+            android:id="@+id/tvHandleAndTime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginStart="8dp"
+            android:ellipsize="start"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivAuthorAvatar"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle">
-
-            <TextView
-                android:id="@+id/tvAuthorHandle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:ellipsize="start"
-                android:singleLine="true"
-                tools:text="Commented by denmen0207" />
-
-            <TextView
-                android:id="@+id/tvTimeAgo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:singleLine="true"
-                tools:text="7 minutes ago" />
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            tools:text="BOGDAN_ - 17 hours ago" />
 
         <TextView
             android:id="@+id/tvContent"
@@ -80,6 +64,6 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llSubHeader" />
+            app:layout_constraintTop_toBottomOf="@id/tvHandleAndTime" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

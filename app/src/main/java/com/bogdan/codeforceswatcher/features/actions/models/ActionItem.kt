@@ -14,7 +14,7 @@ sealed class ActionItem {
         var title: String
         var content: String
         var commentatorAvatar: String
-        var creationTimeSeconds: Long
+        var time: Long
 
         init {
             val comment = action.comment ?: throw NullPointerException()
@@ -23,7 +23,7 @@ sealed class ActionItem {
                 comment.commentatorHandle, comment.commentatorRank
             )
             title = action.blogEntry.title
-            creationTimeSeconds = action.timeInMillisecond
+            time = action.timeInMillisecond
             content = comment.text
         }
 

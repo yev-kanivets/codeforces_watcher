@@ -1,6 +1,7 @@
 package com.bogdan.codeforceswatcher.features.actions
 
 import android.content.Context
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.view_blog_entry_item.view.*
 import kotlinx.android.synthetic.main.view_comment_item.view.*
 import kotlinx.android.synthetic.main.view_comment_item.view.tvContent
-import kotlinx.android.synthetic.main.view_comment_item.view.tvTimeAgo
+import kotlinx.android.synthetic.main.view_comment_item.view.tvHandleAndTime
 import kotlinx.android.synthetic.main.view_comment_item.view.tvTitle
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
@@ -67,8 +68,7 @@ class ActionsAdapter(
     private fun bindComment(viewHolder: CommentViewHolder, comment: ActionItem.CommentItem) = with(comment) {
         with(viewHolder) {
             tvTitle.text = title
-            tvHandle.text = commentatorHandle
-            tvTimeAgo.text = PrettyTime().format(Date(creationTimeSeconds * 1000))
+            tvHandleAndTime.text = TextUtils.concat(commentatorHandle, " - ${PrettyTime().format(Date(time * 1000))}")
             tvContent.text = content
         }
 
@@ -80,9 +80,7 @@ class ActionsAdapter(
     private fun bindBlogEntry(viewHolder: BlogEntryViewHolder, blogEntry: ActionItem.BlogEntryItem) = with(blogEntry) {
         with(viewHolder) {
             tvTitle.text = blogTitle
-            tvHandle.text = authorHandle
-            tvTimeAgo.text = PrettyTime().format(Date(time * 1000))
-            println("$blogTitle : $time")
+            tvHandleAndTime.text = TextUtils.concat(authorHandle, " - ${PrettyTime().format(Date(time * 1000))}")
             tvContent.text = CwApp.app.getString(R.string.created_or_updated_text)
         }
 
@@ -98,9 +96,8 @@ class ActionsAdapter(
     }
 
     class CommentViewHolder(view: View, itemClickListener: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
-        val tvHandle: TextView = view.tvCommentatorHandle
+        val tvHandleAndTime: TextView = view.tvHandleAndTime
         val tvTitle: TextView = view.tvTitle
-        val tvTimeAgo: TextView = view.tvTimeAgo
         val tvContent: TextView = view.tvContent
         val ivAvatar: ImageView = view.ivCommentatorAvatar
 
@@ -112,9 +109,8 @@ class ActionsAdapter(
     }
 
     class BlogEntryViewHolder(view: View, itemClickListener: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
-        val tvHandle: TextView = view.tvAuthorHandle
+        val tvHandleAndTime: TextView = view.tvHandleAndTime
         val tvTitle: TextView = view.tvTitle
-        val tvTimeAgo: TextView = view.tvTimeAgo
         val tvContent: TextView = view.tvContent
         val ivAvatar: ImageView = view.ivAuthorAvatar
 
