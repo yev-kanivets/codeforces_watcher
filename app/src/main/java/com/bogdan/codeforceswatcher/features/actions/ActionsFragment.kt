@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.actions.models.ActionItem
+import com.bogdan.codeforceswatcher.features.actions.models.CFAction
 import com.bogdan.codeforceswatcher.features.actions.redux.requests.ActionsRequests
 import com.bogdan.codeforceswatcher.features.actions.redux.states.ActionsState
 import com.bogdan.codeforceswatcher.store
@@ -34,9 +35,18 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         store.unsubscribe(this)
     }
 
+    private fun buildActionItems(actions: List<CFAction>) =
+        actions.map {
+            if (it.comment != null) {
+                ActionItem.CommentItem(it)
+            } else {
+                ActionItem.BlogEntryItem(it)
+            }
+        }
+
     override fun newState(state: ActionsState) {
         swipeRefreshLayout.isRefreshing = (state.status == ActionsState.Status.PENDING)
-        actionsAdapter.setItems(state.actions.map { ActionItem.Action(it) })
+        actionsAdapter.setItems(buildActionItems(state.actions))
     }
 
     override fun onRefresh() {
@@ -58,9 +68,7 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
         actionsAdapter = ActionsAdapter(requireContext()) { actionIndex ->
-            store.state.actions.actions[actionIndex].comment?.let { comment ->
-                startActivity(ActionActivity.newIntent(requireContext(), comment.id))
-            }
+            startActivity(ActionActivity.newIntent(requireContext(), store.state.actions.actions[actionIndex]))
         }
         recyclerView.adapter = actionsAdapter
     }

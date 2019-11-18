@@ -12,6 +12,7 @@ import com.bogdan.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.CustomMarkerView
+import com.bogdan.codeforceswatcher.util.LinkValidator
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -73,7 +74,7 @@ class UserActivity : AppCompatActivity() {
             user.firstName + " " + user.lastName
         }
 
-        tvHandle.text = getString(R.string.name, handle)
+        tvUserHandle.text = getString(R.string.name, handle)
 
         if (user.maxRating == null) {
             tvMaxRating.text = getString(R.string.max_rating, getString(R.string.none))
@@ -81,12 +82,7 @@ class UserActivity : AppCompatActivity() {
             tvMaxRating.text = getString(R.string.max_rating, user.maxRating.toString())
         }
 
-        if (user.avatar.startsWith("https:")) {
-            Picasso.get().load(user.avatar).into(ivAvatar)
-        } else {
-            Picasso.get().load("https:" + user.avatar).into(ivAvatar)
-        }
-
+        Picasso.get().load(LinkValidator.avatar(user.avatar)).into(ivUserAvatar)
         title = user.handle
     }
 

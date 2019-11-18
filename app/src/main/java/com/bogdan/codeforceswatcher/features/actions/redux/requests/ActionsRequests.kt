@@ -14,7 +14,7 @@ import com.bogdan.codeforceswatcher.store
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.rekotlin.Action
-import java.util.Locale
+import java.util.*
 
 class ActionsRequests {
 
@@ -30,9 +30,9 @@ class ActionsRequests {
         }
 
         private suspend fun buildUiDataAndDispatch(actions: List<CFAction>) {
-            val commentatorsHandles = buildCommentatorsHandles(actions)
+            val handles = buildHandles(actions)
 
-            when (val result = getUsers(commentatorsHandles, false)) {
+            when (val result = getUsers(handles, false)) {
                 is UsersRequestResult.Success -> {
                     store.dispatch(Success(buildUiData(actions, result.users)))
                 }
@@ -50,16 +50,17 @@ class ActionsRequests {
             store.dispatch(Failure(noConnectionError))
         }
 
-        private fun buildCommentatorsHandles(actions: List<CFAction>): String {
-            var commentatorsHandles = ""
+        private fun buildHandles(actions: List<CFAction>): String {
+            val handles: MutableSet<String> = mutableSetOf()
 
             for (action in actions) {
                 if (action.comment != null) {
-                    commentatorsHandles += "${action.comment.commentatorHandle};"
+                    handles.add(action.comment.commentatorHandle)
                 }
+                handles.add(action.blogEntry.authorHandle)
             }
 
-            return commentatorsHandles
+            return handles.joinToString(separator = ";")
         }
 
         private suspend fun buildUiData(
@@ -69,16 +70,23 @@ class ActionsRequests {
             val uiData: MutableList<CFAction> = mutableListOf()
 
             for (action in actions) {
-                if (action.comment == null) continue
+                if (action.comment != null) {
+                    users?.find { user -> user.handle == action.comment.commentatorHandle }
+                        ?.let { foundUser ->
+                            action.comment.commentatorAvatar = foundUser.avatar
+                            action.comment.commentatorRank = foundUser.rank
+                        }
 
-                users?.find { user -> user.handle == action.comment.commentatorHandle }
+                    action.comment.text = convertFromHtml(action.comment.text)
+                }
+
+                users?.find { user -> user.handle == action.blogEntry.authorHandle }
                     ?.let { foundUser ->
-                        action.comment.commentatorAvatar = foundUser.avatar
-                        action.comment.commentatorRank = foundUser.rank
+                        action.blogEntry.authorAvatar = foundUser.avatar
+                        action.blogEntry.authorRank = foundUser.rank
                     }
-                action.blogEntry.title = convertFromHtml(action.blogEntry.title)
-                action.comment.text = convertFromHtml(action.comment.text)
 
+                action.blogEntry.title = convertFromHtml(action.blogEntry.title)
                 uiData.add(action)
             }
 
