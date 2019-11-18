@@ -53,18 +53,18 @@ class ActionsAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        when {
-            items[position] is ActionItem.Stub -> return
-            items[position] is ActionItem.CommentItem -> {
-                bindCommentToView(viewHolder as CommentViewHolder, items[position] as ActionItem.CommentItem)
+        when (val item = items[position]) {
+            is ActionItem.Stub -> return
+            is ActionItem.CommentItem -> {
+                bindComment(viewHolder as CommentViewHolder, item)
             }
-            items[position] is ActionItem.BlogEntryItem -> {
-                bindBlogEntryToView(viewHolder as BlogEntryViewHolder, items[position] as ActionItem.BlogEntryItem)
+            is ActionItem.BlogEntryItem -> {
+                bindBlogEntry(viewHolder as BlogEntryViewHolder, item)
             }
         }
     }
 
-    private fun bindCommentToView(viewHolder: CommentViewHolder, comment: ActionItem.CommentItem) = with(comment) {
+    private fun bindComment(viewHolder: CommentViewHolder, comment: ActionItem.CommentItem) = with(comment) {
         with(viewHolder) {
             tvTitle.text = title
             tvHandle.text = commentatorHandle
@@ -77,7 +77,7 @@ class ActionsAdapter(
             .into(viewHolder.ivAvatar)
     }
 
-    private fun bindBlogEntryToView(viewHolder: BlogEntryViewHolder, blogEntry: ActionItem.BlogEntryItem) = with(blogEntry) {
+    private fun bindBlogEntry(viewHolder: BlogEntryViewHolder, blogEntry: ActionItem.BlogEntryItem) = with(blogEntry) {
         with(viewHolder) {
             tvTitle.text = blogTitle
             tvHandle.text = authorHandle

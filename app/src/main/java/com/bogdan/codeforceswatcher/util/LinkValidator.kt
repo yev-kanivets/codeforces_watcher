@@ -1,8 +1,8 @@
 package com.bogdan.codeforceswatcher.util
 
-object Validator {
+object LinkValidator {
 
-    fun validateAvatarLink(avatarLink: String) =
+    fun avatar(avatarLink: String) =
         if (avatarLink.startsWith("https:")) {
             avatarLink
         } else {

@@ -4,7 +4,7 @@ import android.text.SpannableStringBuilder
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.users.models.colorTextByUserRank
-import com.bogdan.codeforceswatcher.util.Validator
+import com.bogdan.codeforceswatcher.util.LinkValidator
 
 sealed class ActionItem {
 
@@ -18,7 +18,7 @@ sealed class ActionItem {
 
         init {
             val comment = action.comment ?: throw NullPointerException()
-            commentatorAvatar = Validator.validateAvatarLink(comment.commentatorAvatar)
+            commentatorAvatar = LinkValidator.avatar(comment.commentatorAvatar)
             commentatorHandle = formHandle(
                 comment.commentatorHandle, comment.commentatorRank
             )
@@ -46,10 +46,8 @@ sealed class ActionItem {
 
         init {
             with(action) {
-                authorAvatar = Validator.validateAvatarLink(blogEntry.authorAvatar)
-                authorHandle = colorTextByUserRank(
-                    blogEntry.authorHandle, blogEntry.authorRank
-                )
+                authorAvatar = LinkValidator.avatar(blogEntry.authorAvatar)
+                authorHandle = colorTextByUserRank(blogEntry.authorHandle, blogEntry.authorRank)
                 blogTitle = blogEntry.title
                 time = timeInMillisecond
             }

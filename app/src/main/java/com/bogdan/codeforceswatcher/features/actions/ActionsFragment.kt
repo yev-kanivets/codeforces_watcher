@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.actions.models.ActionItem
+import com.bogdan.codeforceswatcher.features.actions.models.CFAction
 import com.bogdan.codeforceswatcher.features.actions.redux.requests.ActionsRequests
 import com.bogdan.codeforceswatcher.features.actions.redux.states.ActionsState
 import com.bogdan.codeforceswatcher.store
@@ -36,14 +37,17 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun newState(state: ActionsState) {
         swipeRefreshLayout.isRefreshing = (state.status == ActionsState.Status.PENDING)
-        actionsAdapter.setItems(state.actions.map {
+        actionsAdapter.setItems(formActionItems(state.actions))
+    }
+
+    private fun formActionItems(actions: List<CFAction>) =
+        actions.map {
             if (it.comment != null) {
                 ActionItem.CommentItem(it)
             } else {
                 ActionItem.BlogEntryItem(it)
             }
-        })
-    }
+        }
 
     override fun onRefresh() {
         store.dispatch(ActionsRequests.FetchActions(true))

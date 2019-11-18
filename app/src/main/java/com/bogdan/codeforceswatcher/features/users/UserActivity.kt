@@ -12,7 +12,7 @@ import com.bogdan.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.CustomMarkerView
-import com.bogdan.codeforceswatcher.util.Validator
+import com.bogdan.codeforceswatcher.util.LinkValidator
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -82,7 +82,7 @@ class UserActivity : AppCompatActivity() {
             tvMaxRating.text = getString(R.string.max_rating, user.maxRating.toString())
         }
 
-        Picasso.get().load(Validator.validateAvatarLink(user.avatar)).into(ivUserAvatar)
+        Picasso.get().load(LinkValidator.avatar(user.avatar)).into(ivUserAvatar)
         title = user.handle
     }
 
