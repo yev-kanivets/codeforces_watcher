@@ -35,11 +35,6 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         store.unsubscribe(this)
     }
 
-    override fun newState(state: ActionsState) {
-        swipeRefreshLayout.isRefreshing = (state.status == ActionsState.Status.PENDING)
-        actionsAdapter.setItems(buildActionItems(state.actions))
-    }
-
     private fun buildActionItems(actions: List<CFAction>) =
         actions.map {
             if (it.comment != null) {
@@ -48,6 +43,11 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                 ActionItem.BlogEntryItem(it)
             }
         }
+
+    override fun newState(state: ActionsState) {
+        swipeRefreshLayout.isRefreshing = (state.status == ActionsState.Status.PENDING)
+        actionsAdapter.setItems(buildActionItems(state.actions))
+    }
 
     override fun onRefresh() {
         store.dispatch(ActionsRequests.FetchActions(true))
