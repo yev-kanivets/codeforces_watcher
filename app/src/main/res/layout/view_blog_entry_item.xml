@@ -39,7 +39,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivAuthorAvatar"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Mirror of Bubble Cup sadsdglkja;sdgj sfad;jjasdfka;lkdjg;aslkjdg;lsadg;kj" />
+            tools:text="Mirror of Bubble Cup" />
 
         <TextView
             android:id="@+id/tvHandleAndTime"
@@ -51,7 +51,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivAuthorAvatar"
             app:layout_constraintTop_toBottomOf="@id/tvTitle"
-            tools:text="BOGDAN_ 17 hours ago" />
+            tools:text="BOGDAN_ - 17 hours ago" />
 
         <TextView
             android:id="@+id/tvContent"

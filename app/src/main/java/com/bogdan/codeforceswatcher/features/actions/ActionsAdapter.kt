@@ -68,7 +68,7 @@ class ActionsAdapter(
     private fun bindComment(viewHolder: CommentViewHolder, comment: ActionItem.CommentItem) = with(comment) {
         with(viewHolder) {
             tvTitle.text = title
-            tvHandleAndTime.text = TextUtils.concat(commentatorHandle, "  ${PrettyTime().format(Date(time * 1000))}")
+            tvHandleAndTime.text = TextUtils.concat(commentatorHandle, " - ${PrettyTime().format(Date(time * 1000))}")
             tvContent.text = content
         }
 
@@ -80,7 +80,7 @@ class ActionsAdapter(
     private fun bindBlogEntry(viewHolder: BlogEntryViewHolder, blogEntry: ActionItem.BlogEntryItem) = with(blogEntry) {
         with(viewHolder) {
             tvTitle.text = blogTitle
-            tvHandleAndTime.text = TextUtils.concat(authorHandle, "  ${PrettyTime().format(Date(time * 1000))}")
+            tvHandleAndTime.text = TextUtils.concat(authorHandle, " - ${PrettyTime().format(Date(time * 1000))}")
             tvContent.text = CwApp.app.getString(R.string.created_or_updated_text)
         }
 
