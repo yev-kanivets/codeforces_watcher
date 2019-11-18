@@ -31,28 +31,28 @@ object RestClient {
     suspend fun getUsers(handle: String) = try {
         codeforcesApi.getUsers(handle)
     } catch (t: Throwable) {
-        CrashLogger.logThrowable(t)
+        CrashLogger.log(t)
         null
     }
 
     suspend fun getRating(handle: String) = try {
         codeforcesApi.getRating(handle)
     } catch (t: Throwable) {
-        CrashLogger.logThrowable(t)
+        CrashLogger.log(t)
         null
     }
 
     suspend fun getActions(maxCount: Int = 100, lang: String) = try {
         codeforcesApi.getActions(maxCount, lang)
     } catch (t: Throwable) {
-        CrashLogger.logThrowable(t)
+        CrashLogger.log(t)
         null
     }
 
     suspend fun getContests() = try {
         codeforcesApi.getContests()
     } catch (t: Throwable) {
-        CrashLogger.logThrowable(t)
+        CrashLogger.log(t)
         null
     }
 }
