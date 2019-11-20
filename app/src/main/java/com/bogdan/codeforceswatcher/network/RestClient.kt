@@ -60,7 +60,6 @@ object RestClient {
         codeforcesApi.getProblems(lang = lang)
     } catch (t: Throwable) {
         CrashLogger.log(t)
-        println("Problems throwable ${t.message}")
         null
     }
 }

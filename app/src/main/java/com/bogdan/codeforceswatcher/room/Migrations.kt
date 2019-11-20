@@ -19,3 +19,14 @@ val MIGRATION_2_3 = object : Migration(2, 3) {
         database.execSQL("ALTER TABLE Contest ADD COLUMN duration INTEGER DEFAULT 0 NOT NULL")
     }
 }
+
+val MIGRATION_3_4 = object : Migration(3, 4) {
+
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL(
+            "CREATE TABLE Problem (id INTEGER NOT NULL, " +
+                "name TEXT NOT NULL, 'enName' TEXT, 'ruName' TEXT, 'index' TEXT NOT NULL, 'contestId' INTEGER, " +
+                "PRIMARY KEY(id))"
+        )
+    }
+}

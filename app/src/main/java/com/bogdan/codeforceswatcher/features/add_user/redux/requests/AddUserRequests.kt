@@ -39,7 +39,7 @@ class AddUserRequests {
         }
 
         private fun addUser(user: User) {
-            val foundUser = DatabaseClient.userDao.getAll()
+            val foundUser = DatabaseClient.userDao.getUsers()
                 .find { currentUser -> currentUser.handle == user.handle }
 
             if (foundUser == null) {

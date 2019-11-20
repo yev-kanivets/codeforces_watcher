@@ -23,7 +23,7 @@ class UsersRequests {
     ) : Request() {
 
         override suspend fun execute() {
-            val users: List<User> = DatabaseClient.userDao.getAll()
+            val users: List<User> = DatabaseClient.userDao.getUsers()
             when (val result = getUsers(getHandles(users), true)) {
                 is UsersRequestResult.Failure -> dispatchError(result.error)
                 is UsersRequestResult.Success -> store.dispatch(
