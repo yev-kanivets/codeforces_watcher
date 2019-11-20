@@ -2,7 +2,7 @@ package com.bogdan.codeforceswatcher.network
 
 import com.bogdan.codeforceswatcher.features.actions.redux.requests.ActionsResponse
 import com.bogdan.codeforceswatcher.features.contests.redux.requests.ContestsResponse
-import com.bogdan.codeforceswatcher.features.problems.redux.ProblemsResponse
+import com.bogdan.codeforceswatcher.features.problems.redux.requests.ProblemsResponse
 import com.bogdan.codeforceswatcher.features.users.redux.requests.RatingChangeResponse
 import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersResponse
 import retrofit2.Response
@@ -28,6 +28,7 @@ interface CodeforcesApi {
 
     @GET("problemset.problems")
     suspend fun getProblems(
-        @Query("tags") tags: String = "implementation"
+        @Query("tags") tags: String = "implementation",
+        @Query("lang") lang: String
     ): Response<ProblemsResponse>
 }

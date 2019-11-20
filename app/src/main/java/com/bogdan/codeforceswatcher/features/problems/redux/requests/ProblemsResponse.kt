@@ -1,4 +1,4 @@
-package com.bogdan.codeforceswatcher.features.problems.redux
+package com.bogdan.codeforceswatcher.features.problems.redux.requests
 
 import com.bogdan.codeforceswatcher.features.problems.models.Problem
 import com.google.gson.annotations.SerializedName

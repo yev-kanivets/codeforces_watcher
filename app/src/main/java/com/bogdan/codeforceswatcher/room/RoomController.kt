@@ -30,5 +30,6 @@ object RoomController : StoreSubscriber<AppState> {
     override fun newState(state: AppState) {
         DatabaseClient.contestDao.deleteAll()
         DatabaseClient.contestDao.insert(state.contests.contests)
+        // TODO add updating db with problems
     }
 }

@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Intent
 import com.bogdan.codeforceswatcher.features.actions.redux.requests.ActionsRequests
 import com.bogdan.codeforceswatcher.features.contests.redux.requests.ContestsRequests
-import com.bogdan.codeforceswatcher.features.problems.redux.ProblemsRequests
+import com.bogdan.codeforceswatcher.features.problems.redux.requests.ProblemsRequests
 import com.bogdan.codeforceswatcher.features.users.redux.requests.Source
 import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersRequests
 import com.bogdan.codeforceswatcher.receiver.StartAlarm
