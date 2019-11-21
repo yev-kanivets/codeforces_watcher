@@ -10,7 +10,7 @@ import com.bogdan.codeforceswatcher.features.problems.models.Problem
 interface ProblemsDao {
 
     @Query("SELECT * FROM problem")
-    fun getProblems(): List<Problem>
+    fun getAll(): List<Problem>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(problems: List<Problem>)

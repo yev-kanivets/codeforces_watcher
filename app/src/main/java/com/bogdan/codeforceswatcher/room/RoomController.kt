@@ -23,11 +23,11 @@ object RoomController : StoreSubscriber<AppState> {
         return AppState(
             contests = ContestsState(contests = DatabaseClient.contestDao.getUpcomingContests().reversed()),
             users = UsersState(
-                users = DatabaseClient.userDao.getUsers(),
+                users = DatabaseClient.userDao.getAll(),
                 sortType = UsersState.SortType.getSortType(Prefs.get().readSpinnerSortPosition().toInt())
             ),
             problems = ProblemsState(
-                problems = DatabaseClient.problemsDao.getProblems()
+                problems = DatabaseClient.problemsDao.getAll()
             )
         )
     }
@@ -37,7 +37,7 @@ object RoomController : StoreSubscriber<AppState> {
             DatabaseClient.contestDao.deleteAll()
             DatabaseClient.contestDao.insert(state.contests.contests)
         }
-        if (DatabaseClient.problemsDao.getProblems() != state.problems.problems) {
+        if (DatabaseClient.problemsDao.getAll() != state.problems.problems) {
             DatabaseClient.problemsDao.deleteAll()
             DatabaseClient.problemsDao.insert(state.problems.problems)
         }

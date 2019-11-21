@@ -28,7 +28,6 @@ interface CodeforcesApi {
 
     @GET("problemset.problems")
     suspend fun getProblems(
-        @Query("tags") tags: String = "implementation",
         @Query("lang") lang: String
     ): Response<ProblemsResponse>
 }

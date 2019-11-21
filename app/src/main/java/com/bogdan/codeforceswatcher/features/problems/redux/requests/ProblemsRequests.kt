@@ -15,36 +15,31 @@ class ProblemsRequests {
     class FetchProblems : Request() {
 
         override suspend fun execute() {
-            val responseEn = CoroutineScope(Dispatchers.Main).async {
+            val promiseProblemsEn = CoroutineScope(Dispatchers.Main).async {
                 RestClient.getProblems("en")
             }
-            val responseRu = CoroutineScope(Dispatchers.Main).async {
+
+            val promiseProblemsRu = CoroutineScope(Dispatchers.Main).async {
                 RestClient.getProblems("ru")
             }
-            responseEn.await()?.body()?.result?.problems?.let { problemsEn ->
-                responseRu.await()?.body()?.result?.problems?.let { problemsRu ->
-                    store.dispatch(Success(mergeProblems(problemsEn, problemsRu)))
-                } ?: store.dispatch(Failure(null))
+
+            var problemsEn: List<Problem> = listOf()
+            promiseProblemsEn.await()?.body()?.result?.problems?.let {
+                problemsEn = it
+            } ?: store.dispatch(Failure(null))
+
+            promiseProblemsRu.await()?.body()?.result?.problems?.let { problemsRu ->
+                store.dispatch(Success(mergeProblems(problemsEn, problemsRu)))
             } ?: store.dispatch(Failure(null))
         }
 
         private fun mergeProblems(problemsEn: List<Problem>, problemsRu: List<Problem>): List<Problem> {
             val problems: MutableList<Problem> = mutableListOf()
-
-            for (problemEn in problemsEn) {
-                problemEn.enName = problemEn.name
-                problems.add(problemEn)
+            for ((index, problem) in problemsEn.withIndex()) {
+                problem.ruName = problemsRu[index].name
+                problem.enName = problem.name
+                problems.add(problem)
             }
-
-            for (problemRu in problemsRu) {
-                problemRu.ruName = problemRu.name
-                problems.find { problem ->
-                    problem.contestId == problemRu.contestId && problem.index == problemRu.index
-                }?.let { problem ->
-                    problem.ruName = problemRu.ruName
-                } ?: problems.add(problemRu)
-            }
-
             return problems
         }
 

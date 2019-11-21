@@ -7,7 +7,7 @@ import com.bogdan.codeforceswatcher.features.users.models.User
 interface UsersDao {
 
     @Query("SELECT * FROM user")
-    fun getUsers(): List<User>
+    fun getAll(): List<User>
 
     @Query("SELECT * FROM user WHERE id = :id")
     fun getById(id: Long): User
