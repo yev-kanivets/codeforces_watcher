@@ -5,6 +5,7 @@ import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
+import com.bogdan.codeforceswatcher.util.CrashLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -23,14 +24,19 @@ class ProblemsRequests {
                 RestClient.getProblems("ru")
             }
 
-            var problemsEn: List<Problem> = listOf()
-            promiseProblemsEn.await()?.body()?.result?.problems?.let {
-                problemsEn = it
-            } ?: store.dispatch(Failure(null))
+            val problemsEn = promiseProblemsEn.await()?.body()?.result?.problems
+            val problemsRu = promiseProblemsRu.await()?.body()?.result?.problems
 
-            promiseProblemsRu.await()?.body()?.result?.problems?.let { problemsRu ->
-                store.dispatch(Success(mergeProblems(problemsEn, problemsRu)))
-            } ?: store.dispatch(Failure(null))
+            if (problemsEn == null || problemsRu == null) {
+                store.dispatch(Failure(null))
+            } else {
+                if (isCoincidence(problemsEn, problemsRu)) {
+                    store.dispatch(Success(mergeProblems(problemsEn, problemsRu)))
+                } else {
+                    CrashLogger.problemsNotConvenience()
+                    store.dispatch(Failure(null))
+                }
+            }
         }
 
         private fun mergeProblems(problemsEn: List<Problem>, problemsRu: List<Problem>): List<Problem> {
@@ -41,6 +47,16 @@ class ProblemsRequests {
                 problems.add(problem)
             }
             return problems
+        }
+
+        private fun isCoincidence(problemsEn: List<Problem>, problemsRu: List<Problem>): Boolean {
+            for ((index, problem) in problemsEn.withIndex()) {
+                if (problem.contestId != problemsRu[index].contestId ||
+                    problem.index != problemsRu[index].index) {
+                    return false
+                }
+            }
+            return true
         }
 
         data class Success(val problems: List<Problem>) : Action
