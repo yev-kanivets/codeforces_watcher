@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import org.rekotlin.Action
+import java.lang.IllegalArgumentException
 
 class ProblemsRequests {
 
@@ -30,10 +31,10 @@ class ProblemsRequests {
             if (problemsEn == null || problemsRu == null) {
                 store.dispatch(Failure(null))
             } else {
-                if (isCoincidence(problemsEn, problemsRu)) {
+                if (isProblemsMatching(problemsEn, problemsRu)) {
                     store.dispatch(Success(mergeProblems(problemsEn, problemsRu)))
                 } else {
-                    CrashLogger.problemsNotConvenience()
+                    CrashLogger.log(IllegalArgumentException("Problems doesn't match"))
                     store.dispatch(Failure(null))
                 }
             }
@@ -49,7 +50,7 @@ class ProblemsRequests {
             return problems
         }
 
-        private fun isCoincidence(problemsEn: List<Problem>, problemsRu: List<Problem>): Boolean {
+        private fun isProblemsMatching(problemsEn: List<Problem>, problemsRu: List<Problem>): Boolean {
             for ((index, problem) in problemsEn.withIndex()) {
                 if (problem.contestId != problemsRu[index].contestId ||
                     problem.index != problemsRu[index].index) {
