@@ -18,7 +18,7 @@ fun contestsReducer(action: Action, state: AppState): ContestsState {
         is ContestsRequests.FetchContests.Success -> {
             newState = newState.copy(
                 status = ContestsState.Status.IDLE,
-                contests = action.contests.filter { it.phase == "BEFORE" }.sortedBy(Contest::time)
+                contests = action.contests
             )
         }
         is ContestsRequests.FetchContests.Failure -> {

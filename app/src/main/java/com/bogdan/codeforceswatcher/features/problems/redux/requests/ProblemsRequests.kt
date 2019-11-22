@@ -32,7 +32,9 @@ class ProblemsRequests {
                 store.dispatch(Failure(null))
             } else {
                 if (isProblemsMatching(problemsEn, problemsRu)) {
-                    store.dispatch(Success(mergeProblems(problemsEn, problemsRu)))
+                    val problems = mergeProblems(problemsEn, problemsRu)
+                    bindProblemsToContests(problems)
+                    store.dispatch(Success(problems))
                 } else {
                     CrashLogger.log(IllegalArgumentException("Problems doesn't match"))
                     store.dispatch(Failure(null))
@@ -48,6 +50,16 @@ class ProblemsRequests {
                 problems.add(problem)
             }
             return problems
+        }
+
+        private fun bindProblemsToContests(problems: List<Problem>) {
+            val contests = store.state.contests.contests
+            for (problem in problems) {
+                contests.find { it.id == problem.contestId }?.let { contest ->
+                    problem.contestName = contest.name
+                    problem.contestTime = contest.time
+                }
+            }
         }
 
         private fun isProblemsMatching(problemsEn: List<Problem>, problemsRu: List<Problem>): Boolean {

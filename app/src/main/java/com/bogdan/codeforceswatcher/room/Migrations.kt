@@ -26,7 +26,7 @@ val MIGRATION_3_4 = object : Migration(3, 4) {
         database.execSQL(
             "CREATE TABLE Problem (id INTEGER NOT NULL, " +
                 "name TEXT NOT NULL, 'enName' TEXT, 'ruName' TEXT, 'index' TEXT NOT NULL, 'contestId' INTEGER, " +
-                "PRIMARY KEY(id))"
+                "contestName TEXT, contestTime INTEGER, isFavourite INTEGER DEFAULT 0 NOT NULL, PRIMARY KEY(id))"
         )
     }
 }
