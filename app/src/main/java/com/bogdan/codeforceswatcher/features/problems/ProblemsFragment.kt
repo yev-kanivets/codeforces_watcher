@@ -32,6 +32,6 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState> {
     }
 
     override fun newState(state: ProblemsState) {
-        println("State problems: ${state.problems}")
+        //println("State problems: ${state.problems}")
     }
 }

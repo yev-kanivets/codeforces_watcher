@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +33,9 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     private val currentTabFragment: Fragment?
         get() = supportFragmentManager.fragments.lastOrNull()
 
+    private val prefs = Prefs.get()
+    private var problemsFABPosition = prefs.readProblemsFABPosition()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -49,6 +54,7 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     override fun onStop() {
         super.onStop()
+        prefs.writeProblemsFABPosition(problemsFABPosition)
         store.unsubscribe(this)
     }
 
@@ -106,6 +112,7 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     private fun onUsersTabSelected() {
         llSorting.visibility = View.VISIBLE
+        btnSearch.visibility = View.GONE
         fab.setOnClickListener {
             startActivity(Intent(this@MainActivity, AddUserActivity::class.java))
         }
@@ -114,6 +121,7 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     private fun onContestsTabSelected() {
         llSorting.visibility = View.GONE
+        btnSearch.visibility = View.GONE
         fab.setOnClickListener {
             val intent =
                 Intent(Intent.ACTION_VIEW).setData(Uri.parse(CODEFORCES_LINK))
@@ -124,11 +132,30 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     private fun onActionsTabSelected() {
         llSorting.visibility = View.GONE
+        btnSearch.visibility = View.GONE
         fab.setOnClickListener {
             showShareDialog()
             Analytics.logShareApp()
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_share))
+    }
+
+    private fun onProblemsTabSelected() {
+        llSorting.visibility = View.GONE
+        btnSearch.visibility = View.VISIBLE
+        if (problemsFABPosition == 0) {
+            fab.setImageDrawable(getDrawable(R.drawable.ic_all))
+        } else {
+            fab.setImageDrawable(getDrawable(R.drawable.ic_star))
+        }
+        fab.setOnClickListener {
+            problemsFABPosition = problemsFABPosition.xor(1)
+            if (problemsFABPosition == 0) {
+                fab.setImageDrawable(getDrawable(R.drawable.ic_all))
+            } else {
+                fab.setImageDrawable(getDrawable(R.drawable.ic_star))
+            }
+        }
     }
 
     private fun showShareDialog() {
@@ -150,12 +177,6 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
         type = "text/plain"
         putExtra(Intent.EXTRA_TEXT, getString(R.string.share_cw_message))
     })
-
-    private fun onProblemsTabSelected() {
-        llSorting.visibility = View.GONE
-        fab.setOnClickListener(null)
-        fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
-    }
 
     private fun initViews() {
         setSupportActionBar(toolbar)
