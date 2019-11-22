@@ -4,7 +4,7 @@ import androidx.room.*
 import com.bogdan.codeforceswatcher.features.users.models.User
 
 @Dao
-interface UserDao {
+interface UsersDao {
 
     @Query("SELECT * FROM user")
     fun getAll(): List<User>

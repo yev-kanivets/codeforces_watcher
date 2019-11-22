@@ -1,6 +1,7 @@
 package com.bogdan.codeforceswatcher.room
 
 import com.bogdan.codeforceswatcher.features.contests.redux.states.ContestsState
+import com.bogdan.codeforceswatcher.features.problems.redux.states.ProblemsState
 import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState
 import com.bogdan.codeforceswatcher.redux.states.AppState
 import com.bogdan.codeforceswatcher.store
@@ -13,6 +14,7 @@ object RoomController : StoreSubscriber<AppState> {
         store.subscribe(this) {
             it.skipRepeats { oldState, newState ->
                 oldState.contests == newState.contests
+                    && oldState.problems == newState.problems
             }
         }
     }
@@ -23,12 +25,21 @@ object RoomController : StoreSubscriber<AppState> {
             users = UsersState(
                 users = DatabaseClient.userDao.getAll(),
                 sortType = UsersState.SortType.getSortType(Prefs.get().readSpinnerSortPosition().toInt())
+            ),
+            problems = ProblemsState(
+                problems = DatabaseClient.problemsDao.getAll()
             )
         )
     }
 
     override fun newState(state: AppState) {
-        DatabaseClient.contestDao.deleteAll()
-        DatabaseClient.contestDao.insert(state.contests.contests)
+        if (DatabaseClient.contestDao.getUpcomingContests() != state.contests.contests) {
+            DatabaseClient.contestDao.deleteAll()
+            DatabaseClient.contestDao.insert(state.contests.contests)
+        }
+        if (DatabaseClient.problemsDao.getAll() != state.problems.problems) {
+            DatabaseClient.problemsDao.deleteAll()
+            DatabaseClient.problemsDao.insert(state.problems.problems)
+        }
     }
 }

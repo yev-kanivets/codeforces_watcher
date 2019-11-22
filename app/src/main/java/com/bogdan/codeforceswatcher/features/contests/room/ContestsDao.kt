@@ -7,7 +7,7 @@ import androidx.room.Query
 import com.bogdan.codeforceswatcher.features.contests.models.Contest
 
 @Dao
-interface ContestDao {
+interface ContestsDao {
 
     @Query("SELECT * FROM contest")
     fun getUpcomingContests(): List<Contest>

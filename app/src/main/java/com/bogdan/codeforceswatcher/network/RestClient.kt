@@ -55,4 +55,11 @@ object RestClient {
         CrashLogger.log(t)
         null
     }
+
+    suspend fun getProblems(lang: String) = try {
+        codeforcesApi.getProblems(lang)
+    } catch (t: Throwable) {
+        CrashLogger.log(t)
+        null
+    }
 }
