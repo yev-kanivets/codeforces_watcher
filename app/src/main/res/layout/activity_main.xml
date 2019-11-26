@@ -35,13 +35,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_search" />
+                    android:src="@drawable/ic_search"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/llSorting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp">
+                    android:layout_marginEnd="4dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/tvSortBy"

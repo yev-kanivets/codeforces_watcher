@@ -13,7 +13,7 @@ interface ProblemsDao {
     fun getAll(): List<Problem>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(problems: List<Problem>)
+    fun insert(problems: List<Problem>) : List<Long>
 
     @Query("DELETE FROM problem")
     fun deleteAll()

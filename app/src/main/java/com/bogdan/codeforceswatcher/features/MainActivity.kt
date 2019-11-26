@@ -5,8 +5,6 @@ import android.content.Intent
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +15,7 @@ import com.bogdan.codeforceswatcher.features.actions.ActionsFragment
 import com.bogdan.codeforceswatcher.features.add_user.AddUserActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
+import com.bogdan.codeforceswatcher.features.problems.redux.actions.ProblemsActions
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.redux.actions.UIActions
 import com.bogdan.codeforceswatcher.redux.states.UIState
@@ -74,6 +73,11 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
             }
         }
 
+        when (currentTabFragment) {
+            is UsersFragment -> onUsersTabUnselected()
+            is ProblemsFragment -> onProblemsTabUnselected()
+        }
+
         if (fragment != currentTabFragment) {
             supportFragmentManager
                 .beginTransaction()
@@ -112,7 +116,6 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     private fun onUsersTabSelected() {
         llSorting.visibility = View.VISIBLE
-        btnSearch.visibility = View.GONE
         fab.setOnClickListener {
             startActivity(Intent(this@MainActivity, AddUserActivity::class.java))
         }
@@ -120,8 +123,6 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     private fun onContestsTabSelected() {
-        llSorting.visibility = View.GONE
-        btnSearch.visibility = View.GONE
         fab.setOnClickListener {
             val intent =
                 Intent(Intent.ACTION_VIEW).setData(Uri.parse(CODEFORCES_LINK))
@@ -131,8 +132,6 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     private fun onActionsTabSelected() {
-        llSorting.visibility = View.GONE
-        btnSearch.visibility = View.GONE
         fab.setOnClickListener {
             showShareDialog()
             Analytics.logShareApp()
@@ -141,7 +140,6 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     private fun onProblemsTabSelected() {
-        llSorting.visibility = View.GONE
         btnSearch.visibility = View.VISIBLE
         if (problemsFABPosition == 0) {
             fab.setImageDrawable(getDrawable(R.drawable.ic_all))
@@ -149,13 +147,22 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
             fab.setImageDrawable(getDrawable(R.drawable.ic_star))
         }
         fab.setOnClickListener {
-            problemsFABPosition = problemsFABPosition.xor(1)
+            problemsFABPosition = (problemsFABPosition + 1) % 2
+            store.dispatch(ProblemsActions.ChangeProblems(problemsFABPosition > 0))
             if (problemsFABPosition == 0) {
                 fab.setImageDrawable(getDrawable(R.drawable.ic_all))
             } else {
                 fab.setImageDrawable(getDrawable(R.drawable.ic_star))
             }
         }
+    }
+
+    private fun onProblemsTabUnselected() {
+        btnSearch.visibility = View.GONE
+    }
+
+    private fun onUsersTabUnselected() {
+        llSorting.visibility = View.GONE
     }
 
     private fun showShareDialog() {

@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Problem(
-    @PrimaryKey(autoGenerate = true) val id: Long,
+    @PrimaryKey(autoGenerate = true) var id: Long,
     val name: String,
     var enName: String?,
     var ruName: String?,

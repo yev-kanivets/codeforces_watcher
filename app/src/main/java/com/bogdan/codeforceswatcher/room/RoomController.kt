@@ -27,7 +27,8 @@ object RoomController : StoreSubscriber<AppState> {
                 sortType = UsersState.SortType.getSortType(Prefs.get().readSpinnerSortPosition().toInt())
             ),
             problems = ProblemsState(
-                problems = DatabaseClient.problemsDao.getAll()
+                problems = DatabaseClient.problemsDao.getAll(),
+                isFavourite = (Prefs.get().readProblemsFABPosition() > 0)
             )
         )
     }
@@ -39,7 +40,10 @@ object RoomController : StoreSubscriber<AppState> {
         }
         if (DatabaseClient.problemsDao.getAll() != state.problems.problems) {
             DatabaseClient.problemsDao.deleteAll()
-            DatabaseClient.problemsDao.insert(state.problems.problems)
+            val indexes = DatabaseClient.problemsDao.insert(state.problems.problems)
+            for ((index, problem) in state.problems.problems.withIndex()) {
+                problem.id = indexes[index]
+            }
         }
     }
 }
