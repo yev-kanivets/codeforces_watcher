@@ -53,7 +53,7 @@ class CwApp : Application() {
         store.dispatch(ActionsRequests.FetchActions(false))
         store.dispatch(ContestsRequests.FetchContests(false))
         store.dispatch(UsersRequests.FetchUsers(Source.BACKGROUND))
-        store.dispatch(ProblemsRequests.FetchProblems())
+        store.dispatch(ProblemsRequests.FetchProblems(false))
     }
 
     private fun startAlarm() {

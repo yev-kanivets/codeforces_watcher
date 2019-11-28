@@ -5,5 +5,9 @@ import org.rekotlin.StateType
 
 data class ProblemsState(
     val problems: List<Problem> = listOf(),
+    val status: Status = Status.IDLE,
     val isFavourite: Boolean = false
-) : StateType
+) : StateType {
+
+    enum class Status { IDLE, PENDING }
+}

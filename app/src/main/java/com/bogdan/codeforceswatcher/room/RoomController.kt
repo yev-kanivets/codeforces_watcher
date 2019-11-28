@@ -28,7 +28,7 @@ object RoomController : StoreSubscriber<AppState> {
             ),
             problems = ProblemsState(
                 problems = DatabaseClient.problemsDao.getAll(),
-                isFavourite = (Prefs.get().readProblemsFABPosition() > 0)
+                isFavourite = (Prefs.get().readProblemsIsFavourite())
             )
         )
     }
@@ -37,13 +37,6 @@ object RoomController : StoreSubscriber<AppState> {
         if (DatabaseClient.contestDao.getAll() != state.contests.contests) {
             DatabaseClient.contestDao.deleteAll()
             DatabaseClient.contestDao.insert(state.contests.contests)
-        }
-        if (DatabaseClient.problemsDao.getAll() != state.problems.problems) {
-            DatabaseClient.problemsDao.deleteAll()
-            val indexes = DatabaseClient.problemsDao.insert(state.problems.problems)
-            for ((index, problem) in state.problems.problems.withIndex()) {
-                problem.id = indexes[index]
-            }
         }
     }
 }

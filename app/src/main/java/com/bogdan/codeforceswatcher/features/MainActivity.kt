@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
         get() = supportFragmentManager.fragments.lastOrNull()
 
     private val prefs = Prefs.get()
-    private var problemsFABPosition = prefs.readProblemsFABPosition()
+    private var problemsIsFavourite = prefs.readProblemsIsFavourite()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     override fun onStop() {
         super.onStop()
-        prefs.writeProblemsFABPosition(problemsFABPosition)
+        prefs.writeProblemsIsFavourite(problemsIsFavourite)
         store.unsubscribe(this)
     }
 
@@ -141,19 +141,20 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     private fun onProblemsTabSelected() {
         btnSearch.visibility = View.VISIBLE
-        if (problemsFABPosition == 0) {
-            fab.setImageDrawable(getDrawable(R.drawable.ic_all))
-        } else {
-            fab.setImageDrawable(getDrawable(R.drawable.ic_star))
-        }
+        updateProblemsFAB()
+
         fab.setOnClickListener {
-            problemsFABPosition = (problemsFABPosition + 1) % 2
-            store.dispatch(ProblemsActions.ChangeProblems(problemsFABPosition > 0))
-            if (problemsFABPosition == 0) {
-                fab.setImageDrawable(getDrawable(R.drawable.ic_all))
-            } else {
-                fab.setImageDrawable(getDrawable(R.drawable.ic_star))
-            }
+            problemsIsFavourite = !(problemsIsFavourite)
+            store.dispatch(ProblemsActions.ChangeTypeProblems(problemsIsFavourite))
+            updateProblemsFAB()
+        }
+    }
+
+    private fun updateProblemsFAB() {
+        if (problemsIsFavourite) {
+            fab.setImageDrawable(getDrawable(R.drawable.ic_star))
+        } else {
+            fab.setImageDrawable(getDrawable(R.drawable.ic_all))
         }
     }
 

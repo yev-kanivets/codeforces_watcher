@@ -4,5 +4,5 @@ import org.rekotlin.Action
 
 class ProblemsActions {
 
-    data class ChangeProblems(val isFavourite: Boolean) : Action
+    data class ChangeTypeProblems(val isFavourite: Boolean) : Action
 }
