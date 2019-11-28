@@ -18,6 +18,6 @@ interface ProblemsDao {
     @Delete
     fun delete(problem: Problem)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(problem: Problem)
 }

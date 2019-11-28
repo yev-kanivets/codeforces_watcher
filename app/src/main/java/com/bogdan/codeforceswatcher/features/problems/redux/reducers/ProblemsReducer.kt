@@ -17,7 +17,7 @@ fun problemsReducer(action: Action, state: AppState): ProblemsState {
 
         is ProblemsRequests.FetchProblems.Success -> {
             newState = newState.copy(
-                problems = newState.problems.plus(action.problems),
+                problems = action.problems,
                 status = ProblemsState.Status.IDLE
             )
         }

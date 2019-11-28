@@ -59,6 +59,6 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
 
     override fun newState(state: ProblemsState) {
         swipeRefreshLayout.isRefreshing = (state.status == ProblemsState.Status.PENDING)
-        problemsAdapter.setItems(if (state.isFavourite) state.problems.filter { it.isFavourite } else state.problems)
+        problemsAdapter.setItems(if (state.isFavourite) state.problems.filter { it.isFavourite } else state.problems.reversed())
     }
 }

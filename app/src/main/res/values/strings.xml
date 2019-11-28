@@ -40,6 +40,7 @@
     <string name="share_with_friends">Share with friends</string>
     <string name="shared_through_cw">Shared through Codeforces Watcher. Find it on Google Play.</string>
     <string name="no_users">You don’t have any users to watch yet.\nAdd the first one using «+» at the bottom of the screen.</string>
+    <string name="no_favourite_problems">You don’t have any favourite problems yet.\nAdd the first one using «★» at the bottom of the screen.</string>
     <string name="share_cw">Share Codeforces Watcher</string>
     <string name="help_cw_make_more_social">Help us make Codeforces and Codeforces Watcher more social by sharing it with your friends.</string>
     <string name="share">Share</string>
@@ -55,5 +56,6 @@ Codeforces Watcher allows:
 
 Download it now on Google Play - https://play.google.com/store/apps/details?id=com.bogdan.codeforceswatcher"</string>
     <string name="actions_on_the_way">Recent actions on the way to your device…</string>
+    <string name="problems_on_the_way">Problems on the way to your device…</string>
     <string name="created_or_updated_text">Created or updated the text, click to see details…</string>
 </resources>

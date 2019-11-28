@@ -25,8 +25,12 @@ class ProblemsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         when (viewType) {
-            STUB_VIEW_TYPE -> {
-                val layout = LayoutInflater.from(context).inflate(R.layout.view_action_stub, parent, false)
+            STUB_ALL_PROBLEMS_VIEW_TYPE -> {
+                val layout = LayoutInflater.from(context).inflate(R.layout.view_all_problems_stub, parent, false)
+                StubViewHolder(layout)
+            }
+            STUB_FAVOURITE_PROBLEMS_VIEW_TYPE -> {
+                val layout = LayoutInflater.from(context).inflate(R.layout.view_favourite_problems_stub, parent, false)
                 StubViewHolder(layout)
             }
             else -> {
@@ -37,7 +41,8 @@ class ProblemsAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when {
-            items.isEmpty() -> STUB_VIEW_TYPE
+            items.isEmpty() && store.state.problems.isFavourite -> STUB_FAVOURITE_PROBLEMS_VIEW_TYPE
+            items.isEmpty() -> STUB_ALL_PROBLEMS_VIEW_TYPE
             else -> PROBLEM_VIEW_TYPE
         }
     }
@@ -56,7 +61,7 @@ class ProblemsAdapter(
     }
 
     fun setItems(problemsList: List<Problem>) {
-        if (problemsList != items) {
+        if (problemsList != items || problemsList.isEmpty()) {
             items = problemsList
             notifyDataSetChanged()
         }
@@ -81,7 +86,8 @@ class ProblemsAdapter(
     data class StubViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
     companion object {
-        const val STUB_VIEW_TYPE = 0
+        const val STUB_ALL_PROBLEMS_VIEW_TYPE = 0
+        const val STUB_FAVOURITE_PROBLEMS_VIEW_TYPE = 2
         const val PROBLEM_VIEW_TYPE = 1
     }
 }

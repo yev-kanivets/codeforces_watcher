@@ -87,17 +87,18 @@ class ProblemsRequests {
         }
 
         private suspend fun updateDatabaseAndDispatch(newProblems: List<Problem>) {
-            val differenceProblems = mutableListOf<Problem>()
             withContext(Dispatchers.IO) {
+                val isFavouriteProblem = hashMapOf<String, Boolean>()
                 val problems = DatabaseClient.problemsDao.getAll()
-                for (problem in newProblems) {
-                    if (problems.find { it.contestId == problem.contestId && it.name == problem.name } == null) {
-                        differenceProblems.add(problem)
-                    }
+                for (problem in problems) {
+                    isFavouriteProblem[problem.name] = problem.isFavourite
                 }
-                DatabaseClient.problemsDao.insert(differenceProblems)
+                for (problem in newProblems) {
+                    problem.isFavourite = isFavouriteProblem[problem.name] ?: false
+                }
+                DatabaseClient.problemsDao.insert(newProblems)
             }
-            store.dispatch(Success(differenceProblems))
+            store.dispatch(Success(newProblems))
         }
 
         data class Success(val problems: List<Problem>) : Action
