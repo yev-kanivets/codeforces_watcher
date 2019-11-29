@@ -36,7 +36,9 @@ class ActionsRequests {
                 is UsersRequestResult.Success -> {
                     store.dispatch(Success(buildUiData(actions, result.users)))
                 }
-                is UsersRequestResult.Failure -> dispatchFailure()
+                is UsersRequestResult.Failure -> {
+                    dispatchFailure()
+                }
             }
         }
 

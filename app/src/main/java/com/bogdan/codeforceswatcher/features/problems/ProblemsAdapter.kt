@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.view_problem_item.view.*
 
 class ProblemsAdapter(
     private val context: Context,
-    private val itemClickListener: (Int) -> Unit
+    private val itemClickListener: (Problem) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items: List<Problem> = listOf()
@@ -68,7 +68,7 @@ class ProblemsAdapter(
         notifyDataSetChanged()
     }
 
-    class ProblemViewHolder(view: View, itemClickListener: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
+    class ProblemViewHolder(view: View, itemClickListener: (Problem) -> Unit) : RecyclerView.ViewHolder(view) {
         val tvProblemName: TextView = view.tvProblemName
         val tvContestName: TextView = view.tvContestName
         val ivFavourite: ImageView = view.ivFavourite
@@ -76,7 +76,7 @@ class ProblemsAdapter(
 
         init {
             view.setOnClickListener {
-                itemClickListener.invoke(adapterPosition)
+                itemClickListener.invoke(problem)
             }
             view.ivFavourite.setOnClickListener {
                 store.dispatch(ProblemsRequests.MarkProblemFavorite(problem))

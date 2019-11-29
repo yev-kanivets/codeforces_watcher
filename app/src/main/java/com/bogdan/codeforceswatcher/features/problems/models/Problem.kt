@@ -2,6 +2,7 @@ package com.bogdan.codeforceswatcher.features.problems.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity
 data class Problem(
@@ -14,4 +15,4 @@ data class Problem(
     var contestName: String?,
     var contestTime: Long?,
     var isFavourite: Boolean = false
-)
+) : Serializable

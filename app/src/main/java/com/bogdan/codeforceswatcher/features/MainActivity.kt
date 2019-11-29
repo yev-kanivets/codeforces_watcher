@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
         fab.setOnClickListener {
             val intent =
-                Intent(Intent.ACTION_VIEW).setData(Uri.parse(CODEFORCES_LINK))
+                Intent(Intent.ACTION_VIEW).setData(Uri.parse(CONTESTS_LINK))
             startActivity(intent)
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
@@ -215,6 +215,6 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     companion object {
-        private const val CODEFORCES_LINK = "http://codeforces.com/contests"
+        private const val CONTESTS_LINK = "http://codeforces.com/contests"
     }
 }
