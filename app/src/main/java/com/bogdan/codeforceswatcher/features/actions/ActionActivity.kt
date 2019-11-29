@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.actions.models.CFAction
 import com.bogdan.codeforceswatcher.util.Analytics
-import kotlinx.android.synthetic.main.activity_action.*
+import kotlinx.android.synthetic.main.activity_web_page.*
 
 class ActionActivity : AppCompatActivity() {
 
@@ -25,7 +25,7 @@ class ActionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_action)
+        setContentView(R.layout.activity_web_page)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -57,7 +57,7 @@ class ActionActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_action_activity, menu)
+        menuInflater.inflate(R.menu.menu_web_page, menu)
         return true
     }
 
