@@ -23,10 +23,19 @@ class ActionsRequests {
     ) : Request() {
 
         override suspend fun execute() {
+            for (i in 0..2) {
+                if (tryQuery()) return
+            }
+            dispatchFailure()
+        }
+
+        private suspend fun tryQuery(): Boolean {
             val response = RestClient.getActions(lang = defineLang())
             response?.body()?.actions?.let { actions ->
                 buildUiDataAndDispatch(actions)
-            } ?: dispatchFailure()
+            } ?: return false
+
+            return true
         }
 
         private suspend fun buildUiDataAndDispatch(actions: List<CFAction>) {
@@ -48,7 +57,6 @@ class ActionsRequests {
             } else {
                 null
             }
-
             store.dispatch(Failure(noConnectionError))
         }
 
