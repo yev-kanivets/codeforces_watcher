@@ -51,20 +51,21 @@ class ProblemsAdapter(
         if (items.isEmpty()) return
 
         val problemViewHolder = viewHolder as ProblemViewHolder
-        val problem = items[position]
-
-        problemViewHolder.problem = problem
-        problemViewHolder.tvProblemName.text = problem.name
-        problemViewHolder.tvContestName.text = problem.contestName
-        if (problem.isFavourite) problemViewHolder.ivFavourite.setColorFilter(ContextCompat.getColor(context, R.color.colorAccent))
-        else problemViewHolder.ivFavourite.setColorFilter(ContextCompat.getColor(context, R.color.dark_grey))
+        with(problemViewHolder) {
+            with(items[position]) {
+                problem = this
+                tvProblemName.text = name
+                tvContestName.text = contestName
+                ivFavourite.setColorFilter(ContextCompat.getColor(
+                    context, if (isFavourite) R.color.colorAccent else R.color.dark_grey)
+                )
+            }
+        }
     }
 
     fun setItems(problemsList: List<Problem>) {
-        if (problemsList != items || problemsList.isEmpty()) {
-            items = problemsList
-            notifyDataSetChanged()
-        }
+        items = problemsList
+        notifyDataSetChanged()
     }
 
     class ProblemViewHolder(view: View, itemClickListener: (Int) -> Unit) : RecyclerView.ViewHolder(view) {

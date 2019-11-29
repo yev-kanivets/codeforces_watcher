@@ -37,9 +37,13 @@ class ProblemsRequests {
                 dispatchFailure()
             } else {
                 if (isProblemsMatching(problemsEn, problemsRu)) {
-                    val problems = mergeProblems(problemsEn, problemsRu)
-                    withContext(Dispatchers.IO) { bindProblemsToContests(problems) }
-                    updateDatabaseAndDispatch(problems)
+                    var problems = listOf<Problem>()
+                    withContext(Dispatchers.IO) {
+                        problems = mergeProblems(problemsEn, problemsRu)
+                        bindProblemsToContests(problems)
+                        updateDatabase(problems)
+                    }
+                    store.dispatch(Success(problems))
                 } else {
                     CrashLogger.log(IllegalArgumentException("Problems doesn't match"))
                     dispatchFailure()
@@ -68,11 +72,10 @@ class ProblemsRequests {
 
         private fun bindProblemsToContests(problems: List<Problem>) {
             val contests = store.state.contests.contests
-            for (problem in problems) {
-                contests.find { it.id == problem.contestId }?.let { contest ->
-                    problem.contestName = contest.name
-                    problem.contestTime = contest.time
-                }
+            val mapContests = contests.associateBy { contest -> contest.id }
+            problems.forEach { problem ->
+                problem.contestName = mapContests[problem.contestId]?.name
+                problem.contestTime = mapContests[problem.contestId]?.time
             }
         }
 
@@ -86,19 +89,21 @@ class ProblemsRequests {
             return true
         }
 
-        private suspend fun updateDatabaseAndDispatch(newProblems: List<Problem>) {
-            withContext(Dispatchers.IO) {
-                val isFavouriteProblem = hashMapOf<String, Boolean>()
-                val problems = DatabaseClient.problemsDao.getAll()
-                for (problem in problems) {
-                    isFavouriteProblem[problem.name] = problem.isFavourite
-                }
-                for (problem in newProblems) {
-                    problem.isFavourite = isFavouriteProblem[problem.name] ?: false
-                }
-                DatabaseClient.problemsDao.insert(newProblems)
+        private fun updateDatabase(newProblems: List<Problem>) {
+            val problems = DatabaseClient.problemsDao.getAll()
+            val favouriteProblemsMap = problems.associate { problem -> identify(problem) to problem.isFavourite }
+            DatabaseClient.problemsDao.deleteAll()
+
+            newProblems.forEach { problem ->
+                problem.isFavourite = favouriteProblemsMap[identify(problem)] ?: false
             }
-            store.dispatch(Success(newProblems))
+
+            val identifiers = DatabaseClient.problemsDao.insert(newProblems)
+            newProblems.forEachIndexed { index, problem -> problem.id = identifiers[index] }
+        }
+
+        private fun identify(problem: Problem): String {
+            return problem.contestId.toString() + problem.index
         }
 
         data class Success(val problems: List<Problem>) : Action
@@ -111,7 +116,6 @@ class ProblemsRequests {
         override suspend fun execute() {
             lateinit var newProblem: Problem
             withContext(Dispatchers.IO) {
-                DatabaseClient.problemsDao.delete(problem)
                 newProblem = problem.copy(isFavourite = !problem.isFavourite)
                 DatabaseClient.problemsDao.insert(newProblem)
             }

@@ -32,9 +32,6 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     private val currentTabFragment: Fragment?
         get() = supportFragmentManager.fragments.lastOrNull()
 
-    private val prefs = Prefs.get()
-    private var problemsIsFavourite = prefs.readProblemsIsFavourite()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -53,7 +50,6 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     override fun onStop() {
         super.onStop()
-        prefs.writeProblemsIsFavourite(problemsIsFavourite)
         store.unsubscribe(this)
     }
 
@@ -71,11 +67,6 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
             UIState.HomeTab.PROBLEMS -> {
                 currentTabFragment as? ProblemsFragment ?: ProblemsFragment()
             }
-        }
-
-        when (currentTabFragment) {
-            is UsersFragment -> onUsersTabUnselected()
-            is ProblemsFragment -> onProblemsTabUnselected()
         }
 
         if (fragment != currentTabFragment) {
@@ -115,7 +106,9 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     private fun onUsersTabSelected() {
+        btnSearch.visibility = View.GONE
         llSorting.visibility = View.VISIBLE
+
         fab.setOnClickListener {
             startActivity(Intent(this@MainActivity, AddUserActivity::class.java))
         }
@@ -123,6 +116,9 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     private fun onContestsTabSelected() {
+        btnSearch.visibility = View.GONE
+        llSorting.visibility = View.GONE
+
         fab.setOnClickListener {
             val intent =
                 Intent(Intent.ACTION_VIEW).setData(Uri.parse(CODEFORCES_LINK))
@@ -132,6 +128,9 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     private fun onActionsTabSelected() {
+        btnSearch.visibility = View.GONE
+        llSorting.visibility = View.GONE
+
         fab.setOnClickListener {
             showShareDialog()
             Analytics.logShareApp()
@@ -140,30 +139,26 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     private fun onProblemsTabSelected() {
+        llSorting.visibility = View.GONE
         btnSearch.visibility = View.VISIBLE
-        updateProblemsFAB()
+
+        var problemsIsFavourite = store.state.problems.isFavourite
+        updateProblemsFAB(problemsIsFavourite)
 
         fab.setOnClickListener {
             problemsIsFavourite = !(problemsIsFavourite)
+
             store.dispatch(ProblemsActions.ChangeTypeProblems(problemsIsFavourite))
-            updateProblemsFAB()
+            updateProblemsFAB(problemsIsFavourite)
         }
     }
 
-    private fun updateProblemsFAB() {
+    private fun updateProblemsFAB(problemsIsFavourite: Boolean) {
         if (problemsIsFavourite) {
-            fab.setImageDrawable(getDrawable(R.drawable.ic_star))
-        } else {
             fab.setImageDrawable(getDrawable(R.drawable.ic_all))
+        } else {
+            fab.setImageDrawable(getDrawable(R.drawable.ic_star))
         }
-    }
-
-    private fun onProblemsTabUnselected() {
-        btnSearch.visibility = View.GONE
-    }
-
-    private fun onUsersTabUnselected() {
-        llSorting.visibility = View.GONE
     }
 
     private fun showShareDialog() {

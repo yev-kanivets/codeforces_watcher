@@ -31,15 +31,9 @@ fun problemsReducer(action: Action, state: AppState): ProblemsState {
         }
 
         is ProblemsRequests.MarkProblemFavorite.Success -> {
-            val newProblems = mutableListOf<Problem>()
-            for (problem in newState.problems) {
-                if (problem.contestId == action.problem.contestId && problem.name == action.problem.name) {
-                    newProblems.add(action.problem)
-                } else {
-                    newProblems.add(problem)
-                }
-            }
-            newState = newState.copy(problems = newProblems)
+            newState = newState.copy(problems = newState.problems.map {
+                if (it.contestId == action.problem.contestId && it.index == action.problem.index) action.problem else it
+            })
         }
     }
 
