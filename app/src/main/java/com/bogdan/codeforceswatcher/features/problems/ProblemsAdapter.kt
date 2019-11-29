@@ -35,7 +35,7 @@ class ProblemsAdapter(
             }
             else -> {
                 val layout = LayoutInflater.from(context).inflate(R.layout.view_problem_item, parent, false)
-                ProblemViewHolder(layout, itemClickListener)
+                ProblemViewHolder(layout)
             }
         }
 
@@ -53,12 +53,14 @@ class ProblemsAdapter(
         val problemViewHolder = viewHolder as ProblemViewHolder
         with(problemViewHolder) {
             with(items[position]) {
-                problem = this
                 tvProblemName.text = name
                 tvContestName.text = contestName
                 ivFavourite.setColorFilter(ContextCompat.getColor(
                     context, if (isFavourite) R.color.colorAccent else R.color.dark_grey)
                 )
+
+                onClickListener = { itemClickListener(this) }
+                onFavouriteClickListener = { store.dispatch(ProblemsRequests.MarkProblemFavourite(this)) }
             }
         }
     }
@@ -68,19 +70,18 @@ class ProblemsAdapter(
         notifyDataSetChanged()
     }
 
-    class ProblemViewHolder(view: View, itemClickListener: (Problem) -> Unit) : RecyclerView.ViewHolder(view) {
+    class ProblemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
         val tvProblemName: TextView = view.tvProblemName
         val tvContestName: TextView = view.tvContestName
         val ivFavourite: ImageView = view.ivFavourite
-        lateinit var problem: Problem
+
+        var onClickListener: (() -> Unit)? = null
+        var onFavouriteClickListener: (() -> Unit)? = null
 
         init {
-            view.setOnClickListener {
-                itemClickListener.invoke(problem)
-            }
-            view.ivFavourite.setOnClickListener {
-                store.dispatch(ProblemsRequests.MarkProblemFavorite(problem))
-            }
+            view.setOnClickListener { onClickListener?.invoke() }
+            view.ivFavourite.setOnClickListener { onFavouriteClickListener?.invoke() }
         }
     }
 

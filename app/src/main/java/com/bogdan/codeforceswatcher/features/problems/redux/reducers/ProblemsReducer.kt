@@ -1,6 +1,5 @@
 package com.bogdan.codeforceswatcher.features.problems.redux.reducers
 
-import com.bogdan.codeforceswatcher.features.problems.models.Problem
 import com.bogdan.codeforceswatcher.features.problems.redux.actions.ProblemsActions
 import com.bogdan.codeforceswatcher.features.problems.redux.requests.ProblemsRequests
 import com.bogdan.codeforceswatcher.features.problems.redux.states.ProblemsState
@@ -30,7 +29,7 @@ fun problemsReducer(action: Action, state: AppState): ProblemsState {
             newState = newState.copy(isFavourite = action.isFavourite)
         }
 
-        is ProblemsRequests.MarkProblemFavorite.Success -> {
+        is ProblemsRequests.MarkProblemFavourite.Success -> {
             newState = newState.copy(problems = newState.problems.map {
                 if (it.contestId == action.problem.contestId && it.index == action.problem.index) action.problem else it
             })

@@ -23,19 +23,10 @@ class ActionsRequests {
     ) : Request() {
 
         override suspend fun execute() {
-            for (i in 0..2) {
-                if (tryQuery()) return
-            }
-            dispatchFailure()
-        }
-
-        private suspend fun tryQuery(): Boolean {
             val response = RestClient.getActions(lang = defineLang())
             response?.body()?.actions?.let { actions ->
                 buildUiDataAndDispatch(actions)
-            } ?: return false
-
-            return true
+            } ?: dispatchFailure()
         }
 
         private suspend fun buildUiDataAndDispatch(actions: List<CFAction>) {
@@ -45,9 +36,7 @@ class ActionsRequests {
                 is UsersRequestResult.Success -> {
                     store.dispatch(Success(buildUiData(actions, result.users)))
                 }
-                is UsersRequestResult.Failure -> {
-                    dispatchFailure()
-                }
+                is UsersRequestResult.Failure -> dispatchFailure()
             }
         }
 

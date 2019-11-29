@@ -27,17 +27,19 @@ class ProblemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web_page)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.run {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
 
         initData()
         initViews()
+
         Analytics.logProblemOpened()
     }
 
     private fun initData() {
-        val problem = intent.getSerializableExtra(PROBLEM_ID) as? Problem
-            ?: throw NullPointerException()
+        val problem = intent.getSerializableExtra(PROBLEM_ID) as Problem
 
         pageTitle = "${problem.contestId}${problem.index}: ${problem.name}"
         link = buildPageLink(problem)
@@ -68,11 +70,10 @@ class ProblemActivity : AppCompatActivity() {
     }
 
     private fun share() {
-        val share = Intent(Intent.ACTION_SEND)
-        share.type = "text/plain"
+        val shareIntent = Intent(Intent.ACTION_SEND).apply { type = "text/plain" }
         val shareText = "$pageTitle - $link\n\n${getString(R.string.shared_through_cw)}"
-        share.putExtra(Intent.EXTRA_TEXT, shareText)
-        startActivity(Intent.createChooser(share, getString(R.string.share_with_friends)))
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareText)
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_with_friends)))
     }
 
     @SuppressLint("SetJavaScriptEnabled")
