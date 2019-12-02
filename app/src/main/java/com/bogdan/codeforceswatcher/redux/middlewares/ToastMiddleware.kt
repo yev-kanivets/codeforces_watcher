@@ -1,5 +1,7 @@
 package com.bogdan.codeforceswatcher.redux.middlewares
 
+import android.view.Gravity
+import android.widget.TextView
 import android.widget.Toast
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
@@ -18,5 +20,8 @@ val toastMiddleware: Middleware<StateType> = { _, _ ->
 }
 
 private fun showToast(message: String) {
-    Toast.makeText(CwApp.app, message, Toast.LENGTH_SHORT).show()
+    val toast = Toast.makeText(CwApp.app, message, Toast.LENGTH_SHORT)
+    val textInToast = toast.view.findViewById<TextView>(android.R.id.message)
+    textInToast?.gravity = Gravity.CENTER
+    toast.show()
 }
