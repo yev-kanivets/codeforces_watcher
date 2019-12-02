@@ -24,7 +24,7 @@ class ActionsRequests {
     ) : Request() {
 
         override suspend fun execute() {
-            delay(2000)
+            if (!isInitializedByUser) delay(2000)
             val response = RestClient.getActions(lang = defineLang())
             response?.body()?.actions?.let { actions ->
                 buildUiDataAndDispatch(actions)
