@@ -41,7 +41,7 @@ class ProblemActivity : AppCompatActivity() {
     private fun initData() {
         val problem = intent.getSerializableExtra(PROBLEM_ID) as Problem
 
-        pageTitle = "${problem.contestId}${problem.index}: ${problem.name}"
+        pageTitle = getString(R.string.problem_name_with_index, problem.contestId, problem.index, problem.name)
         link = buildPageLink(problem)
     }
 

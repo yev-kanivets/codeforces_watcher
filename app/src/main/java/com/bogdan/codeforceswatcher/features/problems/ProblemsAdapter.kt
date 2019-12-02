@@ -15,11 +15,15 @@ import com.bogdan.codeforceswatcher.store
 import kotlinx.android.synthetic.main.view_problem_item.view.*
 
 class ProblemsAdapter(
-    private val context: Context,
-    private val itemClickListener: (Problem) -> Unit
+    private val context: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    lateinit var itemClickListener: (Problem) -> Unit
     private var items: List<Problem> = listOf()
+
+    fun setOnItemClickListener(newItemClickListener: (Problem) -> Unit) {
+        itemClickListener = newItemClickListener
+    }
 
     override fun getItemCount() = items.size + if (items.isEmpty()) 1 else 0
 
@@ -53,7 +57,7 @@ class ProblemsAdapter(
         val problemViewHolder = viewHolder as ProblemViewHolder
         with(problemViewHolder) {
             with(items[position]) {
-                tvProblemName.text = name
+                tvProblemName.text = context.getString(R.string.problem_name_with_index, contestId, index, name)
                 tvContestName.text = contestName
                 ivFavourite.setColorFilter(ContextCompat.getColor(
                     context, if (isFavourite) R.color.colorAccent else R.color.dark_grey)

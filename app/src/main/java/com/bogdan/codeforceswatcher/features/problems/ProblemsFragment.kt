@@ -32,8 +32,9 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
 
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
-        problemsAdapter = ProblemsAdapter(requireContext()) { problem ->
-            startActivity(ProblemActivity.newIntent(requireContext(), problem))
+        problemsAdapter = ProblemsAdapter(requireContext())
+        problemsAdapter.setOnItemClickListener {
+            startActivity(ProblemActivity.newIntent(requireContext(), it))
         }
         recyclerView.adapter = problemsAdapter
     }
@@ -59,6 +60,9 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
 
     override fun newState(state: ProblemsState) {
         swipeRefreshLayout.isRefreshing = (state.status == ProblemsState.Status.PENDING)
-        problemsAdapter.setItems(if (state.isFavourite) state.problems.filter { it.isFavourite } else state.problems)
+        problemsAdapter.setItems(
+            if (state.isFavourite) state.problems.filter { it.isFavourite }.sortedByDescending { it.contestTime }
+            else state.problems.sortedByDescending { it.contestTime }
+        )
     }
 }

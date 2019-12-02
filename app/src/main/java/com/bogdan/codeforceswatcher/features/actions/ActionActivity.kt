@@ -36,8 +36,7 @@ class ActionActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        val cfAction = intent.getSerializableExtra(ACTION_ID) as? CFAction
-            ?: throw NullPointerException()
+        val cfAction = intent.getSerializableExtra(ACTION_ID) as CFAction
 
         pageTitle = cfAction.blogEntry.title
         link = buildPageLink(cfAction)

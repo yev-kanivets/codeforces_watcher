@@ -29,7 +29,6 @@ suspend fun loadRatingUpdates(userList: List<User>): UsersRequestResult {
         response?.body()?.ratingChanges?.let { ratingChanges ->
             user.ratingChanges = ratingChanges
         } ?: break
-
         countFetchedUsers++
     }
 
