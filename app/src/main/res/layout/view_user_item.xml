@@ -2,6 +2,7 @@
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
@@ -23,15 +24,21 @@
             <TextView
                 android:id="@+id/tvUserHandle"
                 style="@style/HeaderText"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                tools:text="BOGDAN_" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/tvRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:text="4000" />
 
         </LinearLayout>
 
@@ -42,10 +49,15 @@
 
             <TextView
                 android:id="@+id/tvDateLastRatingUpdate"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                tools:text="Last rating update : 2019, 30 March" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/ivDelta"
@@ -58,7 +70,8 @@
                 android:id="@+id/tvLastRatingUpdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                tools:text="41" />
         </LinearLayout>
 
     </LinearLayout>

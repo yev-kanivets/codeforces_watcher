@@ -25,17 +25,20 @@ class UsersRequests {
         override suspend fun execute() {
             val users: List<User> = DatabaseClient.userDao.getAll()
             when (val result = getUsers(getHandles(users), true)) {
-                is UsersRequestResult.Failure -> dispatchError(result.error)
-                is UsersRequestResult.Success -> store.dispatch(
-                    Success(result.users, getDifferenceAndUpdate(users, result.users), source)
-                )
+                is UsersRequestResult.Failure -> {
+                    dispatchError(result.error)
+                }
+                is UsersRequestResult.Success -> {
+                    store.dispatch(
+                        Success(result.users, getDifferenceAndUpdate(users, result.users), source)
+                    )
+                }
             }
         }
 
         private fun dispatchError(error: Error) {
             val noConnectionError = CwApp.app.resources.getString(R.string.no_connection)
             val fetchingUsersError = CwApp.app.resources.getString(R.string.failed_to_fetch_users)
-
             when (error) {
                 Error.INTERNET ->
                     store.dispatch(

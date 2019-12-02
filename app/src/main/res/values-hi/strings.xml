@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">Codeforces Watcher</string>
+    <string name="rank">रैंक: %1$s</string>
+    <string name="name">नाम: %1$s</string>
+    <string name="cur_rating">वर्तमान रेटिंग: %1$s</string>
+    <string name="max_rating">अधिकतम रेटिंग: %1$s</string>
+    <string name="last_rating_update">अंतिम रेटिंग बदलाव: %1$s</string>
+    <string name="no_rating_update">कोई रेटिंग परिवर्तन नहीं</string>
+    <string name="none">कोई परिणाम नहीं</string>
+    <string name="no_connection">ऑफ़लाइन</string>
+    <string name="rating_changes">रेटिंग में बदलाव</string>
+    <string name="ratings_have_been_updated">रेटिंग अपडेट हो चुकी है</string>
+    <string name="ratings_update">रेटिंग अपडेट</string>
+    <string name="user_already_added">यूजर पहले से मौजूद है</string>
+    <string name="failed_to_fetch_users">यूजरनेम मौजूद नहीं! एक बार यूजरनेम जाँच करले…</string>
+    <string name="sort_by">सॉर्ट करें</string>
+    <string name="by_default">डिफ़ॉल्ट</string>
+    <string name="by_descending_rating">↓ रेटिंग</string>
+    <string name="by_ascending_rating">↑ रेटिंग</string>
+    <string name="by_descending_update">↓ अपडेट</string>
+    <string name="by_ascending_update">↑ अपडेट</string>
+    <string name="add">जोड़ें</string>
+    <string name="enter_handle">हैंडल दर्ज करें</string>
+    <string name="like_codeforces_watcher">क्या आपको Codeforces Watcher पसंद है?</string>
+    <string name="rate_it_on_gp">इसे Google Play पर रेट करें!</string>
+    <string name="maybe_later">शायद बाद में</string>
+    <string name="no_thank_you">नहीं धन्यवाद</string>
+    <string name="yes_very">हाँ!</string>
+    <string name="google_play_not_found">Google Play नहीं मिला</string>
+    <string name="users">यूजर्स</string>
+    <string name="contests">प्रतियोगिताएं</string>
+    <string name="actions">एक्शन</string>
+    <string name="problems">प्रॉब्लेमस</string>
+    <string name="empty" translatable="false" />
+    <string name="google_calendar_not_found">क्षमा करें, लेकिन इस उपकरण पर Google Calendar नहीं मिला</string>
+    <string name="commented_by">"कमेंटेड बाय %1$s"</string>
+    <string name="feature_isn_t_available_yet">यह सुविधा अभी तक उपलब्ध नहीं है|</string>
+    <string name="comment_url" translatable="false">https://codeforces.com/blog/entry/%1$d?#comment-%2$d</string>
+    <string name="blog_entry_url" translatable="false">https://codeforces.com/blog/entry/%1$d</string>
+    <string name="share_with_friends">दोस्तों के साथ शेयर करें</string>
+    <string name="shared_through_cw">Shared through Codeforces Watcher. Find it on Google Play.</string>
+    <string name="no_users">आपके पास अभी तक देखने के लिए कोई यूजर नहीं है।\nपहले एक को जोड़ें स्क्रीन के नीचे दिए «+» बटन दबाकर.</string>
+    <string name="share_cw">शेयर Codeforces Watcher</string>
+    <string name="help_cw_make_more_social">हमें अपने मित्रों के साथ शेयर करके Codeforces और Codeforces Watcher को अधिक सामाजिक बनाने में मदद करें।</string>
+    <string name="share">शेयर</string>
+    <string name="cancel">कैंसल</string>
+    <string name="share_cw_message">"मैं कोडफोर्स वॉचर - ओपन-सोर्स, फ्री एंड्रॉइड एप्लिकेशन का उपयोग कर रहा हूं, जो आपके एंड्रॉइड डिवाइस पर अधिक competitive programming लाने के लिए Codeforces API का लाभ उठाता है।
+Codeforces Watcher के साथ आप:
+
+1. किसी भी Codeforces यूजर की गतिविधि देखें।
+2. रेटिंग और अंतिम भागीदारी के आधार पर यूजर को क्रमबद्ध करें।
+3. आगामी आने वाली प्रतियोगिताओं शॉर्टलिस्ट करें।
+4. कोडफोर्सेस पर हालिया गतिविधि देखें।
+5. प्रॉब्लेमस जल्द ही आ रहे है…
+
+इसे अब Google Play पर डाउनलोड करें - https://play.google.com/store/apps/details?id=com.bogdan.codeforceswatcher"</string>
+    <string name="actions_on_the_way">आपके डिवाइस पर आने वाली हाल की क्रियाएं…</string>
+    <string name="created_or_updated_text">टेक्स्ट बनाया या अपडेट किया गया, विवरण देखने के लिए क्लिक करें…</string>
+</resources>
