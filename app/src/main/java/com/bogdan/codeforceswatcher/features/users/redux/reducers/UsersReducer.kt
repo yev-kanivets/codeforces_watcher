@@ -15,12 +15,13 @@ fun usersReducer(action: Action, state: AppState): UsersState {
                 status = UsersState.Status.PENDING
             )
         }
+
         is UsersRequests.FetchUsers.Success -> {
-            newState = newState.copy(
-                status = UsersState.Status.IDLE,
-                users = action.users
-            )
+            val mapUsers = action.users.associateBy { it.id }
+            val newUsers = state.users.users.map { mapUsers[it.id] ?: it }
+            newState = newState.copy(status = UsersState.Status.IDLE, users = newUsers)
         }
+
         is UsersRequests.FetchUsers.Failure -> {
             newState = newState.copy(
                 status = UsersState.Status.IDLE
