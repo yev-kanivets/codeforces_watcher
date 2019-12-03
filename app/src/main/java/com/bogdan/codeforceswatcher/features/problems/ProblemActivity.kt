@@ -1,4 +1,4 @@
-package com.bogdan.codeforceswatcher.features.actions
+package com.bogdan.codeforceswatcher.features.problems
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -14,11 +14,11 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.actions.models.CFAction
+import com.bogdan.codeforceswatcher.features.problems.models.Problem
 import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.activity_web_page.*
 
-class ActionActivity : AppCompatActivity() {
+class ProblemActivity : AppCompatActivity() {
 
     private lateinit var pageTitle: String
     private lateinit var link: String
@@ -27,27 +27,26 @@ class ActionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web_page)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.run {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
 
         initData()
         initViews()
-        Analytics.logActionOpened()
+
+        Analytics.logProblemOpened()
     }
 
     private fun initData() {
-        val cfAction = intent.getSerializableExtra(ACTION_ID) as CFAction
+        val problem = intent.getSerializableExtra(PROBLEM_ID) as Problem
 
-        pageTitle = cfAction.blogEntry.title
-        link = buildPageLink(cfAction)
+        pageTitle = getString(R.string.problem_name_with_index, problem.contestId, problem.index, problem.name)
+        link = buildPageLink(problem)
     }
 
-    private fun buildPageLink(cfAction: CFAction) =
-        if (cfAction.comment != null) {
-            getString(R.string.comment_url, cfAction.blogEntry.id, cfAction.comment.id)
-        } else {
-            getString(R.string.blog_entry_url, cfAction.blogEntry.id)
-        }
+    private fun buildPageLink(problem: Problem) =
+        getString(R.string.problem_url, problem.contestId, problem.index)
 
     private fun initViews() {
         title = pageTitle
@@ -71,11 +70,10 @@ class ActionActivity : AppCompatActivity() {
     }
 
     private fun share() {
-        val share = Intent(Intent.ACTION_SEND)
-        share.type = "text/plain"
+        val shareIntent = Intent(Intent.ACTION_SEND).apply { type = "text/plain" }
         val shareText = "$pageTitle - $link\n\n${getString(R.string.shared_through_cw)}"
-        share.putExtra(Intent.EXTRA_TEXT, shareText)
-        startActivity(Intent.createChooser(share, getString(R.string.share_with_friends)))
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareText)
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_with_friends)))
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -123,11 +121,11 @@ class ActionActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val ACTION_ID = "action_id"
+        private const val PROBLEM_ID = "problem_id"
 
-        fun newIntent(context: Context, action: CFAction): Intent {
-            val intent = Intent(context, ActionActivity::class.java)
-            intent.putExtra(ACTION_ID, action)
+        fun newIntent(context: Context, problem: Problem): Intent {
+            val intent = Intent(context, ProblemActivity::class.java)
+            intent.putExtra(PROBLEM_ID, problem)
             return intent
         }
     }

@@ -44,7 +44,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun newState(state: ContestsState) {
         swipeRefreshLayout.isRefreshing = (state.status == ContestsState.Status.PENDING)
-        contestsAdapter.setItems(state.contests)
+        contestsAdapter.setItems(state.contests.filter { it.phase == "BEFORE" }.sortedBy(Contest::time))
     }
 
     override fun onRefresh() {

@@ -37,7 +37,7 @@ class UsersAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         when (viewType) {
             STUB_VIEW_TYPE -> {
-                val layout = LayoutInflater.from(context).inflate(R.layout.view_user_stub, parent, false)
+                val layout = LayoutInflater.from(context).inflate(R.layout.view_users_stub, parent, false)
                 StubViewHolder(layout)
             }
             else -> {

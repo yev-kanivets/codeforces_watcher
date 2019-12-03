@@ -10,7 +10,7 @@ import com.bogdan.codeforceswatcher.features.contests.models.Contest
 interface ContestsDao {
 
     @Query("SELECT * FROM contest")
-    fun getUpcomingContests(): List<Contest>
+    fun getAll(): List<Contest>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(contests: List<Contest>)

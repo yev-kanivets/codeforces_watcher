@@ -21,25 +21,22 @@ object RoomController : StoreSubscriber<AppState> {
 
     fun fetchAppState(): AppState {
         return AppState(
-            contests = ContestsState(contests = DatabaseClient.contestDao.getUpcomingContests().reversed()),
+            contests = ContestsState(contests = DatabaseClient.contestDao.getAll()),
             users = UsersState(
                 users = DatabaseClient.userDao.getAll(),
                 sortType = UsersState.SortType.getSortType(Prefs.get().readSpinnerSortPosition().toInt())
             ),
             problems = ProblemsState(
-                problems = DatabaseClient.problemsDao.getAll()
+                problems = DatabaseClient.problemsDao.getAll(),
+                isFavourite = (Prefs.get().readProblemsIsFavourite())
             )
         )
     }
 
     override fun newState(state: AppState) {
-        if (DatabaseClient.contestDao.getUpcomingContests() != state.contests.contests) {
+        if (DatabaseClient.contestDao.getAll() != state.contests.contests) {
             DatabaseClient.contestDao.deleteAll()
             DatabaseClient.contestDao.insert(state.contests.contests)
-        }
-        if (DatabaseClient.problemsDao.getAll() != state.problems.problems) {
-            DatabaseClient.problemsDao.deleteAll()
-            DatabaseClient.problemsDao.insert(state.problems.problems)
         }
     }
 }

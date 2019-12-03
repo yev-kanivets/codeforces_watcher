@@ -15,6 +15,7 @@ import com.bogdan.codeforceswatcher.features.actions.ActionsFragment
 import com.bogdan.codeforceswatcher.features.add_user.AddUserActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
+import com.bogdan.codeforceswatcher.features.problems.redux.actions.ProblemsActions
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.redux.actions.UIActions
 import com.bogdan.codeforceswatcher.redux.states.UIState
@@ -105,7 +106,9 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     private fun onUsersTabSelected() {
+        btnSearch.visibility = View.GONE
         llSorting.visibility = View.VISIBLE
+
         fab.setOnClickListener {
             startActivity(Intent(this@MainActivity, AddUserActivity::class.java))
         }
@@ -113,22 +116,49 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     private fun onContestsTabSelected() {
+        btnSearch.visibility = View.GONE
         llSorting.visibility = View.GONE
+
         fab.setOnClickListener {
             val intent =
-                Intent(Intent.ACTION_VIEW).setData(Uri.parse(CODEFORCES_LINK))
+                Intent(Intent.ACTION_VIEW).setData(Uri.parse(CONTESTS_LINK))
             startActivity(intent)
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
     }
 
     private fun onActionsTabSelected() {
+        btnSearch.visibility = View.GONE
         llSorting.visibility = View.GONE
+
         fab.setOnClickListener {
             showShareDialog()
             Analytics.logShareApp()
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_share))
+    }
+
+    private fun onProblemsTabSelected() {
+        llSorting.visibility = View.GONE
+        btnSearch.visibility = View.VISIBLE
+
+        var problemsIsFavourite = store.state.problems.isFavourite
+        updateProblemsFAB(problemsIsFavourite)
+
+        fab.setOnClickListener {
+            problemsIsFavourite = !(problemsIsFavourite)
+
+            store.dispatch(ProblemsActions.ChangeTypeProblems(problemsIsFavourite))
+            updateProblemsFAB(problemsIsFavourite)
+        }
+    }
+
+    private fun updateProblemsFAB(problemsIsFavourite: Boolean) {
+        if (problemsIsFavourite) {
+            fab.setImageDrawable(getDrawable(R.drawable.ic_all))
+        } else {
+            fab.setImageDrawable(getDrawable(R.drawable.ic_star))
+        }
     }
 
     private fun showShareDialog() {
@@ -150,12 +180,6 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
         type = "text/plain"
         putExtra(Intent.EXTRA_TEXT, getString(R.string.share_cw_message))
     })
-
-    private fun onProblemsTabSelected() {
-        llSorting.visibility = View.GONE
-        fab.setOnClickListener(null)
-        fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
-    }
 
     private fun initViews() {
         setSupportActionBar(toolbar)
@@ -191,6 +215,6 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     companion object {
-        private const val CODEFORCES_LINK = "http://codeforces.com/contests"
+        private const val CONTESTS_LINK = "http://codeforces.com/contests"
     }
 }

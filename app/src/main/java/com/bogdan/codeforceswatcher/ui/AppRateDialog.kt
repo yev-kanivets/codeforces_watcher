@@ -3,10 +3,7 @@ package com.bogdan.codeforceswatcher.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.bogdan.codeforceswatcher.R
@@ -29,6 +26,7 @@ class AppRateDialog : DialogFragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         btnMaybe.setOnClickListener(this)
         btnNo.setOnClickListener(this)
         btnYes.setOnClickListener(this)

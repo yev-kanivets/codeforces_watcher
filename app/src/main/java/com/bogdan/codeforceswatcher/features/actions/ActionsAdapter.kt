@@ -32,7 +32,7 @@ class ActionsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         when (viewType) {
             STUB_VIEW_TYPE -> {
-                val layout = LayoutInflater.from(context).inflate(R.layout.view_action_stub, parent, false)
+                val layout = LayoutInflater.from(context).inflate(R.layout.view_actions_stub, parent, false)
                 StubViewHolder(layout)
             }
             COMMENT_VIEW_TYPE -> {

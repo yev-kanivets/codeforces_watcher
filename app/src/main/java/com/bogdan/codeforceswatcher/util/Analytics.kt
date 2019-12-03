@@ -59,4 +59,10 @@ object Analytics {
             instance.logEvent("action_opened", Bundle())
         }
     }
+
+    fun logProblemOpened() {
+        if (isEnabled) {
+            instance.logEvent("problem_opened", Bundle())
+        }
+    }
 }

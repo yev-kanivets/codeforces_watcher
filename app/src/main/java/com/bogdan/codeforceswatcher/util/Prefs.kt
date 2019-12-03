@@ -20,6 +20,17 @@ class Prefs constructor(private val context: Context) {
         editor.apply()
     }
 
+    fun readProblemsIsFavourite(): Boolean {
+        val defaultPrefs = getDefaultPrefs()
+        return defaultPrefs.getBoolean(KEY_PROBLEMS_IS_FAVOURITE, false)
+    }
+
+    fun writeProblemsIsFavourite(isFavourite: Boolean) {
+        val editor = getDefaultPrefs().edit()
+        editor.putBoolean(KEY_PROBLEMS_IS_FAVOURITE, isFavourite)
+        editor.apply()
+    }
+
     fun readAlarm(): String {
         val defaultPrefs = getDefaultPrefs()
         return defaultPrefs.getString(KEY_SPINNER_SORT_POSITION, "") ?: ""
@@ -61,6 +72,7 @@ class Prefs constructor(private val context: Context) {
     companion object {
 
         private const val KEY_SPINNER_SORT_POSITION = "key_counter"
+        private const val KEY_PROBLEMS_IS_FAVOURITE = "key_problems_is_favourite"
         private const val KEY_ALARM = "key_alarm"
         private const val APP_RATED = "app_rated"
         private const val LAUNCH_COUNT = "launch_count"

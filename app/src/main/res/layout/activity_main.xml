@@ -19,6 +19,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:padding="8dp">
 
@@ -30,11 +31,20 @@
                     android:layout_weight="1"
                     tools:text="Users" />
 
+                <ImageView
+                    android:id="@+id/btnSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_search"
+                    android:visibility="gone" />
+
                 <LinearLayout
                     android:id="@+id/llSorting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp">
+                    android:layout_marginEnd="4dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/tvSortBy"
@@ -87,6 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
+            android:tint="@android:color/white"
             app:elevation="10dp"
             app:layout_constraintBottom_toBottomOf="@id/bottomNavigation"
             app:layout_constraintEnd_toEndOf="@id/bottomNavigation"

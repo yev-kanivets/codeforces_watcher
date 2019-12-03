@@ -46,7 +46,6 @@ class ActionsRequests {
             } else {
                 null
             }
-
             store.dispatch(Failure(noConnectionError))
         }
 

@@ -10,6 +10,7 @@ import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.store
+import kotlinx.coroutines.delay
 import org.rekotlin.Action
 
 enum class Source(val isToastNeeded: Boolean) {
@@ -23,6 +24,8 @@ class UsersRequests {
     ) : Request() {
 
         override suspend fun execute() {
+            // Use this delay because actions, problems and contests requests managed to work out(and Codeforces didn't block them)
+            if (source == Source.BACKGROUND) delay(1000)
             val users: List<User> = DatabaseClient.userDao.getAll()
             when (val result = getUsers(getHandles(users), true)) {
                 is UsersRequestResult.Failure -> {

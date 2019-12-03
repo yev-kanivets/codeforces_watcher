@@ -1,20 +1,25 @@
 package com.bogdan.codeforceswatcher.features.problems.redux.requests
 
+import com.bogdan.codeforceswatcher.CwApp
+import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.problems.models.Problem
 import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
+import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.CrashLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 import org.rekotlin.Action
-import java.lang.IllegalArgumentException
 
 class ProblemsRequests {
 
-    class FetchProblems : Request() {
+    class FetchProblems(
+        private val isInitializedByUser: Boolean
+    ) : Request() {
 
         override suspend fun execute() {
             val promiseProblemsEn = CoroutineScope(Dispatchers.Main).async {
@@ -29,15 +34,30 @@ class ProblemsRequests {
             val problemsRu = promiseProblemsRu.await()?.body()?.result?.problems
 
             if (problemsEn == null || problemsRu == null) {
-                store.dispatch(Failure(null))
+                dispatchFailure()
             } else {
                 if (isProblemsMatching(problemsEn, problemsRu)) {
-                    store.dispatch(Success(mergeProblems(problemsEn, problemsRu)))
+                    var problems = listOf<Problem>()
+                    withContext(Dispatchers.IO) {
+                        problems = mergeProblems(problemsEn, problemsRu)
+                        bindProblemsToContests(problems)
+                        updateDatabase(problems)
+                    }
+                    store.dispatch(Success(problems))
                 } else {
                     CrashLogger.log(IllegalArgumentException("Problems doesn't match"))
-                    store.dispatch(Failure(null))
+                    dispatchFailure()
                 }
             }
+        }
+
+        private fun dispatchFailure() {
+            val noConnectionError = if (isInitializedByUser) {
+                CwApp.app.getString(R.string.no_connection)
+            } else {
+                null
+            }
+            store.dispatch(Failure(noConnectionError))
         }
 
         private fun mergeProblems(problemsEn: List<Problem>, problemsRu: List<Problem>): List<Problem> {
@@ -50,6 +70,15 @@ class ProblemsRequests {
             return problems
         }
 
+        private fun bindProblemsToContests(problems: List<Problem>) {
+            val contests = store.state.contests.contests
+            val mapContests = contests.associateBy { contest -> contest.id }
+            problems.forEach { problem ->
+                problem.contestName = mapContests[problem.contestId]?.name
+                problem.contestTime = mapContests[problem.contestId]?.time
+            }
+        }
+
         private fun isProblemsMatching(problemsEn: List<Problem>, problemsRu: List<Problem>): Boolean {
             for ((index, problem) in problemsEn.withIndex()) {
                 if (problem.contestId != problemsRu[index].contestId ||
@@ -60,8 +89,39 @@ class ProblemsRequests {
             return true
         }
 
+        private fun updateDatabase(newProblems: List<Problem>) {
+            val problems = DatabaseClient.problemsDao.getAll()
+            val favouriteProblemsMap = problems.associate { problem -> identify(problem) to problem.isFavourite }
+            DatabaseClient.problemsDao.deleteAll()
+
+            newProblems.forEach { problem ->
+                problem.isFavourite = favouriteProblemsMap[identify(problem)] ?: false
+            }
+
+            val identifiers = DatabaseClient.problemsDao.insert(newProblems)
+            newProblems.forEachIndexed { index, problem -> problem.id = identifiers[index] }
+        }
+
+        private fun identify(problem: Problem): String {
+            return problem.contestId.toString() + problem.index
+        }
+
         data class Success(val problems: List<Problem>) : Action
 
         data class Failure(override val message: String?) : ToastAction
+    }
+
+    class MarkProblemFavourite(val problem: Problem) : Request() {
+
+        override suspend fun execute() {
+            lateinit var newProblem: Problem
+            withContext(Dispatchers.IO) {
+                newProblem = problem.copy(isFavourite = !problem.isFavourite)
+                DatabaseClient.problemsDao.insert(newProblem)
+            }
+            store.dispatch(Success(newProblem))
+        }
+
+        data class Success(val problem: Problem) : Action
     }
 }
