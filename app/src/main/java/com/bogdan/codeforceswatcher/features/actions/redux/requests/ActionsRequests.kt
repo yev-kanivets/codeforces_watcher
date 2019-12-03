@@ -12,7 +12,6 @@ import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import org.rekotlin.Action
 import java.util.*
@@ -24,7 +23,6 @@ class ActionsRequests {
     ) : Request() {
 
         override suspend fun execute() {
-            if (!isInitializedByUser) delay(2000)
             val response = RestClient.getActions(lang = defineLang())
             response?.body()?.actions?.let { actions ->
                 buildUiDataAndDispatch(actions)
