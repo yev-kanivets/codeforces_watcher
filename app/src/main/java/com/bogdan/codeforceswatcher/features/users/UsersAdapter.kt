@@ -87,7 +87,7 @@ class UsersAdapter(
 
         init {
             view.setOnClickListener {
-                itemClickListener.invoke(adapterPosition)
+                if (adapterPosition != RecyclerView.NO_POSITION) itemClickListener.invoke(adapterPosition)
             }
         }
     }
