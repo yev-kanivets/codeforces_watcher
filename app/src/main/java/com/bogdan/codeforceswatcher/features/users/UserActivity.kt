@@ -94,7 +94,6 @@ class UserActivity : AppCompatActivity() {
         chart.isDragEnabled = true
         chart.axisRight.setDrawLabels(false)
         xAxis.setDrawAxisLine(true)
-        xAxis.setDrawAxisLine(true)
         chart.description.isEnabled = false
         chart.legend.isEnabled = false
         xAxis.position = XAxis.XAxisPosition.BOTTOM
