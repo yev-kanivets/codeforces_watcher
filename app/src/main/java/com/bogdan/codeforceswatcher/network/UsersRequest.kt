@@ -11,6 +11,10 @@ suspend fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean): UsersRequ
         UsersRequestResult.Failure(Error.INTERNET)
     } else {
         response.body()?.users?.let { users ->
+            if (users.isEmpty()) {
+                return UsersRequestResult.Failure(Error.RESPONSE)
+            }
+
             if (isRatingUpdatesNeeded) {
                 loadRatingUpdates(users)
             } else {
@@ -31,7 +35,6 @@ suspend fun loadRatingUpdates(userList: List<User>): UsersRequestResult {
         } ?: break
         countFetchedUsers++
     }
-
     return if (countFetchedUsers < userList.size) {
         UsersRequestResult.Failure(Error.RESPONSE)
     } else {
