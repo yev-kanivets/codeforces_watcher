@@ -25,7 +25,7 @@ class UsersRequests {
 
         override suspend fun execute() {
             // Use this delay because actions, problems and contests requests managed to work out(and Codeforces didn't block them)
-            if (source == Source.BACKGROUND) delay(1000)
+            if (source == Source.BACKGROUND) delay(1500)
             val users = store.state.users.users
             when (val result = getUsers(getHandles(users), true)) {
                 is UsersRequestResult.Failure -> {

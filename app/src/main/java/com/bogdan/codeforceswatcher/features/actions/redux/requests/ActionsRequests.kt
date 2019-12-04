@@ -77,6 +77,11 @@ class ActionsRequests {
                         }
 
                     action.comment.text = convertFromHtml(action.comment.text)
+                } else {
+                    if (action.timeInMillisecond != action.blogEntry.creationTimeSeconds &&
+                        action.timeInMillisecond != action.blogEntry.modificationTimeSeconds) {
+                        continue
+                    }
                 }
 
                 users?.find { user -> user.handle == action.blogEntry.authorHandle }

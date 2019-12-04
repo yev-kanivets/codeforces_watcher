@@ -8,5 +8,7 @@ data class BlogEntry(
     val content: String?,
     val authorHandle: String,
     var authorRank: String?,
-    var authorAvatar: String
+    var authorAvatar: String,
+    val creationTimeSeconds: Long,
+    val modificationTimeSeconds: Long
 ) : Serializable
