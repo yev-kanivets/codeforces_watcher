@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
@@ -18,6 +20,7 @@ import org.rekotlin.StoreSubscriber
 class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var problemsAdapter: ProblemsAdapter
+    private var searchView: SearchView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +39,23 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
             startActivity(ProblemActivity.newIntent(requireContext(), it))
         }
         recyclerView.adapter = problemsAdapter
+
+        initializeSearchingProblems()
+    }
+
+    private fun initializeSearchingProblems() {
+        searchView = activity?.findViewById(R.id.searchView)
+        searchView?.imeOptions = EditorInfo.IME_ACTION_DONE
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                problemsAdapter.filter.filter(newText)
+                return false
+            }
+        })
     }
 
     override fun onRefresh() {
@@ -61,7 +81,8 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
         swipeRefreshLayout.isRefreshing = (state.status == ProblemsState.Status.PENDING)
         problemsAdapter.setItems(
             if (state.isFavourite) state.problems.filter { it.isFavourite }.sortedByDescending { it.contestTime }
-            else state.problems.sortedByDescending { it.contestTime }
+            else state.problems.sortedByDescending { it.contestTime },
+            searchView?.query?.toString().orEmpty()
         )
     }
 }

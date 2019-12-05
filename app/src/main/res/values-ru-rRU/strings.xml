@@ -42,7 +42,7 @@
     <string name="share_with_friends">Поделиться с друзьями</string>
     <string name="shared_through_cw">Отправлено через Codeforces Watcher. Найдите его в Google Play.</string>
     <string name="no_users">У Вас еще нет пользователей для отслеживания.\nДобавьте первого воспользовавшись кнопкой «+» внизу экрана.</string>
-    <string name="no_favourite_problems">У Вас еще нет любимых задач.\nДобавьте первую воспользовавшись кнопкой «★» внизу экрана.</string>
+    <string name="no_favourite_problems">У Вас еще нет любимых задач.\nДобавьте первую воспользовавшись кнопкой «∞» внизу экрана.</string>
 
     <string name="share_cw">Поделится Codeforces Watcher</string>
     <string name="help_cw_make_more_social">Помогите сделать Codeforces и Codeforces Watcher более социальными, поделившись ними с вашими друзьями.</string>

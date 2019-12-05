@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -13,15 +15,17 @@ import com.bogdan.codeforceswatcher.features.problems.models.Problem
 import com.bogdan.codeforceswatcher.features.problems.redux.requests.ProblemsRequests
 import com.bogdan.codeforceswatcher.store
 import kotlinx.android.synthetic.main.view_problem_item.view.*
+import java.util.*
 
 class ProblemsAdapter(
     private val context: Context,
     private val itemClickListener: (Problem) -> Unit
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
+    private var showingItems: MutableList<Problem> = mutableListOf()
     private var items: List<Problem> = listOf()
 
-    override fun getItemCount() = items.size + if (items.isEmpty()) 1 else 0
+    override fun getItemCount() = showingItems.size + if (showingItems.isEmpty()) 1 else 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         when (viewType) {
@@ -41,18 +45,18 @@ class ProblemsAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when {
-            items.isEmpty() && store.state.problems.isFavourite -> STUB_FAVOURITE_PROBLEMS_VIEW_TYPE
-            items.isEmpty() -> STUB_ALL_PROBLEMS_VIEW_TYPE
+            showingItems.isEmpty() && store.state.problems.isFavourite -> STUB_FAVOURITE_PROBLEMS_VIEW_TYPE
+            showingItems.isEmpty() -> STUB_ALL_PROBLEMS_VIEW_TYPE
             else -> PROBLEM_VIEW_TYPE
         }
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        if (items.isEmpty()) return
+        if (showingItems.isEmpty()) return
 
         val problemViewHolder = viewHolder as ProblemViewHolder
         with(problemViewHolder) {
-            with(items[position]) {
+            with(showingItems[position]) {
                 tvProblemName.text = context.getString(R.string.problem_name_with_index, contestId, index, name)
                 tvContestName.text = contestName
                 ivFavourite.setColorFilter(ContextCompat.getColor(
@@ -65,10 +69,47 @@ class ProblemsAdapter(
         }
     }
 
-    fun setItems(problemsList: List<Problem>) {
+    fun setItems(problemsList: List<Problem>, constraint: String) {
         items = problemsList
+        showingItems = buildFilteredList(constraint)
         notifyDataSetChanged()
     }
+
+    private val problemFilter: Filter = object : Filter() {
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            val filteredList = mutableListOf<Problem>()
+            if (constraint == null) {
+                filteredList.addAll(items)
+            } else {
+                filteredList.addAll(buildFilteredList(constraint.toString()))
+            }
+            val results = FilterResults()
+            results.values = filteredList
+            return results
+        }
+
+        override fun publishResults(constraint: CharSequence, results: FilterResults) {
+            showingItems.clear()
+            showingItems.addAll(results.values as List<Problem>)
+            notifyDataSetChanged()
+        }
+    }
+
+    private fun buildFilteredList(constraint: String): MutableList<Problem> {
+        val lowerCaseConstraint = constraint.toLowerCase(Locale.getDefault())
+        val filteredList = mutableListOf<Problem>()
+        for (problem in items) {
+            val fullProblemNameEn = context.getString(R.string.problem_name_with_index, problem.contestId, problem.index, problem.enName).toLowerCase(Locale.getDefault())
+            val fullProblemNameRu = context.getString(R.string.problem_name_with_index, problem.contestId, problem.index, problem.ruName).toLowerCase(Locale.getDefault())
+            if (fullProblemNameEn.contains(lowerCaseConstraint) || fullProblemNameRu.contains(lowerCaseConstraint) ||
+                problem.contestName.orEmpty().toLowerCase(Locale.getDefault()).contains(lowerCaseConstraint)) {
+                filteredList.add(problem)
+            }
+        }
+        return filteredList
+    }
+
+    override fun getFilter() = problemFilter
 
     class ProblemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

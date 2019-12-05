@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     private fun onUsersTabSelected() {
-        btnSearch.visibility = View.GONE
+        searchView.visibility = View.GONE
         llSorting.visibility = View.VISIBLE
 
         fab.setOnClickListener {
@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     private fun onContestsTabSelected() {
-        btnSearch.visibility = View.GONE
+        searchView.visibility = View.GONE
         llSorting.visibility = View.GONE
 
         fab.setOnClickListener {
@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     private fun onActionsTabSelected() {
-        btnSearch.visibility = View.GONE
+        searchView.visibility = View.GONE
         llSorting.visibility = View.GONE
 
         fab.setOnClickListener {
@@ -140,7 +140,7 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     private fun onProblemsTabSelected() {
         llSorting.visibility = View.GONE
-        btnSearch.visibility = View.VISIBLE
+        searchView.visibility = View.VISIBLE
 
         var problemsIsFavourite = store.state.problems.isFavourite
         updateProblemsFAB(problemsIsFavourite)
@@ -184,7 +184,6 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     private fun initViews() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-
         spSort.background.setColorFilter(
             ContextCompat.getColor(this, R.color.white),
             PorterDuff.Mode.SRC_ATOP
