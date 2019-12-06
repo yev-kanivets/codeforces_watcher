@@ -81,7 +81,15 @@ class ProblemsAdapter(
             if (constraint == null) {
                 filteredList.addAll(items)
             } else {
-                filteredList.addAll(buildFilteredList(constraint.toString()))
+                val lowerCaseConstraint = constraint.toString().toLowerCase(Locale.getDefault())
+                for (problem in items) {
+                    val fullProblemNameEn = context.getString(R.string.problem_name_with_index, problem.contestId, problem.index, problem.enName).toLowerCase(Locale.getDefault())
+                    val fullProblemNameRu = context.getString(R.string.problem_name_with_index, problem.contestId, problem.index, problem.ruName).toLowerCase(Locale.getDefault())
+                    if (fullProblemNameEn.contains(lowerCaseConstraint) || fullProblemNameRu.contains(lowerCaseConstraint) ||
+                        problem.contestName.orEmpty().toLowerCase(Locale.getDefault()).contains(lowerCaseConstraint)) {
+                        filteredList.add(problem)
+                    }
+                }
             }
             val results = FilterResults()
             results.values = filteredList

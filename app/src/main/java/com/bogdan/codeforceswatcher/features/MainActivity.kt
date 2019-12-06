@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +33,8 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     private val currentTabFragment: Fragment?
         get() = supportFragmentManager.fragments.lastOrNull()
+
+    private var searchViewItem: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,9 +109,14 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        searchViewItem = menu?.findItem(R.id.action_search)
+        return super.onCreateOptionsMenu(menu)
+    }
+
     private fun onUsersTabSelected() {
-        searchView.visibility = View.GONE
         llSorting.visibility = View.VISIBLE
+        searchViewItem?.isVisible = false
 
         fab.setOnClickListener {
             startActivity(Intent(this@MainActivity, AddUserActivity::class.java))
@@ -116,8 +125,8 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     private fun onContestsTabSelected() {
-        searchView.visibility = View.GONE
         llSorting.visibility = View.GONE
+        searchViewItem?.isVisible = false
 
         fab.setOnClickListener {
             val intent =
@@ -128,8 +137,8 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     private fun onActionsTabSelected() {
-        searchView.visibility = View.GONE
         llSorting.visibility = View.GONE
+        searchViewItem?.isVisible = false
 
         fab.setOnClickListener {
             showShareDialog()
@@ -140,7 +149,7 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     private fun onProblemsTabSelected() {
         llSorting.visibility = View.GONE
-        searchView.visibility = View.VISIBLE
+        searchViewItem?.isVisible = true
 
         var problemsIsFavourite = store.state.problems.isFavourite
         updateProblemsFAB(problemsIsFavourite)

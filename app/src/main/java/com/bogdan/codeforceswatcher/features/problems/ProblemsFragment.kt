@@ -1,11 +1,9 @@
 package com.bogdan.codeforceswatcher.features.problems
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.EditorInfo
-import android.widget.SearchView
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
@@ -22,6 +20,11 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
     private lateinit var problemsAdapter: ProblemsAdapter
     private var searchView: SearchView? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,18 +36,11 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
         initViews()
     }
 
-    private fun initViews() {
-        swipeRefreshLayout.setOnRefreshListener(this)
-        problemsAdapter = ProblemsAdapter(requireContext()) {
-            startActivity(ProblemActivity.newIntent(requireContext(), it))
-        }
-        recyclerView.adapter = problemsAdapter
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_search, menu)
+        val searchItem = menu?.findItem(R.id.action_search)
+        searchView = searchItem?.actionView as? SearchView
 
-        initializeSearchingProblems()
-    }
-
-    private fun initializeSearchingProblems() {
-        searchView = activity?.findViewById(R.id.searchView)
         searchView?.imeOptions = EditorInfo.IME_ACTION_DONE
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -56,6 +52,14 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
                 return false
             }
         })
+    }
+
+    private fun initViews() {
+        swipeRefreshLayout.setOnRefreshListener(this)
+        problemsAdapter = ProblemsAdapter(requireContext()) {
+            startActivity(ProblemActivity.newIntent(requireContext(), it))
+        }
+        recyclerView.adapter = problemsAdapter
     }
 
     override fun onRefresh() {
