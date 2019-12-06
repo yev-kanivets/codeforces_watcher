@@ -78,14 +78,13 @@ class ProblemsAdapter(
     private val problemFilter: Filter = object : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
             val filteredList = mutableListOf<Problem>()
-            if (constraint.isNullOrEmpty()) {
-                filteredList.addAll(items)
-            } else {
-                filteredList.addAll(buildFilteredList(constraint.toString()))
+            filteredList.addAll(
+                if (constraint.isNullOrEmpty()) items
+                else buildFilteredList(constraint.toString())
+            )
+            return FilterResults().apply {
+                values = filteredList
             }
-            val results = FilterResults()
-            results.values = filteredList
-            return results
         }
 
         override fun publishResults(constraint: CharSequence, results: FilterResults) {
@@ -96,19 +95,21 @@ class ProblemsAdapter(
     }
 
     private fun buildFilteredList(constraint: String): MutableList<Problem> {
-        val lowerCaseConstraint = constraint.toLowerCase(Locale.getDefault())
+        val lowerCaseConstraint = constraint.lowercase()
         val filteredList = mutableListOf<Problem>()
 
         for (problem in items) {
-            val fullProblemNameEn = "${problem.contestId}${problem.index}: ${problem.enName.toLowerCase(Locale.getDefault())}"
-            val fullProblemNameRu = "${problem.contestId}${problem.index}: ${problem.ruName.toLowerCase(Locale.getDefault())}"
+            val fullProblemNameEn = "${problem.contestId}${problem.index}: ${problem.enName.lowercase()}"
+            val fullProblemNameRu = "${problem.contestId}${problem.index}: ${problem.ruName.lowercase()}"
             if (fullProblemNameEn.contains(lowerCaseConstraint) || fullProblemNameRu.contains(lowerCaseConstraint) ||
-                problem.contestName.toLowerCase(Locale.getDefault()).contains(lowerCaseConstraint)) {
+                problem.contestName.lowercase().contains(lowerCaseConstraint)) {
                 filteredList.add(problem)
             }
         }
         return filteredList
     }
+
+    private fun String.lowercase() = this.toLowerCase(Locale.getDefault())
 
     override fun getFilter() = problemFilter
 

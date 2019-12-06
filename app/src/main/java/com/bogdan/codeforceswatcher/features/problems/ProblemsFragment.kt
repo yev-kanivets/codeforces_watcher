@@ -1,8 +1,10 @@
 package com.bogdan.codeforceswatcher.features.problems
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -40,12 +42,14 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
         inflater?.inflate(R.menu.menu_search, menu)
         val searchItem = menu?.findItem(R.id.action_search)
         searchView = searchItem?.actionView as? SearchView
+        val textSearch = searchView?.findViewById<View>(androidx.appcompat.R.id.search_src_text) as EditText?
+        textSearch?.hint = resources.getString(R.string.search_for_problems)
+        textSearch?.setHintTextColor(Color.WHITE)
+        textSearch?.setTextColor(Color.WHITE)
 
         searchView?.imeOptions = EditorInfo.IME_ACTION_DONE
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
+            override fun onQueryTextSubmit(query: String?) = false
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 problemsAdapter.filter.filter(newText)

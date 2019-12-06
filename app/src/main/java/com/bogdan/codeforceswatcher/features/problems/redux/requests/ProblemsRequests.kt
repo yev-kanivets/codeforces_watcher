@@ -19,6 +19,7 @@ class ProblemsRequests {
     ) : Request() {
 
         override suspend fun execute() {
+            if (!isInitializedByUser) delay(1000)
             val promiseProblemsEn = CoroutineScope(Dispatchers.Main).async {
                 RestClient.getProblems("en")
             }
@@ -37,10 +38,7 @@ class ProblemsRequests {
                     var problems = listOf<Problem>()
                     withContext(Dispatchers.IO) {
                         problems = mergeProblems(problemsEn, problemsRu)
-                        for (i in 0..3) {
-                            if (bindProblemsToContests(problems)) break
-                            delay(1000)
-                        }
+                        boundProblemsToContests(problems)
                         updateDatabase(problems)
                     }
                     store.dispatch(Success(problems))
@@ -70,18 +68,13 @@ class ProblemsRequests {
             return problems
         }
 
-        private fun bindProblemsToContests(problems: List<Problem>): Boolean {
+        private fun boundProblemsToContests(problems: List<Problem>) {
             val contests = store.state.contests.contests
             val mapContests = contests.associateBy { contest -> contest.id }
-            var amountOfBoundedProblems = 0
             problems.forEach { problem ->
-                if (mapContests[problem.contestId] != null) {
-                    problem.contestName = mapContests[problem.contestId]?.name.orEmpty()
-                    problem.contestTime = mapContests[problem.contestId]?.time ?: 0
-                    amountOfBoundedProblems++
-                }
+                problem.contestName = mapContests[problem.contestId]?.name.orEmpty()
+                problem.contestTime = mapContests[problem.contestId]?.time ?: 0
             }
-            return (amountOfBoundedProblems != problems.size)
         }
 
         private fun isProblemsMatching(problemsEn: List<Problem>, problemsRu: List<Problem>): Boolean {
