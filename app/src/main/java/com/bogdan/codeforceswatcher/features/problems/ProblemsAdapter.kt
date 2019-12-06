@@ -78,18 +78,10 @@ class ProblemsAdapter(
     private val problemFilter: Filter = object : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
             val filteredList = mutableListOf<Problem>()
-            if (constraint == null) {
+            if (constraint.isNullOrEmpty()) {
                 filteredList.addAll(items)
             } else {
-                val lowerCaseConstraint = constraint.toString().toLowerCase(Locale.getDefault())
-                for (problem in items) {
-                    val fullProblemNameEn = context.getString(R.string.problem_name_with_index, problem.contestId, problem.index, problem.enName).toLowerCase(Locale.getDefault())
-                    val fullProblemNameRu = context.getString(R.string.problem_name_with_index, problem.contestId, problem.index, problem.ruName).toLowerCase(Locale.getDefault())
-                    if (fullProblemNameEn.contains(lowerCaseConstraint) || fullProblemNameRu.contains(lowerCaseConstraint) ||
-                        problem.contestName.orEmpty().toLowerCase(Locale.getDefault()).contains(lowerCaseConstraint)) {
-                        filteredList.add(problem)
-                    }
-                }
+                filteredList.addAll(buildFilteredList(constraint.toString()))
             }
             val results = FilterResults()
             results.values = filteredList
@@ -106,9 +98,10 @@ class ProblemsAdapter(
     private fun buildFilteredList(constraint: String): MutableList<Problem> {
         val lowerCaseConstraint = constraint.toLowerCase(Locale.getDefault())
         val filteredList = mutableListOf<Problem>()
+
         for (problem in items) {
-            val fullProblemNameEn = context.getString(R.string.problem_name_with_index, problem.contestId, problem.index, problem.enName).toLowerCase(Locale.getDefault())
-            val fullProblemNameRu = context.getString(R.string.problem_name_with_index, problem.contestId, problem.index, problem.ruName).toLowerCase(Locale.getDefault())
+            val fullProblemNameEn = "${problem.contestId}${problem.index}: ${problem.enName?.toLowerCase(Locale.getDefault())}"
+            val fullProblemNameRu = "${problem.contestId}${problem.index}: ${problem.ruName?.toLowerCase(Locale.getDefault())}"
             if (fullProblemNameEn.contains(lowerCaseConstraint) || fullProblemNameRu.contains(lowerCaseConstraint) ||
                 problem.contestName.orEmpty().toLowerCase(Locale.getDefault()).contains(lowerCaseConstraint)) {
                 filteredList.add(problem)
