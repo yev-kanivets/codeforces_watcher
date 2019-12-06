@@ -101,8 +101,8 @@ class ProblemsAdapter(
         for (problem in items) {
             val fullProblemNameEn = "${problem.contestId}${problem.index}: ${problem.enName.lowercase()}"
             val fullProblemNameRu = "${problem.contestId}${problem.index}: ${problem.ruName.lowercase()}"
-            if (fullProblemNameEn.contains(lowerCaseConstraint) || fullProblemNameRu.contains(lowerCaseConstraint) ||
-                problem.contestName.lowercase().contains(lowerCaseConstraint)) {
+            if (fullProblemNameEn.isContain(lowerCaseConstraint) || fullProblemNameRu.isContain(lowerCaseConstraint) ||
+                problem.contestName.lowercase().isContain(lowerCaseConstraint)) {
                 filteredList.add(problem)
             }
         }
@@ -110,6 +110,28 @@ class ProblemsAdapter(
     }
 
     private fun String.lowercase() = this.toLowerCase(Locale.getDefault())
+
+    private fun String.isContain(findingString: String): Boolean {
+        val findingStringLength = findingString.length
+        val cmpStr = "$findingString%$this"
+        val prefixArray = IntArray(cmpStr.length)
+        var currentIndexOfBlock = 0
+        prefixArray[0] = 0
+        for (i in 1 until cmpStr.length) {
+            while (currentIndexOfBlock > 0 && cmpStr[currentIndexOfBlock] != cmpStr[i]) {
+                currentIndexOfBlock = prefixArray[currentIndexOfBlock - 1]
+            }
+            if (cmpStr[currentIndexOfBlock] == cmpStr[i]) {
+                currentIndexOfBlock++
+            }
+
+            prefixArray[i] = currentIndexOfBlock
+            if (prefixArray[i] == findingStringLength) {
+                return true
+            }
+        }
+        return false
+    }
 
     override fun getFilter() = problemFilter
 
