@@ -9,10 +9,7 @@ import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.CrashLogger
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.rekotlin.Action
 
 class ProblemsRequests {
@@ -40,7 +37,10 @@ class ProblemsRequests {
                     var problems = listOf<Problem>()
                     withContext(Dispatchers.IO) {
                         problems = mergeProblems(problemsEn, problemsRu)
-                        bindProblemsToContests(problems)
+                        for (i in 0..3) {
+                            if (bindProblemsToContests(problems)) break
+                            delay(1000)
+                        }
                         updateDatabase(problems)
                     }
                     store.dispatch(Success(problems))
@@ -70,13 +70,18 @@ class ProblemsRequests {
             return problems
         }
 
-        private fun bindProblemsToContests(problems: List<Problem>) {
+        private fun bindProblemsToContests(problems: List<Problem>): Boolean {
             val contests = store.state.contests.contests
             val mapContests = contests.associateBy { contest -> contest.id }
+            var amountOfBoundedProblems = 0
             problems.forEach { problem ->
-                problem.contestName = mapContests[problem.contestId]?.name
-                problem.contestTime = mapContests[problem.contestId]?.time
+                if (mapContests[problem.contestId] != null) {
+                    problem.contestName = mapContests[problem.contestId]?.name.orEmpty()
+                    problem.contestTime = mapContests[problem.contestId]?.time ?: 0
+                    amountOfBoundedProblems++
+                }
             }
+            return (amountOfBoundedProblems != problems.size)
         }
 
         private fun isProblemsMatching(problemsEn: List<Problem>, problemsRu: List<Problem>): Boolean {

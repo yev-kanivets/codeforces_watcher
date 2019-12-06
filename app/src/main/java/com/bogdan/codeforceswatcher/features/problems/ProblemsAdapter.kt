@@ -100,10 +100,10 @@ class ProblemsAdapter(
         val filteredList = mutableListOf<Problem>()
 
         for (problem in items) {
-            val fullProblemNameEn = "${problem.contestId}${problem.index}: ${problem.enName?.toLowerCase(Locale.getDefault())}"
-            val fullProblemNameRu = "${problem.contestId}${problem.index}: ${problem.ruName?.toLowerCase(Locale.getDefault())}"
+            val fullProblemNameEn = "${problem.contestId}${problem.index}: ${problem.enName.toLowerCase(Locale.getDefault())}"
+            val fullProblemNameRu = "${problem.contestId}${problem.index}: ${problem.ruName.toLowerCase(Locale.getDefault())}"
             if (fullProblemNameEn.contains(lowerCaseConstraint) || fullProblemNameRu.contains(lowerCaseConstraint) ||
-                problem.contestName.orEmpty().toLowerCase(Locale.getDefault()).contains(lowerCaseConstraint)) {
+                problem.contestName.toLowerCase(Locale.getDefault()).contains(lowerCaseConstraint)) {
                 filteredList.add(problem)
             }
         }
