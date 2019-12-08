@@ -45,6 +45,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/ic_star" />
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="8dp"
+            android:src="@drawable/ic_star"
+            />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

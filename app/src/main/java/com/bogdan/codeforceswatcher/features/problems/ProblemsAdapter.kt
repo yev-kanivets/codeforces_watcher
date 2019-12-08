@@ -79,12 +79,9 @@ class ProblemsAdapter(
         override fun performFiltering(constraint: CharSequence?): FilterResults {
             val filteredList = mutableListOf<Problem>()
             filteredList.addAll(
-                if (constraint.isNullOrEmpty()) items
-                else buildFilteredList(constraint.toString())
+                if (constraint.isNullOrEmpty()) items else buildFilteredList(constraint.toString())
             )
-            return FilterResults().apply {
-                values = filteredList
-            }
+            return FilterResults().apply { values = filteredList }
         }
 
         override fun publishResults(constraint: CharSequence, results: FilterResults) {
@@ -101,8 +98,9 @@ class ProblemsAdapter(
         for (problem in items) {
             val fullProblemNameEn = "${problem.contestId}${problem.index}: ${problem.enName.lowercase()}"
             val fullProblemNameRu = "${problem.contestId}${problem.index}: ${problem.ruName.lowercase()}"
-            if (fullProblemNameEn.isContain(lowerCaseConstraint) || fullProblemNameRu.isContain(lowerCaseConstraint) ||
-                problem.contestName.lowercase().isContain(lowerCaseConstraint)) {
+            if (fullProblemNameEn.cmpContains(lowerCaseConstraint)
+                || fullProblemNameRu.cmpContains(lowerCaseConstraint)
+                || problem.contestName.lowercase().cmpContains(lowerCaseConstraint)) {
                 filteredList.add(problem)
             }
         }
@@ -111,9 +109,9 @@ class ProblemsAdapter(
 
     private fun String.lowercase() = this.toLowerCase(Locale.getDefault())
 
-    private fun String.isContain(findingString: String): Boolean {
-        val findingStringLength = findingString.length
-        val cmpStr = "$findingString%$this"
+    private fun String.cmpContains(searchString: String): Boolean {
+        val findingStringLength = searchString.length
+        val cmpStr = "$searchString%$this"
         val prefixArray = IntArray(cmpStr.length)
         var currentIndexOfBlock = 0
         prefixArray[0] = 0

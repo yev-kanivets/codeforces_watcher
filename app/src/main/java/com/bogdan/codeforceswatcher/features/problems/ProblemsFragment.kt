@@ -42,10 +42,8 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
         inflater?.inflate(R.menu.menu_search, menu)
         val searchItem = menu?.findItem(R.id.action_search)
         searchView = searchItem?.actionView as? SearchView
-        val textSearch = searchView?.findViewById<View>(androidx.appcompat.R.id.search_src_text) as EditText?
-        textSearch?.hint = resources.getString(R.string.search_for_problems)
-        textSearch?.setHintTextColor(Color.WHITE)
-        textSearch?.setTextColor(Color.WHITE)
+
+        adjustSearchViewHint()
 
         searchView?.imeOptions = EditorInfo.IME_ACTION_DONE
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -56,6 +54,15 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
                 return false
             }
         })
+    }
+
+    private fun adjustSearchViewHint() {
+        val textSearch = searchView?.findViewById<View>(androidx.appcompat.R.id.search_src_text) as EditText?
+        textSearch?.apply {
+            hint = resources.getString(R.string.search_for_problems)
+            setHintTextColor(Color.WHITE)
+            setTextColor(Color.WHITE)
+        }
     }
 
     private fun initViews() {
