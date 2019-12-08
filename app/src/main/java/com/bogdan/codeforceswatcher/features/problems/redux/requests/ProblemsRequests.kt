@@ -9,10 +9,7 @@ import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.CrashLogger
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.rekotlin.Action
 
 class ProblemsRequests {
@@ -22,6 +19,7 @@ class ProblemsRequests {
     ) : Request() {
 
         override suspend fun execute() {
+            if (!isInitializedByUser) delay(1000)
             val promiseProblemsEn = CoroutineScope(Dispatchers.Main).async {
                 RestClient.getProblems("en")
             }
@@ -40,7 +38,7 @@ class ProblemsRequests {
                     var problems = listOf<Problem>()
                     withContext(Dispatchers.IO) {
                         problems = mergeProblems(problemsEn, problemsRu)
-                        bindProblemsToContests(problems)
+                        boundProblemsToContests(problems)
                         updateDatabase(problems)
                     }
                     store.dispatch(Success(problems))
@@ -70,12 +68,12 @@ class ProblemsRequests {
             return problems
         }
 
-        private fun bindProblemsToContests(problems: List<Problem>) {
+        private fun boundProblemsToContests(problems: List<Problem>) {
             val contests = store.state.contests.contests
             val mapContests = contests.associateBy { contest -> contest.id }
             problems.forEach { problem ->
-                problem.contestName = mapContests[problem.contestId]?.name
-                problem.contestTime = mapContests[problem.contestId]?.time
+                problem.contestName = mapContests[problem.contestId]?.name.orEmpty()
+                problem.contestTime = mapContests[problem.contestId]?.time ?: 0
             }
         }
 

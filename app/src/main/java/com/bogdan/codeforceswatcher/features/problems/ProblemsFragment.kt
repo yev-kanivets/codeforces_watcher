@@ -1,9 +1,11 @@
 package com.bogdan.codeforceswatcher.features.problems
 
+import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
@@ -18,6 +20,12 @@ import org.rekotlin.StoreSubscriber
 class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var problemsAdapter: ProblemsAdapter
+    private var searchView: SearchView? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +36,33 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_search, menu)
+        val searchItem = menu?.findItem(R.id.action_search)
+        searchView = searchItem?.actionView as? SearchView
+
+        adjustSearchViewHint()
+
+        searchView?.imeOptions = EditorInfo.IME_ACTION_DONE
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?) = false
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                problemsAdapter.filter.filter(newText)
+                return false
+            }
+        })
+    }
+
+    private fun adjustSearchViewHint() {
+        val textSearch = searchView?.findViewById<View>(androidx.appcompat.R.id.search_src_text) as EditText?
+        textSearch?.apply {
+            hint = resources.getString(R.string.search_for_problems)
+            setHintTextColor(Color.WHITE)
+            setTextColor(Color.WHITE)
+        }
     }
 
     private fun initViews() {
@@ -61,7 +96,8 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
         swipeRefreshLayout.isRefreshing = (state.status == ProblemsState.Status.PENDING)
         problemsAdapter.setItems(
             if (state.isFavourite) state.problems.filter { it.isFavourite }.sortedByDescending { it.contestTime }
-            else state.problems.sortedByDescending { it.contestTime }
+            else state.problems.sortedByDescending { it.contestTime },
+            searchView?.query?.toString().orEmpty()
         )
     }
 }

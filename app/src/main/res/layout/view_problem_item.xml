@@ -31,10 +31,10 @@
                 tools:text="1264A: Feeding Chicken" />
 
             <TextView
-                android:singleLine="true"
                 android:id="@+id/tvContestName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:textSize="12sp"
                 tools:text="Codeforces Round #601 (Div. 1)" />
 
@@ -45,6 +45,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/ic_star" />
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="8dp"
+            android:src="@drawable/ic_star"
+            />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
