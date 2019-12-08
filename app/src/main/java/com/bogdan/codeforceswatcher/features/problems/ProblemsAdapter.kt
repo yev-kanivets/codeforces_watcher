@@ -98,9 +98,9 @@ class ProblemsAdapter(
         for (problem in items) {
             val fullProblemNameEn = "${problem.contestId}${problem.index}: ${problem.enName.lowercase()}"
             val fullProblemNameRu = "${problem.contestId}${problem.index}: ${problem.ruName.lowercase()}"
-            if (fullProblemNameEn.cmpContains(lowerCaseConstraint)
-                || fullProblemNameRu.cmpContains(lowerCaseConstraint)
-                || problem.contestName.lowercase().cmpContains(lowerCaseConstraint)) {
+            if (fullProblemNameEn.kmpContains(lowerCaseConstraint)
+                || fullProblemNameRu.kmpContains(lowerCaseConstraint)
+                || problem.contestName.lowercase().kmpContains(lowerCaseConstraint)) {
                 filteredList.add(problem)
             }
         }
@@ -109,7 +109,7 @@ class ProblemsAdapter(
 
     private fun String.lowercase() = this.toLowerCase(Locale.getDefault())
 
-    private fun String.cmpContains(searchString: String): Boolean {
+    private fun String.kmpContains(searchString: String): Boolean {
         val findingStringLength = searchString.length
         val cmpStr = "$searchString%$this"
         val prefixArray = IntArray(cmpStr.length)
