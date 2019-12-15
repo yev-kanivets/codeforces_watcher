@@ -66,8 +66,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
-        contestsAdapter = ContestsAdapter(requireContext()) { contestIndex ->
-            val contest = store.state.contests.contests[contestIndex]
+        contestsAdapter = ContestsAdapter(requireContext()) { contest ->
             addContestToCalendar(contest)
         }
         recyclerView.adapter = contestsAdapter

@@ -15,7 +15,7 @@ import java.util.*
 
 class ContestsAdapter(
     private val context: Context,
-    private val itemClickListener: (Int) -> Unit
+    private val itemClickListener: (Contest) -> Unit
 ) : RecyclerView.Adapter<ContestsAdapter.ViewHolder>() {
 
     private var items: List<Contest> = listOf()
@@ -23,10 +23,8 @@ class ContestsAdapter(
     override fun getItemCount() = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.view_contest_item, parent, false),
-            itemClickListener
-        )
+        val layout = LayoutInflater.from(context).inflate(R.layout.view_contest_item, parent, false)
+        return ViewHolder(layout)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -34,6 +32,8 @@ class ContestsAdapter(
         with(holder) {
             tvContestName.text = contest.name
             tvContestTime.text = getDateTime(contest.time)
+
+            onClickListener = { itemClickListener.invoke(contest) }
         }
     }
 
@@ -47,15 +47,15 @@ class ContestsAdapter(
         return dateFormat.format(Date(seconds * 1000)).toString()
     }
 
-    class ViewHolder(view: View, itemClickListener: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvContestName: TextView = view.tvContestName
         val tvContestTime: TextView = view.tvContestTime
         private val ivAddToCalendar: ImageView = view.ivAddToCalendar
 
+        var onClickListener: (() -> Unit)? = null
+
         init {
-            ivAddToCalendar.setOnClickListener {
-                itemClickListener.invoke(adapterPosition)
-            }
+            ivAddToCalendar.setOnClickListener { onClickListener?.invoke() }
         }
     }
 }
