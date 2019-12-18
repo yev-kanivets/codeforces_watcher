@@ -27,6 +27,9 @@ import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Prefs
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.rekotlin.StoreSubscriber
 
 class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
@@ -58,28 +61,6 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
     }
 
     override fun newState(state: UIState) {
-        val fragment: Fragment = when (state.selectedHomeTab) {
-            UIState.HomeTab.USERS -> {
-                currentTabFragment as? UsersFragment ?: UsersFragment()
-            }
-            UIState.HomeTab.CONTESTS -> {
-                currentTabFragment as? ContestsFragment ?: ContestsFragment()
-            }
-            UIState.HomeTab.ACTIONS -> {
-                currentTabFragment as? ActionsFragment ?: ActionsFragment()
-            }
-            UIState.HomeTab.PROBLEMS -> {
-                currentTabFragment as? ProblemsFragment ?: ProblemsFragment()
-            }
-        }
-
-        if (fragment != currentTabFragment) {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit()
-        }
-
         val bottomNavSelectedItemId = when (state.selectedHomeTab) {
             UIState.HomeTab.USERS -> R.id.navUsers
             UIState.HomeTab.CONTESTS -> R.id.navContests
@@ -88,6 +69,7 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
         }
 
         tvPageTitle.text = getString(state.selectedHomeTab.titleId)
+        toolbar.collapseActionView()
 
         if (bottomNavigation.selectedItemId != bottomNavSelectedItemId) {
             bottomNavigation.selectedItemId = bottomNavSelectedItemId
@@ -106,6 +88,28 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
             UIState.HomeTab.PROBLEMS -> {
                 onProblemsTabSelected()
             }
+        }
+
+        val fragment: Fragment = when (state.selectedHomeTab) {
+            UIState.HomeTab.USERS -> {
+                currentTabFragment as? UsersFragment ?: UsersFragment()
+            }
+            UIState.HomeTab.CONTESTS -> {
+                currentTabFragment as? ContestsFragment ?: ContestsFragment()
+            }
+            UIState.HomeTab.ACTIONS -> {
+                currentTabFragment as? ActionsFragment ?: ActionsFragment()
+            }
+            UIState.HomeTab.PROBLEMS -> {
+                currentTabFragment as? ProblemsFragment ?: ProblemsFragment()
+            }
+        }
+
+        if (fragment != currentTabFragment) {
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .commit()
         }
     }
 
