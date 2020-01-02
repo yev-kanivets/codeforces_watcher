@@ -14,6 +14,7 @@ sealed class UserItem {
     class User(user: com.bogdan.codeforceswatcher.features.users.models.User) : UserItem() {
 
         val id: Long = user.id
+        val avatar: String = user.avatar
         var update: Update = Update.NULL
         val handle: SpannableString = colorTextByUserRank(user.handle, user.rank)
         val rating: SpannableString = colorTextByUserRank(user.rating?.toString().orEmpty(), user.rank)

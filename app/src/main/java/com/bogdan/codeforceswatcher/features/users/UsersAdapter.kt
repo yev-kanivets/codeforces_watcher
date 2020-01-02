@@ -13,6 +13,7 @@ import com.bogdan.codeforceswatcher.R.color.bright_green
 import com.bogdan.codeforceswatcher.R.color.red
 import com.bogdan.codeforceswatcher.features.users.models.Update
 import com.bogdan.codeforceswatcher.features.users.models.UserItem
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.view_user_item.view.*
 
 class UsersAdapter(
@@ -51,6 +52,11 @@ class UsersAdapter(
 
         with(items[position] as UserItem.User) {
             with(holder as UserViewHolder) {
+                if (avatar.substring(0, 6) != "https:") {
+                    Picasso.get().load("https:" + avatar).into(ivAvatar)
+                } else {
+                    Picasso.get().load(avatar).into(ivAvatar)
+                }
                 tvHandle.text = handle
                 tvRating.text = rating
                 tvDateLastRatingUpdate.text = dateOfLastRatingUpdate
@@ -79,6 +85,7 @@ class UsersAdapter(
     }
 
     class UserViewHolder(view: View, itemClickListener: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
+        val ivAvatar: ImageView = view.ivAvatar
         val tvHandle: TextView = view.tvUserHandle
         val tvRating: TextView = view.tvRating
         val tvDateLastRatingUpdate: TextView = view.tvDateLastRatingUpdate
