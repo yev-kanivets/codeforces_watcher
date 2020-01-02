@@ -13,6 +13,7 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.R.color.*
 import com.bogdan.codeforceswatcher.activity.TryActivity
 import com.bogdan.codeforceswatcher.model.User
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.users_list_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -34,6 +35,11 @@ class UserAdapter(private var items: List<User>, private val context: Context) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = items[position]
+        if (user.avatar.substring(0, 6) != "https:") {
+            Picasso.get().load("https:" + user.avatar).into(holder.ivAvatar.ivAvatar)
+        } else {
+            Picasso.get().load(user.avatar).into(holder.ivAvatar.ivAvatar)
+        }
         holder.tvHandle.text = user.handle
         if (user.rating == null) {
             holder.tvRating.text = null
@@ -100,6 +106,7 @@ class UserAdapter(private var items: List<User>, private val context: Context) :
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+        val ivAvatar: ImageView = view.ivAvatar
         val tvHandle: TextView = view.tvHandle
         val tvRating: TextView = view.tvRating
         val tvLastRatingUpdate: TextView = view.tvLastRatingUpdate
