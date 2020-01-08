@@ -1,16 +1,22 @@
 package com.bogdan.codeforceswatcher.network
 
+import com.bogdan.codeforceswatcher.BuildConfig
 import com.bogdan.codeforceswatcher.util.CrashLogger
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import okhttp3.logging.HttpLoggingInterceptor
 
 object RestClient {
 
     private val retrofit by lazy {
-        val okHttpClient = OkHttpClient.Builder()
-            .build()
+        val okHttpClientBuild = OkHttpClient.Builder()
+        if (BuildConfig.DEBUG) {
+            okHttpClientBuild.addInterceptor(HttpLoggingInterceptor()
+                    .apply { level = HttpLoggingInterceptor.Level.BODY })
+        }
+        val okHttpClient = okHttpClientBuild.build()
 
         val gsonBuilder = GsonBuilder()
             .setLenient()
