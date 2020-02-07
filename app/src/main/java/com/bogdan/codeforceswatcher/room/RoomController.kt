@@ -14,22 +14,22 @@ object RoomController : StoreSubscriber<AppState> {
         store.subscribe(this) {
             it.skipRepeats { oldState, newState ->
                 oldState.contests == newState.contests
-                    && oldState.problems == newState.problems
+                        && oldState.problems == newState.problems
             }
         }
     }
 
     fun fetchAppState(): AppState {
         return AppState(
-            contests = ContestsState(contests = DatabaseClient.contestDao.getAll()),
-            users = UsersState(
-                users = DatabaseClient.userDao.getAll(),
-                sortType = UsersState.SortType.getSortType(Prefs.get().readSpinnerSortPosition().toInt())
-            ),
-            problems = ProblemsState(
-                problems = DatabaseClient.problemsDao.getAll(),
-                isFavourite = (Prefs.get().readProblemsIsFavourite())
-            )
+                contests = ContestsState(contests = DatabaseClient.contestDao.getAll()),
+                users = UsersState(
+                        users = DatabaseClient.userDao.getAll(),
+                        sortType = UsersState.SortType.getSortType(Prefs.get().readSpinnerSortPosition().toInt())
+                ),
+                problems = ProblemsState(
+                        problems = DatabaseClient.problemsDao.getAll(),
+                        isFavourite = (Prefs.get().readProblemsIsFavourite())
+                )
         )
     }
 

@@ -21,8 +21,8 @@ import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
 class ActionsAdapter(
-    private val context: Context,
-    private val itemClickListener: (Int) -> Unit
+        private val context: Context,
+        private val itemClickListener: (Int) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items: List<ActionItem> = listOf()
@@ -30,20 +30,20 @@ class ActionsAdapter(
     override fun getItemCount() = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        when (viewType) {
-            STUB_VIEW_TYPE -> {
-                val layout = LayoutInflater.from(context).inflate(R.layout.view_actions_stub, parent, false)
-                StubViewHolder(layout)
+            when (viewType) {
+                STUB_VIEW_TYPE -> {
+                    val layout = LayoutInflater.from(context).inflate(R.layout.view_actions_stub, parent, false)
+                    StubViewHolder(layout)
+                }
+                COMMENT_VIEW_TYPE -> {
+                    val layout = LayoutInflater.from(context).inflate(R.layout.view_comment_item, parent, false)
+                    CommentViewHolder(layout, itemClickListener)
+                }
+                else -> {
+                    val layout = LayoutInflater.from(context).inflate(R.layout.view_blog_entry_item, parent, false)
+                    BlogEntryViewHolder(layout, itemClickListener)
+                }
             }
-            COMMENT_VIEW_TYPE -> {
-                val layout = LayoutInflater.from(context).inflate(R.layout.view_comment_item, parent, false)
-                CommentViewHolder(layout, itemClickListener)
-            }
-            else -> {
-                val layout = LayoutInflater.from(context).inflate(R.layout.view_blog_entry_item, parent, false)
-                BlogEntryViewHolder(layout, itemClickListener)
-            }
-        }
 
     override fun getItemViewType(position: Int): Int {
         return when {
@@ -73,8 +73,8 @@ class ActionsAdapter(
         }
 
         Picasso.get().load(commentatorAvatar)
-            .placeholder(R.drawable.no_avatar)
-            .into(viewHolder.ivAvatar)
+                .placeholder(R.drawable.no_avatar)
+                .into(viewHolder.ivAvatar)
     }
 
     private fun bindBlogEntry(viewHolder: BlogEntryViewHolder, blogEntry: ActionItem.BlogEntryItem) = with(blogEntry) {
@@ -85,8 +85,8 @@ class ActionsAdapter(
         }
 
         Picasso.get().load(authorAvatar)
-            .placeholder(R.drawable.no_avatar)
-            .into(viewHolder.ivAvatar)
+                .placeholder(R.drawable.no_avatar)
+                .into(viewHolder.ivAvatar)
     }
 
     fun setItems(actionsList: List<ActionItem>) {

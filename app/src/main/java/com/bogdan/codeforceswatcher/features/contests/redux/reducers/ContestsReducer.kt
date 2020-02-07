@@ -12,18 +12,18 @@ fun contestsReducer(action: Action, state: AppState): ContestsState {
     when (action) {
         is ContestsRequests.FetchContests -> {
             newState = newState.copy(
-                status = ContestsState.Status.PENDING
+                    status = ContestsState.Status.PENDING
             )
         }
         is ContestsRequests.FetchContests.Success -> {
             newState = newState.copy(
-                status = ContestsState.Status.IDLE,
-                contests = action.contests
+                    status = ContestsState.Status.IDLE,
+                    contests = action.contests
             )
         }
         is ContestsRequests.FetchContests.Failure -> {
             newState = newState.copy(
-                status = ContestsState.Status.IDLE
+                    status = ContestsState.Status.IDLE
             )
         }
     }

@@ -46,7 +46,7 @@ class ProblemActivity : AppCompatActivity() {
     }
 
     private fun buildPageLink(problem: Problem) =
-        getString(R.string.problem_url, problem.contestId, problem.index)
+            getString(R.string.problem_url, problem.contestId, problem.index)
 
     private fun initViews() {
         title = pageTitle

@@ -18,8 +18,8 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.view_user_item.view.*
 
 class UsersAdapter(
-    private val context: Context,
-    private val itemClickListener: (Int) -> Unit
+        private val context: Context,
+        private val itemClickListener: (Int) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items: List<UserItem> = listOf()
@@ -37,16 +37,16 @@ class UsersAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        when (viewType) {
-            STUB_VIEW_TYPE -> {
-                val layout = LayoutInflater.from(context).inflate(R.layout.view_users_stub, parent, false)
-                StubViewHolder(layout)
+            when (viewType) {
+                STUB_VIEW_TYPE -> {
+                    val layout = LayoutInflater.from(context).inflate(R.layout.view_users_stub, parent, false)
+                    StubViewHolder(layout)
+                }
+                else -> {
+                    val layout = LayoutInflater.from(context).inflate(R.layout.view_user_item, parent, false)
+                    UserViewHolder(layout, itemClickListener)
+                }
             }
-            else -> {
-                val layout = LayoutInflater.from(context).inflate(R.layout.view_user_item, parent, false)
-                UserViewHolder(layout, itemClickListener)
-            }
-        }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (items[position] is UserItem.Stub) return

@@ -22,12 +22,12 @@ interface CodeforcesApi {
 
     @GET("recentActions")
     suspend fun getActions(
-        @Query("maxCount") maxCount: Int,
-        @Query("lang") lang: String
+            @Query("maxCount") maxCount: Int,
+            @Query("lang") lang: String
     ): Response<ActionsResponse>
 
     @GET("problemset.problems")
     suspend fun getProblems(
-        @Query("lang") lang: String
+            @Query("lang") lang: String
     ): Response<ProblemsResponse>
 }

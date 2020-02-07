@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_users.*
 import org.rekotlin.StoreSubscriber
 
 class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
-    StoreSubscriber<UsersState> {
+        StoreSubscriber<UsersState> {
 
     private lateinit var spSort: AppCompatSpinner
     private lateinit var usersAdapter: UsersAdapter
@@ -40,7 +40,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         super.onStart()
         store.subscribe(this) { state ->
             state.skipRepeats { oldState, newState -> oldState.users == newState.users }
-                .select { it.users }
+                    .select { it.users }
         }
     }
 
@@ -58,14 +58,14 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     private fun adjustSpinnerSortVisibility(isUsersListEmpty: Boolean) {
         spSort.visibility = if (isUsersListEmpty) View.GONE else View.VISIBLE
         requireActivity().findViewById<TextView>(R.id.tvSortBy).visibility =
-            if (isUsersListEmpty) View.GONE else View.VISIBLE
+                if (isUsersListEmpty) View.GONE else View.VISIBLE
         swipeRefreshLayout.isEnabled = !isUsersListEmpty
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_users, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -87,8 +87,8 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         spSort = requireActivity().findViewById(R.id.spSort)
 
         val spinnerAdapter = ArrayAdapter(
-            requireContext(), R.layout.spinner_item,
-            resources.getStringArray(R.array.array_sort)
+                requireContext(), R.layout.spinner_item,
+                resources.getStringArray(R.array.array_sort)
         )
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
@@ -98,10 +98,10 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         spSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
             ) {
                 store.dispatch(UsersActions.Sort(getSortType(position)))
             }

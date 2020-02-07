@@ -19,14 +19,14 @@ class ContestsRequests {
             response?.body()?.contests?.let { contests ->
                 store.dispatch(Success(contests))
             } ?: store.dispatch(
-                Failure(if (isInitiatedByUser) noConnectionError else null)
+                    Failure(if (isInitiatedByUser) noConnectionError else null)
             )
         }
 
         data class Success(val contests: List<Contest>) : Action
 
         data class Failure(
-            override val message: String?
+                override val message: String?
         ) : ToastAction
     }
 }

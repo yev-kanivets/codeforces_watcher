@@ -18,8 +18,8 @@ import kotlinx.android.synthetic.main.view_problem_item.view.*
 import java.util.*
 
 class ProblemsAdapter(
-    private val context: Context,
-    private val itemClickListener: (Problem) -> Unit
+        private val context: Context,
+        private val itemClickListener: (Problem) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private var showingItems: MutableList<Problem> = mutableListOf()
@@ -28,20 +28,20 @@ class ProblemsAdapter(
     override fun getItemCount() = showingItems.size + if (showingItems.isEmpty()) 1 else 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        when (viewType) {
-            STUB_ALL_PROBLEMS_VIEW_TYPE -> {
-                val layout = LayoutInflater.from(context).inflate(R.layout.view_all_problems_stub, parent, false)
-                StubViewHolder(layout)
+            when (viewType) {
+                STUB_ALL_PROBLEMS_VIEW_TYPE -> {
+                    val layout = LayoutInflater.from(context).inflate(R.layout.view_all_problems_stub, parent, false)
+                    StubViewHolder(layout)
+                }
+                STUB_FAVOURITE_PROBLEMS_VIEW_TYPE -> {
+                    val layout = LayoutInflater.from(context).inflate(R.layout.view_favourite_problems_stub, parent, false)
+                    StubViewHolder(layout)
+                }
+                else -> {
+                    val layout = LayoutInflater.from(context).inflate(R.layout.view_problem_item, parent, false)
+                    ProblemViewHolder(layout)
+                }
             }
-            STUB_FAVOURITE_PROBLEMS_VIEW_TYPE -> {
-                val layout = LayoutInflater.from(context).inflate(R.layout.view_favourite_problems_stub, parent, false)
-                StubViewHolder(layout)
-            }
-            else -> {
-                val layout = LayoutInflater.from(context).inflate(R.layout.view_problem_item, parent, false)
-                ProblemViewHolder(layout)
-            }
-        }
 
     override fun getItemViewType(position: Int): Int {
         return when {
@@ -60,7 +60,7 @@ class ProblemsAdapter(
                 tvProblemName.text = context.getString(R.string.problem_name_with_index, contestId, index, name)
                 tvContestName.text = contestName
                 ivFavourite.setColorFilter(ContextCompat.getColor(
-                    context, if (isFavourite) R.color.colorAccent else R.color.dark_grey)
+                        context, if (isFavourite) R.color.colorAccent else R.color.dark_grey)
                 )
 
                 onClickListener = { itemClickListener(this) }
@@ -79,7 +79,7 @@ class ProblemsAdapter(
         override fun performFiltering(constraint: CharSequence?): FilterResults {
             val filteredList = mutableListOf<Problem>()
             filteredList.addAll(
-                if (constraint.isNullOrEmpty()) items else buildFilteredList(constraint.toString())
+                    if (constraint.isNullOrEmpty()) items else buildFilteredList(constraint.toString())
             )
             return FilterResults().apply { values = filteredList }
         }
@@ -99,8 +99,8 @@ class ProblemsAdapter(
             val fullProblemNameEn = "${problem.contestId}${problem.index}: ${problem.enName.lowercase()}"
             val fullProblemNameRu = "${problem.contestId}${problem.index}: ${problem.ruName.lowercase()}"
             if (fullProblemNameEn.kmpContains(lowerCaseConstraint)
-                || fullProblemNameRu.kmpContains(lowerCaseConstraint)
-                || problem.contestName.lowercase().kmpContains(lowerCaseConstraint)) {
+                    || fullProblemNameRu.kmpContains(lowerCaseConstraint)
+                    || problem.contestName.lowercase().kmpContains(lowerCaseConstraint)) {
                 filteredList.add(problem)
             }
         }

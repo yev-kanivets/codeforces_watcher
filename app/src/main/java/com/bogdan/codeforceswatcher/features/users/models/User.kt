@@ -12,15 +12,15 @@ import com.bogdan.codeforceswatcher.R
 
 @Entity
 data class User(
-    @PrimaryKey(autoGenerate = true) var id: Long = 0,
-    val avatar: String,
-    val rank: String?,
-    val handle: String,
-    val rating: Int?,
-    val maxRating: Int?,
-    val firstName: String?,
-    val lastName: String?,
-    var ratingChanges: List<RatingChange>
+        @PrimaryKey(autoGenerate = true) var id: Long = 0,
+        val avatar: String,
+        val rank: String?,
+        val handle: String,
+        val rating: Int?,
+        val maxRating: Int?,
+        val firstName: String?,
+        val lastName: String?,
+        var ratingChanges: List<RatingChange>
 )
 
 fun colorTextByUserRank(text: String, rank: String?): SpannableString {

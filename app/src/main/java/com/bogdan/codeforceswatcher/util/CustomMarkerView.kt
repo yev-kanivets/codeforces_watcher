@@ -10,7 +10,7 @@ import com.github.mikephil.charting.utils.MPPointF
 import kotlinx.android.synthetic.main.chart.view.tvContent
 
 class CustomMarkerView(context: Context, layoutResource: Int) :
-    MarkerView(context, layoutResource) {
+        MarkerView(context, layoutResource) {
 
     override fun getOffset(): MPPointF {
         return MPPointF((-(width * 0.95)).toFloat(), (-height).toFloat())

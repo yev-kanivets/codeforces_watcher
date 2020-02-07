@@ -14,7 +14,7 @@ object PersistenceController : StoreSubscriber<AppState> {
         store.subscribe(this) {
             it.skipRepeats { oldState, newState ->
                 oldState.users.sortType == newState.users.sortType &&
-                    oldState.problems.isFavourite == newState.problems.isFavourite
+                        oldState.problems.isFavourite == newState.problems.isFavourite
             }
         }
     }

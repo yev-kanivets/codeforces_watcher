@@ -6,13 +6,13 @@ import java.io.Serializable
 
 @Entity
 data class Problem(
-    @PrimaryKey(autoGenerate = true) var id: Long,
-    val name: String,
-    var enName: String,
-    var ruName: String,
-    val index: String,
-    var contestId: Long,
-    var contestName: String,
-    var contestTime: Long,
-    var isFavourite: Boolean = false
+        @PrimaryKey(autoGenerate = true) var id: Long,
+        val name: String,
+        var enName: String,
+        var ruName: String,
+        val index: String,
+        var contestId: Long,
+        var contestName: String,
+        var contestTime: Long,
+        var isFavourite: Boolean = false
 ) : Serializable

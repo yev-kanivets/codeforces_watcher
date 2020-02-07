@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
         super.onStart()
         store.subscribe(this) { state ->
             state.skipRepeats { oldState, newState -> oldState.ui == newState.ui }
-                .select { it.ui }
+                    .select { it.ui }
         }
     }
 
@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
         fab.setOnClickListener {
             val intent =
-                Intent(Intent.ACTION_VIEW).setData(Uri.parse(CONTESTS_LINK))
+                    Intent(Intent.ACTION_VIEW).setData(Uri.parse(CONTESTS_LINK))
             startActivity(intent)
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
@@ -176,16 +176,16 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     private fun showShareDialog() {
         AlertDialog.Builder(this)
-            .setTitle(getString(R.string.share_cw))
-            .setMessage(getString(R.string.help_cw_make_more_social))
-            .setCancelable(false)
-            .setPositiveButton(getString(R.string.share)) { _, _ ->
-                share()
-                Analytics.logAppShared()
-            }
-            .setNegativeButton(getString(R.string.cancel), null)
-            .create()
-            .show()
+                .setTitle(getString(R.string.share_cw))
+                .setMessage(getString(R.string.help_cw_make_more_social))
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.share)) { _, _ ->
+                    share()
+                    Analytics.logAppShared()
+                }
+                .setNegativeButton(getString(R.string.cancel), null)
+                .create()
+                .show()
     }
 
     private fun share() = startActivity(Intent().apply {
@@ -198,8 +198,8 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         spSort.background.setColorFilter(
-            ContextCompat.getColor(this, R.color.white),
-            PorterDuff.Mode.SRC_ATOP
+                ContextCompat.getColor(this, R.color.white),
+                PorterDuff.Mode.SRC_ATOP
         )
 
         bottomNavigation.setOnNavigationItemSelectedListener { item ->

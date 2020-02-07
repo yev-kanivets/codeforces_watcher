@@ -20,7 +20,7 @@ enum class Source(val isToastNeeded: Boolean) {
 class UsersRequests {
 
     class FetchUsers(
-        private val source: Source
+            private val source: Source
     ) : Request() {
 
         override suspend fun execute() {
@@ -33,7 +33,7 @@ class UsersRequests {
                 }
                 is UsersRequestResult.Success -> {
                     store.dispatch(
-                        Success(result.users, getDifferenceAndUpdate(users, result.users), source)
+                            Success(result.users, getDifferenceAndUpdate(users, result.users), source)
                     )
                 }
             }
@@ -45,11 +45,11 @@ class UsersRequests {
             when (error) {
                 Error.INTERNET ->
                     store.dispatch(
-                        Failure(if (source.isToastNeeded) noConnectionError else null)
+                            Failure(if (source.isToastNeeded) noConnectionError else null)
                     )
                 Error.RESPONSE ->
                     store.dispatch(
-                        Failure(if (source.isToastNeeded) fetchingUsersError else null)
+                            Failure(if (source.isToastNeeded) fetchingUsersError else null)
                     )
             }
         }
@@ -81,9 +81,9 @@ class UsersRequests {
         }
 
         data class Success(
-            val users: List<User>,
-            val notificationData: List<Pair<String, Int>>,
-            val source: Source
+                val users: List<User>,
+                val notificationData: List<Pair<String, Int>>,
+                val source: Source
         ) : Action
 
         data class Failure(override val message: String?) : ToastAction

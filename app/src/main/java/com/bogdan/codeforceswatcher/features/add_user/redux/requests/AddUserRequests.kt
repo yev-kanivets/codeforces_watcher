@@ -15,7 +15,7 @@ import org.rekotlin.Action
 class AddUserRequests {
 
     class AddUser(
-        val handle: String
+            val handle: String
     ) : Request() {
 
         override suspend fun execute() {
@@ -29,18 +29,18 @@ class AddUserRequests {
             when (error) {
                 Error.INTERNET ->
                     store.dispatch(
-                        Failure(CwApp.app.resources.getString(R.string.no_connection))
+                            Failure(CwApp.app.resources.getString(R.string.no_connection))
                     )
                 Error.RESPONSE ->
                     store.dispatch(
-                        Failure(CwApp.app.resources.getString(R.string.failed_to_fetch_users))
+                            Failure(CwApp.app.resources.getString(R.string.failed_to_fetch_users))
                     )
             }
         }
 
         private fun addUser(user: User) {
             val foundUser = DatabaseClient.userDao.getAll()
-                .find { currentUser -> currentUser.handle == user.handle }
+                    .find { currentUser -> currentUser.handle == user.handle }
 
             if (foundUser == null) {
                 user.id = DatabaseClient.userDao.insert(user)

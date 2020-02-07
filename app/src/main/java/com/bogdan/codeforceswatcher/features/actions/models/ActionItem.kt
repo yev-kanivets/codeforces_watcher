@@ -20,7 +20,7 @@ sealed class ActionItem {
             val comment = action.comment ?: throw NullPointerException()
             commentatorAvatar = LinkValidator.avatar(comment.commentatorAvatar)
             commentatorHandle = buildHandle(
-                comment.commentatorHandle, comment.commentatorRank
+                    comment.commentatorHandle, comment.commentatorRank
             )
             title = action.blogEntry.title
             time = action.timeInMillisecond
@@ -33,7 +33,7 @@ sealed class ActionItem {
             val handlePosition = commentedByString.indexOf("%1\$s")
 
             return SpannableStringBuilder(commentedByString)
-                .replace(handlePosition, handlePosition + "%1\$s".length, colorHandle)
+                    .replace(handlePosition, handlePosition + "%1\$s".length, colorHandle)
         }
     }
 

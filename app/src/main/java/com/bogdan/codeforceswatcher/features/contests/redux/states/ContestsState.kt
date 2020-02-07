@@ -4,8 +4,8 @@ import com.bogdan.codeforceswatcher.features.contests.models.Contest
 import org.rekotlin.StateType
 
 data class ContestsState(
-    val status: Status = Status.IDLE,
-    val contests: List<Contest> = listOf()
+        val status: Status = Status.IDLE,
+        val contests: List<Contest> = listOf()
 ) : StateType {
 
     enum class Status { IDLE, PENDING }

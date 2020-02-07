@@ -32,7 +32,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener, StoreSubscriber<Ad
         super.onStart()
         store.subscribe(this) { state ->
             state.skipRepeats { oldState, newState -> oldState.addUserState == newState.addUserState }
-                .select { it.addUserState }
+                    .select { it.addUserState }
         }
     }
 

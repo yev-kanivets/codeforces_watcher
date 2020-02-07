@@ -28,9 +28,9 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_problems, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -95,9 +95,9 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
     override fun newState(state: ProblemsState) {
         swipeRefreshLayout.isRefreshing = (state.status == ProblemsState.Status.PENDING)
         problemsAdapter.setItems(
-            if (state.isFavourite) state.problems.filter { it.isFavourite }.sortedByDescending { it.contestTime }
-            else state.problems.sortedByDescending { it.contestTime },
-            searchView?.query?.toString().orEmpty()
+                if (state.isFavourite) state.problems.filter { it.isFavourite }.sortedByDescending { it.contestTime }
+                else state.problems.sortedByDescending { it.contestTime },
+                searchView?.query?.toString().orEmpty()
         )
     }
 }

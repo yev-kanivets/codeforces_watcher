@@ -24,8 +24,8 @@ sealed class UserItem {
         init {
             user.ratingChanges.lastOrNull()?.let { ratingChange ->
                 dateOfLastRatingUpdate = CwApp.app.getString(
-                    R.string.last_rating_update,
-                    getDateTime(ratingChange.ratingUpdateTimeSeconds)
+                        R.string.last_rating_update,
+                        getDateTime(ratingChange.ratingUpdateTimeSeconds)
                 )
                 val difference = ratingChange.newRating - ratingChange.oldRating
                 update = if (difference >= 0) Update.INCREASE else Update.DECREASE

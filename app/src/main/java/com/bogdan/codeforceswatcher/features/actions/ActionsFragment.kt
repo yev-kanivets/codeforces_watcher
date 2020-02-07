@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_users.*
 import org.rekotlin.StoreSubscriber
 
 class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
-    StoreSubscriber<ActionsState> {
+        StoreSubscriber<ActionsState> {
 
     private lateinit var actionsAdapter: ActionsAdapter
 
@@ -26,7 +26,7 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         super.onStart()
         store.subscribe(this) { state ->
             state.skipRepeats { oldState, newState -> oldState.actions == newState.actions }
-                .select { it.actions }
+                    .select { it.actions }
         }
     }
 
@@ -36,13 +36,13 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     }
 
     private fun buildActionItems(actions: List<CFAction>) =
-        actions.map {
-            if (it.comment != null) {
-                ActionItem.CommentItem(it)
-            } else {
-                ActionItem.BlogEntryItem(it)
+            actions.map {
+                if (it.comment != null) {
+                    ActionItem.CommentItem(it)
+                } else {
+                    ActionItem.BlogEntryItem(it)
+                }
             }
-        }
 
     override fun newState(state: ActionsState) {
         swipeRefreshLayout.isRefreshing = (state.status == ActionsState.Status.PENDING)
@@ -55,9 +55,9 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_actions, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

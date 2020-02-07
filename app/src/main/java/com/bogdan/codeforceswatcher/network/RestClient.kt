@@ -19,17 +19,17 @@ object RestClient {
         val okHttpClient = okHttpClientBuild.build()
 
         val gsonBuilder = GsonBuilder()
-            .setLenient()
-            .create()
+                .setLenient()
+                .create()
 
         val gsonConverterFactory = GsonConverterFactory
-            .create(gsonBuilder)
+                .create(gsonBuilder)
 
         return@lazy Retrofit.Builder()
-            .baseUrl("http://www.codeforces.com/api/")
-            .client(okHttpClient)
-            .addConverterFactory(gsonConverterFactory)
-            .build()
+                .baseUrl("http://www.codeforces.com/api/")
+                .client(okHttpClient)
+                .addConverterFactory(gsonConverterFactory)
+                .build()
     }
 
     private val codeforcesApi by lazy { retrofit.create(CodeforcesApi::class.java) }

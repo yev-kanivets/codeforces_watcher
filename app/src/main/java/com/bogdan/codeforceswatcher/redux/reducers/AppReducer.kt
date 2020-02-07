@@ -11,11 +11,11 @@ import org.rekotlin.Action
 fun appReducer(action: Action, state: AppState?): AppState {
     requireNotNull(state)
     return AppState(
-        contests = contestsReducer(action, state),
-        users = usersReducer(action, state),
-        actions = actionsReducer(action, state),
-        problems = problemsReducer(action, state),
-        addUserState = addUserReducer(action, state),
-        ui = uiReducer(action, state)
+            contests = contestsReducer(action, state),
+            users = usersReducer(action, state),
+            actions = actionsReducer(action, state),
+            problems = problemsReducer(action, state),
+            addUserState = addUserReducer(action, state),
+            ui = uiReducer(action, state)
     )
 }

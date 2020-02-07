@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
-    StoreSubscriber<ContestsState> {
+        StoreSubscriber<ContestsState> {
 
     private lateinit var contestsAdapter: ContestsAdapter
 
@@ -33,7 +33,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         super.onStart()
         store.subscribe(this) { state ->
             state.skipRepeats { oldState, newState -> oldState.contests == newState.contests }
-                .select { it.contests }
+                    .select { it.contests }
         }
     }
 
@@ -53,9 +53,9 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_contests, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -78,15 +78,15 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         val timeEnd = getCalendarTime(contest.time + contest.duration)
         val encodeName = URLEncoder.encode(contest.name)
         val calendarEventLink =
-            "${CALENDAR_LINK}?action=TEMPLATE&text=$encodeName&dates=$timeStart/$timeEnd&details=${CODEFORCES_LINK}"
+                "${CALENDAR_LINK}?action=TEMPLATE&text=$encodeName&dates=$timeStart/$timeEnd&details=${CODEFORCES_LINK}"
         val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(calendarEventLink))
         try {
             context?.startActivity(intent)
         } catch (error: ActivityNotFoundException) {
             Toast.makeText(
-                context,
-                context?.resources?.getString(R.string.google_calendar_not_found),
-                Toast.LENGTH_SHORT
+                    context,
+                    context?.resources?.getString(R.string.google_calendar_not_found),
+                    Toast.LENGTH_SHORT
             ).show()
         }
         Analytics.logAddContestToCalendarEvent(contest.name)

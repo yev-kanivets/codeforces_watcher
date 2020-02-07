@@ -17,9 +17,9 @@ class AppRateDialog : DialogFragment(), View.OnClickListener {
     private val prefs = Prefs.get()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         return View.inflate(activity, R.layout.dialog_rate, container)
     }
@@ -47,9 +47,9 @@ class AppRateDialog : DialogFragment(), View.OnClickListener {
             prefs.appRated()
         } catch (e: Exception) {
             Toast.makeText(
-                requireContext(),
-                getString(R.string.google_play_not_found),
-                Toast.LENGTH_SHORT
+                    requireContext(),
+                    getString(R.string.google_play_not_found),
+                    Toast.LENGTH_SHORT
             ).show()
             e.printStackTrace()
             dismiss()
@@ -63,8 +63,8 @@ class AppRateDialog : DialogFragment(), View.OnClickListener {
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT
         )
     }
 

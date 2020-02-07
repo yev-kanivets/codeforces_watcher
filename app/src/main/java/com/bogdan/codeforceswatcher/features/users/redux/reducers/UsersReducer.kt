@@ -12,7 +12,7 @@ fun usersReducer(action: Action, state: AppState): UsersState {
     when (action) {
         is UsersRequests.FetchUsers -> {
             newState = newState.copy(
-                status = UsersState.Status.PENDING
+                    status = UsersState.Status.PENDING
             )
         }
 
@@ -24,25 +24,25 @@ fun usersReducer(action: Action, state: AppState): UsersState {
 
         is UsersRequests.FetchUsers.Failure -> {
             newState = newState.copy(
-                status = UsersState.Status.IDLE
+                    status = UsersState.Status.IDLE
             )
         }
 
         is AddUserRequests.AddUser.Success -> {
             newState = newState.copy(
-                users = state.users.users.plus(action.user)
+                    users = state.users.users.plus(action.user)
             )
         }
 
         is UsersActions.DeleteUser -> {
             newState = newState.copy(
-                users = state.users.users.minus(action.user)
+                    users = state.users.users.minus(action.user)
             )
         }
 
         is UsersActions.Sort -> {
             newState = newState.copy(
-                sortType = action.sortType
+                    sortType = action.sortType
             )
         }
     }

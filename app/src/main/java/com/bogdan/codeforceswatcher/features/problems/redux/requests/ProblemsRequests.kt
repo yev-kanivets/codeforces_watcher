@@ -15,7 +15,7 @@ import org.rekotlin.Action
 class ProblemsRequests {
 
     class FetchProblems(
-        private val isInitializedByUser: Boolean
+            private val isInitializedByUser: Boolean
     ) : Request() {
 
         override suspend fun execute() {
@@ -80,7 +80,7 @@ class ProblemsRequests {
         private fun isProblemsMatching(problemsEn: List<Problem>, problemsRu: List<Problem>): Boolean {
             for ((index, problem) in problemsEn.withIndex()) {
                 if (problem.contestId != problemsRu[index].contestId ||
-                    problem.index != problemsRu[index].index) {
+                        problem.index != problemsRu[index].index) {
                     return false
                 }
             }

@@ -19,11 +19,11 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import org.rekotlin.Store
 
 val store = Store(
-    reducer = ::appReducer,
-    state = RoomController.fetchAppState(),
-    middleware = listOf(
-        appMiddleware, notificationMiddleware, toastMiddleware
-    )
+        reducer = ::appReducer,
+        state = RoomController.fetchAppState(),
+        middleware = listOf(
+                appMiddleware, notificationMiddleware, toastMiddleware
+        )
 )
 
 class CwApp : Application() {

@@ -4,7 +4,7 @@ import com.bogdan.codeforceswatcher.R
 import org.rekotlin.StateType
 
 data class UIState(
-    val selectedHomeTab: HomeTab = HomeTab.USERS
+        val selectedHomeTab: HomeTab = HomeTab.USERS
 ) : StateType {
 
     enum class HomeTab(val titleId: Int, val menuItemId: Int) {
@@ -17,7 +17,7 @@ data class UIState(
         companion object {
 
             fun fromMenuItemId(menuItemId: Int): HomeTab =
-                enumValues<HomeTab>().find { it.menuItemId == menuItemId } ?: USERS
+                    enumValues<HomeTab>().find { it.menuItemId == menuItemId } ?: USERS
         }
     }
 

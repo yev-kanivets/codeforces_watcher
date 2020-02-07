@@ -4,9 +4,9 @@ import com.bogdan.codeforceswatcher.features.users.models.User
 import org.rekotlin.StateType
 
 data class UsersState(
-    val status: Status = Status.IDLE,
-    val users: List<User> = listOf(),
-    val sortType: SortType = SortType.DEFAULT
+        val status: Status = Status.IDLE,
+        val users: List<User> = listOf(),
+        val sortType: SortType = SortType.DEFAULT
 ) : StateType {
 
     enum class Status { IDLE, PENDING }

@@ -14,8 +14,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ContestsAdapter(
-    private val context: Context,
-    private val itemClickListener: (Contest) -> Unit
+        private val context: Context,
+        private val itemClickListener: (Contest) -> Unit
 ) : RecyclerView.Adapter<ContestsAdapter.ViewHolder>() {
 
     private var items: List<Contest> = listOf()

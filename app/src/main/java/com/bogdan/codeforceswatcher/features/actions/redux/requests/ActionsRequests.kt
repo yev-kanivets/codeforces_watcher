@@ -19,7 +19,7 @@ import java.util.*
 class ActionsRequests {
 
     class FetchActions(
-        private val isInitializedByUser: Boolean
+            private val isInitializedByUser: Boolean
     ) : Request() {
 
         override suspend fun execute() {
@@ -63,32 +63,32 @@ class ActionsRequests {
         }
 
         private suspend fun buildUiData(
-            actions: List<CFAction>,
-            users: List<User>?
+                actions: List<CFAction>,
+                users: List<User>?
         ): List<CFAction> = withContext(Dispatchers.IO) {
             val uiData: MutableList<CFAction> = mutableListOf()
 
             for (action in actions) {
                 if (action.comment != null) {
                     users?.find { user -> user.handle == action.comment.commentatorHandle }
-                        ?.let { foundUser ->
-                            action.comment.commentatorAvatar = foundUser.avatar
-                            action.comment.commentatorRank = foundUser.rank
-                        }
+                            ?.let { foundUser ->
+                                action.comment.commentatorAvatar = foundUser.avatar
+                                action.comment.commentatorRank = foundUser.rank
+                            }
 
                     action.comment.text = convertFromHtml(action.comment.text)
                 } else {
                     if (action.timeInMillisecond != action.blogEntry.creationTimeSeconds &&
-                        action.timeInMillisecond != action.blogEntry.modificationTimeSeconds) {
+                            action.timeInMillisecond != action.blogEntry.modificationTimeSeconds) {
                         continue
                     }
                 }
 
                 users?.find { user -> user.handle == action.blogEntry.authorHandle }
-                    ?.let { foundUser ->
-                        action.blogEntry.authorAvatar = foundUser.avatar
-                        action.blogEntry.authorRank = foundUser.rank
-                    }
+                        ?.let { foundUser ->
+                            action.blogEntry.authorAvatar = foundUser.avatar
+                            action.blogEntry.authorRank = foundUser.rank
+                        }
 
                 action.blogEntry.title = convertFromHtml(action.blogEntry.title)
                 uiData.add(action)
@@ -98,11 +98,11 @@ class ActionsRequests {
         }
 
         private fun convertFromHtml(text: String) =
-            HtmlCompat.fromHtml(
-                text.replace("\n", "<br>")
-                    .replace("\t", "<tl>")
-                    .replace("$", ""), HtmlCompat.FROM_HTML_MODE_LEGACY
-            ).trim().toString()
+                HtmlCompat.fromHtml(
+                        text.replace("\n", "<br>")
+                                .replace("\t", "<tl>")
+                                .replace("$", ""), HtmlCompat.FROM_HTML_MODE_LEGACY
+                ).trim().toString()
 
         private fun defineLang(): String {
             val locale = Locale.getDefault().language

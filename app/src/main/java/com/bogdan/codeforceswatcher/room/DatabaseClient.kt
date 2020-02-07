@@ -7,9 +7,9 @@ object DatabaseClient {
 
     private val database by lazy {
         Room.databaseBuilder(CwApp.app, AppDatabase::class.java, "database")
-            .allowMainThreadQueries()
-            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
-            .build()
+                .allowMainThreadQueries()
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+                .build()
     }
 
     val userDao by lazy { database.usersDao() }
