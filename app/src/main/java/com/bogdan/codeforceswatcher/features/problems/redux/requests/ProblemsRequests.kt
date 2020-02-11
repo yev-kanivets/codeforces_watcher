@@ -109,7 +109,7 @@ class ProblemsRequests {
         data class Failure(override val message: String?) : ToastAction
     }
 
-    class MarkProblemFavourite(val problem: Problem) : Request() {
+    class ChangeStatusFavourite(val problem: Problem) : Request() {
 
         override suspend fun execute() {
             lateinit var newProblem: Problem
