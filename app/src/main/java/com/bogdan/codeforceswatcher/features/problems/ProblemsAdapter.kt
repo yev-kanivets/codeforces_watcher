@@ -19,11 +19,13 @@ import java.util.*
 
 class ProblemsAdapter(
         private val context: Context,
-        private val itemClickListener: (Problem) -> Unit
+        private val itemClickListener: (Problem) -> Unit,
+        private val onFavouriteClickListener: (Int, Boolean) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private var showingItems: MutableList<Problem> = mutableListOf()
     private var items: List<Problem> = listOf()
+    private var isFavouriteStatus = false
 
     override fun getItemCount() = showingItems.size + if (showingItems.isEmpty()) 1 else 0
 
@@ -56,7 +58,7 @@ class ProblemsAdapter(
 
         val problemViewHolder = viewHolder as ProblemViewHolder
         with(problemViewHolder) {
-            with(showingItems[position]) {
+            with(showingItems[adapterPosition]) {
                 tvProblemName.text = context.getString(R.string.problem_name_with_index, contestId, index, name)
                 tvContestName.text = contestName
                 ivFavourite.setColorFilter(ContextCompat.getColor(
@@ -64,12 +66,27 @@ class ProblemsAdapter(
                 )
 
                 onClickListener = { itemClickListener(this) }
-                onFavouriteClickListener = { store.dispatch(ProblemsRequests.MarkProblemFavourite(this)) }
+                onFavouriteClickListener = {
+                    store.dispatch(ProblemsRequests.ChangeStatusFavourite(this.copy()))
+                    onFavouriteClickListener(adapterPosition, isFavouriteStatus)
+                    if (isFavouriteStatus) removeProblem(this)
+                    else changeProblem(this)
+                }
             }
         }
     }
 
-    fun setItems(problemsList: List<Problem>, constraint: String) {
+    private fun changeProblem(problem: Problem) {
+        problem.isFavourite = problem.isFavourite.not()
+    }
+
+    private fun removeProblem(problem: Problem) {
+        items.minus(problem)
+        showingItems.remove(problem)
+    }
+
+    fun setItems(problemsList: List<Problem>, constraint: String, isFavourite: Boolean) {
+        this.isFavouriteStatus = isFavourite
         items = problemsList
         showingItems = buildFilteredList(constraint)
         notifyDataSetChanged()

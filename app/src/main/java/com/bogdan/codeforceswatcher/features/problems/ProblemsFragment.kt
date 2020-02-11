@@ -67,10 +67,15 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
 
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
-        problemsAdapter = ProblemsAdapter(requireContext()) {
-            startActivity(ProblemActivity.newIntent(requireContext(), it))
-        }
+        problemsAdapter = ProblemsAdapter(requireContext(), { startActivity(ProblemActivity.newIntent(requireContext(), it)) }, ::updateProblemsView)
         recyclerView.adapter = problemsAdapter
+    }
+
+    private fun updateProblemsView(position: Int, isFavourite: Boolean) {
+        when (isFavourite) {
+            false -> problemsAdapter.notifyItemChanged(position)
+            true -> problemsAdapter.notifyItemRemoved(position)
+        }
     }
 
     override fun onRefresh() {
@@ -82,7 +87,8 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
         super.onStart()
         store.subscribe(this) { state ->
             state.skipRepeats { oldState, newState ->
-                oldState.problems == newState.problems
+                oldState.problems.status == newState.problems.status
+                        && oldState.problems.isFavourite == newState.problems.isFavourite
             }.select { it.problems }
         }
     }
@@ -97,7 +103,8 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
         problemsAdapter.setItems(
                 if (state.isFavourite) state.problems.filter { it.isFavourite }.sortedByDescending { it.contestTime }
                 else state.problems.sortedByDescending { it.contestTime },
-                searchView?.query?.toString().orEmpty()
+                searchView?.query?.toString().orEmpty(),
+                state.isFavourite
         )
     }
 }

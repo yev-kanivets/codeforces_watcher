@@ -29,7 +29,7 @@ fun problemsReducer(action: Action, state: AppState): ProblemsState {
             newState = newState.copy(isFavourite = action.isFavourite)
         }
 
-        is ProblemsRequests.MarkProblemFavourite.Success -> {
+        is ProblemsRequests.ChangeStatusFavourite.Success -> {
             newState = newState.copy(problems = newState.problems.map {
                 if (it.contestId == action.problem.contestId && it.index == action.problem.index) action.problem else it
             })
