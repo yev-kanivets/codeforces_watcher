@@ -1,8 +1,13 @@
 package com.bogdan.codeforceswatcher.network.models
 
+import com.bogdan.codeforceswatcher.CwApp
+import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.users.models.User
 
-enum class Error { INTERNET, RESPONSE }
+sealed class Error(val message: String) {
+    class Internet(message: String = CwApp.app.resources.getString(R.string.no_connection)) : Error(message)
+    class Response(message: String = CwApp.app.resources.getString(R.string.failed_to_fetch_users)) : Error(message)
+}
 
 sealed class UsersRequestResult {
     data class Success(val users: List<User>) : UsersRequestResult()

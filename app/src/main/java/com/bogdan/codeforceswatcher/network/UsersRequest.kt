@@ -4,15 +4,18 @@ import com.bogdan.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.network.models.Error
 import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
 import kotlinx.coroutines.*
+import okhttp3.ResponseBody
+import org.json.JSONObject
 
 suspend fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean): UsersRequestResult {
     val response = RestClient.getUsers(handles)
+
     return if (response == null) {
-        UsersRequestResult.Failure(Error.INTERNET)
+        UsersRequestResult.Failure(Error.Internet())
     } else {
         response.body()?.users?.let { users ->
             if (users.isEmpty()) {
-                return UsersRequestResult.Failure(Error.RESPONSE)
+                return UsersRequestResult.Failure(Error.Response())
             }
 
             if (isRatingUpdatesNeeded) {
@@ -20,24 +23,21 @@ suspend fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean): UsersRequ
             } else {
                 UsersRequestResult.Success(users)
             }
-        } ?: UsersRequestResult.Failure(Error.RESPONSE)
+        } ?: buildError(response.errorBody())
     }
 }
 
 suspend fun loadRatingUpdates(userList: List<User>): UsersRequestResult {
-    var countFetchedUsers = 0
-
     for (user in userList) {
         delay(250) // Because Codeforces blocks frequent queries
         val response = RestClient.getRating(user.handle)
         response?.body()?.ratingChanges?.let { ratingChanges ->
             user.ratingChanges = ratingChanges
-        } ?: break
-        countFetchedUsers++
+        } ?: buildError(response?.errorBody())
     }
-    return if (countFetchedUsers < userList.size) {
-        UsersRequestResult.Failure(Error.RESPONSE)
-    } else {
-        UsersRequestResult.Success(userList)
-    }
+    return UsersRequestResult.Success(userList)
 }
+
+private fun buildErrorMessage(errorBody: ResponseBody?) = errorBody?.let { JSONObject(errorBody.string()).getString("comment") }
+private fun buildError(errorBody: ResponseBody?) = buildErrorMessage(errorBody)?.let { UsersRequestResult.Failure(Error.Response(it)) }
+        ?: UsersRequestResult.Failure(Error.Response())
