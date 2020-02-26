@@ -67,15 +67,8 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
 
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
-        problemsAdapter = ProblemsAdapter(requireContext(), { startActivity(ProblemActivity.newIntent(requireContext(), it)) }, ::updateProblemsView)
+        problemsAdapter = ProblemsAdapter(requireContext(), { startActivity(ProblemActivity.newIntent(requireContext(), it)) })
         recyclerView.adapter = problemsAdapter
-    }
-
-    private fun updateProblemsView(position: Int, isFavourite: Boolean) {
-        when (isFavourite) {
-            false -> problemsAdapter.notifyItemChanged(position)
-            true -> problemsAdapter.notifyItemRemoved(position)
-        }
     }
 
     override fun onRefresh() {
