@@ -19,8 +19,7 @@ import java.util.*
 
 class ProblemsAdapter(
         private val context: Context,
-        private val itemClickListener: (Problem) -> Unit,
-        private val onFavouriteClickListener: (Int, Boolean) -> Unit
+        private val itemClickListener: (Problem) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private var showingItems: MutableList<Problem> = mutableListOf()
@@ -68,9 +67,10 @@ class ProblemsAdapter(
                 onClickListener = { itemClickListener(this) }
                 onFavouriteClickListener = {
                     store.dispatch(ProblemsRequests.ChangeStatusFavourite(this.copy()))
-                    onFavouriteClickListener(adapterPosition, isFavouriteStatus)
-                    if (isFavouriteStatus) removeProblem(this)
-                    else changeProblem(this)
+                    when (isFavouriteStatus) {
+                        false -> notifyItemChanged(adapterPosition).also { changeProblem(this) }
+                        true -> notifyItemRemoved(adapterPosition).also { removeProblem(this) }
+                    }
                 }
             }
         }
