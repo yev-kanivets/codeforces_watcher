@@ -38,6 +38,6 @@ suspend fun loadRatingUpdates(userList: List<User>): UsersRequestResult {
     return UsersRequestResult.Success(userList)
 }
 
-private fun buildErrorMessage(errorBody: ResponseBody?) = errorBody?.let { JSONObject(errorBody.string()).getString("comment") }
-private fun buildError(errorBody: ResponseBody?) = buildErrorMessage(errorBody)?.let { UsersRequestResult.Failure(Error.Response(it)) }
-        ?: UsersRequestResult.Failure(Error.Response())
+private fun extractErrorMessage(errorBody: ResponseBody?) = errorBody?.let { JSONObject(errorBody.string()).getString("comment") }
+private fun buildError(errorBody: ResponseBody?) = UsersRequestResult.Failure(extractErrorMessage(errorBody)?.let { Error.Response(it) }
+        ?: Error.Response())
