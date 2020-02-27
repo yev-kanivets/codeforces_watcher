@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Codeforces Watcher</string>
+    <string name="app_name" translatable="false">Codeforces WatchR</string>
     <string name="rank">Rank: %1$s</string>
     <string name="name">Name: %1$s</string>
     <string name="cur_rating">Current Rating: %1$s</string>
@@ -21,7 +21,7 @@
     <string name="by_ascending_update">↑ update</string>
     <string name="add">Add</string>
     <string name="enter_handle">Enter handle</string>
-    <string name="like_codeforces_watcher">Do you like Codeforces Watcher?</string>
+    <string name="like_codeforces_watcher">Do you like Codeforces WatchR?</string>
     <string name="rate_it_on_gp">Rate it on Google Play!</string>
     <string name="maybe_later">Maybe Later</string>
     <string name="no_thank_you">No, Thank You</string>
@@ -39,15 +39,15 @@
     <string name="problem_url" translatable="false">https://codeforces.com/contest/%1$d/problem/%2$s</string>
     <string name="blog_entry_url" translatable="false">https://codeforces.com/blog/entry/%1$d</string>
     <string name="share_with_friends">Share with friends</string>
-    <string name="shared_through_cw">Shared through Codeforces Watcher. Find it on Google Play.</string>
+    <string name="shared_through_cw">Shared through Codeforces WatchR. Find it on Google Play.</string>
     <string name="no_users">You don’t have any users to watch yet.\nAdd the first one using «+» at the bottom of the screen.</string>
     <string name="no_favourite_problems">You don’t have any favourite problems yet.\nAdd the first one using «∞» at the bottom of the screen.</string>
-    <string name="share_cw">Share Codeforces Watcher</string>
-    <string name="help_cw_make_more_social">Help us make Codeforces and Codeforces Watcher more social by sharing it with your friends.</string>
+    <string name="share_cw">Share Codeforces WatchR</string>
+    <string name="help_cw_make_more_social">Help us make Codeforces and Codeforces WatchR more social by sharing it with your friends.</string>
     <string name="share">Share</string>
     <string name="cancel">Cancel</string>
-    <string name="share_cw_message">"I'm using Codeforces Watcher - open-source, free Android application, which leverages Codeforces API to bring more competitive programming to your Android device.
-Codeforces Watcher allows:
+    <string name="share_cw_message">"I'm using Codeforces WatchR - open-source, free Android application, which leverages Codeforces API to bring more competitive programming to your Android device.
+Codeforces WatchR allows:
 
 1. Watch for activity of any Codeforces user.
 2. Sort users by rating and last participation date.

@@ -2,10 +2,6 @@ package com.bogdan.codeforceswatcher.util
 
 import com.bogdan.codeforceswatcher.redux.states.AppState
 import com.bogdan.codeforceswatcher.store
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 import org.rekotlin.StoreSubscriber
 
 object PersistenceController : StoreSubscriber<AppState> {
