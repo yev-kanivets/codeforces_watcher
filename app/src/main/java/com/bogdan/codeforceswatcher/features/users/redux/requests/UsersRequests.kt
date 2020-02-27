@@ -1,10 +1,7 @@
 package com.bogdan.codeforceswatcher.features.users.redux.requests
 
-import com.bogdan.codeforceswatcher.CwApp
-import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.network.getUsers
-import com.bogdan.codeforceswatcher.network.models.Error
 import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
@@ -29,28 +26,11 @@ class UsersRequests {
             val users = store.state.users.users
             when (val result = getUsers(getHandles(users), true)) {
                 is UsersRequestResult.Failure -> {
-                    dispatchError(result.error)
+                    store.dispatch(Failure(if (source.isToastNeeded) result.error.message else null))
                 }
                 is UsersRequestResult.Success -> {
-                    store.dispatch(
-                            Success(result.users, getDifferenceAndUpdate(users, result.users), source)
-                    )
+                    store.dispatch(Success(result.users, getDifferenceAndUpdate(users, result.users), source))
                 }
-            }
-        }
-
-        private fun dispatchError(error: Error) {
-            val noConnectionError = CwApp.app.resources.getString(R.string.no_connection)
-            val fetchingUsersError = CwApp.app.resources.getString(R.string.failed_to_fetch_users)
-            when (error) {
-                Error.INTERNET ->
-                    store.dispatch(
-                            Failure(if (source.isToastNeeded) noConnectionError else null)
-                    )
-                Error.RESPONSE ->
-                    store.dispatch(
-                            Failure(if (source.isToastNeeded) fetchingUsersError else null)
-                    )
             }
         }
 
