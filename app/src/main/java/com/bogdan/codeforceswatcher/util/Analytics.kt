@@ -4,7 +4,7 @@ import android.os.Bundle
 import com.bogdan.codeforceswatcher.CwApp
 import com.google.firebase.analytics.FirebaseAnalytics
 
-enum class Refresh { USERS, CONTESTS, ACTIONS }
+enum class Refresh { USERS, CONTESTS, ACTIONS, PROBLEMS }
 
 object Analytics {
 
@@ -26,6 +26,7 @@ object Analytics {
                 Refresh.USERS -> "users_list_refresh"
                 Refresh.CONTESTS -> "contests_list_refresh"
                 Refresh.ACTIONS -> "actions_list_refresh"
+                Refresh.PROBLEMS -> "problems_list_refresh"
             }, Bundle())
         }
     }
@@ -51,6 +52,12 @@ object Analytics {
     fun logShareComment() {
         if (isEnabled) {
             instance.logEvent("action_share_comment", Bundle())
+        }
+    }
+
+    fun logShareProblem() {
+        if (isEnabled) {
+            instance.logEvent("problem_shared", Bundle())
         }
     }
 

@@ -63,7 +63,7 @@ class ProblemActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_share -> {
                 share()
-                Analytics.logShareComment()
+                Analytics.logShareProblem()
             }
         }
         return super.onOptionsItemSelected(item)
