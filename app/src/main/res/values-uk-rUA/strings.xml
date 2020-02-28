@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Codeforces Watcher</string>
     <string name="rank">Ранг: %1$s</string>
     <string name="name">Iм\'я: %1$s</string>
     <string name="cur_rating">Поточний рейтинг: %1$s</string>
@@ -23,7 +22,7 @@
     <string name="add">Додати</string>
     <string name="enter_handle">Введіть хендл</string>
 
-    <string name="like_codeforces_watcher">Вам подобається Codeforces Watcher?</string>
+    <string name="like_codeforces_watcher">Вам подобається Codeforces WatchR?</string>
     <string name="rate_it_on_gp">Оцініть його на Google Play!</string>
     <string name="maybe_later">Можливо пізніше</string>
     <string name="no_thank_you">Ні, дякую</string>
@@ -40,16 +39,16 @@
     <string name="commented_by">"Прокоментував %1$s"</string>
     <string name="feature_isn_t_available_yet">Ця функція ще не доступна.</string>
     <string name="share_with_friends">Поділитися з друзями</string>
-    <string name="shared_through_cw">Відправлено через Codeforces Watcher. Знайдіть його в Google Play.</string>
+    <string name="shared_through_cw">Відправлено через Codeforces WatchR. Знайдіть його в Google Play.</string>
     <string name="no_users">Ви ще не маєте користувачів для відслідковування.\nДодайте першого скориставшись кнопкою «+» знизу екрану.</string>
     <string name="no_favourite_problems">Ви ще не маєте улюблених задач.\nДодайте першу скориставшись кнопкою «∞» знизу екрану.</string>
 
-    <string name="share_cw">Поділитися Codeforces Watcher</string>
-    <string name="help_cw_make_more_social">Допоможіть зробити Codeforces та Codeforces Watcher більш соціальними, поділившися ними з вашими друзями.</string>
+    <string name="share_cw">Поділитися Codeforces WatchR</string>
+    <string name="help_cw_make_more_social">Допоможіть зробити Codeforces та Codeforces WatchR більш соціальними, поділившися ними з вашими друзями.</string>
     <string name="share">Поділитися</string>
     <string name="cancel">Скасувати</string>
-    <string name="share_cw_message">"Я користуюсь Codeforces Watcher - безкоштовним Android застосунком з відкритим кодом, що використовує Codeforces API для того щоб принести більше олімпіадного програмування на ваш Android пристрій.
-Codeforces Watcher дозволяє:
+    <string name="share_cw_message">"Я користуюсь Codeforces WatchR - безкоштовним Android застосунком з відкритим кодом, що використовує Codeforces API для того щоб принести більше олімпіадного програмування на ваш Android пристрій.
+Codeforces WatchR дозволяє:
 
 1. Слідкувати за активністю будь-якого користувача Codeforces.
 2. Сортувати користувачів за рейтингом та датою останньої участі у змаганнях.
