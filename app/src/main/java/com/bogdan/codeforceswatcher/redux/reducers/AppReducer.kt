@@ -6,7 +6,7 @@ import com.bogdan.codeforceswatcher.features.add_user.redux.reducers.addUserRedu
 import com.bogdan.codeforceswatcher.features.problems.redux.reducers.problemsReducer
 import com.bogdan.codeforceswatcher.features.users.redux.reducers.usersReducer
 import com.bogdan.codeforceswatcher.redux.states.AppState
-import org.rekotlin.Action
+import tw.geothings.rekotlin.Action
 
 fun appReducer(action: Action, state: AppState?): AppState {
     requireNotNull(state)

@@ -16,7 +16,7 @@ import com.bogdan.codeforceswatcher.room.RoomController
 import com.bogdan.codeforceswatcher.util.PersistenceController
 import com.bogdan.codeforceswatcher.util.Prefs
 import com.google.firebase.analytics.FirebaseAnalytics
-import org.rekotlin.Store
+import tw.geothings.rekotlin.Store
 
 val store = Store(
         reducer = ::appReducer,

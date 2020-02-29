@@ -2,7 +2,7 @@ package com.bogdan.codeforceswatcher.util
 
 import com.bogdan.codeforceswatcher.redux.states.AppState
 import com.bogdan.codeforceswatcher.store
-import org.rekotlin.StoreSubscriber
+import tw.geothings.rekotlin.StoreSubscriber
 
 object PersistenceController : StoreSubscriber<AppState> {
 
@@ -19,5 +19,4 @@ object PersistenceController : StoreSubscriber<AppState> {
         Prefs.get().writeSpinnerSortPosition(state.users.sortType.position)
         Prefs.get().writeProblemsIsFavourite(state.problems.isFavourite)
     }
-
 }

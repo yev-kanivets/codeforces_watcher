@@ -13,13 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.contests.models.Contest
-import com.bogdan.codeforceswatcher.features.contests.redux.states.ContestsState
 import com.bogdan.codeforceswatcher.features.contests.redux.requests.ContestsRequests
+import com.bogdan.codeforceswatcher.features.contests.redux.states.ContestsState
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Refresh
 import kotlinx.android.synthetic.main.fragment_contests.*
-import org.rekotlin.StoreSubscriber
+import tw.geothings.rekotlin.StoreSubscriber
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.*

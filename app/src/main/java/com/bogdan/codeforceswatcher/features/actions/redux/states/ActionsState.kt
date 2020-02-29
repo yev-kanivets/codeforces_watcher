@@ -1,7 +1,7 @@
 package com.bogdan.codeforceswatcher.features.actions.redux.states
 
 import com.bogdan.codeforceswatcher.features.actions.models.CFAction
-import org.rekotlin.StateType
+import tw.geothings.rekotlin.StateType
 
 data class ActionsState(
     val status: Status = Status.IDLE,

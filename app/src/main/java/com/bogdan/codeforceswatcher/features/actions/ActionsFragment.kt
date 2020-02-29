@@ -15,7 +15,7 @@ import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Refresh
 import kotlinx.android.synthetic.main.fragment_users.*
-import org.rekotlin.StoreSubscriber
+import tw.geothings.rekotlin.StoreSubscriber
 
 class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         StoreSubscriber<ActionsState> {

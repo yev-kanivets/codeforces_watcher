@@ -4,8 +4,8 @@ import com.bogdan.codeforceswatcher.redux.Request
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.rekotlin.Middleware
-import org.rekotlin.StateType
+import tw.geothings.rekotlin.Middleware
+import tw.geothings.rekotlin.StateType
 
 val appMiddleware: Middleware<StateType> = { _, _ ->
     { next ->

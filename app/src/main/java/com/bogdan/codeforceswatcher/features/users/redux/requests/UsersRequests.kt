@@ -8,7 +8,7 @@ import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.store
 import kotlinx.coroutines.delay
-import org.rekotlin.Action
+import tw.geothings.rekotlin.Action
 
 enum class Source(val isToastNeeded: Boolean) {
     USER(true), BROADCAST(false), BACKGROUND(false)

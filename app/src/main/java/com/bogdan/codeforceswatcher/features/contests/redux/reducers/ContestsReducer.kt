@@ -2,9 +2,8 @@ package com.bogdan.codeforceswatcher.features.contests.redux.reducers
 
 import com.bogdan.codeforceswatcher.features.contests.redux.requests.ContestsRequests
 import com.bogdan.codeforceswatcher.features.contests.redux.states.ContestsState
-import com.bogdan.codeforceswatcher.features.contests.models.Contest
 import com.bogdan.codeforceswatcher.redux.states.AppState
-import org.rekotlin.Action
+import tw.geothings.rekotlin.Action
 
 fun contestsReducer(action: Action, state: AppState): ContestsState {
     var newState = state.contests

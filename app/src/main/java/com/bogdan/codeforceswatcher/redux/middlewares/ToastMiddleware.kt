@@ -5,8 +5,8 @@ import android.widget.TextView
 import android.widget.Toast
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
-import org.rekotlin.Middleware
-import org.rekotlin.StateType
+import tw.geothings.rekotlin.Middleware
+import tw.geothings.rekotlin.StateType
 
 val toastMiddleware: Middleware<StateType> = { _, _ ->
     { next ->
