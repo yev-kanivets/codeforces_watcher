@@ -37,6 +37,28 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+    packagingOptions {
+        exclude "**/*.kotlin_module"
+        exclude 'META-INF/*.kotlin_module'
+    }
+}
+
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(':common')
+            }
+        }
+
+        androidMain {
+
+        }
+    }
+
+    android {
+
+    }
 }
 
 allprojects {
