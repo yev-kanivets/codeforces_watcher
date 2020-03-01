@@ -3,8 +3,9 @@ package com.bogdan.codeforceswatcher.network
 import com.bogdan.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.network.models.Error
 import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
-import kotlinx.coroutines.*
+import kotlinx.coroutines.delay
 import okhttp3.ResponseBody
+import org.json.JSONException
 import org.json.JSONObject
 
 suspend fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean): UsersRequestResult {
@@ -38,6 +39,15 @@ suspend fun loadRatingUpdates(userList: List<User>): UsersRequestResult {
     return UsersRequestResult.Success(userList)
 }
 
-private fun extractErrorMessage(errorBody: ResponseBody?) = errorBody?.let { JSONObject(errorBody.string()).getString("comment") }
-private fun buildError(errorBody: ResponseBody?) = UsersRequestResult.Failure(extractErrorMessage(errorBody)?.let { Error.Response(it) }
+private fun extractErrorMessage(errorBody: ResponseBody?) = errorBody?.let {
+    try {
+        JSONObject(errorBody.string()).getString("comment")
+    } catch (e: JSONException) {
+        e.printStackTrace()
+        null
+    }
+}
+
+private fun buildError(errorBody: ResponseBody?) = UsersRequestResult.Failure(extractErrorMessage(errorBody)
+        ?.let { Error.Response(it) }
         ?: Error.Response())
