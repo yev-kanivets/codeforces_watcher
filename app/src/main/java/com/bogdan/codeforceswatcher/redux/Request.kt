@@ -1,6 +1,6 @@
 package com.bogdan.codeforceswatcher.redux
 
-import org.rekotlin.Action
+import tw.geothings.rekotlin.Action
 
 abstract class Request : Action {
 

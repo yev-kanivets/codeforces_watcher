@@ -6,7 +6,7 @@ import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState
 import com.bogdan.codeforceswatcher.redux.states.AppState
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Prefs
-import org.rekotlin.StoreSubscriber
+import tw.geothings.rekotlin.StoreSubscriber
 
 object RoomController : StoreSubscriber<AppState> {
 

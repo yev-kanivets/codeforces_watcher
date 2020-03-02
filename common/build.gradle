@@ -1,0 +1,82 @@
+apply plugin: 'kotlin-multiplatform'
+apply plugin: 'kotlinx-serialization'
+apply plugin: 'org.jetbrains.kotlin.native.cocoapods'
+apply plugin: 'co.touchlab.kotlinxcodesync'
+
+kotlin {
+    jvm {}
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                api "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlin_version"
+                api "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutines_version"
+                api "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization_version"
+            }
+        }
+
+        commonTest {
+            dependencies {
+                api "org.jetbrains.kotlin:kotlin-test-common:$kotlin_version"
+            }
+        }
+
+        iOSMain {
+            dependencies {
+                api "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutines_version"
+                api "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serialization_version"
+            }
+        }
+
+        jvmMain {
+            dependencies {
+                api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+                api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+                api "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version"
+            }
+        }
+
+        jvmTest {
+            dependencies {
+                api "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+                api "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+                api "junit:junit:4.13"
+            }
+        }
+    }
+
+    targets {
+        def buildForDevice = project.findProperty("kotlin.native.cocoapods.target") == "ios_arm"
+        if (buildForDevice) {
+            iosArm64("iOS64") {
+                compilations.main.extraOpts '-Xobjc-generics'
+            }
+            iosArm32("iOS32") {
+                compilations.main.extraOpts '-Xobjc-generics'
+            }
+
+            sourceSets["iOS64Main"].dependsOn(sourceSets.iOSMain)
+            sourceSets["iOS32Main"].dependsOn(sourceSets.iOSMain)
+        } else {
+            iosX64('iosX') {
+                compilations.main.extraOpts '-Xobjc-generics'
+            }
+
+            sourceSets["iosXMain"].dependsOn(sourceSets.iOSMain)
+        }
+    }
+
+    cocoapods {
+        summary = "Codeforces WatchR common module"
+        homepage = "https://github.com/xorum-io/codeforces_watcher"
+    }
+}
+
+configurations {
+    compileClasspath
+}
+
+xcode {
+    projectPath = "../ios/Codeforces Watcher.xcodeproj"
+    target = "Codeforces Watcher"
+}

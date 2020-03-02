@@ -7,7 +7,7 @@ import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
-import org.rekotlin.Action
+import tw.geothings.rekotlin.Action
 
 class ContestsRequests {
 

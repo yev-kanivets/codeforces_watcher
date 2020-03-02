@@ -13,7 +13,7 @@ import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.rekotlin.Action
+import tw.geothings.rekotlin.Action
 import java.util.*
 
 class ActionsRequests {

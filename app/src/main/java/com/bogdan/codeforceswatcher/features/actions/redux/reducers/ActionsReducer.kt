@@ -3,7 +3,7 @@ package com.bogdan.codeforceswatcher.features.actions.redux.reducers
 import com.bogdan.codeforceswatcher.features.actions.redux.requests.ActionsRequests
 import com.bogdan.codeforceswatcher.features.actions.redux.states.ActionsState
 import com.bogdan.codeforceswatcher.redux.states.AppState
-import org.rekotlin.Action
+import tw.geothings.rekotlin.Action
 
 fun actionsReducer(action: Action, state: AppState): ActionsState {
     var newState = state.actions

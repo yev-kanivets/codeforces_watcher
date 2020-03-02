@@ -4,7 +4,7 @@ import android.text.SpannableStringBuilder
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.users.models.colorTextByUserRank
-import com.bogdan.codeforceswatcher.util.LinkValidator
+import io.xorum.codeforceswatcher.util.LinkValidator
 
 sealed class ActionItem {
 

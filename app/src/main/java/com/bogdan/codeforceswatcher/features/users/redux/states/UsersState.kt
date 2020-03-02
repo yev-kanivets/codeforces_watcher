@@ -1,7 +1,7 @@
 package com.bogdan.codeforceswatcher.features.users.redux.states
 
 import com.bogdan.codeforceswatcher.features.users.models.User
-import org.rekotlin.StateType
+import tw.geothings.rekotlin.StateType
 
 data class UsersState(
         val status: Status = Status.IDLE,

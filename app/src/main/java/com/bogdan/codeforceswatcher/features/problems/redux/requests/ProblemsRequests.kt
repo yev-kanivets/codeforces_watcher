@@ -10,7 +10,7 @@ import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.CrashLogger
 import kotlinx.coroutines.*
-import org.rekotlin.Action
+import tw.geothings.rekotlin.Action
 
 class ProblemsRequests {
 
