@@ -1,0 +1,17 @@
+CREATE TABLE IF NOT EXISTS User (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    avatar TEXT NOT NULL,
+    rank TEXT,
+    handle TEXT NOT NULL,
+    rating INTEGER,
+    maxRating INTEGER,
+    firstName TEXT,
+    lastName TEXT,
+    ratingChanges TEXT NOT NULL
+);
+
+read:
+SELECT * FROM User WHERE id = ?;
+
+readAll:
+SELECT * FROM User;

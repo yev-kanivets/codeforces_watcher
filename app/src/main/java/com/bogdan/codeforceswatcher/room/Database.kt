@@ -11,7 +11,7 @@ import com.bogdan.codeforceswatcher.features.problems.room.ProblemsDao
 import com.bogdan.codeforceswatcher.features.users.models.User
 
 @Database(entities = [User::class, Contest::class, Problem::class],
-    version = 4, exportSchema = false)
+        version = 4, exportSchema = true)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 

@@ -9,13 +9,16 @@ import com.bogdan.codeforceswatcher.features.users.redux.requests.Source
 import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersRequests
 import com.bogdan.codeforceswatcher.receiver.StartAlarm
 import com.bogdan.codeforceswatcher.redux.middlewares.appMiddleware
-import com.bogdan.codeforceswatcher.redux.reducers.appReducer
-import com.bogdan.codeforceswatcher.redux.middlewares.toastMiddleware
 import com.bogdan.codeforceswatcher.redux.middlewares.notificationMiddleware
+import com.bogdan.codeforceswatcher.redux.middlewares.toastMiddleware
+import com.bogdan.codeforceswatcher.redux.reducers.appReducer
 import com.bogdan.codeforceswatcher.room.RoomController
 import com.bogdan.codeforceswatcher.util.PersistenceController
 import com.bogdan.codeforceswatcher.util.Prefs
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.squareup.sqldelight.android.AndroidSqliteDriver
+import io.xorum.codeforceswatcher.CWDatabase
+import redux.sqlDriver
 import tw.geothings.rekotlin.Store
 
 val store = Store(
@@ -47,6 +50,7 @@ class CwApp : Application() {
         }
 
         prefs.addLaunchCount()
+        initDatabase()
     }
 
     private fun fetchData() {
@@ -59,6 +63,12 @@ class CwApp : Application() {
     private fun startAlarm() {
         val intent = Intent(this, StartAlarm::class.java)
         sendBroadcast(intent)
+    }
+
+    private fun initDatabase() {
+        sqlDriver = AndroidSqliteDriver(CWDatabase.Schema, app.applicationContext, "database")
+        val database = CWDatabase(sqlDriver)
+        println("Here database : ${(database.userQueries.readAll().executeAsList().firstOrNull())}")
     }
 
     companion object {
