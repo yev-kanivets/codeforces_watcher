@@ -39,7 +39,6 @@ class UsersRequests {
             for (user in updatedUsers) {
                 users.find { it.handle == user.handle }?.let { foundUser ->
                     user.id = foundUser.id
-
                     if (foundUser.ratingChanges != user.ratingChanges) {
                         user.ratingChanges.lastOrNull()?.let { ratingChange ->
                             val delta = ratingChange.newRating - ratingChange.oldRating

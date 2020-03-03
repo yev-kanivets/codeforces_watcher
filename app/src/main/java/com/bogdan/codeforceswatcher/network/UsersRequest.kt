@@ -34,7 +34,7 @@ suspend fun loadRatingUpdates(userList: List<User>): UsersRequestResult {
         val response = RestClient.getRating(user.handle)
         response?.body()?.ratingChanges?.let { ratingChanges ->
             user.ratingChanges = ratingChanges
-        } ?: buildError(response?.errorBody())
+        } ?: return buildError(response?.errorBody())
     }
     return UsersRequestResult.Success(userList)
 }
