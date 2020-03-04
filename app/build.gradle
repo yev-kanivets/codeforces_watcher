@@ -35,6 +35,7 @@ android {
             signingConfig signingConfigs.releaseConfig
         }
         debug {
+            matchingFallbacks = ['release']
             applicationIdSuffix ".debug"
         }
     }
@@ -45,6 +46,12 @@ android {
     packagingOptions {
         exclude "**/*.kotlin_module"
         exclude 'META-INF/*.kotlin_module'
+    }
+    sourceSets {
+        main {
+            java.srcDirs += 'src/main/kotlin'
+            res.srcDirs += 'src/main/res'
+        }
     }
 }
 

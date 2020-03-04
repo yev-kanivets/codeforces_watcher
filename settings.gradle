@@ -1,2 +1,9 @@
-include ':app'
-include ':common'
+rootProject.name = 'codeforces_watcher'
+def buildAndroid = properties['org.gradle.project.buildAndroid'].toBoolean()
+if (buildAndroid) {
+    include 'app'
+}
+
+include 'common'
+
+enableFeaturePreview('GRADLE_METADATA')
