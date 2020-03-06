@@ -1,12 +1,12 @@
 package com.bogdan.codeforceswatcher.features.users.redux.requests
 
-import com.bogdan.codeforceswatcher.features.users.models.User
+import io.xorum.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.network.getUsers
 import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
-import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.store
+import io.xorum.codeforceswatcher.db.DatabaseQueries
 import kotlinx.coroutines.delay
 import tw.geothings.rekotlin.Action
 
@@ -46,7 +46,7 @@ class UsersRequests {
                             difference.add(Pair(user.handle, delta))
                         }
                     }
-                    DatabaseClient.userDao.update(user)
+                    DatabaseQueries.Users.insert(user)
                 }
             }
             return difference

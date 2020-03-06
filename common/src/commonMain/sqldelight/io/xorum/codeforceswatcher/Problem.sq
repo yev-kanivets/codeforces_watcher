@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS Problem (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name TEXT NOT NULL,
+    enName TEXT NOT NULL,
+    ruName TEXT NOT NULL,
+    indexProblem TEXT NOT NULL,
+    contestId INTEGER NOT NULL,
+    contestName TEXT NOT NULL,
+    contestTime INTEGER NOT NULL,
+    isFavourite INTEGER AS Boolean NOT NULL
+);
+
+getAll:
+SELECT * FROM Problem;
+
+insert:
+INSERT OR REPLACE INTO Problem(id, name, enName, ruName, indexProblem, contestId, contestName, contestTime, isFavourite) VALUES(?,?,?,?,?,?,?,?,?);
+
+deleteAll:
+DELETE FROM Problem;
+
+getIndex:
+SELECT last_insert_rowid();

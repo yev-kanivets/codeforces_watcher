@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.problems.models.Problem
+import io.xorum.codeforceswatcher.features.problems.models.Problem
 import com.bogdan.codeforceswatcher.features.problems.redux.requests.ProblemsRequests
 import com.bogdan.codeforceswatcher.store
 import kotlinx.android.synthetic.main.view_problem_item.view.*

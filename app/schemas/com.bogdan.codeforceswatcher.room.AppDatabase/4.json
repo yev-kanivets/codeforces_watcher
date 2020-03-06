@@ -2,123 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "a65c3b2512f0b6a7c68ed1df68ebc540",
+    "identityHash": "603c15c77250b33089a4dee776501855",
     "entities": [
       {
-        "tableName": "User",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `avatar` TEXT NOT NULL, `rank` TEXT, `handle` TEXT NOT NULL, `rating` INTEGER, `maxRating` INTEGER, `firstName` TEXT, `lastName` TEXT, `ratingChanges` TEXT NOT NULL)",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "avatar",
-            "columnName": "avatar",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "rank",
-            "columnName": "rank",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "handle",
-            "columnName": "handle",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "rating",
-            "columnName": "rating",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "maxRating",
-            "columnName": "maxRating",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "firstName",
-            "columnName": "firstName",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "lastName",
-            "columnName": "lastName",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "ratingChanges",
-            "columnName": "ratingChanges",
-            "affinity": "TEXT",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "id"
-          ],
-          "autoGenerate": true
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "Contest",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `time` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `phase` TEXT NOT NULL, PRIMARY KEY(`id`))",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "name",
-            "columnName": "name",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "time",
-            "columnName": "time",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "duration",
-            "columnName": "duration",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "phase",
-            "columnName": "phase",
-            "affinity": "TEXT",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "id"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
         "tableName": "Problem",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `enName` TEXT NOT NULL, `ruName` TEXT NOT NULL, `index` TEXT NOT NULL, `contestId` INTEGER NOT NULL, `contestName` TEXT NOT NULL, `contestTime` INTEGER NOT NULL, `isFavourite` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `enName` TEXT NOT NULL, `ruName` TEXT NOT NULL, `index` TEXT NOT NULL, `contestId` INTEGER NOT NULL, `contestName` TEXT NOT NULL, `contestTime` INTEGER NOT NULL, `isFavourite` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -176,10 +64,8 @@
           }
         ],
         "primaryKey": {
-          "columnNames": [
-            "id"
-          ],
-          "autoGenerate": true
+          "columnNames": [],
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
@@ -188,7 +74,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a65c3b2512f0b6a7c68ed1df68ebc540')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '603c15c77250b33089a4dee776501855')"
     ]
   }
 }

@@ -36,12 +36,12 @@ class CwApp : Application() {
 
         app = this
 
+        initDatabase()
         RoomController.onAppCreated()
         PersistenceController.onAppCreated()
         FirebaseAnalytics.getInstance(this)
 
         val prefs = Prefs.get()
-
         fetchData()
 
         if (prefs.readAlarm().isEmpty()) {
@@ -50,7 +50,6 @@ class CwApp : Application() {
         }
 
         prefs.addLaunchCount()
-        initDatabase()
     }
 
     private fun fetchData() {
@@ -67,8 +66,6 @@ class CwApp : Application() {
 
     private fun initDatabase() {
         sqlDriver = AndroidSqliteDriver(CWDatabase.Schema, app.applicationContext, "database")
-        val database = CWDatabase(sqlDriver)
-        println("Here database : ${(database.userQueries.readAll().executeAsList().firstOrNull())}")
     }
 
     companion object {

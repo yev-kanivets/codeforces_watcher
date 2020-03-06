@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.contests.models.Contest
+import io.xorum.codeforceswatcher.features.contests.models.Contest
 import com.bogdan.codeforceswatcher.features.contests.redux.requests.ContestsRequests
 import com.bogdan.codeforceswatcher.features.contests.redux.states.ContestsState
 import com.bogdan.codeforceswatcher.store
@@ -44,7 +44,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun newState(state: ContestsState) {
         swipeRefreshLayout.isRefreshing = (state.status == ContestsState.Status.PENDING)
-        contestsAdapter.setItems(state.contests.filter { it.phase == "BEFORE" }.sortedBy(Contest::time))
+        contestsAdapter.setItems(state.contests.filter { it.phase == "BEFORE" }.sortedBy(Contest::startTimeSeconds))
     }
 
     override fun onRefresh() {
@@ -74,8 +74,8 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     }
 
     private fun addContestToCalendar(contest: Contest) {
-        val timeStart = getCalendarTime(contest.time)
-        val timeEnd = getCalendarTime(contest.time + contest.duration)
+        val timeStart = getCalendarTime(contest.startTimeSeconds)
+        val timeEnd = getCalendarTime(contest.startTimeSeconds + contest.durationSeconds)
         val encodeName = URLEncoder.encode(contest.name)
         val calendarEventLink =
                 "${CALENDAR_LINK}?action=TEMPLATE&text=$encodeName&dates=$timeStart/$timeEnd&details=${CODEFORCES_LINK}"

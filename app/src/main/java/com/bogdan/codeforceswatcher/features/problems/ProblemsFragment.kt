@@ -67,7 +67,7 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
 
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
-        problemsAdapter = ProblemsAdapter(requireContext(), { startActivity(ProblemActivity.newIntent(requireContext(), it)) })
+        problemsAdapter = ProblemsAdapter(requireContext()) { startActivity(ProblemActivity.newIntent(requireContext(), it.id)) }
         recyclerView.adapter = problemsAdapter
     }
 

@@ -1,3 +1,4 @@
+/*
 package com.bogdan.codeforceswatcher.room
 
 import androidx.room.migration.Migration
@@ -30,3 +31,4 @@ val MIGRATION_3_4 = object : Migration(3, 4) {
         )
     }
 }
+*/

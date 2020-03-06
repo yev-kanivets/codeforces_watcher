@@ -8,8 +8,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.users.redux.actions.UsersActions
-import com.bogdan.codeforceswatcher.features.users.models.User
-import com.bogdan.codeforceswatcher.room.DatabaseClient
+import io.xorum.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.CustomMarkerView
 import io.xorum.codeforceswatcher.util.LinkValidator
@@ -19,6 +18,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.squareup.picasso.Picasso
+import io.xorum.codeforceswatcher.db.DatabaseQueries
 import kotlinx.android.synthetic.main.activity_user.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -125,7 +125,7 @@ class UserActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_delete -> {
-                DatabaseClient.userDao.delete(DatabaseClient.userDao.getById(userId))
+                DatabaseQueries.Users.delete(userId)
                 val user = store.state.users.users.find { it.id == userId }
                 user?.let { store.dispatch(UsersActions.DeleteUser(it)) }
                 finish()

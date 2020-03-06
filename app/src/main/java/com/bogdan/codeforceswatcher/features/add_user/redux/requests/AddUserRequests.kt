@@ -2,13 +2,13 @@ package com.bogdan.codeforceswatcher.features.add_user.redux.requests
 
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.network.getUsers
 import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
-import com.bogdan.codeforceswatcher.room.DatabaseClient
 import com.bogdan.codeforceswatcher.store
+import io.xorum.codeforceswatcher.db.DatabaseQueries
+import io.xorum.codeforceswatcher.features.users.models.User
 import tw.geothings.rekotlin.Action
 
 class AddUserRequests {
@@ -22,14 +22,16 @@ class AddUserRequests {
         }
 
         private fun addUser(user: User) {
-            val foundUser = DatabaseClient.userDao.getAll()
+            val foundUser = DatabaseQueries.Users.getAll()
                     .find { currentUser -> currentUser.handle == user.handle }
 
             if (foundUser == null) {
-                user.id = DatabaseClient.userDao.insert(user)
+                user.id = DatabaseQueries.Users.insert(user)
+                println("Here id: ${user.id}")
                 store.dispatch(Success(user))
-            } else
+            } else {
                 store.dispatch(Failure(CwApp.app.getString(R.string.user_already_added)))
+            }
         }
 
         data class Success(val user: User) : Action

@@ -1,6 +1,6 @@
 package com.bogdan.codeforceswatcher.features.problems.redux.requests
 
-import com.bogdan.codeforceswatcher.features.problems.models.Problem
+import io.xorum.codeforceswatcher.features.problems.models.Problem
 import com.google.gson.annotations.SerializedName
 
 data class ProblemsResponse(

@@ -1,0 +1,17 @@
+CREATE TABLE IF NOT EXISTS Contest (
+    id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    startTimeSeconds INTEGER NOT NULL,
+    durationSeconds INTEGER NOT NULL,
+    phase TEXT NOT NULL,
+    PRIMARY KEY (id)
+);
+
+getAll:
+SELECT * FROM Contest;
+
+insert:
+INSERT OR REPLACE INTO Contest(id, name, startTimeSeconds, durationSeconds, phase) VALUES(?,?,?,?,?);
+
+deleteAll:
+DELETE FROM Contest;
