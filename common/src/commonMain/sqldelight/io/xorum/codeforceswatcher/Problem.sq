@@ -13,8 +13,11 @@ CREATE TABLE IF NOT EXISTS Problem (
 getAll:
 SELECT * FROM Problem;
 
-insert:
+update:
 INSERT OR REPLACE INTO Problem(id, name, enName, ruName, indexProblem, contestId, contestName, contestTime, isFavourite) VALUES(?,?,?,?,?,?,?,?,?);
+
+insert:
+INSERT OR REPLACE INTO Problem(name, enName, ruName, indexProblem, contestId, contestName, contestTime, isFavourite) VALUES(?,?,?,?,?,?,?,?);
 
 deleteAll:
 DELETE FROM Problem;

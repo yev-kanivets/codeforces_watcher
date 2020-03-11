@@ -15,6 +15,8 @@ class Problem(
         var contestTime: Long,
         var isFavourite: Boolean = false
 ) {
+    fun identify() = "$contestId$index"
+
     fun copy(id: Long = this.id, name: String = this.name, enName: String = this.enName, ruName: String = this.ruName, index: String = this.index, contestId: Long = this.contestId, contestName: String = this.contestName, contestTime: Long = this.contestTime, isFavourite: Boolean = this.isFavourite) =
             Problem(id, name, enName, ruName, index, contestId, contestName, contestTime, isFavourite)
 

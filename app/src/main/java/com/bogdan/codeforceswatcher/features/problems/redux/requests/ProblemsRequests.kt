@@ -2,13 +2,13 @@ package com.bogdan.codeforceswatcher.features.problems.redux.requests
 
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import io.xorum.codeforceswatcher.features.problems.models.Problem
 import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.CrashLogger
 import io.xorum.codeforceswatcher.db.DatabaseQueries
+import io.xorum.codeforceswatcher.features.problems.models.Problem
 import kotlinx.coroutines.*
 import tw.geothings.rekotlin.Action
 
@@ -89,19 +89,15 @@ class ProblemsRequests {
 
         private fun updateDatabase(newProblems: List<Problem>) {
             val problems = DatabaseQueries.Problems.getAll()
-            val favouriteProblemsMap = problems.associate { problem -> identify(problem) to problem.isFavourite }
+            val favouriteProblemsMap = problems.associate { problem -> problem.identify() to problem.isFavourite }
             DatabaseQueries.Problems.deleteAll()
 
             newProblems.forEach { problem ->
-                problem.isFavourite = favouriteProblemsMap[identify(problem)] ?: false
+                problem.isFavourite = favouriteProblemsMap[problem.identify()] ?: false
             }
 
             val identifiers = DatabaseQueries.Problems.insert(newProblems)
             newProblems.forEachIndexed { index, problem -> problem.id = identifiers[index] }
-        }
-
-        private fun identify(problem: Problem): String {
-            return problem.contestId.toString() + problem.index
         }
 
         data class Success(val problems: List<Problem>) : Action
@@ -109,12 +105,11 @@ class ProblemsRequests {
         data class Failure(override val message: String?) : ToastAction
     }
 
-    class ChangeStatusFavourite(val problem: Problem) : Request() {
+    class ChangeStatusFavourite(private val problem: Problem) : Request() {
 
         override suspend fun execute() {
-            lateinit var newProblem: Problem
+            val newProblem = problem.copy(isFavourite = !problem.isFavourite)
             withContext(Dispatchers.IO) {
-                newProblem = problem.copy(isFavourite = !problem.isFavourite)
                 DatabaseQueries.Problems.insert(newProblem)
             }
             store.dispatch(Success(newProblem))

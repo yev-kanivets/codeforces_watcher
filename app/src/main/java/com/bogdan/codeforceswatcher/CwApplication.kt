@@ -12,7 +12,7 @@ import com.bogdan.codeforceswatcher.redux.middlewares.appMiddleware
 import com.bogdan.codeforceswatcher.redux.middlewares.notificationMiddleware
 import com.bogdan.codeforceswatcher.redux.middlewares.toastMiddleware
 import com.bogdan.codeforceswatcher.redux.reducers.appReducer
-import com.bogdan.codeforceswatcher.room.RoomController
+import com.bogdan.codeforceswatcher.room.DatabaseController
 import com.bogdan.codeforceswatcher.util.PersistenceController
 import com.bogdan.codeforceswatcher.util.Prefs
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -23,7 +23,7 @@ import tw.geothings.rekotlin.Store
 
 val store = Store(
         reducer = ::appReducer,
-        state = RoomController.fetchAppState(),
+        state = DatabaseController.fetchAppState(),
         middleware = listOf(
                 appMiddleware, notificationMiddleware, toastMiddleware
         )
@@ -37,7 +37,7 @@ class CwApp : Application() {
         app = this
 
         initDatabase()
-        RoomController.onAppCreated()
+        DatabaseController.onAppCreated()
         PersistenceController.onAppCreated()
         FirebaseAnalytics.getInstance(this)
 
