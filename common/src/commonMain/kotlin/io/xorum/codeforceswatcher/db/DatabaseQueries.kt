@@ -2,22 +2,23 @@ package io.xorum.codeforceswatcher.db
 
 import io.xorum.codeforceswatcher.features.contests.models.Contest
 import io.xorum.codeforceswatcher.features.problems.models.Problem
-import io.xorum.codeforceswatcher.features.users.models.ListRatingChanges
+import io.xorum.codeforceswatcher.features.users.models.RatingChange
 import io.xorum.codeforceswatcher.features.users.models.User
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
+import kotlinx.serialization.list
 
 object DatabaseQueries {
     object Users {
         fun getAll() = database.userQueries.getAll().executeAsList().map { User.fromDB(it) }
         fun insert(user: User): Long {
             val serializer = Json(JsonConfiguration.Stable.copy(strictMode = false))
-            val ratingChanges = serializer.stringify(ListRatingChanges.serializer(), ListRatingChanges(user.ratingChanges))
+            val ratingChangesJson = serializer.stringify(RatingChange.serializer().list, user.ratingChanges)
 
             if (user.id != 0L) {
-                database.userQueries.update(user.id, user.avatar, user.rank, user.handle, user.rating?.toLong(), user.maxRating?.toLong(), user.firstName, user.lastName, ratingChanges)
+                database.userQueries.update(user.id, user.avatar, user.rank, user.handle, user.rating?.toLong(), user.maxRating?.toLong(), user.firstName, user.lastName, ratingChangesJson)
             } else {
-                database.userQueries.insert(user.avatar, user.rank, user.handle, user.rating?.toLong(), user.maxRating?.toLong(), user.firstName, user.lastName, ratingChanges)
+                database.userQueries.insert(user.avatar, user.rank, user.handle, user.rating?.toLong(), user.maxRating?.toLong(), user.firstName, user.lastName, ratingChangesJson)
             }
             return database.userQueries.getIndex().executeAsOne()
         }

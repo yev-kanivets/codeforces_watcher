@@ -69,7 +69,6 @@ class CwApp : Application() {
     }
 
     companion object {
-
         lateinit var app: CwApp
             private set
     }

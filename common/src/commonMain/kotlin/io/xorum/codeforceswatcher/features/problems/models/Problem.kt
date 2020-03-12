@@ -27,7 +27,7 @@ class Problem(
                     name = dbProblem.name,
                     enName = dbProblem.enName,
                     ruName = dbProblem.ruName,
-                    index = dbProblem.indexProblem,
+                    index = dbProblem.index,
                     contestId = dbProblem.contestId,
                     contestName = dbProblem.contestName,
                     contestTime = dbProblem.contestTime,

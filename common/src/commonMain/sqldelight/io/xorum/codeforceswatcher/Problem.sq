@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS Problem (
     name TEXT NOT NULL,
     enName TEXT NOT NULL,
     ruName TEXT NOT NULL,
-    indexProblem TEXT NOT NULL,
+    [index] TEXT NOT NULL,
     contestId INTEGER NOT NULL,
     contestName TEXT NOT NULL,
     contestTime INTEGER NOT NULL,
@@ -14,10 +14,10 @@ getAll:
 SELECT * FROM Problem;
 
 update:
-INSERT OR REPLACE INTO Problem(id, name, enName, ruName, indexProblem, contestId, contestName, contestTime, isFavourite) VALUES(?,?,?,?,?,?,?,?,?);
+INSERT OR REPLACE INTO Problem(id, name, enName, ruName, [index], contestId, contestName, contestTime, isFavourite) VALUES(?,?,?,?,?,?,?,?,?);
 
 insert:
-INSERT OR REPLACE INTO Problem(name, enName, ruName, indexProblem, contestId, contestName, contestTime, isFavourite) VALUES(?,?,?,?,?,?,?,?);
+INSERT OR REPLACE INTO Problem(name, enName, ruName, [index], contestId, contestName, contestTime, isFavourite) VALUES(?,?,?,?,?,?,?,?);
 
 deleteAll:
 DELETE FROM Problem;

@@ -27,7 +27,6 @@ class AddUserRequests {
 
             if (foundUser == null) {
                 user.id = DatabaseQueries.Users.insert(user)
-                println("Here id: ${user.id}")
                 store.dispatch(Success(user))
             } else {
                 store.dispatch(Failure(CwApp.app.getString(R.string.user_already_added)))
