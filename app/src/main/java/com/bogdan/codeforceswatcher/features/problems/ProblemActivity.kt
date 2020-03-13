@@ -14,14 +14,20 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.problems.models.Problem
+import com.bogdan.codeforceswatcher.store
+import io.xorum.codeforceswatcher.features.problems.models.Problem
 import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.activity_web_page.*
+import java.lang.IllegalStateException
 
 class ProblemActivity : AppCompatActivity() {
 
     private lateinit var pageTitle: String
     private lateinit var link: String
+
+    private val problem: Problem
+        get() = store.state.problems.problems.find { it.id == intent.getLongExtra(PROBLEM_ID, 0) }
+                ?: throw IllegalStateException()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +45,6 @@ class ProblemActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        val problem = intent.getSerializableExtra(PROBLEM_ID) as Problem
-
         pageTitle = getString(R.string.problem_name_with_index, problem.contestId, problem.index, problem.name)
         link = buildPageLink(problem)
     }
@@ -63,7 +67,7 @@ class ProblemActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_share -> {
                 share()
-                Analytics.logShareComment()
+                Analytics.logShareProblem()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -123,9 +127,9 @@ class ProblemActivity : AppCompatActivity() {
     companion object {
         private const val PROBLEM_ID = "problem_id"
 
-        fun newIntent(context: Context, problem: Problem): Intent {
+        fun newIntent(context: Context, problemId: Long): Intent {
             val intent = Intent(context, ProblemActivity::class.java)
-            intent.putExtra(PROBLEM_ID, problem)
+            intent.putExtra(PROBLEM_ID, problemId)
             return intent
         }
     }

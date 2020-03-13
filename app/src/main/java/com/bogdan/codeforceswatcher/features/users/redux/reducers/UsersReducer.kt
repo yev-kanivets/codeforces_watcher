@@ -5,7 +5,7 @@ import com.bogdan.codeforceswatcher.features.users.redux.actions.UsersActions
 import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersRequests
 import com.bogdan.codeforceswatcher.features.users.redux.states.UsersState
 import com.bogdan.codeforceswatcher.redux.states.AppState
-import org.rekotlin.Action
+import tw.geothings.rekotlin.Action
 
 fun usersReducer(action: Action, state: AppState): UsersState {
     var newState = state.users

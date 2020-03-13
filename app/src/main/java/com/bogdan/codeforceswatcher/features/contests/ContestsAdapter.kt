@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.contests.models.Contest
+import io.xorum.codeforceswatcher.features.contests.models.Contest
 import kotlinx.android.synthetic.main.view_contest_item.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,7 +31,7 @@ class ContestsAdapter(
         val contest = items[position]
         with(holder) {
             tvContestName.text = contest.name
-            tvContestTime.text = getDateTime(contest.time)
+            tvContestTime.text = getDateTime(contest.startTimeSeconds)
 
             onClickListener = { itemClickListener.invoke(contest) }
         }

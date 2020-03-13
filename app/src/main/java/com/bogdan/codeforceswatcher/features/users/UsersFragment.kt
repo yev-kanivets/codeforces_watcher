@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.users.models.User
+import io.xorum.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.features.users.models.UserItem
 import com.bogdan.codeforceswatcher.features.users.redux.actions.UsersActions
 import com.bogdan.codeforceswatcher.features.users.redux.requests.Source
@@ -23,7 +23,7 @@ import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Refresh
 import kotlinx.android.synthetic.main.fragment_users.*
-import org.rekotlin.StoreSubscriber
+import tw.geothings.rekotlin.StoreSubscriber
 
 class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         StoreSubscriber<UsersState> {
@@ -77,8 +77,8 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         swipeRefreshLayout.setOnRefreshListener(this)
 
         usersAdapter = UsersAdapter(requireContext()) { userIndex ->
-            val userId = store.state.users.users.sort(store.state.users.sortType)[userIndex].id
-            startActivity(UserActivity.newIntent(requireContext(), userId))
+            val user = store.state.users.users.sort(store.state.users.sortType)[userIndex]
+            startActivity(UserActivity.newIntent(requireContext(), user.id))
         }
 
         recyclerView.adapter = usersAdapter

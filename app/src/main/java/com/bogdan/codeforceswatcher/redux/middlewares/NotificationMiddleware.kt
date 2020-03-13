@@ -13,8 +13,8 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.MainActivity
 import com.bogdan.codeforceswatcher.features.users.redux.requests.Source
 import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersRequests
-import org.rekotlin.Middleware
-import org.rekotlin.StateType
+import tw.geothings.rekotlin.Middleware
+import tw.geothings.rekotlin.StateType
 
 val notificationMiddleware: Middleware<StateType> = { _, _ ->
     { next ->

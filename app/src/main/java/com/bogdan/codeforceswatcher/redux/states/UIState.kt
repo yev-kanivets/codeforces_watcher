@@ -1,7 +1,7 @@
 package com.bogdan.codeforceswatcher.redux.states
 
 import com.bogdan.codeforceswatcher.R
-import org.rekotlin.StateType
+import tw.geothings.rekotlin.StateType
 
 data class UIState(
         val selectedHomeTab: HomeTab = HomeTab.USERS

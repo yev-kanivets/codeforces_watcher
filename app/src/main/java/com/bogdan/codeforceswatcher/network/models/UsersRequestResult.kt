@@ -2,7 +2,7 @@ package com.bogdan.codeforceswatcher.network.models
 
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.users.models.User
+import io.xorum.codeforceswatcher.features.users.models.User
 
 sealed class Error(val message: String) {
     class Internet(message: String = CwApp.app.resources.getString(R.string.no_connection)) : Error(message)

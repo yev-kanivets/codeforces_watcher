@@ -15,7 +15,7 @@ import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Refresh
 import kotlinx.android.synthetic.main.fragment_problems.*
-import org.rekotlin.StoreSubscriber
+import tw.geothings.rekotlin.StoreSubscriber
 
 class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefreshLayout.OnRefreshListener {
 
@@ -67,7 +67,7 @@ class ProblemsFragment : Fragment(), StoreSubscriber<ProblemsState>, SwipeRefres
 
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
-        problemsAdapter = ProblemsAdapter(requireContext(), { startActivity(ProblemActivity.newIntent(requireContext(), it)) })
+        problemsAdapter = ProblemsAdapter(requireContext()) { startActivity(ProblemActivity.newIntent(requireContext(), it.id)) }
         recyclerView.adapter = problemsAdapter
     }
 

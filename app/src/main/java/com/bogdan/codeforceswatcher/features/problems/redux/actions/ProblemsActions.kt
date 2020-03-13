@@ -1,6 +1,6 @@
 package com.bogdan.codeforceswatcher.features.problems.redux.actions
 
-import org.rekotlin.Action
+import tw.geothings.rekotlin.Action
 
 class ProblemsActions {
 

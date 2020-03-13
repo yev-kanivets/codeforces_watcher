@@ -1,7 +1,7 @@
 package com.bogdan.codeforceswatcher.redux.actions
 
 import com.bogdan.codeforceswatcher.redux.states.UIState
-import org.rekotlin.Action
+import tw.geothings.rekotlin.Action
 
 class UIActions {
 
