@@ -3,6 +3,7 @@ package io.xorum.codeforceswatcher.features.users.models
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import kotlinx.serialization.list
+import io.xorum.codeforceswatcher.DbUser
 
 data class User(
         var id: Long = 0,
@@ -16,7 +17,7 @@ data class User(
         var ratingChanges: List<RatingChange>
 ) {
     companion object {
-        fun fromDB(dbUser: io.xorum.codeforceswatcher.User): User {
+        fun fromDB(dbUser: DbUser): User {
             val serializer = Json(JsonConfiguration.Stable.copy(strictMode = false))
             return User(
                     id = dbUser.id,
