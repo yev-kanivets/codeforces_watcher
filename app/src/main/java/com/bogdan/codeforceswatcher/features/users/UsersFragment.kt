@@ -77,8 +77,8 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         swipeRefreshLayout.setOnRefreshListener(this)
 
         usersAdapter = UsersAdapter(requireContext()) { userIndex ->
-            val userId = store.state.users.users.sort(store.state.users.sortType)[userIndex].id
-            startActivity(UserActivity.newIntent(requireContext(), userId))
+            val user = store.state.users.users.sort(store.state.users.sortType)[userIndex]
+            startActivity(UserActivity.newIntent(requireContext(), user.id))
         }
 
         recyclerView.adapter = usersAdapter

@@ -7,7 +7,9 @@ import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
 import io.xorum.codeforceswatcher.db.DatabaseQueries
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import tw.geothings.rekotlin.Action
 
 enum class Source(val isToastNeeded: Boolean) {
@@ -34,7 +36,7 @@ class UsersRequests {
             }
         }
 
-        private fun getDifferenceAndUpdate(users: List<User>, updatedUsers: List<User>): List<Pair<String, Int>> {
+        private suspend fun getDifferenceAndUpdate(users: List<User>, updatedUsers: List<User>): List<Pair<String, Int>> {
             val difference: MutableList<Pair<String, Int>> = mutableListOf()
             for (user in updatedUsers) {
                 users.find { it.handle == user.handle }?.let { foundUser ->
@@ -46,7 +48,9 @@ class UsersRequests {
                             difference.add(Pair(user.handle, delta))
                         }
                     }
-                    DatabaseQueries.Users.insert(user)
+                    withContext(Dispatchers.IO) {
+                        DatabaseQueries.Users.insert(user)
+                    }
                 }
             }
             return difference

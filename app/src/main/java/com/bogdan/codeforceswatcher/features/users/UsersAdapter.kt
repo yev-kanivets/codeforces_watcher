@@ -58,7 +58,6 @@ class UsersAdapter(
                 tvRating.text = rating
                 tvDateLastRatingUpdate.text = dateOfLastRatingUpdate
                 tvLastRatingUpdate.text = lastRatingUpdate
-
                 showLastRatingUpdate(update, holder)
             }
         }
