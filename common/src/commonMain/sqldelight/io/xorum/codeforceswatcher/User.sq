@@ -1,0 +1,31 @@
+import kotlin.collections.List;
+
+CREATE TABLE DbUser (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    avatar TEXT NOT NULL,
+    rank TEXT,
+    handle TEXT NOT NULL,
+    rating INTEGER,
+    maxRating INTEGER,
+    firstName TEXT,
+    lastName TEXT,
+    ratingChanges TEXT NOT NULL
+);
+
+getById:
+SELECT * FROM DbUser WHERE id = ?;
+
+getAll:
+SELECT * FROM DbUser;
+
+insert:
+INSERT OR REPLACE INTO DbUser(avatar, rank, handle, rating, maxRating, firstName, lastName, ratingChanges) VALUES(?,?,?,?,?,?,?,?);
+
+update:
+INSERT OR REPLACE INTO DbUser(id, avatar, rank, handle, rating, maxRating, firstName, lastName, ratingChanges) VALUES(?,?,?,?,?,?,?,?,?);
+
+getIndex:
+SELECT last_insert_rowid();
+
+delete:
+DELETE FROM DbUser WHERE id = ?;

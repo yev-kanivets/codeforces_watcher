@@ -1,0 +1,26 @@
+CREATE TABLE IF NOT EXISTS DbProblem (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name TEXT NOT NULL,
+    enName TEXT NOT NULL,
+    ruName TEXT NOT NULL,
+    [index] TEXT NOT NULL,
+    contestId INTEGER NOT NULL,
+    contestName TEXT NOT NULL,
+    contestTime INTEGER NOT NULL,
+    isFavourite INTEGER AS Boolean NOT NULL
+);
+
+getAll:
+SELECT * FROM DbProblem;
+
+update:
+INSERT OR REPLACE INTO DbProblem(id, name, enName, ruName, [index], contestId, contestName, contestTime, isFavourite) VALUES(?,?,?,?,?,?,?,?,?);
+
+insert:
+INSERT OR REPLACE INTO DbProblem(name, enName, ruName, [index], contestId, contestName, contestTime, isFavourite) VALUES(?,?,?,?,?,?,?,?);
+
+deleteAll:
+DELETE FROM DbProblem;
+
+getIndex:
+SELECT last_insert_rowid();

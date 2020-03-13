@@ -1,5 +1,8 @@
-package com.bogdan.codeforceswatcher.features.users.models
+package io.xorum.codeforceswatcher.features.users.models
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class RatingChange(
         val contestId: Int,
         val contestName: String,

@@ -1,0 +1,3 @@
+ALTER TABLE User RENAME TO DbUser;
+ALTER TABLE Contest RENAME TO DbContest;
+ALTER TABLE Problem RENAME TO DbProblem;

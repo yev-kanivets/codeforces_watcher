@@ -1,6 +1,6 @@
 package com.bogdan.codeforceswatcher.features.contests.redux.states
 
-import com.bogdan.codeforceswatcher.features.contests.models.Contest
+import io.xorum.codeforceswatcher.features.contests.models.Contest
 import tw.geothings.rekotlin.StateType
 
 data class ContestsState(

@@ -4,7 +4,7 @@ import androidx.core.text.HtmlCompat
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.actions.models.CFAction
-import com.bogdan.codeforceswatcher.features.users.models.User
+import io.xorum.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.network.getUsers
 import com.bogdan.codeforceswatcher.network.models.UsersRequestResult

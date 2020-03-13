@@ -9,18 +9,21 @@ import com.bogdan.codeforceswatcher.features.users.redux.requests.Source
 import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersRequests
 import com.bogdan.codeforceswatcher.receiver.StartAlarm
 import com.bogdan.codeforceswatcher.redux.middlewares.appMiddleware
-import com.bogdan.codeforceswatcher.redux.reducers.appReducer
-import com.bogdan.codeforceswatcher.redux.middlewares.toastMiddleware
 import com.bogdan.codeforceswatcher.redux.middlewares.notificationMiddleware
-import com.bogdan.codeforceswatcher.room.RoomController
+import com.bogdan.codeforceswatcher.redux.middlewares.toastMiddleware
+import com.bogdan.codeforceswatcher.redux.reducers.appReducer
+import com.bogdan.codeforceswatcher.room.DatabaseController
 import com.bogdan.codeforceswatcher.util.PersistenceController
 import com.bogdan.codeforceswatcher.util.Prefs
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.squareup.sqldelight.android.AndroidSqliteDriver
+import io.xorum.codeforceswatcher.CWDatabase
+import redux.sqlDriver
 import tw.geothings.rekotlin.Store
 
 val store = Store(
         reducer = ::appReducer,
-        state = RoomController.fetchAppState(),
+        state = DatabaseController.fetchAppState(),
         middleware = listOf(
                 appMiddleware, notificationMiddleware, toastMiddleware
         )
@@ -33,12 +36,12 @@ class CwApp : Application() {
 
         app = this
 
-        RoomController.onAppCreated()
+        initDatabase()
+        DatabaseController.onAppCreated()
         PersistenceController.onAppCreated()
         FirebaseAnalytics.getInstance(this)
 
         val prefs = Prefs.get()
-
         fetchData()
 
         if (prefs.readAlarm().isEmpty()) {
@@ -61,8 +64,11 @@ class CwApp : Application() {
         sendBroadcast(intent)
     }
 
-    companion object {
+    private fun initDatabase() {
+        sqlDriver = AndroidSqliteDriver(CWDatabase.Schema, app.applicationContext, "database")
+    }
 
+    companion object {
         lateinit var app: CwApp
             private set
     }

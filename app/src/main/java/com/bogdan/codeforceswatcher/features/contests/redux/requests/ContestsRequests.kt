@@ -2,7 +2,7 @@ package com.bogdan.codeforceswatcher.features.contests.redux.requests
 
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.contests.models.Contest
+import io.xorum.codeforceswatcher.features.contests.models.Contest
 import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
