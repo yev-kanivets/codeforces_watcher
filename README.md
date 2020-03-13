@@ -1,16 +1,18 @@
 # Codeforces WatchR
 
-![](https://github.com/xorum-io/codeforces_watcher/blob/dev/Codeforces%20Watcher.png)
+![](https://user-images.githubusercontent.com/11427267/75924018-7fade780-5e66-11ea-9fa6-7a3ca62a9b46.png)
 
 [Codeforces](https://codeforces.com/) is one of the most popular platforms for competitive programming. Each month there are conducted dozens of contests with thousands of participants, including us.
 
 We decided to give back to this amazing community by creating **Codeforces WatchR** - nice and user-friendly Android application, which leverages Codeforces API to bring more competitive programming to Android devices. Codeforces WatchR allows:
 1. **Watch for activity** of any Codeforces user.
 2. **Sort users** by rating and last participation date.
-3. Shortlist **upcoming Codeforces contests**.
-4. **Recent Actions** and **Problems** are coming soon...
+3. Shortlist and register for **upcoming Codeforces contests**.
+4. Follow **Recent Actions**.
+5. Browse and search for **Problems**.
 
-<a href='https://play.google.com/store/apps/details?id=com.bogdan.codeforceswatcher&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height="100px"></a>
+<a href='https://play.google.com/store/apps/details?id=com.bogdan.codeforceswatcher&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://user-images.githubusercontent.com/11427267/75923897-483f3b00-5e66-11ea-8ec7-e86887afea51.png'></a>
+<a href='https://apps.apple.com/us/app/codeforces-watchr-contests/id1495591299'><img alt='Get it on App Store' src='https://user-images.githubusercontent.com/11427267/75923896-47a6a480-5e66-11ea-87c1-3ec73ebcf7a5.png'></a>
 
 ## Development and maintenance
 
