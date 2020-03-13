@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS Problem (
+CREATE TABLE IF NOT EXISTS DbProblem (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     name TEXT NOT NULL,
     enName TEXT NOT NULL,
@@ -11,16 +11,16 @@ CREATE TABLE IF NOT EXISTS Problem (
 );
 
 getAll:
-SELECT * FROM Problem;
+SELECT * FROM DbProblem;
 
 update:
-INSERT OR REPLACE INTO Problem(id, name, enName, ruName, [index], contestId, contestName, contestTime, isFavourite) VALUES(?,?,?,?,?,?,?,?,?);
+INSERT OR REPLACE INTO DbProblem(id, name, enName, ruName, [index], contestId, contestName, contestTime, isFavourite) VALUES(?,?,?,?,?,?,?,?,?);
 
 insert:
-INSERT OR REPLACE INTO Problem(name, enName, ruName, [index], contestId, contestName, contestTime, isFavourite) VALUES(?,?,?,?,?,?,?,?);
+INSERT OR REPLACE INTO DbProblem(name, enName, ruName, [index], contestId, contestName, contestTime, isFavourite) VALUES(?,?,?,?,?,?,?,?);
 
 deleteAll:
-DELETE FROM Problem;
+DELETE FROM DbProblem;
 
 getIndex:
 SELECT last_insert_rowid();

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS Contest (
+CREATE TABLE IF NOT EXISTS DbContest (
     id INTEGER NOT NULL,
     name TEXT NOT NULL,
     startTimeSeconds INTEGER NOT NULL,
@@ -8,10 +8,10 @@ CREATE TABLE IF NOT EXISTS Contest (
 );
 
 getAll:
-SELECT * FROM Contest;
+SELECT * FROM DbContest;
 
 insert:
-INSERT OR REPLACE INTO Contest(id, name, startTimeSeconds, durationSeconds, phase) VALUES(?,?,?,?,?);
+INSERT OR REPLACE INTO DbContest(id, name, startTimeSeconds, durationSeconds, phase) VALUES(?,?,?,?,?);
 
 deleteAll:
-DELETE FROM Contest;
+DELETE FROM DbContest;

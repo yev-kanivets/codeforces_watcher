@@ -1,6 +1,6 @@
 package io.xorum.codeforceswatcher.features.contests.models
 
-import io.xorum.codeforceswatcher.Contest
+import io.xorum.codeforceswatcher.DbContest
 
 data class Contest(
         val id: Long,
@@ -10,14 +10,12 @@ data class Contest(
         val phase: String
 ) {
     companion object {
-        fun fromDB(dbContest: Contest): io.xorum.codeforceswatcher.features.contests.models.Contest {
-            return Contest(
-                    id = dbContest.id,
-                    name = dbContest.name,
-                    startTimeSeconds = dbContest.startTimeSeconds,
-                    durationSeconds = dbContest.durationSeconds,
-                    phase = dbContest.phase
-            )
-        }
+        fun fromDB(dbContest: DbContest) = Contest(
+                id = dbContest.id,
+                name = dbContest.name,
+                startTimeSeconds = dbContest.startTimeSeconds,
+                durationSeconds = dbContest.durationSeconds,
+                phase = dbContest.phase
+        )
     }
 }

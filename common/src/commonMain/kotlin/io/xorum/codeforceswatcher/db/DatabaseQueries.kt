@@ -9,18 +9,27 @@ import kotlinx.serialization.json.JsonConfiguration
 import kotlinx.serialization.list
 
 object DatabaseQueries {
+
     object Users {
         fun getAll() = database.userQueries.getAll().executeAsList().map { User.fromDB(it) }
+
         fun insert(user: User): Long {
             val serializer = Json(JsonConfiguration.Stable.copy(strictMode = false))
             val ratingChangesJson = serializer.stringify(RatingChange.serializer().list, user.ratingChanges)
-
-            if (user.id != 0L) {
-                database.userQueries.update(user.id, user.avatar, user.rank, user.handle, user.rating?.toLong(), user.maxRating?.toLong(), user.firstName, user.lastName, ratingChangesJson)
-            } else {
+            if (user.id == 0L) {
                 database.userQueries.insert(user.avatar, user.rank, user.handle, user.rating?.toLong(), user.maxRating?.toLong(), user.firstName, user.lastName, ratingChangesJson)
+            } else {
+                database.userQueries.update(user.id, user.avatar, user.rank, user.handle, user.rating?.toLong(), user.maxRating?.toLong(), user.firstName, user.lastName, ratingChangesJson)
             }
             return database.userQueries.getIndex().executeAsOne()
+        }
+
+        fun insert(users: List<User>) {
+            database.userQueries.transaction {
+                users.forEach { user ->
+                    insert(user)
+                }
+            }
         }
 
         fun delete(userId: Long) = database.userQueries.delete(userId)
@@ -51,18 +60,16 @@ object DatabaseQueries {
             }
 
             val databaseProblems = getAll()
-            val identifiers = hashMapOf<String, Long>()
-            databaseProblems.forEach { identifiers[it.identify()] = it.id }
+            val identifiers = databaseProblems.associate { it.identify() to it.id }
             val resultIds = mutableListOf<Long>()
             problems.forEach { identifiers[it.identify()]?.let { id -> resultIds.add(id) } }
-
             return resultIds
         }
 
-        fun insert(problem: Problem) = if (problem.id != 0L) {
-            database.problemQueries.update(problem.id, problem.name, problem.enName, problem.ruName, problem.index, problem.contestId, problem.contestName, problem.contestTime, problem.isFavourite)
-        } else {
+        fun insert(problem: Problem) = if (problem.id == 0L) {
             database.problemQueries.insert(problem.name, problem.enName, problem.ruName, problem.index, problem.contestId, problem.contestName, problem.contestTime, problem.isFavourite)
+        } else {
+            database.problemQueries.update(problem.id, problem.name, problem.enName, problem.ruName, problem.index, problem.contestId, problem.contestName, problem.contestTime, problem.isFavourite)
         }
 
         fun deleteAll() = database.problemQueries.deleteAll()

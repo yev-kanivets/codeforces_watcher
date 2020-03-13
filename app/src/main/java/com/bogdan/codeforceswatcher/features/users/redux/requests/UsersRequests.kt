@@ -36,23 +36,20 @@ class UsersRequests {
             }
         }
 
-        private suspend fun getDifferenceAndUpdate(users: List<User>, updatedUsers: List<User>): List<Pair<String, Int>> {
+        private fun getDifferenceAndUpdate(users: List<User>, updatedUsers: List<User>): List<Pair<String, Int>> {
             val difference: MutableList<Pair<String, Int>> = mutableListOf()
             for (user in updatedUsers) {
                 users.find { it.handle == user.handle }?.let { foundUser ->
                     user.id = foundUser.id
-
                     if (foundUser.ratingChanges != user.ratingChanges) {
                         user.ratingChanges.lastOrNull()?.let { ratingChange ->
                             val delta = ratingChange.newRating - ratingChange.oldRating
                             difference.add(Pair(user.handle, delta))
                         }
                     }
-                    withContext(Dispatchers.IO) {
-                        DatabaseQueries.Users.insert(user)
-                    }
                 }
             }
+            DatabaseQueries.Users.insert(updatedUsers)
             return difference
         }
 

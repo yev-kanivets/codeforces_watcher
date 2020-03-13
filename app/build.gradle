@@ -99,7 +99,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2"
 
     implementation "com.squareup.okhttp3:logging-interceptor:4.2.1"
-    implementation "com.squareup.sqldelight:android-driver:1.2.1"
+    implementation "com.squareup.sqldelight:android-driver:$sqlDelight_version"
     implementation "com.squareup.sqldelight:sqlite-driver:$sqlDelight_version"
 }
 
