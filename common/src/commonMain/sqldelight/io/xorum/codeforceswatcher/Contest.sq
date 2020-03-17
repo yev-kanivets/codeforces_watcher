@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS DbContest (
     id INTEGER NOT NULL,
     name TEXT NOT NULL,
-    startTimeSeconds INTEGER NOT NULL,
-    durationSeconds INTEGER NOT NULL,
+    time INTEGER NOT NULL,
+    duration INTEGER NOT NULL,
     phase TEXT NOT NULL,
     PRIMARY KEY (id)
 );
@@ -11,7 +11,7 @@ getAll:
 SELECT * FROM DbContest;
 
 insert:
-INSERT OR REPLACE INTO DbContest(id, name, startTimeSeconds, durationSeconds, phase) VALUES(?,?,?,?,?);
+INSERT OR REPLACE INTO DbContest(id, name, time, duration, phase) VALUES(?,?,?,?,?);
 
 deleteAll:
 DELETE FROM DbContest;

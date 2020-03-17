@@ -13,8 +13,8 @@ data class Contest(
         fun fromDB(dbContest: DbContest) = Contest(
                 id = dbContest.id,
                 name = dbContest.name,
-                startTimeSeconds = dbContest.startTimeSeconds,
-                durationSeconds = dbContest.durationSeconds,
+                startTimeSeconds = dbContest.time,
+                durationSeconds = dbContest.duration,
                 phase = dbContest.phase
         )
     }
