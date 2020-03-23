@@ -1,9 +1,9 @@
 package com.bogdan.codeforceswatcher.network
 
-import com.bogdan.codeforceswatcher.features.actions.redux.requests.ActionsResponse
+import io.xorum.codeforceswatcher.network.responses.ActionsResponse
 import com.bogdan.codeforceswatcher.features.contests.redux.requests.ContestsResponse
 import com.bogdan.codeforceswatcher.features.problems.redux.requests.ProblemsResponse
-import com.bogdan.codeforceswatcher.features.users.redux.requests.RatingChangeResponse
+import io.xorum.codeforceswatcher.network.responses.RatingChangeResponse
 import io.xorum.codeforceswatcher.network.responses.UsersResponse
 import retrofit2.Response
 import retrofit2.http.GET

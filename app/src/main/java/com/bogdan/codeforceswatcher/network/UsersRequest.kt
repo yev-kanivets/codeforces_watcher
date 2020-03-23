@@ -1,15 +1,13 @@
 package com.bogdan.codeforceswatcher.network
 
-import io.xorum.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.network.models.Error
 import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
+import io.xorum.codeforceswatcher.features.users.models.User
+import io.xorum.codeforceswatcher.network.CodeforcesRestClient
 import kotlinx.coroutines.delay
-import okhttp3.ResponseBody
-import org.json.JSONException
-import org.json.JSONObject
 
 suspend fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean): UsersRequestResult {
-    val response = RestClient.getUsers(handles)
+    val response = CodeforcesRestClient.getUsers(handles)
 
     return response?.result?.let { users ->
         if (users.isEmpty()) {
@@ -28,23 +26,11 @@ suspend fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean): UsersRequ
 suspend fun loadRatingUpdates(userList: List<User>): UsersRequestResult {
     for (user in userList) {
         delay(250) // Because Codeforces blocks frequent queries
-        val response = RestClient.getRating(user.handle)
-        response?.body()?.ratingChanges?.let { ratingChanges ->
+        val response = CodeforcesRestClient.getRating(user.handle)
+        response?.result?.let { ratingChanges ->
             user.ratingChanges = ratingChanges
-        } ?: return buildError(response?.errorBody())
+        } ?: return UsersRequestResult.Failure(response?.comment?.let { Error.Response(it) }
+                ?: Error.Response())
     }
     return UsersRequestResult.Success(userList)
 }
-
-private fun extractErrorMessage(errorBody: ResponseBody?) = errorBody?.let {
-    try {
-        JSONObject(errorBody.string()).getString("comment")
-    } catch (e: JSONException) {
-        e.printStackTrace()
-        null
-    }
-}
-
-private fun buildError(errorBody: ResponseBody?) = UsersRequestResult.Failure(extractErrorMessage(errorBody)
-        ?.let { Error.Response(it) }
-        ?: Error.Response())

@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.actions.models.ActionItem
-import com.bogdan.codeforceswatcher.features.actions.models.CFAction
+import io.xorum.codeforceswatcher.features.actions.models.CFAction
 import com.bogdan.codeforceswatcher.features.actions.redux.requests.ActionsRequests
 import com.bogdan.codeforceswatcher.features.actions.redux.states.ActionsState
 import com.bogdan.codeforceswatcher.store
@@ -68,7 +68,7 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
         actionsAdapter = ActionsAdapter(requireContext()) { actionIndex ->
-            startActivity(ActionActivity.newIntent(requireContext(), store.state.actions.actions[actionIndex]))
+            startActivity(ActionActivity.newIntent(requireContext(), store.state.actions.actions[actionIndex].id))
         }
         recyclerView.adapter = actionsAdapter
     }

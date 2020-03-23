@@ -3,14 +3,14 @@ package com.bogdan.codeforceswatcher.features.actions.redux.requests
 import androidx.core.text.HtmlCompat
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.actions.models.CFAction
-import io.xorum.codeforceswatcher.features.users.models.User
-import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.network.getUsers
 import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
+import io.xorum.codeforceswatcher.features.actions.models.CFAction
+import io.xorum.codeforceswatcher.features.users.models.User
+import io.xorum.codeforceswatcher.network.CodeforcesRestClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import tw.geothings.rekotlin.Action
@@ -23,8 +23,8 @@ class ActionsRequests {
     ) : Request() {
 
         override suspend fun execute() {
-            val response = RestClient.getActions(lang = defineLang())
-            response?.body()?.actions?.let { actions ->
+            val response = CodeforcesRestClient.getActions(lang = defineLang())
+            response?.result?.let { actions ->
                 buildUiDataAndDispatch(actions)
             } ?: dispatchFailure()
         }
@@ -53,9 +53,7 @@ class ActionsRequests {
             val handles: MutableSet<String> = mutableSetOf()
 
             for (action in actions) {
-                if (action.comment != null) {
-                    handles.add(action.comment.commentatorHandle)
-                }
+                action.comment?.let { handles.add(it.commentatorHandle) }
                 handles.add(action.blogEntry.authorHandle)
             }
 
@@ -69,19 +67,17 @@ class ActionsRequests {
             val uiData: MutableList<CFAction> = mutableListOf()
 
             for (action in actions) {
-                if (action.comment != null) {
-                    users?.find { user -> user.handle == action.comment.commentatorHandle }
+                action.comment?.let { comment ->
+                    users?.find { user -> user.handle == comment.commentatorHandle }
                             ?.let { foundUser ->
-                                action.comment.commentatorAvatar = foundUser.avatar
-                                action.comment.commentatorRank = foundUser.rank
+                                comment.commentatorAvatar = foundUser.avatar
+                                comment.commentatorRank = foundUser.rank
                             }
 
-                    action.comment.text = convertFromHtml(action.comment.text)
-                } else {
-                    if (action.timeInMillisecond != action.blogEntry.creationTimeSeconds &&
-                            action.timeInMillisecond != action.blogEntry.modificationTimeSeconds) {
-                        continue
-                    }
+                    comment.text = convertFromHtml(comment.text)
+                } ?: if (action.timeSeconds != action.blogEntry.creationTimeSeconds &&
+                        action.timeSeconds != action.blogEntry.modificationTimeSeconds) {
+                    continue
                 }
 
                 users?.find { user -> user.handle == action.blogEntry.authorHandle }

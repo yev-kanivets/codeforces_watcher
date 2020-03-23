@@ -12,6 +12,8 @@ import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.utils.EmptyContent
 import io.ktor.http.URLProtocol
+import io.xorum.codeforceswatcher.network.responses.ActionsResponse
+import io.xorum.codeforceswatcher.network.responses.RatingChangeResponse
 import io.xorum.codeforceswatcher.network.responses.UsersResponse
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.UnitDescriptor
@@ -22,10 +24,29 @@ private const val CODEFORCES_API_LINK = "www.codeforces.com/api/"
 object CodeforcesRestClient {
     private val codeforcesApiClient = makeCodeforcesApiClient()
 
-    suspend fun getUsers(handles: String): UsersResponse {
-        return codeforcesApiClient.get(path = "user.info") {
+    suspend fun getUsers(handles: String) = try {
+        codeforcesApiClient.get<UsersResponse>(path = "user.info") {
             parameter("handles", handles)
         }
+    } catch (t: Throwable) {
+        null
+    }
+
+    suspend fun getRating(handle: String) = try {
+        codeforcesApiClient.get<RatingChangeResponse>(path = "user.rating") {
+            parameter("handle", handle)
+        }
+    } catch (t: Throwable) {
+        null
+    }
+
+    suspend fun getActions(maxCount: Int = 100, lang: String) = try {
+        codeforcesApiClient.get<ActionsResponse>(path = "recentActions") {
+            parameter("maxCount", maxCount)
+            parameter("lang", lang)
+        }
+    } catch (t: Throwable) {
+        null
     }
 
     @UseExperimental(UnstableDefault::class)

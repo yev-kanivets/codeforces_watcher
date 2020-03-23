@@ -14,8 +14,9 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.actions.models.CFAction
+import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
+import io.xorum.codeforceswatcher.features.actions.models.CFAction
 import kotlinx.android.synthetic.main.activity_web_page.*
 
 class ActionActivity : AppCompatActivity() {
@@ -36,7 +37,8 @@ class ActionActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        val cfAction = intent.getSerializableExtra(ACTION_ID) as CFAction
+        val cfAction = store.state.actions.actions.find { it.id == intent.getIntExtra(ACTION_ID, -1) }
+                ?: throw IllegalStateException()
 
         pageTitle = cfAction.blogEntry.title
         link = buildPageLink(cfAction)
@@ -44,7 +46,7 @@ class ActionActivity : AppCompatActivity() {
 
     private fun buildPageLink(cfAction: CFAction) =
             if (cfAction.comment != null) {
-                getString(R.string.comment_url, cfAction.blogEntry.id, cfAction.comment.id)
+                getString(R.string.comment_url, cfAction.blogEntry.id, cfAction.comment?.id)
             } else {
                 getString(R.string.blog_entry_url, cfAction.blogEntry.id)
             }
@@ -125,9 +127,9 @@ class ActionActivity : AppCompatActivity() {
     companion object {
         private const val ACTION_ID = "action_id"
 
-        fun newIntent(context: Context, action: CFAction): Intent {
+        fun newIntent(context: Context, actionId: Int): Intent {
             val intent = Intent(context, ActionActivity::class.java)
-            intent.putExtra(ACTION_ID, action)
+            intent.putExtra(ACTION_ID, actionId)
             return intent
         }
     }
