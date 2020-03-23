@@ -3,13 +3,13 @@ package com.bogdan.codeforceswatcher.network
 import com.bogdan.codeforceswatcher.BuildConfig
 import com.bogdan.codeforceswatcher.util.CrashLogger
 import com.google.gson.GsonBuilder
+import io.xorum.codeforceswatcher.network.CodeforcesRestClient
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.logging.HttpLoggingInterceptor
 
 object RestClient {
-
     private val retrofit by lazy {
         val okHttpClientBuild = OkHttpClient.Builder()
         if (BuildConfig.DEBUG) {
@@ -35,7 +35,7 @@ object RestClient {
     private val codeforcesApi by lazy { retrofit.create(CodeforcesApi::class.java) }
 
     suspend fun getUsers(handle: String) = try {
-        codeforcesApi.getUsers(handle)
+        CodeforcesRestClient.getUsers(handle)
     } catch (t: Throwable) {
         CrashLogger.log(t)
         null

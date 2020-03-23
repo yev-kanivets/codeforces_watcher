@@ -12,5 +12,4 @@ class RatingUpdateReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         store.dispatch(UsersRequests.FetchUsers(Source.BROADCAST))
     }
-
 }

@@ -4,7 +4,7 @@ import com.bogdan.codeforceswatcher.features.actions.redux.requests.ActionsRespo
 import com.bogdan.codeforceswatcher.features.contests.redux.requests.ContestsResponse
 import com.bogdan.codeforceswatcher.features.problems.redux.requests.ProblemsResponse
 import com.bogdan.codeforceswatcher.features.users.redux.requests.RatingChangeResponse
-import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersResponse
+import io.xorum.codeforceswatcher.network.responses.UsersResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -11,21 +11,18 @@ import org.json.JSONObject
 suspend fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean): UsersRequestResult {
     val response = RestClient.getUsers(handles)
 
-    return if (response == null) {
-        UsersRequestResult.Failure(Error.Internet())
-    } else {
-        response.body()?.users?.let { users ->
-            if (users.isEmpty()) {
-                return UsersRequestResult.Failure(Error.Response())
-            }
+    return response?.result?.let { users ->
+        if (users.isEmpty()) {
+            return UsersRequestResult.Failure(Error.Response())
+        }
 
-            if (isRatingUpdatesNeeded) {
-                loadRatingUpdates(users)
-            } else {
-                UsersRequestResult.Success(users)
-            }
-        } ?: buildError(response.errorBody())
-    }
+        if (isRatingUpdatesNeeded) {
+            loadRatingUpdates(users)
+        } else {
+            UsersRequestResult.Success(users)
+        }
+    } ?: UsersRequestResult.Failure(response?.comment?.let { Error.Response(it) }
+            ?: Error.Internet())
 }
 
 suspend fun loadRatingUpdates(userList: List<User>): UsersRequestResult {
