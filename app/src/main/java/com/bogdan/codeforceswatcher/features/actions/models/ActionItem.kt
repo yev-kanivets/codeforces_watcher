@@ -3,7 +3,7 @@ package com.bogdan.codeforceswatcher.features.actions.models
 import android.text.SpannableStringBuilder
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.users.models.colorTextByUserRank
+import com.bogdan.codeforceswatcher.features.users.colorTextByUserRank
 import io.xorum.codeforceswatcher.features.actions.models.CFAction
 import io.xorum.codeforceswatcher.util.LinkValidator
 import java.lang.IllegalStateException

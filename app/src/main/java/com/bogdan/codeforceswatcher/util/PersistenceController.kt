@@ -1,7 +1,7 @@
 package com.bogdan.codeforceswatcher.util
 
-import com.bogdan.codeforceswatcher.redux.states.AppState
-import com.bogdan.codeforceswatcher.store
+import redux.states.AppState
+import redux.store
 import tw.geothings.rekotlin.StoreSubscriber
 
 object PersistenceController : StoreSubscriber<AppState> {

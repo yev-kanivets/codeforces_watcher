@@ -8,7 +8,7 @@ enum class Refresh { USERS, CONTESTS, ACTIONS, PROBLEMS }
 
 object Analytics {
 
-    var isEnabled: Boolean = true
+    private var isEnabled: Boolean = true
 
     private val instance = FirebaseAnalytics.getInstance(CwApp.app)
 

@@ -4,14 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import com.bogdan.codeforceswatcher.CwApp
+import io.xorum.codeforceswatcher.db.SavedData
 
-class Prefs constructor(private val context: Context) {
+class Prefs(private val context: Context) : SavedData {
 
     private val ratePeriod = 5
 
-    fun readSpinnerSortPosition(): String {
+    override fun readSpinnerSortPosition(): Int {
         val defaultPrefs = getDefaultPrefs()
-        return defaultPrefs.getString(KEY_SPINNER_SORT_POSITION, "0") ?: "0"
+        return (defaultPrefs.getString(KEY_SPINNER_SORT_POSITION, "0") ?: "0").toInt()
     }
 
     fun writeSpinnerSortPosition(spinnerSortPosition: Int) {
@@ -20,7 +21,7 @@ class Prefs constructor(private val context: Context) {
         editor.apply()
     }
 
-    fun readProblemsIsFavourite(): Boolean {
+    override fun readProblemsIsFavourite(): Boolean {
         val defaultPrefs = getDefaultPrefs()
         return defaultPrefs.getBoolean(KEY_PROBLEMS_IS_FAVOURITE, false)
     }

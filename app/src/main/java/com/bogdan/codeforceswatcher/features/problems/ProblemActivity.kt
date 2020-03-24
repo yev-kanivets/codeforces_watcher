@@ -14,10 +14,10 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.store
 import io.xorum.codeforceswatcher.features.problems.models.Problem
 import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.activity_web_page.*
+import redux.store
 import java.lang.IllegalStateException
 
 class ProblemActivity : AppCompatActivity() {

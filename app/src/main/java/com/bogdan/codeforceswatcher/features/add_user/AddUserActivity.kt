@@ -7,12 +7,12 @@ import android.view.View.*
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.add_user.redux.actions.AddUserActions
-import com.bogdan.codeforceswatcher.features.add_user.redux.requests.AddUserRequests
-import com.bogdan.codeforceswatcher.features.add_user.redux.states.AddUserState
-import com.bogdan.codeforceswatcher.store
+import io.xorum.codeforceswatcher.features.add_user.redux.actions.AddUserActions
+import io.xorum.codeforceswatcher.features.add_user.redux.requests.AddUserRequests
+import io.xorum.codeforceswatcher.features.add_user.redux.states.AddUserState
 import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.activity_add_user.*
+import redux.store
 import tw.geothings.rekotlin.StoreSubscriber
 
 class AddUserActivity : AppCompatActivity(), OnClickListener, StoreSubscriber<AddUserState> {

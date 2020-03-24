@@ -7,9 +7,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.users.redux.actions.UsersActions
+import io.xorum.codeforceswatcher.features.users.redux.actions.UsersActions
 import io.xorum.codeforceswatcher.features.users.models.User
-import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.CustomMarkerView
 import io.xorum.codeforceswatcher.util.LinkValidator
 import com.github.mikephil.charting.components.XAxis
@@ -20,6 +19,7 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.squareup.picasso.Picasso
 import io.xorum.codeforceswatcher.db.DatabaseQueries
 import kotlinx.android.synthetic.main.activity_user.*
+import redux.store
 import java.text.SimpleDateFormat
 import java.util.*
 
