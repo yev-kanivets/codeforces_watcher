@@ -1,15 +1,13 @@
 package com.bogdan.codeforceswatcher.features.users.redux.requests
 
 import io.xorum.codeforceswatcher.features.users.models.User
-import com.bogdan.codeforceswatcher.network.getUsers
-import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
+import com.bogdan.codeforceswatcher.features.users.getUsers
+import com.bogdan.codeforceswatcher.features.users.models.UsersRequestResult
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
 import io.xorum.codeforceswatcher.db.DatabaseQueries
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
 import tw.geothings.rekotlin.Action
 
 enum class Source(val isToastNeeded: Boolean) {

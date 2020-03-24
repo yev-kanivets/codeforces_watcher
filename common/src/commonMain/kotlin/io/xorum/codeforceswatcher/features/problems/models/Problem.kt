@@ -5,14 +5,14 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Problem(
-        var id: Long,
+        var id: Long = 0,
         val name: String,
-        var enName: String,
-        var ruName: String,
+        var enName: String = "",
+        var ruName: String = "",
         val index: String,
         var contestId: Long,
-        var contestName: String,
-        var contestTime: Long,
+        var contestName: String = "",
+        var contestTime: Long = 0,
         var isFavourite: Boolean = false
 ) {
     fun identify() = "$contestId$index"

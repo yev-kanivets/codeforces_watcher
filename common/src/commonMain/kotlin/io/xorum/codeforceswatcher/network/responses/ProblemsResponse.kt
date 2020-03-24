@@ -1,11 +1,13 @@
-package com.bogdan.codeforceswatcher.features.problems.redux.requests
+package io.xorum.codeforceswatcher.network.responses
 
 import io.xorum.codeforceswatcher.features.problems.models.Problem
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class ProblemsResponse(
         val status: String,
-        @SerializedName("result") val result: Result
+        val result: Result
 )
 
+@Serializable
 data class Result(val problems: List<Problem>)

@@ -1,7 +1,9 @@
 package io.xorum.codeforceswatcher.features.contests.models
 
 import io.xorum.codeforceswatcher.DbContest
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Contest(
         val id: Long,
         val name: String,

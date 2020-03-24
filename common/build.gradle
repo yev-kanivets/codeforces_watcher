@@ -15,6 +15,7 @@ kotlin {
                 implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization_version"
                 implementation "com.squareup.sqldelight:runtime:$sqlDelight_version"
                 implementation "io.ktor:ktor-client-serialization:$ktor_version"
+                implementation "io.ktor:ktor-client-logging:$ktor_version"
             }
         }
 
@@ -30,6 +31,7 @@ kotlin {
                 implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serialization_version"
                 implementation "com.squareup.sqldelight:native-driver:$sqlDelight_version"
                 implementation "io.ktor:ktor-client-serialization-native:$ktor_version"
+                implementation "io.ktor:ktor-client-logging-native:$ktor_version"
             }
         }
 
@@ -41,6 +43,7 @@ kotlin {
                 implementation "com.squareup.sqldelight:sqlite-driver:$sqlDelight_version"
                 implementation "com.squareup.sqldelight:runtime-jvm:$sqlDelight_version"
                 implementation "io.ktor:ktor-client-serialization-jvm:$ktor_version"
+                api "io.ktor:ktor-client-logging-jvm:$ktor_version"
             }
         }
 

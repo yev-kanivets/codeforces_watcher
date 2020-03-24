@@ -4,7 +4,9 @@ import android.text.SpannableStringBuilder
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.users.models.colorTextByUserRank
+import io.xorum.codeforceswatcher.features.actions.models.CFAction
 import io.xorum.codeforceswatcher.util.LinkValidator
+import java.lang.IllegalStateException
 
 sealed class ActionItem {
 
@@ -18,12 +20,14 @@ sealed class ActionItem {
 
         init {
             val comment = action.comment ?: throw NullPointerException()
-            commentatorAvatar = LinkValidator.avatar(comment.commentatorAvatar)
+
+            commentatorAvatar = LinkValidator.avatar(comment.commentatorAvatar
+                    ?: throw IllegalStateException())
             commentatorHandle = buildHandle(
                     comment.commentatorHandle, comment.commentatorRank
             )
             title = action.blogEntry.title
-            time = action.timeInMillisecond
+            time = action.timeSeconds
             content = comment.text
         }
 
@@ -46,10 +50,11 @@ sealed class ActionItem {
 
         init {
             with(action) {
-                authorAvatar = LinkValidator.avatar(blogEntry.authorAvatar)
+                authorAvatar = LinkValidator.avatar(blogEntry.authorAvatar
+                        ?: throw IllegalStateException())
                 authorHandle = colorTextByUserRank(blogEntry.authorHandle, blogEntry.authorRank)
                 blogTitle = blogEntry.title
-                time = timeInMillisecond
+                time = timeSeconds
             }
         }
     }

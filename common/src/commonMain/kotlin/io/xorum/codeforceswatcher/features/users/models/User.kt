@@ -4,17 +4,19 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import kotlinx.serialization.list
 import io.xorum.codeforceswatcher.DbUser
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class User(
         var id: Long = 0,
         val avatar: String,
-        val rank: String?,
+        val rank: String? = null,
         val handle: String,
-        val rating: Int?,
-        val maxRating: Int?,
-        val firstName: String?,
-        val lastName: String?,
-        var ratingChanges: List<RatingChange>
+        val rating: Int? = null,
+        val maxRating: Int? = null,
+        val firstName: String? = null,
+        val lastName: String? = null,
+        var ratingChanges: List<RatingChange> = listOf()
 ) {
     companion object {
         fun fromDB(dbUser: DbUser): User {

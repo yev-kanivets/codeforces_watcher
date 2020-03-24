@@ -2,13 +2,13 @@ package com.bogdan.codeforceswatcher.features.problems.redux.requests
 
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.network.RestClient
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.CrashLogger
 import io.xorum.codeforceswatcher.db.DatabaseQueries
 import io.xorum.codeforceswatcher.features.problems.models.Problem
+import io.xorum.codeforceswatcher.network.CodeforcesApiClient
 import kotlinx.coroutines.*
 import tw.geothings.rekotlin.Action
 
@@ -21,15 +21,15 @@ class ProblemsRequests {
         override suspend fun execute() {
             if (!isInitializedByUser) delay(1000)
             val promiseProblemsEn = CoroutineScope(Dispatchers.Main).async {
-                RestClient.getProblems("en")
+                CodeforcesApiClient.getProblems("en")
             }
 
             val promiseProblemsRu = CoroutineScope(Dispatchers.Main).async {
-                RestClient.getProblems("ru")
+                CodeforcesApiClient.getProblems("ru")
             }
 
-            val problemsEn = promiseProblemsEn.await()?.body()?.result?.problems
-            val problemsRu = promiseProblemsRu.await()?.body()?.result?.problems
+            val problemsEn = promiseProblemsEn.await()?.result?.problems
+            val problemsRu = promiseProblemsRu.await()?.result?.problems
 
             if (problemsEn == null || problemsRu == null) {
                 dispatchFailure()

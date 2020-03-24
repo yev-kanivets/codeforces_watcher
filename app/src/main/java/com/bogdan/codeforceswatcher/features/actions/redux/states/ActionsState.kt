@@ -1,6 +1,6 @@
 package com.bogdan.codeforceswatcher.features.actions.redux.states
 
-import com.bogdan.codeforceswatcher.features.actions.models.CFAction
+import io.xorum.codeforceswatcher.features.actions.models.CFAction
 import tw.geothings.rekotlin.StateType
 
 data class ActionsState(
