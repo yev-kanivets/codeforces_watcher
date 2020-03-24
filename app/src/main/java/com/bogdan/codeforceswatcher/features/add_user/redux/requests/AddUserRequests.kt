@@ -2,8 +2,8 @@ package com.bogdan.codeforceswatcher.features.add_user.redux.requests
 
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.network.getUsers
-import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
+import com.bogdan.codeforceswatcher.features.users.getUsers
+import com.bogdan.codeforceswatcher.features.users.models.UsersRequestResult
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store

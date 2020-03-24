@@ -12,9 +12,7 @@ import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.utils.EmptyContent
 import io.ktor.http.URLProtocol
-import io.xorum.codeforceswatcher.network.responses.ActionsResponse
-import io.xorum.codeforceswatcher.network.responses.RatingChangeResponse
-import io.xorum.codeforceswatcher.network.responses.UsersResponse
+import io.xorum.codeforceswatcher.network.responses.*
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.UnitDescriptor
 import kotlinx.serialization.json.Json.Companion.nonstrict
@@ -43,6 +41,20 @@ object CodeforcesRestClient {
     suspend fun getActions(maxCount: Int = 100, lang: String) = try {
         codeforcesApiClient.get<ActionsResponse>(path = "recentActions") {
             parameter("maxCount", maxCount)
+            parameter("lang", lang)
+        }
+    } catch (t: Throwable) {
+        null
+    }
+
+    suspend fun getContests() = try {
+        codeforcesApiClient.get<ContestsResponse>(path = "contest.list")
+    } catch (t: Throwable) {
+        null
+    }
+
+    suspend fun getProblems(lang: String) = try {
+        codeforcesApiClient.get<ProblemsResponse>(path = "problemset.problems") {
             parameter("lang", lang)
         }
     } catch (t: Throwable) {

@@ -1,4 +1,4 @@
-package com.bogdan.codeforceswatcher.network.models
+package com.bogdan.codeforceswatcher.features.users.models
 
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R

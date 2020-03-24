@@ -1,7 +1,7 @@
-package com.bogdan.codeforceswatcher.network
+package com.bogdan.codeforceswatcher.features.users
 
-import com.bogdan.codeforceswatcher.network.models.Error
-import com.bogdan.codeforceswatcher.network.models.UsersRequestResult
+import com.bogdan.codeforceswatcher.features.users.models.Error
+import com.bogdan.codeforceswatcher.features.users.models.UsersRequestResult
 import io.xorum.codeforceswatcher.features.users.models.User
 import io.xorum.codeforceswatcher.network.CodeforcesRestClient
 import kotlinx.coroutines.delay
