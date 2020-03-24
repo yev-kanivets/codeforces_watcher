@@ -75,7 +75,7 @@ class ActionsRequests {
                             }
 
                     comment.text = convertFromHtml(comment.text)
-                } ?: isUnnecessaryAction(action)
+                } ?: if (isUnnecessaryAction(action)) continue
 
                 users?.find { user -> user.handle == action.blogEntry.authorHandle }
                         ?.let { foundUser ->
