@@ -8,7 +8,7 @@ import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.CrashLogger
 import io.xorum.codeforceswatcher.db.DatabaseQueries
 import io.xorum.codeforceswatcher.features.problems.models.Problem
-import io.xorum.codeforceswatcher.network.CodeforcesRestClient
+import io.xorum.codeforceswatcher.network.CodeforcesApiClient
 import kotlinx.coroutines.*
 import tw.geothings.rekotlin.Action
 
@@ -21,11 +21,11 @@ class ProblemsRequests {
         override suspend fun execute() {
             if (!isInitializedByUser) delay(1000)
             val promiseProblemsEn = CoroutineScope(Dispatchers.Main).async {
-                CodeforcesRestClient.getProblems("en")
+                CodeforcesApiClient.getProblems("en")
             }
 
             val promiseProblemsRu = CoroutineScope(Dispatchers.Main).async {
-                CodeforcesRestClient.getProblems("ru")
+                CodeforcesApiClient.getProblems("ru")
             }
 
             val problemsEn = promiseProblemsEn.await()?.result?.problems

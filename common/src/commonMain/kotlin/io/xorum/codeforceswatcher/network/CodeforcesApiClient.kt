@@ -19,7 +19,7 @@ import kotlinx.serialization.json.Json.Companion.nonstrict
 
 private const val CODEFORCES_API_LINK = "www.codeforces.com/api/"
 
-object CodeforcesRestClient {
+object CodeforcesApiClient {
     private val codeforcesApiClient = makeCodeforcesApiClient()
 
     suspend fun getUsers(handles: String) = try {

@@ -3,11 +3,11 @@ package com.bogdan.codeforceswatcher.features.users
 import com.bogdan.codeforceswatcher.features.users.models.Error
 import com.bogdan.codeforceswatcher.features.users.models.UsersRequestResult
 import io.xorum.codeforceswatcher.features.users.models.User
-import io.xorum.codeforceswatcher.network.CodeforcesRestClient
+import io.xorum.codeforceswatcher.network.CodeforcesApiClient
 import kotlinx.coroutines.delay
 
 suspend fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean): UsersRequestResult {
-    val response = CodeforcesRestClient.getUsers(handles)
+    val response = CodeforcesApiClient.getUsers(handles)
 
     return response?.result?.let { users ->
         if (users.isEmpty()) {
@@ -26,7 +26,7 @@ suspend fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean): UsersRequ
 suspend fun loadRatingUpdates(userList: List<User>): UsersRequestResult {
     for (user in userList) {
         delay(250) // Because Codeforces blocks frequent queries
-        val response = CodeforcesRestClient.getRating(user.handle)
+        val response = CodeforcesApiClient.getRating(user.handle)
         response?.result?.let { ratingChanges ->
             user.ratingChanges = ratingChanges
         } ?: return UsersRequestResult.Failure(response?.comment?.let { Error.Response(it) }

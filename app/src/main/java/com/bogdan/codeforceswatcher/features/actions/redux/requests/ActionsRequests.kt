@@ -10,7 +10,7 @@ import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
 import io.xorum.codeforceswatcher.features.actions.models.CFAction
 import io.xorum.codeforceswatcher.features.users.models.User
-import io.xorum.codeforceswatcher.network.CodeforcesRestClient
+import io.xorum.codeforceswatcher.network.CodeforcesApiClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import tw.geothings.rekotlin.Action
@@ -23,7 +23,7 @@ class ActionsRequests {
     ) : Request() {
 
         override suspend fun execute() {
-            val response = CodeforcesRestClient.getActions(lang = defineLang())
+            val response = CodeforcesApiClient.getActions(lang = defineLang())
             response?.result?.let { actions ->
                 buildUiDataAndDispatch(actions)
             } ?: dispatchFailure()

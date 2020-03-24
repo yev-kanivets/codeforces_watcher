@@ -6,7 +6,7 @@ import io.xorum.codeforceswatcher.features.contests.models.Contest
 import com.bogdan.codeforceswatcher.redux.Request
 import com.bogdan.codeforceswatcher.redux.actions.ToastAction
 import com.bogdan.codeforceswatcher.store
-import io.xorum.codeforceswatcher.network.CodeforcesRestClient
+import io.xorum.codeforceswatcher.network.CodeforcesApiClient
 import tw.geothings.rekotlin.Action
 
 class ContestsRequests {
@@ -15,7 +15,7 @@ class ContestsRequests {
 
         override suspend fun execute() {
             val noConnectionError = CwApp.app.getString(R.string.no_connection)
-            val response = CodeforcesRestClient.getContests()
+            val response = CodeforcesApiClient.getContests()
             response?.result?.let { contests ->
                 store.dispatch(Success(contests))
             } ?: store.dispatch(
