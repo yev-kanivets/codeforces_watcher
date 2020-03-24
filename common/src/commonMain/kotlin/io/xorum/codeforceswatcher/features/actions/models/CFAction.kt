@@ -8,6 +8,5 @@ data class CFAction(
         val blogEntry: BlogEntry,
         val comment: Comment? = null
 ) {
-    val id
-        get() = hashCode()
+    val id = hashCode()
 }

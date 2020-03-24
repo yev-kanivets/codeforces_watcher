@@ -19,8 +19,7 @@ suspend fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean): UsersRequ
         } else {
             UsersRequestResult.Success(users)
         }
-    } ?: UsersRequestResult.Failure(response?.comment?.let { Error.Response(it) }
-            ?: Error.Internet())
+    } ?: UsersRequestResult.Failure(response?.comment?.let { Error.Response(it) } ?: Error.Internet())
 }
 
 suspend fun loadRatingUpdates(userList: List<User>): UsersRequestResult {
@@ -29,8 +28,7 @@ suspend fun loadRatingUpdates(userList: List<User>): UsersRequestResult {
         val response = CodeforcesApiClient.getRating(user.handle)
         response?.result?.let { ratingChanges ->
             user.ratingChanges = ratingChanges
-        } ?: return UsersRequestResult.Failure(response?.comment?.let { Error.Response(it) }
-                ?: Error.Response())
+        } ?: return UsersRequestResult.Failure(response?.comment?.let { Error.Response(it) } ?: Error.Response())
     }
     return UsersRequestResult.Success(userList)
 }

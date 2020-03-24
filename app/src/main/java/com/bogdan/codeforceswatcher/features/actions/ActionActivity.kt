@@ -44,12 +44,10 @@ class ActionActivity : AppCompatActivity() {
         link = buildPageLink(cfAction)
     }
 
-    private fun buildPageLink(cfAction: CFAction) =
-            if (cfAction.comment != null) {
-                getString(R.string.comment_url, cfAction.blogEntry.id, cfAction.comment?.id)
-            } else {
-                getString(R.string.blog_entry_url, cfAction.blogEntry.id)
-            }
+    private fun buildPageLink(cfAction: CFAction) = cfAction.comment?.let {
+        getString(R.string.comment_url, cfAction.blogEntry.id, cfAction.comment?.id)
+    } ?: getString(R.string.blog_entry_url, cfAction.blogEntry.id)
+
 
     private fun initViews() {
         title = pageTitle

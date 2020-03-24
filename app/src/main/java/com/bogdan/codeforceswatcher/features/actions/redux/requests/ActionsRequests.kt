@@ -75,10 +75,7 @@ class ActionsRequests {
                             }
 
                     comment.text = convertFromHtml(comment.text)
-                } ?: if (action.timeSeconds != action.blogEntry.creationTimeSeconds &&
-                        action.timeSeconds != action.blogEntry.modificationTimeSeconds) {
-                    continue
-                }
+                } ?: isUnnecessaryAction(action)
 
                 users?.find { user -> user.handle == action.blogEntry.authorHandle }
                         ?.let { foundUser ->
@@ -92,6 +89,10 @@ class ActionsRequests {
 
             uiData
         }
+
+        private fun isUnnecessaryAction(action: CFAction) =
+                (action.timeSeconds != action.blogEntry.creationTimeSeconds &&
+                        action.timeSeconds != action.blogEntry.modificationTimeSeconds)
 
         private fun convertFromHtml(text: String) =
                 HtmlCompat.fromHtml(

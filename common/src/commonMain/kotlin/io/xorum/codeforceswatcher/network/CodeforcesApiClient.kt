@@ -10,11 +10,9 @@ import io.ktor.client.features.logging.Logger
 import io.ktor.client.features.logging.Logging
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
-import io.ktor.client.utils.EmptyContent
 import io.ktor.http.URLProtocol
 import io.xorum.codeforceswatcher.network.responses.*
-import kotlinx.serialization.*
-import kotlinx.serialization.internal.UnitDescriptor
+import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json.Companion.nonstrict
 
 private const val CODEFORCES_API_LINK = "www.codeforces.com/api/"
@@ -71,24 +69,11 @@ object CodeforcesApiClient {
             }
         }
         Json {
-            serializer = KotlinxSerializer(json = nonstrict).apply {
-                register(EmptyContentSerializer)
-            }
+            serializer = KotlinxSerializer(json = nonstrict)
         }
         Logging {
             logger = Logger.DEFAULT
             level = LogLevel.INFO
         }
-
-    }
-
-    private object EmptyContentSerializer : KSerializer<EmptyContent> {
-
-        override val descriptor: SerialDescriptor = UnitDescriptor
-
-        override fun deserialize(decoder: Decoder): EmptyContent =
-                EmptyContent.also { decoder.decodeUnit() }
-
-        override fun serialize(encoder: Encoder, obj: EmptyContent) = encoder.encodeUnit()
     }
 }
