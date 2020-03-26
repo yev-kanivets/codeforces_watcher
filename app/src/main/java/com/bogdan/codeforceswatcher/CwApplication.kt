@@ -16,6 +16,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import io.xorum.codeforceswatcher.CWDatabase
 import io.xorum.codeforceswatcher.db.DatabaseController
+import io.xorum.codeforceswatcher.db.savedData
 import io.xorum.codeforceswatcher.features.actions.redux.requests.htmlConverter
 import io.xorum.codeforceswatcher.features.problems.redux.requests.crashLogger
 import io.xorum.codeforceswatcher.features.users.redux.requests.Source
@@ -34,8 +35,8 @@ class CwApp : Application() {
 
         app = this
 
-        initDatabase()
         initCommonModuleComponents()
+        initDatabase()
         DatabaseController.onAppCreated()
         PersistenceController.onAppCreated()
         FirebaseAnalytics.getInstance(this)
@@ -58,6 +59,7 @@ class CwApp : Application() {
         htmlConverter = { text ->
             HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY).trim().toString()
         }
+        savedData = Prefs.get()
 
         localizedStrings["No connection"] = getString(R.string.no_connection)
         localizedStrings["Failed to fetch user(s)! Wait or check handle(s)…"] = getString(R.string.failed_to_fetch_users)
