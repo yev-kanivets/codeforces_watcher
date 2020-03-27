@@ -1,7 +1,7 @@
 package io.xorum.codeforceswatcher.db
 
 import io.xorum.codeforceswatcher.features.problems.redux.states.ProblemsState
-import io.xorum.codeforceswatcher.features.redux.states.ContestsState
+import io.xorum.codeforceswatcher.features.contests.redux.states.ContestsState
 import io.xorum.codeforceswatcher.features.users.redux.states.UsersState
 import redux.states.AppState
 import redux.store

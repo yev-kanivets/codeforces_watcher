@@ -1,4 +1,4 @@
-package io.xorum.codeforceswatcher.features.redux.states
+package io.xorum.codeforceswatcher.features.contests.redux.states
 
 import io.xorum.codeforceswatcher.features.contests.models.Contest
 import tw.geothings.rekotlin.StateType

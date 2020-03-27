@@ -6,6 +6,7 @@ import redux.Request
 import redux.ToastAction
 import io.xorum.codeforceswatcher.db.DatabaseQueries
 import io.xorum.codeforceswatcher.features.users.models.User
+import redux.localizedStrings
 import redux.store
 import tw.geothings.rekotlin.Action
 
@@ -27,7 +28,7 @@ class AddUserRequests {
                 user.id = DatabaseQueries.Users.insert(user)
                 store.dispatch(Success(user))
             } else {
-                store.dispatch(Failure("User already added"))
+                store.dispatch(Failure(localizedStrings["User already added"].orEmpty()))
             }
         }
 

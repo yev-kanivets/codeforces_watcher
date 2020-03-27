@@ -4,7 +4,7 @@ import io.xorum.codeforceswatcher.features.actions.redux.reducers.actionsReducer
 import io.xorum.codeforceswatcher.features.add_user.redux.reducers.addUserReducer
 import io.xorum.codeforceswatcher.features.users.redux.reducers.usersReducer
 import io.xorum.codeforceswatcher.features.problems.redux.reducers.problemsReducer
-import io.xorum.codeforceswatcher.features.redux.reducers.contestsReducer
+import io.xorum.codeforceswatcher.features.contests.redux.reducers.contestsReducer
 import redux.states.AppState
 import tw.geothings.rekotlin.Action
 

@@ -25,9 +25,10 @@ class AndroidNotificationHandler : NotificationHandler {
 
     private fun buildNotificationText(notificationData: List<Pair<String, Int>>) =
             notificationData.joinToString(separator = "\n") { ratingChange ->
-                ratingChange.first + " " +
-                        if (ratingChange.second < 0) ratingChange.second else "+${ratingChange.second}"
+                "${ratingChange.first} ${stringifyRatingChangeValue(ratingChange.second)}"
             }
+
+    private fun stringifyRatingChangeValue(ratingChange: Int) = if (ratingChange < 0) ratingChange else "+$ratingChange"
 
     private fun showNotification(context: Context, text: String) {
         val notificationManager =

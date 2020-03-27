@@ -1,7 +1,7 @@
-package io.xorum.codeforceswatcher.features.redux.reducers
+package io.xorum.codeforceswatcher.features.contests.redux.reducers
 
-import io.xorum.codeforceswatcher.features.redux.requests.ContestsRequests
-import io.xorum.codeforceswatcher.features.redux.states.ContestsState
+import io.xorum.codeforceswatcher.features.contests.redux.requests.ContestsRequests
+import io.xorum.codeforceswatcher.features.contests.redux.states.ContestsState
 import redux.states.AppState
 import tw.geothings.rekotlin.Action
 

@@ -3,7 +3,7 @@ package redux.states
 import io.xorum.codeforceswatcher.features.actions.redux.states.ActionsState
 import io.xorum.codeforceswatcher.features.add_user.redux.states.AddUserState
 import io.xorum.codeforceswatcher.features.problems.redux.states.ProblemsState
-import io.xorum.codeforceswatcher.features.redux.states.ContestsState
+import io.xorum.codeforceswatcher.features.contests.redux.states.ContestsState
 import io.xorum.codeforceswatcher.features.users.redux.states.UsersState
 import tw.geothings.rekotlin.StateType
 

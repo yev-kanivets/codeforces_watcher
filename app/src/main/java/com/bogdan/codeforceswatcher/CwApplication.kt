@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Intent
 import androidx.core.text.HtmlCompat
 import io.xorum.codeforceswatcher.features.actions.redux.requests.ActionsRequests
-import io.xorum.codeforceswatcher.features.redux.requests.ContestsRequests
+import io.xorum.codeforceswatcher.features.contests.redux.requests.ContestsRequests
 import io.xorum.codeforceswatcher.features.problems.redux.requests.ProblemsRequests
 import com.bogdan.codeforceswatcher.receiver.StartAlarm
 import com.bogdan.codeforceswatcher.handlers.AndroidMessageHandler
@@ -63,6 +63,7 @@ class CwApp : Application() {
 
         localizedStrings["No connection"] = getString(R.string.no_connection)
         localizedStrings["Failed to fetch user(s)! Wait or check handle(s)…"] = getString(R.string.failed_to_fetch_users)
+        localizedStrings["User already added"] = getString(R.string.user_already_added)
     }
 
     private fun fetchData() {

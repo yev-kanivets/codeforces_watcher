@@ -44,12 +44,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateFragment() {
-        val bottomNavSelectedItemId = when (selectedHomeTab) {
-            HomeTab.USERS -> R.id.navUsers
-            HomeTab.CONTESTS -> R.id.navContests
-            HomeTab.ACTIONS -> R.id.navActions
-            HomeTab.PROBLEMS -> R.id.navProblems
-        }
+        val bottomNavSelectedItemId = selectedHomeTab.menuItemId
 
         tvPageTitle.text = getString(selectedHomeTab.titleId)
         toolbar.collapseActionView()
@@ -58,20 +53,7 @@ class MainActivity : AppCompatActivity() {
             bottomNavigation.selectedItemId = bottomNavSelectedItemId
         }
 
-        when (selectedHomeTab) {
-            HomeTab.USERS -> {
-                onUsersTabSelected()
-            }
-            HomeTab.CONTESTS -> {
-                onContestsTabSelected()
-            }
-            HomeTab.ACTIONS -> {
-                onActionsTabSelected()
-            }
-            HomeTab.PROBLEMS -> {
-                onProblemsTabSelected()
-            }
-        }
+        onNewTabSelected()
 
         val fragment: Fragment = when (selectedHomeTab) {
             HomeTab.USERS -> {
@@ -92,6 +74,23 @@ class MainActivity : AppCompatActivity() {
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit()
+    }
+
+    private fun onNewTabSelected() {
+        when (selectedHomeTab) {
+            HomeTab.USERS -> {
+                onUsersTabSelected()
+            }
+            HomeTab.CONTESTS -> {
+                onContestsTabSelected()
+            }
+            HomeTab.ACTIONS -> {
+                onActionsTabSelected()
+            }
+            HomeTab.PROBLEMS -> {
+                onProblemsTabSelected()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
