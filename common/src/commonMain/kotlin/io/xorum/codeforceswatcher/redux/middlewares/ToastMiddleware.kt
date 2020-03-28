@@ -1,12 +1,13 @@
 package io.xorum.codeforceswatcher.redux.middlewares
 
+import io.xorum.codeforceswatcher.redux.Message
 import io.xorum.codeforceswatcher.redux.ToastAction
 import tw.geothings.rekotlin.Middleware
 import tw.geothings.rekotlin.StateType
 
 interface ToastHandler {
 
-    fun handle(message: String?)
+    fun handle(message: Message)
 }
 
 var toastHandler: ToastHandler? = null

@@ -10,7 +10,6 @@ import io.xorum.codeforceswatcher.util.PersistenceController
 import tw.geothings.rekotlin.Store
 
 lateinit var sqlDriver: SqlDriver
-val localizedStrings: MutableMap<String, String> = mutableMapOf()
 
 val persistenceController = PersistenceController()
 val databaseController = DatabaseController()

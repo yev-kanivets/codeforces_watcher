@@ -3,11 +3,8 @@ package io.xorum.codeforceswatcher.features.problems.redux.requests
 import io.xorum.codeforceswatcher.db.DatabaseQueries
 import io.xorum.codeforceswatcher.features.problems.models.Problem
 import io.xorum.codeforceswatcher.network.CodeforcesApiClient
+import io.xorum.codeforceswatcher.redux.*
 import kotlinx.coroutines.*
-import io.xorum.codeforceswatcher.redux.Request
-import io.xorum.codeforceswatcher.redux.ToastAction
-import io.xorum.codeforceswatcher.redux.localizedStrings
-import io.xorum.codeforceswatcher.redux.store
 import tw.geothings.rekotlin.Action
 
 class ProblemsRequests {
@@ -47,11 +44,7 @@ class ProblemsRequests {
         }
 
         private fun dispatchFailure() {
-            val noConnectionError = if (isInitializedByUser) {
-                localizedStrings["No connection"]
-            } else {
-                null
-            }
+            val noConnectionError = if (isInitializedByUser) Message.NoConnection else Message.None
             store.dispatch(Failure(noConnectionError))
         }
 
@@ -99,7 +92,7 @@ class ProblemsRequests {
 
         data class Success(val problems: List<Problem>) : Action
 
-        data class Failure(override val message: String?) : ToastAction
+        data class Failure(override val message: Message) : ToastAction
     }
 
     class ChangeStatusFavourite(private val problem: Problem) : Request() {

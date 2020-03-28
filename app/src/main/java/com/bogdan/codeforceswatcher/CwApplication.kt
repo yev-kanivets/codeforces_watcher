@@ -27,9 +27,10 @@ class CwApp : Application() {
 
         app = this
 
-        initCommonModuleComponents()
         initDatabase()
         initSettings()
+        initToastHandler()
+        initNotificationHandler()
 
         databaseController.onAppCreated()
         persistenceController.onAppCreated()
@@ -46,13 +47,20 @@ class CwApp : Application() {
         Prefs.get().addLaunchCount()
     }
 
-    private fun initCommonModuleComponents() {
-        toastHandler = AndroidMessageHandler()
-        notificationHandler = AndroidNotificationHandler()
+    private fun initDatabase() {
+        sqlDriver = AndroidSqliteDriver(CWDatabase.Schema, app.applicationContext, "database")
+    }
 
-        localizedStrings["No connection"] = getString(R.string.no_connection)
-        localizedStrings["Failed to fetch user(s)! Wait or check handle(s)…"] = getString(R.string.failed_to_fetch_users)
-        localizedStrings["User already added"] = getString(R.string.user_already_added)
+    private fun initSettings() {
+        settings = Prefs.get()
+    }
+
+    private fun initToastHandler() {
+        toastHandler = AndroidMessageHandler()
+    }
+
+    private fun initNotificationHandler() {
+        notificationHandler = AndroidNotificationHandler()
     }
 
     private fun fetchData() {
@@ -65,14 +73,6 @@ class CwApp : Application() {
     private fun startAlarm() {
         val intent = Intent(this, StartAlarm::class.java)
         sendBroadcast(intent)
-    }
-
-    private fun initDatabase() {
-        sqlDriver = AndroidSqliteDriver(CWDatabase.Schema, app.applicationContext, "database")
-    }
-
-    private fun initSettings() {
-        settings = Prefs.get()
     }
 
     companion object {

@@ -1,9 +1,10 @@
 package io.xorum.codeforceswatcher.features.users.redux
 
 import io.xorum.codeforceswatcher.features.users.models.User
+import io.xorum.codeforceswatcher.features.users.redux.models.Error
 import io.xorum.codeforceswatcher.features.users.redux.models.UsersRequestResult
 import io.xorum.codeforceswatcher.network.CodeforcesApiClient
-import io.xorum.codeforceswatcher.features.users.redux.models.Error
+import io.xorum.codeforceswatcher.redux.Message
 import kotlinx.coroutines.delay
 
 suspend fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean): UsersRequestResult {
@@ -19,7 +20,7 @@ suspend fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean): UsersRequ
         } else {
             UsersRequestResult.Success(users)
         }
-    } ?: UsersRequestResult.Failure(response?.comment?.let { Error.Response(it) } ?: Error.Internet())
+    } ?: UsersRequestResult.Failure(response?.comment.toError() ?: Error.Internet())
 }
 
 suspend fun loadRatingUpdates(userList: List<User>): UsersRequestResult {
@@ -28,7 +29,9 @@ suspend fun loadRatingUpdates(userList: List<User>): UsersRequestResult {
         val response = CodeforcesApiClient.getRating(user.handle)
         response?.result?.let { ratingChanges ->
             user.ratingChanges = ratingChanges
-        } ?: return UsersRequestResult.Failure(response?.comment?.let { Error.Response(it) } ?: Error.Response())
+        } ?: return UsersRequestResult.Failure(response?.comment.toError() ?: Error.Response())
     }
     return UsersRequestResult.Success(userList)
 }
+
+private fun String?.toError() = this?.let { Error.Response(Message.Custom(it)) }

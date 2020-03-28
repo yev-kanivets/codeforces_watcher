@@ -1,11 +1,11 @@
 package io.xorum.codeforceswatcher.features.users.redux.models
 
 import io.xorum.codeforceswatcher.features.users.models.User
-import io.xorum.codeforceswatcher.redux.localizedStrings
+import io.xorum.codeforceswatcher.redux.Message
 
-sealed class Error(val message: String) {
-    class Internet(message: String = localizedStrings["No connection"].orEmpty()) : Error(message)
-    class Response(message: String = localizedStrings["Failed to fetch user(s)! Wait or check handle(s)…"].orEmpty()) : Error(message)
+sealed class Error(val message: Message) {
+    class Internet(message: Message = Message.NoConnection) : Error(message)
+    class Response(message: Message = Message.FailedToFetchUser) : Error(message)
 }
 
 sealed class UsersRequestResult {

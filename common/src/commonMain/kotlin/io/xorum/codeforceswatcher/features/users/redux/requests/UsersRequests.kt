@@ -4,6 +4,7 @@ import io.xorum.codeforceswatcher.db.DatabaseQueries
 import io.xorum.codeforceswatcher.features.users.models.User
 import io.xorum.codeforceswatcher.features.users.redux.getUsers
 import io.xorum.codeforceswatcher.features.users.redux.models.UsersRequestResult
+import io.xorum.codeforceswatcher.redux.Message
 import io.xorum.codeforceswatcher.redux.Request
 import io.xorum.codeforceswatcher.redux.ToastAction
 import io.xorum.codeforceswatcher.redux.store
@@ -24,7 +25,7 @@ class UsersRequests {
             val users = store.state.users.users
             when (val result = getUsers(getHandles(users), true)) {
                 is UsersRequestResult.Failure -> {
-                    store.dispatch(Failure(if (source.isToastNeeded) result.error.message else null))
+                    store.dispatch(Failure(if (source.isToastNeeded) result.error.message else Message.None))
                 }
                 is UsersRequestResult.Success -> {
                     store.dispatch(Success(result.users, getDifferenceAndUpdate(users, result.users), source))
@@ -57,7 +58,7 @@ class UsersRequests {
                 val source: Source
         ) : Action
 
-        data class Failure(override val message: String?) : ToastAction
+        data class Failure(override val message: Message) : ToastAction
     }
 
     class DeleteUser(val user: User) : Request() {

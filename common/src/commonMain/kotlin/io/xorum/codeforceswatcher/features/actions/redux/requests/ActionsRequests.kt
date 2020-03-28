@@ -5,10 +5,7 @@ import io.xorum.codeforceswatcher.features.users.models.User
 import io.xorum.codeforceswatcher.features.users.redux.getUsers
 import io.xorum.codeforceswatcher.features.users.redux.models.UsersRequestResult
 import io.xorum.codeforceswatcher.network.CodeforcesApiClient
-import io.xorum.codeforceswatcher.redux.Request
-import io.xorum.codeforceswatcher.redux.ToastAction
-import io.xorum.codeforceswatcher.redux.localizedStrings
-import io.xorum.codeforceswatcher.redux.store
+import io.xorum.codeforceswatcher.redux.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import tw.geothings.rekotlin.Action
@@ -39,11 +36,7 @@ class ActionsRequests {
         }
 
         private fun dispatchFailure() {
-            val noConnectionError = if (isInitializedByUser) {
-                localizedStrings["No connection"]
-            } else {
-                null
-            }
+            val noConnectionError = if (isInitializedByUser) Message.NoConnection else Message.None
             store.dispatch(Failure(noConnectionError))
         }
 
@@ -88,6 +81,6 @@ class ActionsRequests {
 
         data class Success(val actions: List<CFAction>) : Action
 
-        data class Failure(override val message: String?) : ToastAction
+        data class Failure(override val message: Message) : ToastAction
     }
 }
