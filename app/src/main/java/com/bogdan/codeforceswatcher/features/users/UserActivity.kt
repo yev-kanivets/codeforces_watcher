@@ -7,10 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
-import io.xorum.codeforceswatcher.features.users.redux.actions.UsersActions
-import io.xorum.codeforceswatcher.features.users.models.User
 import com.bogdan.codeforceswatcher.util.CustomMarkerView
-import io.xorum.codeforceswatcher.util.LinkValidator
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -18,8 +15,11 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.squareup.picasso.Picasso
 import io.xorum.codeforceswatcher.db.DatabaseQueries
-import kotlinx.android.synthetic.main.activity_user.*
+import io.xorum.codeforceswatcher.features.users.models.User
+import io.xorum.codeforceswatcher.features.users.redux.actions.UsersActions
 import io.xorum.codeforceswatcher.redux.store
+import io.xorum.codeforceswatcher.util.LinkValidator
+import kotlinx.android.synthetic.main.activity_user.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -53,37 +53,38 @@ class UserActivity : AppCompatActivity() {
     }
 
     private fun displayUser(user: User) {
-        if (user.rank == null) {
-            tvRank.text = getString(R.string.rank, getString(R.string.none))
-        } else {
-            tvRank.text = getString(R.string.rank, user.rank)
-        }
-        if (user.rating == null) {
-            tvCurrentRating.text = getString(R.string.cur_rating, getString(R.string.none))
-        } else {
-            tvCurrentRating.text = getString(R.string.cur_rating, user.rating.toString())
-        }
-
-        val handle = if (user.firstName == null && user.lastName == null) {
-            getString(R.string.none)
-        } else if (user.firstName == null) {
-            user.lastName
-        } else if (user.lastName == null) {
-            user.firstName
-        } else {
-            user.firstName + " " + user.lastName
-        }
-
-        tvUserHandle.text = getString(R.string.name, handle)
-
-        if (user.maxRating == null) {
-            tvMaxRating.text = getString(R.string.max_rating, getString(R.string.none))
-        } else {
-            tvMaxRating.text = getString(R.string.max_rating, user.maxRating.toString())
-        }
+        tvRank.text = user.buildRank()
+        tvCurrentRating.text = user.buildRating()
+        tvUserHandle.text = getString(R.string.name, user.buildName())
+        tvMaxRating.text = user.buildMaxRating()
 
         Picasso.get().load(LinkValidator.avatar(user.avatar)).into(ivUserAvatar)
         title = user.handle
+    }
+
+    private fun User.buildRank() = if (rank == null) {
+        getString(R.string.rank, getString(R.string.none))
+    } else {
+        getString(R.string.rank, rank)
+    }
+
+    private fun User.buildRating() = if (rating == null) {
+        getString(R.string.cur_rating, getString(R.string.none))
+    } else {
+        getString(R.string.cur_rating, rating.toString())
+    }
+
+    private fun User.buildName() = when {
+        firstName == null && lastName == null -> getString(R.string.none)
+        firstName == null -> lastName
+        lastName == null -> firstName
+        else -> "$firstName $lastName"
+    }
+
+    private fun User.buildMaxRating() = if (maxRating == null) {
+        getString(R.string.max_rating, getString(R.string.none))
+    } else {
+        getString(R.string.max_rating, maxRating.toString())
     }
 
     private fun displayChart(user: User) {

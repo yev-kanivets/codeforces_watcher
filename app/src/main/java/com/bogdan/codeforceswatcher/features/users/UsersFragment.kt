@@ -12,16 +12,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.util.Analytics
+import com.bogdan.codeforceswatcher.util.Refresh
 import io.xorum.codeforceswatcher.features.users.models.User
 import io.xorum.codeforceswatcher.features.users.redux.actions.UsersActions
 import io.xorum.codeforceswatcher.features.users.redux.requests.Source
 import io.xorum.codeforceswatcher.features.users.redux.requests.UsersRequests
 import io.xorum.codeforceswatcher.features.users.redux.states.UsersState
 import io.xorum.codeforceswatcher.features.users.redux.states.UsersState.SortType.Companion.getSortType
-import com.bogdan.codeforceswatcher.util.Analytics
-import com.bogdan.codeforceswatcher.util.Refresh
-import kotlinx.android.synthetic.main.fragment_users.*
 import io.xorum.codeforceswatcher.redux.store
+import kotlinx.android.synthetic.main.fragment_users.*
 import tw.geothings.rekotlin.StoreSubscriber
 
 class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
@@ -38,8 +38,9 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     override fun onStart() {
         super.onStart()
         store.subscribe(this) { state ->
-            state.skipRepeats { oldState, newState -> oldState.users == newState.users }
-                    .select { it.users }
+            state.skipRepeats { oldState, newState ->
+                oldState.users == newState.users
+            }.select { it.users }
         }
     }
 

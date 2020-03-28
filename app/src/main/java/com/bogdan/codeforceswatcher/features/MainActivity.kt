@@ -25,8 +25,8 @@ import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Prefs
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import io.xorum.codeforceswatcher.features.problems.redux.actions.ProblemsActions
-import kotlinx.android.synthetic.main.activity_main.*
 import io.xorum.codeforceswatcher.redux.store
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -78,21 +78,11 @@ class MainActivity : AppCompatActivity() {
                 .commit()
     }
 
-    private fun onNewTabSelected() {
-        when (selectedHomeTab) {
-            HomeTab.USERS -> {
-                onUsersTabSelected()
-            }
-            HomeTab.CONTESTS -> {
-                onContestsTabSelected()
-            }
-            HomeTab.ACTIONS -> {
-                onActionsTabSelected()
-            }
-            HomeTab.PROBLEMS -> {
-                onProblemsTabSelected()
-            }
-        }
+    private fun onNewTabSelected() = when (selectedHomeTab) {
+        HomeTab.USERS -> onUsersTabSelected()
+        HomeTab.CONTESTS -> onContestsTabSelected()
+        HomeTab.ACTIONS -> onActionsTabSelected()
+        HomeTab.PROBLEMS -> onProblemsTabSelected()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
