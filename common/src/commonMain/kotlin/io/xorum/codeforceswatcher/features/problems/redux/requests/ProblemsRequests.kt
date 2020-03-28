@@ -1,13 +1,13 @@
 package io.xorum.codeforceswatcher.features.problems.redux.requests
 
-import redux.Request
-import redux.ToastAction
 import io.xorum.codeforceswatcher.db.DatabaseQueries
 import io.xorum.codeforceswatcher.features.problems.models.Problem
 import io.xorum.codeforceswatcher.network.CodeforcesApiClient
 import kotlinx.coroutines.*
-import redux.localizedStrings
-import redux.store
+import io.xorum.codeforceswatcher.redux.Request
+import io.xorum.codeforceswatcher.redux.ToastAction
+import io.xorum.codeforceswatcher.redux.localizedStrings
+import io.xorum.codeforceswatcher.redux.store
 import tw.geothings.rekotlin.Action
 
 interface CrashLogger {

@@ -12,7 +12,7 @@ import io.xorum.codeforceswatcher.features.add_user.redux.requests.AddUserReques
 import io.xorum.codeforceswatcher.features.add_user.redux.states.AddUserState
 import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.activity_add_user.*
-import redux.store
+import io.xorum.codeforceswatcher.redux.store
 import tw.geothings.rekotlin.StoreSubscriber
 
 class AddUserActivity : AppCompatActivity(), OnClickListener, StoreSubscriber<AddUserState> {

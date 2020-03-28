@@ -11,7 +11,7 @@ import androidx.core.app.NotificationCompat
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.MainActivity
-import redux.middlewares.NotificationHandler
+import io.xorum.codeforceswatcher.redux.middlewares.NotificationHandler
 
 class AndroidNotificationHandler : NotificationHandler {
 

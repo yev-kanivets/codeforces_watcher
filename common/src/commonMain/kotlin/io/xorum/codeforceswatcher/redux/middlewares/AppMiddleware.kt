@@ -1,6 +1,6 @@
-package redux.middlewares
+package io.xorum.codeforceswatcher.redux.middlewares
 
-import redux.Request
+import io.xorum.codeforceswatcher.redux.Request
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

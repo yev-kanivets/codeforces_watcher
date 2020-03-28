@@ -14,7 +14,7 @@ import com.bogdan.codeforceswatcher.R
 import io.xorum.codeforceswatcher.features.problems.models.Problem
 import io.xorum.codeforceswatcher.features.problems.redux.requests.ProblemsRequests
 import kotlinx.android.synthetic.main.view_problem_item.view.*
-import redux.store
+import io.xorum.codeforceswatcher.redux.store
 import java.util.*
 
 class ProblemsAdapter(

@@ -26,7 +26,7 @@ import com.bogdan.codeforceswatcher.util.Prefs
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import io.xorum.codeforceswatcher.features.problems.redux.actions.ProblemsActions
 import kotlinx.android.synthetic.main.activity_main.*
-import redux.store
+import io.xorum.codeforceswatcher.redux.store
 
 class MainActivity : AppCompatActivity() {
 

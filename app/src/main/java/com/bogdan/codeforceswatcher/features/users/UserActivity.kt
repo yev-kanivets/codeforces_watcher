@@ -19,7 +19,7 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.squareup.picasso.Picasso
 import io.xorum.codeforceswatcher.db.DatabaseQueries
 import kotlinx.android.synthetic.main.activity_user.*
-import redux.store
+import io.xorum.codeforceswatcher.redux.store
 import java.text.SimpleDateFormat
 import java.util.*
 

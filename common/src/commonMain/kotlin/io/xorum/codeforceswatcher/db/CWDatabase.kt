@@ -1,6 +1,6 @@
 package io.xorum.codeforceswatcher.db
 
 import io.xorum.codeforceswatcher.CWDatabase
-import redux.sqlDriver
+import io.xorum.codeforceswatcher.redux.sqlDriver
 
 val database = CWDatabase(sqlDriver)

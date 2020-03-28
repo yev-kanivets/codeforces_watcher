@@ -14,7 +14,7 @@ import io.xorum.codeforceswatcher.features.actions.redux.states.ActionsState
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Refresh
 import kotlinx.android.synthetic.main.fragment_users.*
-import redux.store
+import io.xorum.codeforceswatcher.redux.store
 import tw.geothings.rekotlin.StoreSubscriber
 import java.util.*
 

@@ -1,13 +1,13 @@
 package io.xorum.codeforceswatcher.features.users.redux.requests
 
+import io.xorum.codeforceswatcher.db.DatabaseQueries
+import io.xorum.codeforceswatcher.features.users.models.User
 import io.xorum.codeforceswatcher.features.users.redux.getUsers
 import io.xorum.codeforceswatcher.features.users.redux.models.UsersRequestResult
-import io.xorum.codeforceswatcher.features.users.models.User
-import io.xorum.codeforceswatcher.db.DatabaseQueries
+import io.xorum.codeforceswatcher.redux.Request
+import io.xorum.codeforceswatcher.redux.ToastAction
+import io.xorum.codeforceswatcher.redux.store
 import kotlinx.coroutines.delay
-import redux.Request
-import redux.ToastAction
-import redux.store
 import tw.geothings.rekotlin.Action
 
 enum class Source(val isToastNeeded: Boolean) {
@@ -49,13 +49,7 @@ class UsersRequests {
             return difference
         }
 
-        private fun getHandles(roomUserList: List<User>): String {
-            var handles = ""
-            for (element in roomUserList) {
-                handles += element.handle + ";"
-            }
-            return handles
-        }
+        private fun getHandles(users: List<User>) = users.joinToString(separator = ";") { it.handle }
 
         data class Success(
                 val users: List<User>,
@@ -65,5 +59,4 @@ class UsersRequests {
 
         data class Failure(override val message: String?) : ToastAction
     }
-
 }

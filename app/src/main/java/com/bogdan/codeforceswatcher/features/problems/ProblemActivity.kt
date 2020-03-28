@@ -17,7 +17,7 @@ import com.bogdan.codeforceswatcher.R
 import io.xorum.codeforceswatcher.features.problems.models.Problem
 import com.bogdan.codeforceswatcher.util.Analytics
 import kotlinx.android.synthetic.main.activity_web_page.*
-import redux.store
+import io.xorum.codeforceswatcher.redux.store
 import java.lang.IllegalStateException
 
 class ProblemActivity : AppCompatActivity() {

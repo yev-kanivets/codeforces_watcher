@@ -18,6 +18,7 @@ data class Problem(
     fun identify() = "$contestId$index"
 
     companion object {
+
         fun fromDB(dbProblem: DbProblem) = Problem(
                 id = dbProblem.id,
                 name = dbProblem.name,

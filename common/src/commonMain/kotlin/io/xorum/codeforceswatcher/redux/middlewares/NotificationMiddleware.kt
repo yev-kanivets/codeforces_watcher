@@ -1,4 +1,4 @@
-package redux.middlewares
+package io.xorum.codeforceswatcher.redux.middlewares
 
 import io.xorum.codeforceswatcher.features.users.redux.requests.Source
 import io.xorum.codeforceswatcher.features.users.redux.requests.UsersRequests

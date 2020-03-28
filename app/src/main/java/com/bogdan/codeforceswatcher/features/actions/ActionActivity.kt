@@ -17,7 +17,7 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.util.Analytics
 import io.xorum.codeforceswatcher.features.actions.models.CFAction
 import kotlinx.android.synthetic.main.activity_web_page.*
-import redux.store
+import io.xorum.codeforceswatcher.redux.store
 
 class ActionActivity : AppCompatActivity() {
 

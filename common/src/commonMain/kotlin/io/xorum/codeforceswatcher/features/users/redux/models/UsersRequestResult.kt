@@ -1,7 +1,7 @@
 package io.xorum.codeforceswatcher.features.users.redux.models
 
 import io.xorum.codeforceswatcher.features.users.models.User
-import redux.localizedStrings
+import io.xorum.codeforceswatcher.redux.localizedStrings
 
 sealed class Error(val message: String) {
     class Internet(message: String = localizedStrings["No connection"].orEmpty()) : Error(message)

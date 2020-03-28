@@ -21,11 +21,11 @@ import io.xorum.codeforceswatcher.features.actions.redux.requests.htmlConverter
 import io.xorum.codeforceswatcher.features.problems.redux.requests.crashLogger
 import io.xorum.codeforceswatcher.features.users.redux.requests.Source
 import io.xorum.codeforceswatcher.features.users.redux.requests.UsersRequests
-import redux.localizedStrings
-import redux.middlewares.notificationHandler
-import redux.middlewares.toastHandler
-import redux.sqlDriver
-import redux.store
+import io.xorum.codeforceswatcher.redux.localizedStrings
+import io.xorum.codeforceswatcher.redux.middlewares.notificationHandler
+import io.xorum.codeforceswatcher.redux.middlewares.toastHandler
+import io.xorum.codeforceswatcher.redux.sqlDriver
+import io.xorum.codeforceswatcher.redux.store
 import java.util.*
 
 class CwApp : Application() {

@@ -1,6 +1,6 @@
-package redux.middlewares
+package io.xorum.codeforceswatcher.redux.middlewares
 
-import redux.ToastAction
+import io.xorum.codeforceswatcher.redux.ToastAction
 import tw.geothings.rekotlin.Middleware
 import tw.geothings.rekotlin.StateType
 

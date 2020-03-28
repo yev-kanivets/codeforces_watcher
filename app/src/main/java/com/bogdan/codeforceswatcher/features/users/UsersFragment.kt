@@ -21,7 +21,7 @@ import io.xorum.codeforceswatcher.features.users.redux.states.UsersState.SortTyp
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Refresh
 import kotlinx.android.synthetic.main.fragment_users.*
-import redux.store
+import io.xorum.codeforceswatcher.redux.store
 import tw.geothings.rekotlin.StoreSubscriber
 
 class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,

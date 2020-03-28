@@ -11,6 +11,7 @@ import kotlinx.serialization.list
 object DatabaseQueries {
 
     object Users {
+
         fun getAll() = database.userQueries.getAll().executeAsList().map { User.fromDB(it) }
 
         fun insert(user: User): Long {
@@ -36,6 +37,7 @@ object DatabaseQueries {
     }
 
     object Contests {
+
         fun getAll() = database.contestQueries.getAll().executeAsList().map { Contest.fromDB(it) }
 
         fun insert(contests: List<Contest>) {
@@ -50,6 +52,7 @@ object DatabaseQueries {
     }
 
     object Problems {
+
         fun getAll() = database.problemQueries.getAll().executeAsList().map { Problem.fromDB(it) }
 
         fun insert(problems: List<Problem>): List<Long> {

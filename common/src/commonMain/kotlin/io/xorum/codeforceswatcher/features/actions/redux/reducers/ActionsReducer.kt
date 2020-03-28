@@ -2,7 +2,7 @@ package io.xorum.codeforceswatcher.features.actions.redux.reducers
 
 import io.xorum.codeforceswatcher.features.actions.redux.requests.ActionsRequests
 import io.xorum.codeforceswatcher.features.actions.redux.states.ActionsState
-import redux.states.AppState
+import io.xorum.codeforceswatcher.redux.states.AppState
 import tw.geothings.rekotlin.Action
 
 fun actionsReducer(action: Action, state: AppState): ActionsState {

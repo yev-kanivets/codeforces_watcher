@@ -11,6 +11,7 @@ data class UsersState(
 
     enum class Status { IDLE, PENDING }
     enum class SortType {
+
         DEFAULT, RATING_UP, RATING_DOWN, UPDATE_UP, UPDATE_DOWN;
 
         val position: Int
@@ -32,6 +33,5 @@ data class UsersState(
                 else -> DEFAULT
             }
         }
-
     }
 }

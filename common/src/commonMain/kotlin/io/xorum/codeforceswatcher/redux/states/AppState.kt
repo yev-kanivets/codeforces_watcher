@@ -1,4 +1,4 @@
-package redux.states
+package io.xorum.codeforceswatcher.redux.states
 
 import io.xorum.codeforceswatcher.features.actions.redux.states.ActionsState
 import io.xorum.codeforceswatcher.features.add_user.redux.states.AddUserState

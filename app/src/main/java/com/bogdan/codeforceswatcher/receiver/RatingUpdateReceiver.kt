@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import io.xorum.codeforceswatcher.features.users.redux.requests.Source
 import io.xorum.codeforceswatcher.features.users.redux.requests.UsersRequests
-import redux.store
+import io.xorum.codeforceswatcher.redux.store
 
 class RatingUpdateReceiver : BroadcastReceiver() {
 

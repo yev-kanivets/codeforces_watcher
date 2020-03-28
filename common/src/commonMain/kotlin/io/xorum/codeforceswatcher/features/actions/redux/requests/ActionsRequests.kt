@@ -1,16 +1,16 @@
 package io.xorum.codeforceswatcher.features.actions.redux.requests
 
-import io.xorum.codeforceswatcher.features.users.redux.getUsers
-import io.xorum.codeforceswatcher.features.users.redux.models.UsersRequestResult
-import redux.Request
-import redux.ToastAction
 import io.xorum.codeforceswatcher.features.actions.models.CFAction
 import io.xorum.codeforceswatcher.features.users.models.User
+import io.xorum.codeforceswatcher.features.users.redux.getUsers
+import io.xorum.codeforceswatcher.features.users.redux.models.UsersRequestResult
 import io.xorum.codeforceswatcher.network.CodeforcesApiClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import redux.localizedStrings
-import redux.store
+import io.xorum.codeforceswatcher.redux.Request
+import io.xorum.codeforceswatcher.redux.ToastAction
+import io.xorum.codeforceswatcher.redux.localizedStrings
+import io.xorum.codeforceswatcher.redux.store
 import tw.geothings.rekotlin.Action
 
 var htmlConverter: ((String) -> String)? = null
@@ -49,16 +49,9 @@ class ActionsRequests {
             store.dispatch(Failure(noConnectionError))
         }
 
-        private fun buildHandles(actions: List<CFAction>): String {
-            val handles: MutableSet<String> = mutableSetOf()
-
-            for (action in actions) {
-                action.comment?.let { handles.add(it.commentatorHandle) }
-                handles.add(action.blogEntry.authorHandle)
-            }
-
-            return handles.joinToString(separator = ";")
-        }
+        private fun buildHandles(actions: List<CFAction>) = actions.flatMap { action ->
+            listOf(action.comment?.commentatorHandle, action.blogEntry.authorHandle)
+        }.filterNotNull().toSet().joinToString(separator = ";")
 
         private suspend fun buildUiData(
                 actions: List<CFAction>,

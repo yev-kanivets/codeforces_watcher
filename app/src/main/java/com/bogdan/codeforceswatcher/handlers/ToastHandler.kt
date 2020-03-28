@@ -4,7 +4,7 @@ import android.view.Gravity
 import android.widget.TextView
 import android.widget.Toast
 import com.bogdan.codeforceswatcher.CwApp
-import redux.middlewares.ToastHandler
+import io.xorum.codeforceswatcher.redux.middlewares.ToastHandler
 
 class AndroidMessageHandler : ToastHandler {
 

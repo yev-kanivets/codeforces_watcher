@@ -2,12 +2,12 @@ package io.xorum.codeforceswatcher.features.add_user.redux.requests
 
 import io.xorum.codeforceswatcher.features.users.redux.getUsers
 import io.xorum.codeforceswatcher.features.users.redux.models.UsersRequestResult
-import redux.Request
-import redux.ToastAction
+import io.xorum.codeforceswatcher.redux.Request
+import io.xorum.codeforceswatcher.redux.ToastAction
 import io.xorum.codeforceswatcher.db.DatabaseQueries
 import io.xorum.codeforceswatcher.features.users.models.User
-import redux.localizedStrings
-import redux.store
+import io.xorum.codeforceswatcher.redux.localizedStrings
+import io.xorum.codeforceswatcher.redux.store
 import tw.geothings.rekotlin.Action
 
 class AddUserRequests {
