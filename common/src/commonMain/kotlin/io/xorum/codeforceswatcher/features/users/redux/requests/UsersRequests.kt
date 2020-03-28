@@ -59,4 +59,11 @@ class UsersRequests {
 
         data class Failure(override val message: String?) : ToastAction
     }
+
+    class DeleteUser(val user: User) : Request() {
+
+        override suspend fun execute() {
+            DatabaseQueries.Users.delete(user.id)
+        }
+    }
 }

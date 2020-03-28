@@ -4,5 +4,5 @@ import tw.geothings.rekotlin.Action
 
 class AddUserActions {
 
-    object ClearAddUserState : Action
+    class ClearAddUserState : Action
 }

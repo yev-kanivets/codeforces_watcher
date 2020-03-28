@@ -25,7 +25,7 @@ fun usersReducer(action: Action, state: AppState): UsersState {
         is AddUserRequests.AddUser.Success -> {
             newState = newState.copy(users = state.users.users.plus(action.user))
         }
-        is UsersActions.DeleteUser -> {
+        is UsersRequests.DeleteUser -> {
             newState = newState.copy(users = state.users.users.minus(action.user))
         }
         is UsersActions.Sort -> {

@@ -6,7 +6,7 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.users.colorTextByUserRank
 import com.bogdan.codeforceswatcher.util.convertFromHtml
 import io.xorum.codeforceswatcher.features.actions.models.CFAction
-import io.xorum.codeforceswatcher.util.LinkValidator
+import io.xorum.codeforceswatcher.util.avatar
 
 sealed class ActionItem {
 
@@ -21,11 +21,9 @@ sealed class ActionItem {
         init {
             val comment = action.comment ?: throw NullPointerException()
 
-            commentatorAvatar = LinkValidator.avatar(comment.commentatorAvatar
-                    ?: throw IllegalStateException())
-            commentatorHandle = buildHandle(
-                    comment.commentatorHandle, comment.commentatorRank
-            )
+            commentatorAvatar = avatar(comment.commentatorAvatar ?: throw IllegalStateException())
+            commentatorHandle = buildHandle(comment.commentatorHandle, comment.commentatorRank)
+
             title = action.blogEntry.title.convertFromHtml()
             time = action.timeSeconds
             content = comment.text.convertFromHtml()
@@ -50,8 +48,7 @@ sealed class ActionItem {
 
         init {
             with(action) {
-                authorAvatar = LinkValidator.avatar(blogEntry.authorAvatar
-                        ?: throw IllegalStateException())
+                authorAvatar = avatar(blogEntry.authorAvatar ?: throw IllegalStateException())
                 authorHandle = colorTextByUserRank(blogEntry.authorHandle, blogEntry.authorRank)
                 blogTitle = blogEntry.title.convertFromHtml()
                 time = timeSeconds

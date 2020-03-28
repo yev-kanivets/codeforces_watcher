@@ -8,9 +8,9 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import kotlinx.serialization.list
 
-object DatabaseQueries {
+internal object DatabaseQueries {
 
-    object Users {
+    internal object Users {
 
         fun getAll() = database.userQueries.getAll().executeAsList().map { User.fromDB(it) }
 
@@ -36,7 +36,7 @@ object DatabaseQueries {
         fun delete(userId: Long) = database.userQueries.delete(userId)
     }
 
-    object Contests {
+    internal object Contests {
 
         fun getAll() = database.contestQueries.getAll().executeAsList().map { Contest.fromDB(it) }
 
@@ -51,7 +51,7 @@ object DatabaseQueries {
         fun deleteAll() = database.contestQueries.deleteAll()
     }
 
-    object Problems {
+    internal object Problems {
 
         fun getAll() = database.problemQueries.getAll().executeAsList().map { Problem.fromDB(it) }
 

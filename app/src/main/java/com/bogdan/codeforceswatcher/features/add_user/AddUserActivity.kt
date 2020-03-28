@@ -44,7 +44,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener, StoreSubscriber<Ad
 
     override fun onStop() {
         super.onStop()
-        store.dispatch(AddUserActions.ClearAddUserState)
+        store.dispatch(AddUserActions.ClearAddUserState())
         store.unsubscribe(this)
     }
 

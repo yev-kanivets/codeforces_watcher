@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.R.color.bright_green
 import com.bogdan.codeforceswatcher.R.color.red
-import io.xorum.codeforceswatcher.util.LinkValidator
 import com.squareup.picasso.Picasso
+import io.xorum.codeforceswatcher.util.avatar
 import kotlinx.android.synthetic.main.view_user_item.view.*
 
 class UsersAdapter(
@@ -51,7 +51,7 @@ class UsersAdapter(
 
         with(items[position] as UserItem.User) {
             with(holder as UserViewHolder) {
-                Picasso.get().load(LinkValidator.avatar(avatar)).into(ivAvatar)
+                Picasso.get().load(avatar(avatarLink)).into(ivAvatar)
                 tvHandle.text = handle
                 tvRating.text = rating
                 tvDateLastRatingUpdate.text = dateOfLastRatingUpdate

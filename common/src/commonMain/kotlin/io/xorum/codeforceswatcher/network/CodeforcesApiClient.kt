@@ -17,7 +17,7 @@ import kotlinx.serialization.json.Json.Companion.nonstrict
 
 private const val CODEFORCES_API_LINK = "www.codeforces.com/api/"
 
-object CodeforcesApiClient {
+internal object CodeforcesApiClient {
 
     private val codeforcesApiClient = makeCodeforcesApiClient()
 
