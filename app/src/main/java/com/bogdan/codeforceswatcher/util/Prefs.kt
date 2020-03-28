@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import com.bogdan.codeforceswatcher.CwApp
-import io.xorum.codeforceswatcher.db.SavedData
+import io.xorum.codeforceswatcher.db.Settings
 
-class Prefs(private val context: Context) : SavedData {
+class Prefs(private val context: Context) : Settings {
 
     private val ratePeriod = 5
 
@@ -37,9 +37,9 @@ class Prefs(private val context: Context) : SavedData {
         return defaultPrefs.getString(KEY_SPINNER_SORT_POSITION, "") ?: ""
     }
 
-    fun writeAlarm(alarm: String) {
+    fun writeAlarm() {
         val editor = getDefaultPrefs().edit()
-        editor.putString(KEY_ALARM, alarm)
+        editor.putString(KEY_ALARM, "alarm")
         editor.apply()
     }
 

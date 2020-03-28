@@ -1,18 +1,18 @@
 package io.xorum.codeforceswatcher.db
 
-import io.xorum.codeforceswatcher.features.problems.redux.states.ProblemsState
 import io.xorum.codeforceswatcher.features.contests.redux.states.ContestsState
+import io.xorum.codeforceswatcher.features.problems.redux.states.ProblemsState
 import io.xorum.codeforceswatcher.features.users.redux.states.UsersState
 import io.xorum.codeforceswatcher.redux.states.AppState
 import io.xorum.codeforceswatcher.redux.store
 import tw.geothings.rekotlin.StoreSubscriber
 
-interface SavedData {
+interface Settings {
     fun readSpinnerSortPosition(): Int
     fun readProblemsIsFavourite(): Boolean
 }
 
-var savedData: SavedData? = null
+lateinit var settings: Settings
 
 object DatabaseController : StoreSubscriber<AppState> {
 
@@ -28,12 +28,11 @@ object DatabaseController : StoreSubscriber<AppState> {
             contests = ContestsState(contests = DatabaseQueries.Contests.getAll()),
             users = UsersState(
                     users = DatabaseQueries.Users.getAll(),
-                    sortType = UsersState.SortType.getSortType(savedData?.readSpinnerSortPosition()
-                            ?: 0)
+                    sortType = UsersState.SortType.getSortType(settings.readSpinnerSortPosition())
             ),
             problems = ProblemsState(
                     problems = DatabaseQueries.Problems.getAll(),
-                    isFavourite = (savedData?.readProblemsIsFavourite() ?: false)
+                    isFavourite = (settings.readProblemsIsFavourite())
             )
     )
 

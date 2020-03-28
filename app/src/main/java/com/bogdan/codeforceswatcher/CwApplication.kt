@@ -14,7 +14,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import io.xorum.codeforceswatcher.CWDatabase
 import io.xorum.codeforceswatcher.db.DatabaseController
-import io.xorum.codeforceswatcher.db.savedData
+import io.xorum.codeforceswatcher.db.settings
 import io.xorum.codeforceswatcher.features.users.redux.requests.Source
 import io.xorum.codeforceswatcher.features.users.redux.requests.UsersRequests
 import io.xorum.codeforceswatcher.redux.localizedStrings
@@ -33,25 +33,25 @@ class CwApp : Application() {
 
         initCommonModuleComponents()
         initDatabase()
+        initSettings()
+
         DatabaseController.onAppCreated()
         PersistenceController.onAppCreated()
         FirebaseAnalytics.getInstance(this)
 
-        val prefs = Prefs.get()
         fetchData()
 
-        if (prefs.readAlarm().isEmpty()) {
+        if (Prefs.get().readAlarm().isEmpty()) {
             startAlarm()
-            prefs.writeAlarm("alarm")
+            Prefs.get().writeAlarm()
         }
 
-        prefs.addLaunchCount()
+        Prefs.get().addLaunchCount()
     }
 
     private fun initCommonModuleComponents() {
         toastHandler = AndroidMessageHandler()
         notificationHandler = AndroidNotificationHandler()
-        savedData = Prefs.get()
 
         localizedStrings["No connection"] = getString(R.string.no_connection)
         localizedStrings["Failed to fetch user(s)! Wait or check handle(s)…"] = getString(R.string.failed_to_fetch_users)
@@ -72,6 +72,10 @@ class CwApp : Application() {
 
     private fun initDatabase() {
         sqlDriver = AndroidSqliteDriver(CWDatabase.Schema, app.applicationContext, "database")
+    }
+
+    private fun initSettings() {
+        settings = Prefs.get()
     }
 
     companion object {
