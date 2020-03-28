@@ -8,7 +8,7 @@ import io.xorum.codeforceswatcher.redux.store
 import io.xorum.codeforceswatcher.util.settings
 import tw.geothings.rekotlin.StoreSubscriber
 
-object DatabaseController : StoreSubscriber<AppState> {
+class DatabaseController : StoreSubscriber<AppState> {
 
     fun onAppCreated() {
         store.subscribe(this) {

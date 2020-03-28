@@ -4,7 +4,7 @@ import io.xorum.codeforceswatcher.redux.states.AppState
 import io.xorum.codeforceswatcher.redux.store
 import tw.geothings.rekotlin.StoreSubscriber
 
-object PersistenceController : StoreSubscriber<AppState> {
+class PersistenceController : StoreSubscriber<AppState> {
 
     fun onAppCreated() {
         store.subscribe(this) {
