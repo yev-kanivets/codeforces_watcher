@@ -10,12 +10,6 @@ import io.xorum.codeforceswatcher.redux.localizedStrings
 import io.xorum.codeforceswatcher.redux.store
 import tw.geothings.rekotlin.Action
 
-interface CrashLogger {
-    fun log(t: Throwable)
-}
-
-var crashLogger: CrashLogger? = null
-
 class ProblemsRequests {
 
     class FetchProblems(
@@ -47,7 +41,6 @@ class ProblemsRequests {
                     }
                     store.dispatch(Success(problems))
                 } else {
-                    crashLogger?.log(IllegalArgumentException("Problems doesn't match"))
                     dispatchFailure()
                 }
             }

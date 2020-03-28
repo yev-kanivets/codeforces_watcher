@@ -8,7 +8,6 @@ import io.xorum.codeforceswatcher.features.problems.redux.requests.ProblemsReque
 import com.bogdan.codeforceswatcher.receiver.StartAlarm
 import com.bogdan.codeforceswatcher.handlers.AndroidMessageHandler
 import com.bogdan.codeforceswatcher.handlers.AndroidNotificationHandler
-import com.bogdan.codeforceswatcher.util.AndroidCrashLogger
 import com.bogdan.codeforceswatcher.util.PersistenceController
 import com.bogdan.codeforceswatcher.util.Prefs
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -16,7 +15,6 @@ import com.squareup.sqldelight.android.AndroidSqliteDriver
 import io.xorum.codeforceswatcher.CWDatabase
 import io.xorum.codeforceswatcher.db.DatabaseController
 import io.xorum.codeforceswatcher.db.savedData
-import io.xorum.codeforceswatcher.features.problems.redux.requests.crashLogger
 import io.xorum.codeforceswatcher.features.users.redux.requests.Source
 import io.xorum.codeforceswatcher.features.users.redux.requests.UsersRequests
 import io.xorum.codeforceswatcher.redux.localizedStrings
@@ -53,7 +51,6 @@ class CwApp : Application() {
     private fun initCommonModuleComponents() {
         toastHandler = AndroidMessageHandler()
         notificationHandler = AndroidNotificationHandler()
-        crashLogger = AndroidCrashLogger()
         savedData = Prefs.get()
 
         localizedStrings["No connection"] = getString(R.string.no_connection)
