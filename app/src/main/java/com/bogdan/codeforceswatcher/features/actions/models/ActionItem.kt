@@ -4,9 +4,9 @@ import android.text.SpannableStringBuilder
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.users.colorTextByUserRank
+import com.bogdan.codeforceswatcher.util.convertFromHtml
 import io.xorum.codeforceswatcher.features.actions.models.CFAction
 import io.xorum.codeforceswatcher.util.LinkValidator
-import java.lang.IllegalStateException
 
 sealed class ActionItem {
 
@@ -26,9 +26,9 @@ sealed class ActionItem {
             commentatorHandle = buildHandle(
                     comment.commentatorHandle, comment.commentatorRank
             )
-            title = action.blogEntry.title
+            title = action.blogEntry.title.convertFromHtml()
             time = action.timeSeconds
-            content = comment.text
+            content = comment.text.convertFromHtml()
         }
 
         private fun buildHandle(handle: String, rank: String?): CharSequence {
@@ -53,7 +53,7 @@ sealed class ActionItem {
                 authorAvatar = LinkValidator.avatar(blogEntry.authorAvatar
                         ?: throw IllegalStateException())
                 authorHandle = colorTextByUserRank(blogEntry.authorHandle, blogEntry.authorRank)
-                blogTitle = blogEntry.title
+                blogTitle = blogEntry.title.convertFromHtml()
                 time = timeSeconds
             }
         }

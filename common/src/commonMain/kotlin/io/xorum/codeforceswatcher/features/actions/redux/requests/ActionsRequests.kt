@@ -5,15 +5,13 @@ import io.xorum.codeforceswatcher.features.users.models.User
 import io.xorum.codeforceswatcher.features.users.redux.getUsers
 import io.xorum.codeforceswatcher.features.users.redux.models.UsersRequestResult
 import io.xorum.codeforceswatcher.network.CodeforcesApiClient
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import io.xorum.codeforceswatcher.redux.Request
 import io.xorum.codeforceswatcher.redux.ToastAction
 import io.xorum.codeforceswatcher.redux.localizedStrings
 import io.xorum.codeforceswatcher.redux.store
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import tw.geothings.rekotlin.Action
-
-var htmlConverter: ((String) -> String)? = null
 
 class ActionsRequests {
 
@@ -66,8 +64,6 @@ class ActionsRequests {
                                 comment.commentatorAvatar = foundUser.avatar
                                 comment.commentatorRank = foundUser.rank
                             }
-
-                    comment.text = convertFromHtml(comment.text)
                 } ?: if (isUnnecessaryAction(action)) continue
 
                 users?.find { user -> user.handle == action.blogEntry.authorHandle }
@@ -76,7 +72,6 @@ class ActionsRequests {
                             action.blogEntry.authorRank = foundUser.rank
                         }
 
-                action.blogEntry.title = convertFromHtml(action.blogEntry.title)
                 uiData.add(action)
             }
 
@@ -86,11 +81,6 @@ class ActionsRequests {
         private fun isUnnecessaryAction(action: CFAction) =
                 (action.timeSeconds != action.blogEntry.creationTimeSeconds &&
                         action.timeSeconds != action.blogEntry.modificationTimeSeconds)
-
-        private fun convertFromHtml(text: String) =
-                htmlConverter?.invoke(text.replace("\n", "<br>")
-                        .replace("\t", "<tl>")
-                        .replace("$", "")).orEmpty()
 
         private fun defineLang(): String {
             return if (language == "ru" || language == "uk") "ru" else "en"

@@ -2,7 +2,6 @@ package com.bogdan.codeforceswatcher
 
 import android.app.Application
 import android.content.Intent
-import androidx.core.text.HtmlCompat
 import io.xorum.codeforceswatcher.features.actions.redux.requests.ActionsRequests
 import io.xorum.codeforceswatcher.features.contests.redux.requests.ContestsRequests
 import io.xorum.codeforceswatcher.features.problems.redux.requests.ProblemsRequests
@@ -17,7 +16,6 @@ import com.squareup.sqldelight.android.AndroidSqliteDriver
 import io.xorum.codeforceswatcher.CWDatabase
 import io.xorum.codeforceswatcher.db.DatabaseController
 import io.xorum.codeforceswatcher.db.savedData
-import io.xorum.codeforceswatcher.features.actions.redux.requests.htmlConverter
 import io.xorum.codeforceswatcher.features.problems.redux.requests.crashLogger
 import io.xorum.codeforceswatcher.features.users.redux.requests.Source
 import io.xorum.codeforceswatcher.features.users.redux.requests.UsersRequests
@@ -56,9 +54,6 @@ class CwApp : Application() {
         toastHandler = AndroidMessageHandler()
         notificationHandler = AndroidNotificationHandler()
         crashLogger = AndroidCrashLogger()
-        htmlConverter = { text ->
-            HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY).trim().toString()
-        }
         savedData = Prefs.get()
 
         localizedStrings["No connection"] = getString(R.string.no_connection)
