@@ -1,0 +1,32 @@
+/* 
+  Localizable.strings
+  Codeforces Watcher
+
+  Created by Den Matyash on 1/10/20.
+  Copyright © 2020 xorum.io. All rights reserved.
+*/
+"Codeforces Watcher" = "Codeforces WatchR";
+
+"Contests" = "Contests";
+"Actions" = "Actions";
+"Problems" = "Problems";
+
+"Commented by" = "Commented by";
+"ago" = "ago";
+
+"Recent Actions are on the way to your device..." = "Recent Actions are on the way to your device...";
+"Problems are on the way to your device..." = "Problems are on the way to your device...";
+"Contests are on the way to your device..." = "Contests are on the way to your device...";
+
+"Has been added to your calendar" = "Has been added to your calendar";
+"Can't add contest to Calendar without permission" = "Can't add contest to Calendar without permission";
+
+"OK" = "OK";
+"No connection" = "No connection";
+
+"Search for problems..." = "Search for problems...";
+
+"Official Codeforces rules" = "Official Codeforces rules";
+"Apple isn't a sponsor of any contests conducted on Codeforces" = "Apple isn't a sponsor of any contests conducted on Codeforces";
+
+"Filter" = "Filter";
