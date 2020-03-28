@@ -5,14 +5,8 @@ import io.xorum.codeforceswatcher.features.problems.redux.states.ProblemsState
 import io.xorum.codeforceswatcher.features.users.redux.states.UsersState
 import io.xorum.codeforceswatcher.redux.states.AppState
 import io.xorum.codeforceswatcher.redux.store
+import io.xorum.codeforceswatcher.util.settings
 import tw.geothings.rekotlin.StoreSubscriber
-
-interface Settings {
-    fun readSpinnerSortPosition(): Int
-    fun readProblemsIsFavourite(): Boolean
-}
-
-lateinit var settings: Settings
 
 object DatabaseController : StoreSubscriber<AppState> {
 

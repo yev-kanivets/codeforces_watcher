@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import com.bogdan.codeforceswatcher.CwApp
-import io.xorum.codeforceswatcher.db.Settings
+import io.xorum.codeforceswatcher.util.Settings
 
 class Prefs(private val context: Context) : Settings {
 
@@ -15,7 +15,7 @@ class Prefs(private val context: Context) : Settings {
         return (defaultPrefs.getString(KEY_SPINNER_SORT_POSITION, "0") ?: "0").toInt()
     }
 
-    fun writeSpinnerSortPosition(spinnerSortPosition: Int) {
+    override fun writeSpinnerSortPosition(spinnerSortPosition: Int) {
         val editor = getDefaultPrefs().edit()
         editor.putString(KEY_SPINNER_SORT_POSITION, spinnerSortPosition.toString())
         editor.apply()
@@ -26,7 +26,7 @@ class Prefs(private val context: Context) : Settings {
         return defaultPrefs.getBoolean(KEY_PROBLEMS_IS_FAVOURITE, false)
     }
 
-    fun writeProblemsIsFavourite(isFavourite: Boolean) {
+    override fun writeProblemsIsFavourite(isFavourite: Boolean) {
         val editor = getDefaultPrefs().edit()
         editor.putBoolean(KEY_PROBLEMS_IS_FAVOURITE, isFavourite)
         editor.apply()
