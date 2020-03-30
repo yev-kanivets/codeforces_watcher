@@ -26,7 +26,7 @@ class ProblemActivity : AppCompatActivity() {
     private lateinit var link: String
 
     private val problem: Problem
-        get() = store.state.problems.problems.find { it.id == intent.getLongExtra(PROBLEM_ID, 0) }
+        get() = store.state.problems.problems.find { it.identify() == intent.getStringExtra(PROBLEM_ID) }
                 ?: throw IllegalStateException()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -127,9 +127,9 @@ class ProblemActivity : AppCompatActivity() {
     companion object {
         private const val PROBLEM_ID = "problem_id"
 
-        fun newIntent(context: Context, problemId: Long): Intent {
+        fun newIntent(context: Context, problemIdentification: String): Intent {
             val intent = Intent(context, ProblemActivity::class.java)
-            intent.putExtra(PROBLEM_ID, problemId)
+            intent.putExtra(PROBLEM_ID, problemIdentification)
             return intent
         }
     }
