@@ -8,14 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.actions.models.ActionItem
-import io.xorum.codeforceswatcher.features.actions.models.CFAction
-import com.bogdan.codeforceswatcher.features.actions.redux.requests.ActionsRequests
-import com.bogdan.codeforceswatcher.features.actions.redux.states.ActionsState
-import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Refresh
+import io.xorum.codeforceswatcher.features.actions.models.CFAction
+import io.xorum.codeforceswatcher.features.actions.redux.requests.ActionsRequests
+import io.xorum.codeforceswatcher.features.actions.redux.states.ActionsState
+import io.xorum.codeforceswatcher.redux.store
 import kotlinx.android.synthetic.main.fragment_users.*
 import tw.geothings.rekotlin.StoreSubscriber
+import java.util.*
 
 class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         StoreSubscriber<ActionsState> {
@@ -25,8 +26,9 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     override fun onStart() {
         super.onStart()
         store.subscribe(this) { state ->
-            state.skipRepeats { oldState, newState -> oldState.actions == newState.actions }
-                    .select { it.actions }
+            state.skipRepeats { oldState, newState ->
+                oldState.actions == newState.actions
+            }.select { it.actions }
         }
     }
 
@@ -50,7 +52,7 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     }
 
     override fun onRefresh() {
-        store.dispatch(ActionsRequests.FetchActions(true))
+        store.dispatch(ActionsRequests.FetchActions(true, Locale.getDefault().language))
         Analytics.logRefreshingData(Refresh.ACTIONS)
     }
 

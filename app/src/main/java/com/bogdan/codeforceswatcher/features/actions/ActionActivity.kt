@@ -14,10 +14,11 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
+import com.bogdan.codeforceswatcher.util.convertFromHtml
 import io.xorum.codeforceswatcher.features.actions.models.CFAction
 import kotlinx.android.synthetic.main.activity_web_page.*
+import io.xorum.codeforceswatcher.redux.store
 
 class ActionActivity : AppCompatActivity() {
 
@@ -40,7 +41,7 @@ class ActionActivity : AppCompatActivity() {
         val cfAction = store.state.actions.actions.find { it.id == intent.getIntExtra(ACTION_ID, -1) }
                 ?: throw IllegalStateException()
 
-        pageTitle = cfAction.blogEntry.title
+        pageTitle = cfAction.blogEntry.title.convertFromHtml()
         link = buildPageLink(cfAction)
     }
 

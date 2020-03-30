@@ -7,11 +7,11 @@ import android.view.View.*
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.add_user.redux.actions.AddUserActions
-import com.bogdan.codeforceswatcher.features.add_user.redux.requests.AddUserRequests
-import com.bogdan.codeforceswatcher.features.add_user.redux.states.AddUserState
-import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.util.Analytics
+import io.xorum.codeforceswatcher.features.add_user.redux.actions.AddUserActions
+import io.xorum.codeforceswatcher.features.add_user.redux.requests.AddUserRequests
+import io.xorum.codeforceswatcher.features.add_user.redux.states.AddUserState
+import io.xorum.codeforceswatcher.redux.store
 import kotlinx.android.synthetic.main.activity_add_user.*
 import tw.geothings.rekotlin.StoreSubscriber
 
@@ -31,8 +31,9 @@ class AddUserActivity : AppCompatActivity(), OnClickListener, StoreSubscriber<Ad
     override fun onStart() {
         super.onStart()
         store.subscribe(this) { state ->
-            state.skipRepeats { oldState, newState -> oldState.addUserState == newState.addUserState }
-                    .select { it.addUserState }
+            state.skipRepeats { oldState, newState ->
+                oldState.addUserState == newState.addUserState
+            }.select { it.addUserState }
         }
     }
 
@@ -43,7 +44,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener, StoreSubscriber<Ad
 
     override fun onStop() {
         super.onStop()
-        store.dispatch(AddUserActions.ClearAddUserState)
+        store.dispatch(AddUserActions.ClearAddUserState())
         store.unsubscribe(this)
     }
 
@@ -64,9 +65,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener, StoreSubscriber<Ad
             AddUserState.Status.PENDING -> VISIBLE
             AddUserState.Status.DONE -> INVISIBLE
         }
-        if (state.status == AddUserState.Status.DONE) {
-            finish()
-        }
+        if (state.status == AddUserState.Status.DONE) finish()
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -1,6 +1,6 @@
 package com.bogdan.codeforceswatcher.features
 
-import android.app.AlertDialog
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.net.Uri
@@ -9,6 +9,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -17,24 +19,23 @@ import com.bogdan.codeforceswatcher.features.actions.ActionsFragment
 import com.bogdan.codeforceswatcher.features.add_user.AddUserActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
-import com.bogdan.codeforceswatcher.features.problems.redux.actions.ProblemsActions
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
-import com.bogdan.codeforceswatcher.redux.actions.UIActions
-import com.bogdan.codeforceswatcher.redux.states.UIState
-import com.bogdan.codeforceswatcher.store
 import com.bogdan.codeforceswatcher.ui.AppRateDialog
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Prefs
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import io.xorum.codeforceswatcher.features.problems.redux.actions.ProblemsActions
+import io.xorum.codeforceswatcher.redux.store
 import kotlinx.android.synthetic.main.activity_main.*
-import tw.geothings.rekotlin.StoreSubscriber
 
-class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
+class MainActivity : AppCompatActivity() {
 
     private val currentTabFragment: Fragment?
         get() = supportFragmentManager.fragments.lastOrNull()
 
     private var searchViewItem: MenuItem? = null
+
+    private var selectedHomeTab = HomeTab.USERS
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,70 +45,44 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
         initViews()
     }
 
-    override fun onStart() {
-        super.onStart()
-        store.subscribe(this) { state ->
-            state.skipRepeats { oldState, newState -> oldState.ui == newState.ui }
-                    .select { it.ui }
-        }
-    }
+    private fun updateFragment() {
+        val bottomNavSelectedItemId = selectedHomeTab.menuItemId
 
-    override fun onStop() {
-        super.onStop()
-        store.unsubscribe(this)
-    }
-
-    override fun newState(state: UIState) {
-        val bottomNavSelectedItemId = when (state.selectedHomeTab) {
-            UIState.HomeTab.USERS -> R.id.navUsers
-            UIState.HomeTab.CONTESTS -> R.id.navContests
-            UIState.HomeTab.ACTIONS -> R.id.navActions
-            UIState.HomeTab.PROBLEMS -> R.id.navProblems
-        }
-
-        tvPageTitle.text = getString(state.selectedHomeTab.titleId)
+        tvPageTitle.text = getString(selectedHomeTab.titleId)
         toolbar.collapseActionView()
 
         if (bottomNavigation.selectedItemId != bottomNavSelectedItemId) {
             bottomNavigation.selectedItemId = bottomNavSelectedItemId
         }
 
-        when (state.selectedHomeTab) {
-            UIState.HomeTab.USERS -> {
-                onUsersTabSelected()
-            }
-            UIState.HomeTab.CONTESTS -> {
-                onContestsTabSelected()
-            }
-            UIState.HomeTab.ACTIONS -> {
-                onActionsTabSelected()
-            }
-            UIState.HomeTab.PROBLEMS -> {
-                onProblemsTabSelected()
-            }
-        }
+        onNewTabSelected()
 
-        val fragment: Fragment = when (state.selectedHomeTab) {
-            UIState.HomeTab.USERS -> {
+        val fragment: Fragment = when (selectedHomeTab) {
+            HomeTab.USERS -> {
                 currentTabFragment as? UsersFragment ?: UsersFragment()
             }
-            UIState.HomeTab.CONTESTS -> {
+            HomeTab.CONTESTS -> {
                 currentTabFragment as? ContestsFragment ?: ContestsFragment()
             }
-            UIState.HomeTab.ACTIONS -> {
+            HomeTab.ACTIONS -> {
                 currentTabFragment as? ActionsFragment ?: ActionsFragment()
             }
-            UIState.HomeTab.PROBLEMS -> {
+            HomeTab.PROBLEMS -> {
                 currentTabFragment as? ProblemsFragment ?: ProblemsFragment()
             }
         }
 
-        if (fragment != currentTabFragment) {
-            supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .commit()
-        }
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit()
+    }
+
+    private fun onNewTabSelected() = when (selectedHomeTab) {
+        HomeTab.USERS -> onUsersTabSelected()
+        HomeTab.CONTESTS -> onContestsTabSelected()
+        HomeTab.ACTIONS -> onActionsTabSelected()
+        HomeTab.PROBLEMS -> onProblemsTabSelected()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -130,9 +105,12 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
         searchViewItem?.isVisible = false
 
         fab.setOnClickListener {
-            val intent =
-                    Intent(Intent.ACTION_VIEW).setData(Uri.parse(CONTESTS_LINK))
-            startActivity(intent)
+            try {
+                val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(CONTESTS_LINK))
+                startActivity(intent)
+            } catch (t: ActivityNotFoundException) {
+                Toast.makeText(this, getString(R.string.no_browser_has_been_found), Toast.LENGTH_SHORT).show()
+            }
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
     }
@@ -200,12 +178,15 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
         )
 
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
-            val homeTab = UIState.HomeTab.fromMenuItemId(item.itemId)
-            if (homeTab != store.state.ui.selectedHomeTab) {
-                store.dispatch(UIActions.SelectHomeTab(homeTab))
+            val homeTab = HomeTab.fromMenuItemId(item.itemId)
+            if (homeTab != selectedHomeTab) {
+                selectedHomeTab = homeTab
+                updateFragment()
             }
             true
         }
+
+        updateFragment()
 
         val menuView = bottomNavigation.getChildAt(0) as? BottomNavigationMenuView ?: return
 
@@ -225,5 +206,19 @@ class MainActivity : AppCompatActivity(), StoreSubscriber<UIState> {
 
     companion object {
         private const val CONTESTS_LINK = "http://codeforces.com/contests"
+    }
+
+    enum class HomeTab(val titleId: Int, val menuItemId: Int) {
+
+        USERS(R.string.empty, R.id.navUsers),
+        CONTESTS(R.string.contests, R.id.navContests),
+        ACTIONS(R.string.actions, R.id.navActions),
+        PROBLEMS(R.string.problems, R.id.navProblems);
+
+        companion object {
+
+            fun fromMenuItemId(menuItemId: Int): HomeTab =
+                    enumValues<HomeTab>().find { it.menuItemId == menuItemId } ?: USERS
+        }
     }
 }

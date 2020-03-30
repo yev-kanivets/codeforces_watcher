@@ -2,32 +2,23 @@ package com.bogdan.codeforceswatcher
 
 import android.app.Application
 import android.content.Intent
-import com.bogdan.codeforceswatcher.features.actions.redux.requests.ActionsRequests
-import com.bogdan.codeforceswatcher.features.contests.redux.requests.ContestsRequests
-import com.bogdan.codeforceswatcher.features.problems.redux.requests.ProblemsRequests
-import com.bogdan.codeforceswatcher.features.users.redux.requests.Source
-import com.bogdan.codeforceswatcher.features.users.redux.requests.UsersRequests
+import com.bogdan.codeforceswatcher.handlers.AndroidMessageHandler
+import com.bogdan.codeforceswatcher.handlers.AndroidNotificationHandler
 import com.bogdan.codeforceswatcher.receiver.StartAlarm
-import com.bogdan.codeforceswatcher.redux.middlewares.appMiddleware
-import com.bogdan.codeforceswatcher.redux.middlewares.notificationMiddleware
-import com.bogdan.codeforceswatcher.redux.middlewares.toastMiddleware
-import com.bogdan.codeforceswatcher.redux.reducers.appReducer
-import com.bogdan.codeforceswatcher.room.DatabaseController
-import com.bogdan.codeforceswatcher.util.PersistenceController
 import com.bogdan.codeforceswatcher.util.Prefs
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import io.xorum.codeforceswatcher.CWDatabase
-import redux.sqlDriver
-import tw.geothings.rekotlin.Store
-
-val store = Store(
-        reducer = ::appReducer,
-        state = DatabaseController.fetchAppState(),
-        middleware = listOf(
-                appMiddleware, notificationMiddleware, toastMiddleware
-        )
-)
+import io.xorum.codeforceswatcher.features.actions.redux.requests.ActionsRequests
+import io.xorum.codeforceswatcher.features.contests.redux.requests.ContestsRequests
+import io.xorum.codeforceswatcher.features.problems.redux.requests.ProblemsRequests
+import io.xorum.codeforceswatcher.features.users.redux.requests.Source
+import io.xorum.codeforceswatcher.features.users.redux.requests.UsersRequests
+import io.xorum.codeforceswatcher.redux.*
+import io.xorum.codeforceswatcher.redux.middlewares.notificationHandler
+import io.xorum.codeforceswatcher.redux.middlewares.toastHandler
+import io.xorum.codeforceswatcher.util.settings
+import java.util.*
 
 class CwApp : Application() {
 
@@ -37,23 +28,43 @@ class CwApp : Application() {
         app = this
 
         initDatabase()
-        DatabaseController.onAppCreated()
-        PersistenceController.onAppCreated()
+        initSettings()
+        initToastHandler()
+        initNotificationHandler()
+
+        databaseController.onAppCreated()
+        persistenceController.onAppCreated()
+
         FirebaseAnalytics.getInstance(this)
 
-        val prefs = Prefs.get()
         fetchData()
 
-        if (prefs.readAlarm().isEmpty()) {
+        if (Prefs.get().readAlarm().isEmpty()) {
             startAlarm()
-            prefs.writeAlarm("alarm")
+            Prefs.get().writeAlarm()
         }
 
-        prefs.addLaunchCount()
+        Prefs.get().addLaunchCount()
+    }
+
+    private fun initDatabase() {
+        sqlDriver = AndroidSqliteDriver(CWDatabase.Schema, app.applicationContext, "database")
+    }
+
+    private fun initSettings() {
+        settings = Prefs.get()
+    }
+
+    private fun initToastHandler() {
+        toastHandler = AndroidMessageHandler()
+    }
+
+    private fun initNotificationHandler() {
+        notificationHandler = AndroidNotificationHandler()
     }
 
     private fun fetchData() {
-        store.dispatch(ActionsRequests.FetchActions(false))
+        store.dispatch(ActionsRequests.FetchActions(false, Locale.getDefault().language))
         store.dispatch(ContestsRequests.FetchContests(false))
         store.dispatch(UsersRequests.FetchUsers(Source.BACKGROUND))
         store.dispatch(ProblemsRequests.FetchProblems(false))
@@ -62,10 +73,6 @@ class CwApp : Application() {
     private fun startAlarm() {
         val intent = Intent(this, StartAlarm::class.java)
         sendBroadcast(intent)
-    }
-
-    private fun initDatabase() {
-        sqlDriver = AndroidSqliteDriver(CWDatabase.Schema, app.applicationContext, "database")
     }
 
     companion object {

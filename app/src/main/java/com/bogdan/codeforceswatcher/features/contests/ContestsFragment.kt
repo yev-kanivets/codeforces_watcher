@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
 import io.xorum.codeforceswatcher.features.contests.models.Contest
-import com.bogdan.codeforceswatcher.features.contests.redux.requests.ContestsRequests
-import com.bogdan.codeforceswatcher.features.contests.redux.states.ContestsState
-import com.bogdan.codeforceswatcher.store
+import io.xorum.codeforceswatcher.features.contests.redux.requests.ContestsRequests
+import io.xorum.codeforceswatcher.features.contests.redux.states.ContestsState
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Refresh
 import kotlinx.android.synthetic.main.fragment_contests.*
+import io.xorum.codeforceswatcher.redux.store
 import tw.geothings.rekotlin.StoreSubscriber
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
@@ -32,8 +32,9 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     override fun onStart() {
         super.onStart()
         store.subscribe(this) { state ->
-            state.skipRepeats { oldState, newState -> oldState.contests == newState.contests }
-                    .select { it.contests }
+            state.skipRepeats { oldState, newState ->
+                oldState.contests == newState.contests
+            }.select { it.contests }
         }
     }
 

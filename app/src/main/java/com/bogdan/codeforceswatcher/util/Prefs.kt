@@ -4,28 +4,29 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import com.bogdan.codeforceswatcher.CwApp
+import io.xorum.codeforceswatcher.util.Settings
 
-class Prefs constructor(private val context: Context) {
+class Prefs(private val context: Context) : Settings {
 
     private val ratePeriod = 5
 
-    fun readSpinnerSortPosition(): String {
+    override fun readSpinnerSortPosition(): Int {
         val defaultPrefs = getDefaultPrefs()
-        return defaultPrefs.getString(KEY_SPINNER_SORT_POSITION, "0") ?: "0"
+        return (defaultPrefs.getString(KEY_SPINNER_SORT_POSITION, "0") ?: "0").toInt()
     }
 
-    fun writeSpinnerSortPosition(spinnerSortPosition: Int) {
+    override fun writeSpinnerSortPosition(spinnerSortPosition: Int) {
         val editor = getDefaultPrefs().edit()
         editor.putString(KEY_SPINNER_SORT_POSITION, spinnerSortPosition.toString())
         editor.apply()
     }
 
-    fun readProblemsIsFavourite(): Boolean {
+    override fun readProblemsIsFavourite(): Boolean {
         val defaultPrefs = getDefaultPrefs()
         return defaultPrefs.getBoolean(KEY_PROBLEMS_IS_FAVOURITE, false)
     }
 
-    fun writeProblemsIsFavourite(isFavourite: Boolean) {
+    override fun writeProblemsIsFavourite(isFavourite: Boolean) {
         val editor = getDefaultPrefs().edit()
         editor.putBoolean(KEY_PROBLEMS_IS_FAVOURITE, isFavourite)
         editor.apply()
@@ -36,9 +37,9 @@ class Prefs constructor(private val context: Context) {
         return defaultPrefs.getString(KEY_SPINNER_SORT_POSITION, "") ?: ""
     }
 
-    fun writeAlarm(alarm: String) {
+    fun writeAlarm() {
         val editor = getDefaultPrefs().edit()
-        editor.putString(KEY_ALARM, alarm)
+        editor.putString(KEY_ALARM, "alarm")
         editor.apply()
     }
 
