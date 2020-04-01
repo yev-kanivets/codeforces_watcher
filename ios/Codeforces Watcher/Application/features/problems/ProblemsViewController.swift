@@ -7,11 +7,10 @@
 //
 
 import UIKit
-import ReSwift
+import common
 import FirebaseAnalytics
 
 class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResultsUpdating {
-
     private let tableView = UITableView()
     private let tableAdapter = ProblemsTableViewAdapter()
     private let refreshControl = UIRefreshControl()
@@ -27,24 +26,25 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        store.subscribe(self) { subcription in
+        
+        newStore.subscribe(subscriber: self) { subcription in
             subcription.select { state in state.problems }
         }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        store.unsubscribe(self)
+        newStore.unsubscribe(subscriber: self)
     }
 
-    func setupView() {
+    private func setupView() {
         view.backgroundColor = .white
 
         buildViewTree()
         setConstraints()
     }
 
-    func setupTableView() {
+    private func setupTableView() {
         tableView.run {
             $0.delegate = tableAdapter
             $0.dataSource = tableAdapter
@@ -72,7 +72,7 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
         }
     }
 
-    func setupSearchView() {
+    private func setupSearchView() {
         searchController.run {
             $0.searchResultsUpdater = self
             $0.obscuresBackgroundDuringPresentation = false
@@ -92,27 +92,29 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
     }
 
     func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text else { return }
+        guard let text = searchController.searchBar.text?.lowercased() else { return }
 
-        var filteredProblemItems: [ProblemItem] = []
+        var filteredProblems: [Problem] = []
 
-        for problem in store.state.problems.problemItems {
-            if (problem.round.lowercased().contains(text.lowercased()) || problem.englishTitle.lowercased().contains(text.lowercased()) ||
-                problem.russianTitle.lowercased().contains(text.lowercased())) {
-                filteredProblemItems.append(problem)
+        for problem in newStore.state.problems.problems {
+            if (problem.contestName.lowercased().contains(text) || problem.enName.lowercased().contains(text) ||
+                problem.ruName.lowercased().contains(text)) {
+                filteredProblems.append(problem)
             }
         }
 
-        tableAdapter.problemItems = text.isEmpty ? store.state.problems.problemItems : filteredProblemItems
+        tableAdapter.problems = text.isEmpty ? newStore.state.problems.problems : filteredProblems
         tableView.reloadData()
     }
-
-    func newState(state: ProblemsState) {
-        if (state.status == ProblemsState.Status.IDLE) {
+    
+    func doNewState(state: Any) {
+        let state = state as! ProblemsState
+        
+        if (state.status == ProblemsState.Status.idle) {
             refreshControl.endRefreshing()
         }
 
-        tableAdapter.problemItems = state.problemItems
+        tableAdapter.problems = state.problems
         updateSearchResults(for: searchController)
         tableView.reloadData()
     }
@@ -122,15 +124,15 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
         fetchProblems()
     }
 
-    func fetchProblems() {
-        store.dispatch(ProblemsRequests.FetchProblems())
+    private func fetchProblems() {
+        newStore.dispatch(action: ProblemsRequests.FetchProblems(isInitializedByUser: true))
     }
 
-    func buildViewTree() {
+    private func buildViewTree() {
         view.addSubview(tableView)
     }
 
-    func setConstraints() {
+    private func setConstraints() {
         tableView.edgesToSuperview()
     }
 }

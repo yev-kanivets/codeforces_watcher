@@ -9,7 +9,6 @@ import ReSwift
 struct AppState: StateType {
     var actions = ActionsState()
     var contests = ContestsState()
-    var problems = ProblemsState()
 }
 
 struct ActionsState: StateType {
@@ -40,15 +39,5 @@ struct ContestsState: StateType {
                 filters[platform] = true
             }
         }
-    }
-}
-
-struct ProblemsState: StateType {
-    var problemItems: [ProblemItem] = []
-    var status: Status = Status.IDLE
-    
-    enum Status {
-        case IDLE
-        case PENDING
     }
 }

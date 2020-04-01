@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+/*
 struct ProblemItem {
     var shareText: String
     var title: String!
@@ -32,4 +32,4 @@ struct ProblemItem {
         englishTitle = englishProblemItem.title
         self.russianTitle = russianTitle
     }
-}
+}*/

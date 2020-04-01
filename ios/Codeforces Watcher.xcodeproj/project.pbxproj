@@ -67,13 +67,6 @@
 		63736F2923D1F5DB001E9AB9 /* ProblemItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F2823D1F5DB001E9AB9 /* ProblemItem.swift */; };
 		63736F2A23D1F5DB001E9AB9 /* ProblemItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F2823D1F5DB001E9AB9 /* ProblemItem.swift */; };
 		63736F2B23D1F5DB001E9AB9 /* ProblemItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F2823D1F5DB001E9AB9 /* ProblemItem.swift */; };
-		63736F2D23D1F7AC001E9AB9 /* Problem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F2C23D1F7AC001E9AB9 /* Problem.swift */; };
-		63736F2E23D1F7AC001E9AB9 /* Problem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F2C23D1F7AC001E9AB9 /* Problem.swift */; };
-		63736F2F23D1F7AC001E9AB9 /* Problem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F2C23D1F7AC001E9AB9 /* Problem.swift */; };
-		63736F3123D1F837001E9AB9 /* ProblemsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F3023D1F837001E9AB9 /* ProblemsResponse.swift */; };
-		63736F3223D1F837001E9AB9 /* ProblemsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F3023D1F837001E9AB9 /* ProblemsResponse.swift */; };
-		63736F3323D1F837001E9AB9 /* ProblemsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F3023D1F837001E9AB9 /* ProblemsResponse.swift */; };
-		63736F3523D5B276001E9AB9 /* ProblemsRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F3423D5B276001E9AB9 /* ProblemsRequests.swift */; };
 		6394361823BA116000B302A3 /* Codeforces_WatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6394361723BA116000B302A3 /* Codeforces_WatcherTests.swift */; };
 		6394362323BA116000B302A3 /* Codeforces_WatcherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6394362223BA116000B302A3 /* Codeforces_WatcherUITests.swift */; };
 		63A0E14723CDF579001F570C /* NoActionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A0E14623CDF579001F570C /* NoActionsTableViewCell.swift */; };
@@ -161,9 +154,6 @@
 		63736F2023D1F336001E9AB9 /* ProblemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemTableViewCell.swift; sourceTree = "<group>"; };
 		63736F2423D1F3EC001E9AB9 /* ProblemsTableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemsTableViewAdapter.swift; sourceTree = "<group>"; };
 		63736F2823D1F5DB001E9AB9 /* ProblemItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemItem.swift; sourceTree = "<group>"; };
-		63736F2C23D1F7AC001E9AB9 /* Problem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem.swift; sourceTree = "<group>"; };
-		63736F3023D1F837001E9AB9 /* ProblemsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemsResponse.swift; sourceTree = "<group>"; };
-		63736F3423D5B276001E9AB9 /* ProblemsRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemsRequests.swift; sourceTree = "<group>"; };
 		639435FD23BA115C00B302A3 /* Codeforces WatchR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Codeforces WatchR.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6394360E23BA116000B302A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6394361323BA116000B302A3 /* Codeforces WatcherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Codeforces WatcherTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -476,7 +466,6 @@
 		63736F1A23D1F29E001E9AB9 /* problems */ = {
 			isa = PBXGroup;
 			children = (
-				63736F1D23D1F2E2001E9AB9 /* requests */,
 				63736F1C23D1F2DC001E9AB9 /* models */,
 				63736F1B23D1F2D7001E9AB9 /* cells */,
 				63736F1E23D1F2FD001E9AB9 /* ProblemsViewController.swift */,
@@ -498,18 +487,8 @@
 			isa = PBXGroup;
 			children = (
 				63736F2823D1F5DB001E9AB9 /* ProblemItem.swift */,
-				63736F2C23D1F7AC001E9AB9 /* Problem.swift */,
-				63736F3023D1F837001E9AB9 /* ProblemsResponse.swift */,
 			);
 			path = models;
-			sourceTree = "<group>";
-		};
-		63736F1D23D1F2E2001E9AB9 /* requests */ = {
-			isa = PBXGroup;
-			children = (
-				63736F3423D5B276001E9AB9 /* ProblemsRequests.swift */,
-			);
-			path = requests;
 			sourceTree = "<group>";
 		};
 		639435F423BA115C00B302A3 = {
@@ -861,21 +840,18 @@
 				63736F2523D1F3EC001E9AB9 /* ProblemsTableViewAdapter.swift in Sources */,
 				33524585031C11024879680D /* BlogEntryTableViewCell.swift in Sources */,
 				63736F2923D1F5DB001E9AB9 /* ProblemItem.swift in Sources */,
-				63736F3523D5B276001E9AB9 /* ProblemsRequests.swift in Sources */,
 				63736F0B23CF6899001E9AB9 /* ContestItem.swift in Sources */,
 				63715C5723D88FBB00BA064F /* NoProblemsTableViewCell.swift in Sources */,
 				63736F0523CF6657001E9AB9 /* CodeforcesContest.swift in Sources */,
 				63223DF023E04734004F5A28 /* Platform.swift in Sources */,
 				63736F2123D1F336001E9AB9 /* ProblemTableViewCell.swift in Sources */,
 				335247826CC8C76840B8B161 /* ActionsViewController.swift in Sources */,
-				63736F2D23D1F7AC001E9AB9 /* Problem.swift in Sources */,
 				63736F1F23D1F2FD001E9AB9 /* ProblemsViewController.swift in Sources */,
 				33524B39CED3D72F41F01C9B /* CardView.swift in Sources */,
 				33524EA5619D62409125FD81 /* AppDelegate.swift in Sources */,
 				63EB130123CF3F830013A974 /* MainViewController.swift in Sources */,
 				335240BE358E7469D97B1472 /* String+Extension.swift in Sources */,
 				63B08A8D23E2FCA9000240B3 /* PersistenceController.swift in Sources */,
-				63736F3123D1F837001E9AB9 /* ProblemsResponse.swift in Sources */,
 				33524BC0E57CE4F3A2D1EC04 /* UIColor+Extension.swift in Sources */,
 				3352406FDC5916F705E86498 /* ScopeFunc.swift in Sources */,
 				63FB270923E1AA50005F19F1 /* WebViewController.swift in Sources */,
@@ -904,11 +880,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63736F3223D1F837001E9AB9 /* ProblemsResponse.swift in Sources */,
 				63736F2A23D1F5DB001E9AB9 /* ProblemItem.swift in Sources */,
 				6394361823BA116000B302A3 /* Codeforces_WatcherTests.swift in Sources */,
 				63736F2623D1F3EC001E9AB9 /* ProblemsTableViewAdapter.swift in Sources */,
-				63736F2E23D1F7AC001E9AB9 /* Problem.swift in Sources */,
 				63736F2223D1F336001E9AB9 /* ProblemTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -917,11 +891,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63736F3323D1F837001E9AB9 /* ProblemsResponse.swift in Sources */,
 				63736F2B23D1F5DB001E9AB9 /* ProblemItem.swift in Sources */,
 				6394362323BA116000B302A3 /* Codeforces_WatcherUITests.swift in Sources */,
 				63736F2723D1F3EC001E9AB9 /* ProblemsTableViewAdapter.swift in Sources */,
-				63736F2F23D1F7AC001E9AB9 /* Problem.swift in Sources */,
 				63736F2323D1F336001E9AB9 /* ProblemTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

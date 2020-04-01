@@ -11,8 +11,7 @@ func appReducer(action: Action, state: AppState?) -> AppState {
 
     return AppState(
         actions: actionsReducer(action, state),
-        contests: contestsReducer(action, state),
-        problems: problemsReducer(action, state)
+        contests: contestsReducer(action, state)
     )
 }
 
@@ -57,25 +56,6 @@ func contestsReducer(_ action: Action, _ state: AppState) -> ContestsState {
     case let action as FilterChangeAction:
         newState.filters[action.platform] = action.isOn
         PersistenceController.saveContestsFilters(filters: newState.filters)
-    default:
-        break
-    }
-    return newState
-}
-
-func problemsReducer(_ action: Action, _ state: AppState) -> ProblemsState {
-    var newState = state.problems
-    switch (action) {
-    case _ as ProblemsRequests.FetchProblems:
-        newState.status = ProblemsState.Status.PENDING
-        
-    case let action as ProblemsRequests.FetchProblems.Success:
-        newState.problemItems = action.problemItems
-        newState.status = ProblemsState.Status.IDLE
-        
-    case _ as ProblemsRequests.FetchProblems.Failure:
-        newState.status = ProblemsState.Status.IDLE
-        
     default:
         break
     }

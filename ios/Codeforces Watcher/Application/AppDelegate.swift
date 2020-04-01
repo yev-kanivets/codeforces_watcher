@@ -7,14 +7,17 @@
 //
 
 import UIKit
-import ReSwift
 import Firebase
+import ReSwift
+import common
 
-let store = Store<AppState>(
+let store = ReSwift.Store<AppState>(
     reducer: appReducer,
     state: AppState(),
     middleware: [appMiddleware]
 )
+
+let newStore = AppStoreKt.store
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

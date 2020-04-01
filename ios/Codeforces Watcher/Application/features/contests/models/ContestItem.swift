@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import common
 
 struct ContestItem {
     var name: String!

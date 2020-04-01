@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import common
 
 class ProblemTableViewCell: UITableViewCell {
     private let cardView = CardView()
@@ -69,8 +70,8 @@ class ProblemTableViewCell: UITableViewCell {
         }
     }
 
-    func bind(_ problemItem: ProblemItem) {
-        nameLabel.text = problemItem.title
-        contestLabel.text = problemItem.round
+    func bind(_ problemItem: Problem) {
+        nameLabel.text = problemItem.name
+        contestLabel.text = problemItem.contestName
     }
 }
