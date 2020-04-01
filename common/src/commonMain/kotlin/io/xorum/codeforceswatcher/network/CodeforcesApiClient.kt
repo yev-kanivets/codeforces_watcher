@@ -46,8 +46,8 @@ internal object CodeforcesApiClient {
         null
     }
 
-    suspend fun getContests() = try {
-        codeforcesApiClient.get<ContestsResponse>(path = "contest.list")
+    suspend fun getCodeforcesContests() = try {
+        codeforcesApiClient.get<CodeforcesContestsResponse>(path = "contest.list")
     } catch (t: Throwable) {
         null
     }

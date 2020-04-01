@@ -95,7 +95,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     private fun getCalendarTime(time: Long): String {
         val dateFormat = SimpleDateFormat("yyyyMMd'T'HHmmss", Locale.getDefault())
-        return dateFormat.format(Date(time * 1000)).toString()
+        return dateFormat.format(Date(time)).toString()
     }
 
     companion object {

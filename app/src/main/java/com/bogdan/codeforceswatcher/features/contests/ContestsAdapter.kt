@@ -44,7 +44,7 @@ class ContestsAdapter(
 
     private fun getDateTime(seconds: Long): String {
         val dateFormat = SimpleDateFormat("kk:mm MMM d, EEEE", Locale.getDefault())
-        return dateFormat.format(Date(seconds * 1000)).toString()
+        return dateFormat.format(Date(seconds)).toString()
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
