@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.features.MainActivity
 import io.xorum.codeforceswatcher.features.contests.models.Contest
 import io.xorum.codeforceswatcher.features.contests.redux.requests.ContestsRequests
 import io.xorum.codeforceswatcher.features.contests.redux.states.ContestsState
@@ -67,11 +68,18 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
-        contestsAdapter = ContestsAdapter(requireContext()) { contest ->
-            addContestToCalendar(contest)
-        }
+        contestsAdapter = ContestsAdapter(requireContext(), { addContestToCalendar(it) }, { showContestPage(it.link) })
         recyclerView.adapter = contestsAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun showContestPage(url: String) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(url))
+            startActivity(intent)
+        } catch (t: ActivityNotFoundException) {
+            Toast.makeText(requireContext(), getString(R.string.no_browser_has_been_found), Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun addContestToCalendar(contest: Contest) {
