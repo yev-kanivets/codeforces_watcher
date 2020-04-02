@@ -43,10 +43,8 @@ internal object DatabaseQueries {
 
         fun insert(contests: List<Contest>) {
             database.contestQueries.transaction {
-                contests.forEach { contest ->
-                    if (contest.platform == Platform.CODEFORCES) {
-                        database.contestQueries.insert(contest.id, contest.name, contest.startTimeSeconds, contest.durationSeconds, contest.phase)
-                    }
+                contests.filter { it.platform != Platform.CODEFORCES }.forEach { contest ->
+                    database.contestQueries.insert(contest.id, contest.name, contest.startTimeSeconds, contest.durationSeconds, contest.phase)
                 }
             }
         }

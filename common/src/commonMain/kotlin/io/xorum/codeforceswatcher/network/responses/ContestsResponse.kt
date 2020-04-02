@@ -18,24 +18,21 @@ data class ContestResponse(
 ) {
     fun toContest(): Contest {
         val dateFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-        println("Here : here : $startTime + ${dateFormat.parse(startTime).local.unixMillisLong} + ${platform}")
         return Contest(0L, name, dateFormat.parse(startTime).local.unixMillisLong, duration.toLong() * 1000, status, parsePlatform(platform)).apply { link = url }
     }
 
-    private fun parsePlatform(platform: String): Platform {
-        return when (platform) {
-            "CodeForces" -> Platform.CODEFORCES
-            "CodeForces::Gym" -> Platform.CODEFORCES_GYM
-            "TopCoder" -> Platform.TOPCODER
-            "AtCoder" -> Platform.ATCODER
-            "CS Academy" -> Platform.CS_ACADEMY
-            "CodeChef" -> Platform.CODECHEF
-            "HackerRank" -> Platform.HACKERRANK
-            "HackerEarth" -> Platform.HACKEREARTH
-            "Kick Start" -> Platform.KICK_START
-            "LeetCode" -> Platform.LEETCODE
-            "A2OJ" -> Platform.CODEFORCES
-            else -> Platform.CODEFORCES
-        }
+    private fun parsePlatform(platform: String) = when (platform) {
+        "CodeForces" -> Platform.CODEFORCES
+        "CodeForces::Gym" -> Platform.CODEFORCES_GYM
+        "TopCoder" -> Platform.TOPCODER
+        "AtCoder" -> Platform.ATCODER
+        "CS Academy" -> Platform.CS_ACADEMY
+        "CodeChef" -> Platform.CODECHEF
+        "HackerRank" -> Platform.HACKERRANK
+        "HackerEarth" -> Platform.HACKEREARTH
+        "Kick Start" -> Platform.KICK_START
+        "LeetCode" -> Platform.LEETCODE
+        "A2OJ" -> Platform.CODEFORCES
+        else -> Platform.CODEFORCES
     }
 }

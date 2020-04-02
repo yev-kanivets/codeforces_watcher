@@ -14,7 +14,8 @@ data class Contest(
         val phase: String,
         val platform: Platform = Platform.CODEFORCES
 ) {
-    var link: String = "$CODEFORCES_CONTESTS_LINK/$id"
+    var link: String = ""
+        get() = field.takeIf { it.isNotEmpty() } ?: "$CODEFORCES_CONTESTS_LINK/$id"
 
     companion object {
         fun fromDB(dbContest: DbContest) = Contest(

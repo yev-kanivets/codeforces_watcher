@@ -28,7 +28,13 @@ import java.util.*
 class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         StoreSubscriber<ContestsState> {
 
-    private lateinit var contestsAdapter: ContestsAdapter
+    private val contestsAdapter by lazy {
+        ContestsAdapter(
+                requireContext(),
+                addToCalendarClickListener = { addContestToCalendar(it) },
+                itemClickListener = { showContestPage(it.link) }
+        )
+    }
 
     override fun onStart() {
         super.onStart()
@@ -68,7 +74,6 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
-        contestsAdapter = ContestsAdapter(requireContext(), { addContestToCalendar(it) }, { showContestPage(it.link) })
         recyclerView.adapter = contestsAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
