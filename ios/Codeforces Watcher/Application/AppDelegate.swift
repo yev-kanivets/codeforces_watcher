@@ -26,6 +26,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let rootViewController = MainViewController()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        initAppStyle()
+        initDatabase()
+        
+        store.dispatch(ContestsRequests.FetchCodeforcesContests())
+
+        FirebaseApp.configure()
+        
+        return true
+    }
+    
+    private func initDatabase() {
+        DatabaseKt.doInitDatabase()
+    }
+    
+    private func initAppStyle() {
         UINavigationBar.appearance().run {
             $0.isTranslucent = false
             $0.barTintColor = Pallete.colorPrimary
@@ -45,11 +60,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if #available(iOS 13.0, *) {
             window?.overrideUserInterfaceStyle = .light
         }
-        
-        store.dispatch(ContestsRequests.FetchCodeforcesContests())
-
-        FirebaseApp.configure()
-        
-        return true
     }
 }

@@ -21,7 +21,7 @@ let appMiddleware: Middleware<AppState> = { dispatch, getState in
             // Need to get contest name by id in Problems tab
             case _ as ContestsRequests.FetchCodeforcesContests.Success:
                 store.dispatch(ContestsRequests.FetchAllContests())
-                newStore.dispatch(action: ProblemsRequests.FetchProblems(isInitializedByUser: false))
+                //newStore.dispatch(action: ProblemsRequests.FetchProblems(isInitializedByUser: false))
                 
             case let messageAction as MessageAction:
                 notificationStatusWindow.fireNotification(message: messageAction.message)
