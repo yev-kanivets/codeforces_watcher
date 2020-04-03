@@ -17,6 +17,8 @@ data class Problem(
 ) {
     fun identify() = "$contestId$index"
 
+    val link: String get() = "https://codeforces.com/contest/$contestId/problem/$index"
+
     companion object {
 
         fun fromDB(dbProblem: DbProblem) = Problem(

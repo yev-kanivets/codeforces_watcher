@@ -9,12 +9,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bogdan.codeforceswatcher.R
 import io.xorum.codeforceswatcher.features.contests.models.Contest
+import io.xorum.codeforceswatcher.features.contests.models.Platform
 import kotlinx.android.synthetic.main.view_contest_item.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ContestsAdapter(
         private val context: Context,
+        private val addToCalendarClickListener: (Contest) -> Unit,
         private val itemClickListener: (Contest) -> Unit
 ) : RecyclerView.Adapter<ContestsAdapter.ViewHolder>() {
 
@@ -32,8 +34,21 @@ class ContestsAdapter(
         with(holder) {
             tvContestName.text = contest.name
             tvContestTime.text = getDateTime(contest.startTimeSeconds)
+            ivContest.setImageResource(when (contest.platform) {
+                Platform.ATCODER -> R.drawable.atcoder
+                Platform.TOPCODER -> R.drawable.topcoder
+                Platform.CODEFORCES -> R.drawable.codeforces
+                Platform.CODECHEF -> R.drawable.codechef
+                Platform.CODEFORCES_GYM -> R.drawable.codeforces
+                Platform.LEETCODE -> R.drawable.leetcode
+                Platform.KICK_START -> R.drawable.kickstart
+                Platform.HACKEREARTH -> R.drawable.hackerearth
+                Platform.HACKERRANK -> R.drawable.hackerrank
+                Platform.CS_ACADEMY -> R.drawable.csacademy
+            })
 
-            onClickListener = { itemClickListener.invoke(contest) }
+            onAddToCalendarClickListener = { addToCalendarClickListener(contest) }
+            onItemClickListener = { itemClickListener(contest) }
         }
     }
 
@@ -44,18 +59,21 @@ class ContestsAdapter(
 
     private fun getDateTime(seconds: Long): String {
         val dateFormat = SimpleDateFormat("kk:mm MMM d, EEEE", Locale.getDefault())
-        return dateFormat.format(Date(seconds * 1000)).toString()
+        return dateFormat.format(Date(seconds)).toString()
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvContestName: TextView = view.tvContestName
         val tvContestTime: TextView = view.tvContestTime
+        val ivContest: ImageView = view.ivContest
         private val ivAddToCalendar: ImageView = view.ivAddToCalendar
 
-        var onClickListener: (() -> Unit)? = null
+        var onAddToCalendarClickListener: (() -> Unit)? = null
+        var onItemClickListener: (() -> Unit)? = null
 
         init {
-            ivAddToCalendar.setOnClickListener { onClickListener?.invoke() }
+            ivAddToCalendar.setOnClickListener { onAddToCalendarClickListener?.invoke() }
+            view.setOnClickListener { onItemClickListener?.invoke() }
         }
     }
 }

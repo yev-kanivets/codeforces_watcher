@@ -205,7 +205,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val CONTESTS_LINK = "http://codeforces.com/contests"
+        private const val CONTESTS_LINK = "https://clist.by/"
     }
 
     enum class HomeTab(val titleId: Int, val menuItemId: Int) {
