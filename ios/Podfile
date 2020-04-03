@@ -18,6 +18,7 @@ target 'Codeforces Watcher' do
   pod 'Crashlytics', '~> 3.14.0'
   pod 'Firebase/Analytics'
   pod 'PKHUD', '~> 5.0'
+  pod 'Toaster'
 
   target 'Codeforces WatcherTests' do
     inherit! :search_paths

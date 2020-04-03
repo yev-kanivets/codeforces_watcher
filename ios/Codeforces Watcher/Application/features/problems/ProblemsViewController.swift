@@ -25,11 +25,13 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(animated)
         
         newStore.subscribe(subscriber: self) { subcription in
             subcription.select { state in state.problems }
         }
+        
     }
 
     override func viewWillDisappear(_ animated: Bool) {

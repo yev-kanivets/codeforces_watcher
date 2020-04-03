@@ -7,8 +7,6 @@ import Foundation
 import ReSwift
 import common
 
-let notificationStatusWindow = NotificationStatusWindow(frame: CGRect.zero)
-
 let appMiddleware: Middleware<AppState> = { dispatch, getState in
     return { next in
         return { action in
@@ -21,10 +19,6 @@ let appMiddleware: Middleware<AppState> = { dispatch, getState in
             // Need to get contest name by id in Problems tab
             case _ as ContestsRequests.FetchCodeforcesContests.Success:
                 store.dispatch(ContestsRequests.FetchAllContests())
-                //newStore.dispatch(action: ProblemsRequests.FetchProblems(isInitializedByUser: false))
-                
-            case let messageAction as MessageAction:
-                notificationStatusWindow.fireNotification(message: messageAction.message)
             default:
                 break
             }

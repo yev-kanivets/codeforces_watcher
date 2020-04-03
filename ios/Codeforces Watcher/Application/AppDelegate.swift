@@ -26,18 +26,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let rootViewController = MainViewController()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        initAppStyle()
         initDatabase()
+        initSettings()
+        initToastHandler()
         
-        store.dispatch(ContestsRequests.FetchCodeforcesContests())
-
+        AppStoreKt.databaseController.onAppCreated()
+        AppStoreKt.persistenceController.onAppCreated()
+        
         FirebaseApp.configure()
+        
+        initAppStyle()
+        fetchData()
         
         return true
     }
-    
+
     private func initDatabase() {
         DatabaseKt.doInitDatabase()
+    }
+    
+    private func initSettings() {
+        SettingsKt.settings = Prefs()
+    }
+    
+    private func initToastHandler() {
+        ToastMiddlewareKt.toastHandlers.add(IOSToastHandler())
+    }
+    
+    private func fetchData() {
+        store.dispatch(ContestsRequests.FetchCodeforcesContests())
     }
     
     private func initAppStyle() {

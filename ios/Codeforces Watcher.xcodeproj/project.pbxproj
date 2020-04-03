@@ -42,13 +42,11 @@
 		33524FEAE56CD4737349DE6A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3352491960327B2FC4E36E63 /* Constants.swift */; };
 		6311376023D98E51008126B0 /* NoContestsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6311375F23D98E51008126B0 /* NoContestsTableViewCell.swift */; };
 		63223DF023E04734004F5A28 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63223DEF23E04734004F5A28 /* Platform.swift */; };
-		6325F4C123D840AF00CD19B7 /* NotificationStatusWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6325F4C023D840AF00CD19B7 /* NotificationStatusWindow.swift */; };
 		633B4CF623E078380099EF41 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633B4CF523E078380099EF41 /* FiltersViewController.swift */; };
 		633B4CF823E07F150099EF41 /* FiltersTableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633B4CF723E07F150099EF41 /* FiltersTableViewAdapter.swift */; };
 		633B4CFA23E083A10099EF41 /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633B4CF923E083A10099EF41 /* FilterTableViewCell.swift */; };
 		63603E6723DF00D700F86BC0 /* CommonContest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63603E6623DF00D700F86BC0 /* CommonContest.swift */; };
 		63603E6923DF2ADC00F86BC0 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63603E6823DF2ADC00F86BC0 /* Double+Extension.swift */; };
-		63715C5523D8794800BA064F /* MessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63715C5423D8794800BA064F /* MessageAction.swift */; };
 		63715C5723D88FBB00BA064F /* NoProblemsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63715C5623D88FBB00BA064F /* NoProblemsTableViewCell.swift */; };
 		63736EFD23CF6405001E9AB9 /* ContestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736EFC23CF6405001E9AB9 /* ContestsViewController.swift */; };
 		63736F0023CF6557001E9AB9 /* ContestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736EFF23CF6557001E9AB9 /* ContestTableViewCell.swift */; };
@@ -67,6 +65,9 @@
 		63736F2923D1F5DB001E9AB9 /* ProblemItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F2823D1F5DB001E9AB9 /* ProblemItem.swift */; };
 		63736F2A23D1F5DB001E9AB9 /* ProblemItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F2823D1F5DB001E9AB9 /* ProblemItem.swift */; };
 		63736F2B23D1F5DB001E9AB9 /* ProblemItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F2823D1F5DB001E9AB9 /* ProblemItem.swift */; };
+		638C392624361AC200DB33A3 /* IOSToastHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638C392524361AC100DB33A3 /* IOSToastHandler.swift */; };
+		638C39282437277F00DB33A3 /* Prefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638C39272437277F00DB33A3 /* Prefs.swift */; };
+		638C392A2437292800DB33A3 /* MessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638C39292437292800DB33A3 /* MessageAction.swift */; };
 		6394361823BA116000B302A3 /* Codeforces_WatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6394361723BA116000B302A3 /* Codeforces_WatcherTests.swift */; };
 		6394362323BA116000B302A3 /* Codeforces_WatcherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6394362223BA116000B302A3 /* Codeforces_WatcherUITests.swift */; };
 		63A0E14723CDF579001F570C /* NoActionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A0E14623CDF579001F570C /* NoActionsTableViewCell.swift */; };
@@ -135,13 +136,11 @@
 		33524F526EA086A75C8F9ABC /* AppMiddleware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppMiddleware.swift; sourceTree = "<group>"; };
 		6311375F23D98E51008126B0 /* NoContestsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoContestsTableViewCell.swift; sourceTree = "<group>"; };
 		63223DEF23E04734004F5A28 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
-		6325F4C023D840AF00CD19B7 /* NotificationStatusWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStatusWindow.swift; sourceTree = "<group>"; };
 		633B4CF523E078380099EF41 /* FiltersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 		633B4CF723E07F150099EF41 /* FiltersTableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersTableViewAdapter.swift; sourceTree = "<group>"; };
 		633B4CF923E083A10099EF41 /* FilterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
 		63603E6623DF00D700F86BC0 /* CommonContest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonContest.swift; sourceTree = "<group>"; };
 		63603E6823DF2ADC00F86BC0 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
-		63715C5423D8794800BA064F /* MessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAction.swift; sourceTree = "<group>"; };
 		63715C5623D88FBB00BA064F /* NoProblemsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoProblemsTableViewCell.swift; sourceTree = "<group>"; };
 		63736EFC23CF6405001E9AB9 /* ContestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContestsViewController.swift; sourceTree = "<group>"; };
 		63736EFF23CF6557001E9AB9 /* ContestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContestTableViewCell.swift; sourceTree = "<group>"; };
@@ -154,6 +153,9 @@
 		63736F2023D1F336001E9AB9 /* ProblemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemTableViewCell.swift; sourceTree = "<group>"; };
 		63736F2423D1F3EC001E9AB9 /* ProblemsTableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemsTableViewAdapter.swift; sourceTree = "<group>"; };
 		63736F2823D1F5DB001E9AB9 /* ProblemItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemItem.swift; sourceTree = "<group>"; };
+		638C392524361AC100DB33A3 /* IOSToastHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSToastHandler.swift; sourceTree = "<group>"; };
+		638C39272437277F00DB33A3 /* Prefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefs.swift; sourceTree = "<group>"; };
+		638C39292437292800DB33A3 /* MessageAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageAction.swift; path = ../../../../../../../.Trash/MessageAction.swift; sourceTree = "<group>"; };
 		639435FD23BA115C00B302A3 /* Codeforces WatchR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Codeforces WatchR.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6394360E23BA116000B302A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6394361323BA116000B302A3 /* Codeforces WatcherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Codeforces WatcherTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -317,8 +319,8 @@
 			children = (
 				33524F526EA086A75C8F9ABC /* AppMiddleware.swift */,
 				335243ED9980DC3C23AEE045 /* Request.swift */,
-				63715C5423D8794800BA064F /* MessageAction.swift */,
 				63A771A323E09AD600BB8F19 /* FilterChangeAction.swift */,
+				638C39292437292800DB33A3 /* MessageAction.swift */,
 			);
 			path = redux;
 			sourceTree = "<group>";
@@ -365,9 +367,10 @@
 			children = (
 				3352449F83A3B6FE1CA12CE9 /* CardView.swift */,
 				63EB130023CF3F830013A974 /* MainViewController.swift */,
-				6325F4C023D840AF00CD19B7 /* NotificationStatusWindow.swift */,
 				63FB270823E1AA50005F19F1 /* WebViewController.swift */,
 				63B08A8C23E2FCA9000240B3 /* PersistenceController.swift */,
+				638C392524361AC100DB33A3 /* IOSToastHandler.swift */,
+				638C39272437277F00DB33A3 /* Prefs.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -819,7 +822,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				33524E698A1B05C3FAB1E720 /* Font.swift in Sources */,
-				63715C5523D8794800BA064F /* MessageAction.swift in Sources */,
 				63B932A323DEDB7600D9E254 /* ContestsRulesView.swift in Sources */,
 				33524789EFFED3D6CA62DEE5 /* Pallete.swift in Sources */,
 				33524FEAE56CD4737349DE6A /* Constants.swift in Sources */,
@@ -828,13 +830,13 @@
 				3352432968890D766C49708B /* FetchUsersRequest.swift in Sources */,
 				335242912AD07F62A0AE4CAB /* CFAction.swift in Sources */,
 				335243C1482358DDDE60AFEF /* Comment.swift in Sources */,
+				638C392A2437292800DB33A3 /* MessageAction.swift in Sources */,
 				6311376023D98E51008126B0 /* NoContestsTableViewCell.swift in Sources */,
 				33524DD39C6FE0067BAF8266 /* BlogEntry.swift in Sources */,
 				63736EFD23CF6405001E9AB9 /* ContestsViewController.swift in Sources */,
 				63603E6723DF00D700F86BC0 /* CommonContest.swift in Sources */,
 				3352429A509E37568216C9E2 /* ActionItem.swift in Sources */,
 				33524418BBB1B1435CE66E3B /* ActionsResponse.swift in Sources */,
-				6325F4C123D840AF00CD19B7 /* NotificationStatusWindow.swift in Sources */,
 				335241CDE4B72D9ED0597A27 /* ActionsRequests.swift in Sources */,
 				33524D7137C7D47F8BE95703 /* CommentTableViewCell.swift in Sources */,
 				63736F2523D1F3EC001E9AB9 /* ProblemsTableViewAdapter.swift in Sources */,
@@ -842,6 +844,7 @@
 				63736F2923D1F5DB001E9AB9 /* ProblemItem.swift in Sources */,
 				63736F0B23CF6899001E9AB9 /* ContestItem.swift in Sources */,
 				63715C5723D88FBB00BA064F /* NoProblemsTableViewCell.swift in Sources */,
+				638C39282437277F00DB33A3 /* Prefs.swift in Sources */,
 				63736F0523CF6657001E9AB9 /* CodeforcesContest.swift in Sources */,
 				63223DF023E04734004F5A28 /* Platform.swift in Sources */,
 				63736F2123D1F336001E9AB9 /* ProblemTableViewCell.swift in Sources */,
@@ -854,6 +857,7 @@
 				63B08A8D23E2FCA9000240B3 /* PersistenceController.swift in Sources */,
 				33524BC0E57CE4F3A2D1EC04 /* UIColor+Extension.swift in Sources */,
 				3352406FDC5916F705E86498 /* ScopeFunc.swift in Sources */,
+				638C392624361AC200DB33A3 /* IOSToastHandler.swift in Sources */,
 				63FB270923E1AA50005F19F1 /* WebViewController.swift in Sources */,
 				633B4CF823E07F150099EF41 /* FiltersTableViewAdapter.swift in Sources */,
 				335240DCD1989E341210D5E1 /* TimeInterval+Extension.swift in Sources */,

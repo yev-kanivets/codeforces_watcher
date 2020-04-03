@@ -16,7 +16,7 @@ import io.xorum.codeforceswatcher.features.users.redux.requests.Source
 import io.xorum.codeforceswatcher.features.users.redux.requests.UsersRequests
 import io.xorum.codeforceswatcher.redux.*
 import io.xorum.codeforceswatcher.redux.middlewares.notificationHandler
-import io.xorum.codeforceswatcher.redux.middlewares.toastHandler
+import io.xorum.codeforceswatcher.redux.middlewares.toastHandlers
 import io.xorum.codeforceswatcher.util.settings
 import java.util.*
 
@@ -56,7 +56,7 @@ class CwApp : Application() {
     }
 
     private fun initToastHandler() {
-        toastHandler = AndroidMessageHandler()
+        toastHandlers.add(AndroidMessageHandler())
     }
 
     private fun initNotificationHandler() {
