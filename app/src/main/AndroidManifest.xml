@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".features.contests.ContestsFiltersActivity"
+        <activity android:name=".features.contests.FiltersActivity"
             android:label="Hello"/>
         <activity android:name=".features.users.UserActivity" />
         <activity android:name=".features.actions.ActionActivity" />

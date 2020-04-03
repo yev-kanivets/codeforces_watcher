@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.actions.ActionsFragment
 import com.bogdan.codeforceswatcher.features.add_user.AddUserActivity
-import com.bogdan.codeforceswatcher.features.contests.ContestsFiltersActivity
+import com.bogdan.codeforceswatcher.features.contests.FiltersActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         ivFilter.setOnClickListener {
-            startActivity(Intent(this, ContestsFiltersActivity::class.java))
+            startActivity(Intent(this, FiltersActivity::class.java))
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_eye))
     }
