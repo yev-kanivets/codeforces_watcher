@@ -11,6 +11,7 @@ import common
 import FirebaseAnalytics
 
 class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResultsUpdating {
+    
     private let tableView = UITableView()
     private let tableAdapter = ProblemsTableViewAdapter()
     private let refreshControl = UIRefreshControl()
@@ -25,13 +26,15 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(animated)
         
-        newStore.subscribe(subscriber: self) { subcription in
-            subcription.select { state in state.problems }
+        newStore.subscribe(subscriber: self) { subscription in
+            subscription.skipRepeats { oldState, newState in
+                return KotlinBoolean(bool: oldState.problems == newState.problems)
+            }.select { state in
+                return state.problems
+            }
         }
-        
     }
 
     override func viewWillDisappear(_ animated: Bool) {

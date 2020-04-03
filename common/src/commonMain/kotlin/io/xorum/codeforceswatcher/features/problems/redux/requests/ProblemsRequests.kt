@@ -2,9 +2,8 @@ package io.xorum.codeforceswatcher.features.problems.redux.requests
 
 import io.xorum.codeforceswatcher.db.DatabaseQueries
 import io.xorum.codeforceswatcher.features.problems.models.Problem
-import io.xorum.codeforceswatcher.network.CodeforcesApiClient
 import io.xorum.codeforceswatcher.redux.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.delay
 import tw.geothings.rekotlin.Action
 
 class ProblemsRequests {
@@ -15,27 +14,19 @@ class ProblemsRequests {
 
         override suspend fun execute() {
             if (!isInitializedByUser) delay(1000)
-            val promiseProblemsEn = CoroutineScope(Dispatchers.Main).async {
-                CodeforcesApiClient.getProblems("en")
-            }
 
-            val promiseProblemsRu = CoroutineScope(Dispatchers.Main).async {
-                CodeforcesApiClient.getProblems("ru")
-            }
-
-            val problemsEn = promiseProblemsEn.await()?.result?.problems
-            val problemsRu = promiseProblemsRu.await()?.result?.problems
+            val problemsEn = codeforcesRepository.getProblems("en")?.result?.problems
+            val problemsRu = codeforcesRepository.getProblems("ru")?.result?.problems
 
             if (problemsEn == null || problemsRu == null) {
                 dispatchFailure()
             } else {
                 if (isProblemsMatching(problemsEn, problemsRu)) {
-                    var problems = listOf<Problem>()
-                    withContext(Dispatchers.Default) {
-                        problems = mergeProblems(problemsEn, problemsRu)
-                        boundProblemsToContests(problems)
-                        updateDatabase(problems)
-                    }
+                    val problems = mergeProblems(problemsEn, problemsRu)
+
+                    boundProblemsToContests(problems)
+                    updateDatabase(problems)
+
                     store.dispatch(Success(problems))
                 } else {
                     dispatchFailure()
@@ -99,9 +90,7 @@ class ProblemsRequests {
 
         override suspend fun execute() {
             val newProblem = problem.copy(isFavourite = !problem.isFavourite)
-            withContext(Dispatchers.Default) {
-                DatabaseQueries.Problems.insert(newProblem)
-            }
+            DatabaseQueries.Problems.insert(newProblem)
             store.dispatch(Success(newProblem))
         }
 

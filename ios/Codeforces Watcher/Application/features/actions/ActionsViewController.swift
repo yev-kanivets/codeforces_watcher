@@ -27,8 +27,13 @@ class ActionsViewController: UIViewController, StoreSubscriber {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        newStore.subscribe(subscriber: self) { subcription in
-            subcription.select { state in state.actions }
+        
+        newStore.subscribe(subscriber: self) { subscription in
+            subscription.skipRepeats { oldState, newState in
+                return KotlinBoolean(bool: oldState.actions == newState.actions)
+            }.select { state in
+                return state.actions
+            }
         }
     }
     

@@ -2,6 +2,8 @@ package io.xorum.codeforceswatcher.redux
 
 import com.squareup.sqldelight.db.SqlDriver
 import io.xorum.codeforceswatcher.db.DatabaseController
+import io.xorum.codeforceswatcher.network.CodeforcesRepository
+import io.xorum.codeforceswatcher.network.KontestsRepository
 import io.xorum.codeforceswatcher.redux.middlewares.appMiddleware
 import io.xorum.codeforceswatcher.redux.middlewares.notificationMiddleware
 import io.xorum.codeforceswatcher.redux.middlewares.toastMiddleware
@@ -13,6 +15,9 @@ lateinit var sqlDriver: SqlDriver
 
 val persistenceController = PersistenceController()
 val databaseController = DatabaseController()
+
+internal val codeforcesRepository = CodeforcesRepository()
+internal val kontestsRepository = KontestsRepository()
 
 val store by lazy {
     Store(

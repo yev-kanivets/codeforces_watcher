@@ -4,10 +4,7 @@ import io.xorum.codeforceswatcher.features.actions.models.CFAction
 import io.xorum.codeforceswatcher.features.users.models.User
 import io.xorum.codeforceswatcher.features.users.redux.getUsers
 import io.xorum.codeforceswatcher.features.users.redux.models.UsersRequestResult
-import io.xorum.codeforceswatcher.network.CodeforcesApiClient
 import io.xorum.codeforceswatcher.redux.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import tw.geothings.rekotlin.Action
 
 class ActionsRequests {
@@ -18,7 +15,7 @@ class ActionsRequests {
     ) : Request() {
 
         override suspend fun execute() {
-            val response = CodeforcesApiClient.getActions(lang = defineLang())
+            val response = codeforcesRepository.getActions(lang = defineLang())
             response?.result?.let { actions ->
                 buildUiDataAndDispatch(actions)
             } ?: dispatchFailure()
@@ -44,10 +41,10 @@ class ActionsRequests {
             listOf(action.comment?.commentatorHandle, action.blogEntry.authorHandle)
         }.filterNotNull().toSet().joinToString(separator = ";")
 
-        private suspend fun buildUiData(
+        private fun buildUiData(
                 actions: List<CFAction>,
                 users: List<User>?
-        ): List<CFAction> = withContext(Dispatchers.Default) {
+        ): List<CFAction> {
             val uiData: MutableList<CFAction> = mutableListOf()
 
             for (action in actions) {
@@ -68,7 +65,7 @@ class ActionsRequests {
                 uiData.add(action)
             }
 
-            uiData
+            return uiData
         }
 
         private fun isUnnecessaryAction(action: CFAction) =

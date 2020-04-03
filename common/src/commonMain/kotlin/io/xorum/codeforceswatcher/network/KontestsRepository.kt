@@ -17,7 +17,7 @@ import kotlinx.serialization.json.Json.Companion.nonstrict
 
 private const val KONTESTS_API_LINK = "www.kontests.net/api/v1"
 
-internal object KontestsApiClient {
+internal class KontestsRepository {
 
     private val kontestsApiClient = makeKontestsApiClient()
 

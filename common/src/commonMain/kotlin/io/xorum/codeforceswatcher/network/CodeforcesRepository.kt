@@ -15,9 +15,9 @@ import io.xorum.codeforceswatcher.network.responses.*
 import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json.Companion.nonstrict
 
-private const val CODEFORCES_API_LINK = "www.codeforces.com/api/"
+private const val CODEFORCES_API_LINK = "www.codeforces.com/api"
 
-internal object CodeforcesApiClient {
+internal class CodeforcesRepository {
 
     private val codeforcesApiClient = makeCodeforcesApiClient()
 
