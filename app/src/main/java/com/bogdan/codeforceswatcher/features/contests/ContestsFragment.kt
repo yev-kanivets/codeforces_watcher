@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.features.MainActivity
 import io.xorum.codeforceswatcher.features.contests.models.Contest
 import io.xorum.codeforceswatcher.features.contests.redux.requests.ContestsRequests
 import io.xorum.codeforceswatcher.features.contests.redux.states.ContestsState
@@ -27,7 +28,13 @@ import java.util.*
 class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         StoreSubscriber<ContestsState> {
 
-    private lateinit var contestsAdapter: ContestsAdapter
+    private val contestsAdapter by lazy {
+        ContestsAdapter(
+                requireContext(),
+                addToCalendarClickListener = { addContestToCalendar(it) },
+                itemClickListener = { showContestPage(it.link) }
+        )
+    }
 
     override fun onStart() {
         super.onStart()
@@ -67,11 +74,17 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
-        contestsAdapter = ContestsAdapter(requireContext()) { contest ->
-            addContestToCalendar(contest)
-        }
         recyclerView.adapter = contestsAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun showContestPage(url: String) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(url))
+            startActivity(intent)
+        } catch (t: ActivityNotFoundException) {
+            Toast.makeText(requireContext(), getString(R.string.no_browser_has_been_found), Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun addContestToCalendar(contest: Contest) {
@@ -95,7 +108,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     private fun getCalendarTime(time: Long): String {
         val dateFormat = SimpleDateFormat("yyyyMMd'T'HHmmss", Locale.getDefault())
-        return dateFormat.format(Date(time * 1000)).toString()
+        return dateFormat.format(Date(time)).toString()
     }
 
     companion object {

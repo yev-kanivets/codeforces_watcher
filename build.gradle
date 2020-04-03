@@ -5,10 +5,12 @@ buildscript {
     ext.serialization_version = '0.4.1'
     ext.sqlDelight_version = '1.2.2'
     ext.ktor_version = '1.2.6'
+    ext.klock_version = '1.8.4'
 
     repositories {
         google()
         jcenter()
+        maven { url "https://dl.bintray.com/soywiz/soywiz" }
         maven { url 'https://maven.fabric.io/public' }
         maven { url "https://kotlin.bintray.com/kotlinx" }
         maven { url "http://dl.bintray.com/kotlin/kotlin-eap" }
