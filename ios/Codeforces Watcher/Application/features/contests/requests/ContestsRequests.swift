@@ -53,7 +53,7 @@ struct ContestsRequests {
             var contestItems: [ContestItem]
         }
         
-        struct Failure: MessageAction {
+        struct Failure: Action {
             var message: String
         }
     }
@@ -103,7 +103,7 @@ struct ContestsRequests {
             var contestItems: [ContestItem]
         }
         
-        struct Failure: MessageAction {
+        struct Failure: Action {
             var message: String
         }
     }

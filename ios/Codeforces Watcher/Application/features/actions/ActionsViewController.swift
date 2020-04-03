@@ -13,6 +13,7 @@ import common
 import FirebaseAnalytics
 
 class ActionsViewController: UIViewController, StoreSubscriber {
+    
     private let tableView = UITableView()
     private let tableAdapter = ActionsTableViewAdapter()
     private let refreshControl = UIRefreshControl()
@@ -22,7 +23,6 @@ class ActionsViewController: UIViewController, StoreSubscriber {
         
         setupView()
         setupTableView()
-        //fetchActions()
     }
     
     override func viewWillAppear(_ animated: Bool) {
