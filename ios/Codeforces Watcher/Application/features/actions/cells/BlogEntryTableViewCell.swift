@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import common
 
 class BlogEntryTableViewCell: UITableViewCell {
     private let cardView = CardView()
@@ -104,10 +105,20 @@ class BlogEntryTableViewCell: UITableViewCell {
         }
     }
 
-    func bind(actionItem: ActionItem.BlogEntryItem) {
-        blogEntryTitleLabel.text = actionItem.blogTitle
-        userHandleLabel.attributedText = actionItem.authorHandle
-        someTimeAgoLabel.text = " - \(actionItem.time) " + "ago".localized
-        userImage.sd_setImage(with: URL(string: actionItem.authorAvatar), placeholderImage: noImage)
+    func bind(_ action: CFAction) {
+        let blogEntry = action.blogEntry
+        guard let timePassed = TimeInterval((Int(Date().timeIntervalSince1970) - Int(action.timeSeconds))).socialDate else { return }
+        
+        blogEntryTitleLabel.text = blogEntry.title
+        userHandleLabel.attributedText = colorTextByUserRank(text: blogEntry.authorHandle, rank: blogEntry.authorRank)
+        someTimeAgoLabel.text = " - \(timePassed) " + "ago".localized
+        
+        detailsLabel.text = blogEntry.content
+        
+        if let avatar = blogEntry.authorAvatar {
+            userImage.sd_setImage(with: URL(string: avatar), placeholderImage: noImage)
+        } else {
+            userImage.image = noImage
+        }
     }
 }

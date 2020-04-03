@@ -8,7 +8,7 @@
 
 import Foundation
 import ObjectMapper
-
+/*
 struct BlogEntry: Mappable {
     var id: Int!
     var title: String!
@@ -27,5 +27,5 @@ struct BlogEntry: Mappable {
         creationTimeSeconds <- map["creationTimeSeconds"]
         modificationTimeSeconds <- map["modificationTimeSeconds"]
     }
-}
+}*/
 

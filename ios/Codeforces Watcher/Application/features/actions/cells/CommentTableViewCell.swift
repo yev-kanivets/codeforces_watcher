@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import common
 
 class CommentTableViewCell: UITableViewCell {
     private let cardView = CardView()
@@ -113,12 +114,21 @@ class CommentTableViewCell: UITableViewCell {
         }
     }
 
-    func bind(actionItem: ActionItem.CommentItem) {
-        blogEntryTitleLabel.text = actionItem.blogTitle
-        userHandleLabel.attributedText = actionItem.commentatorHandle
+    func bind(_ action: CFAction) {
+        let blogEntry = action.blogEntry
+        guard let comment = action.comment else { return }
+        guard let timePassed = TimeInterval((Int(Date().timeIntervalSince1970) - Int(action.timeSeconds))).socialDate else { return }
         
-        someTimeAgoLabel.text = " - \(actionItem.time) " + "ago".localized
-        detailsLabel.text = actionItem.content
-        userImage.sd_setImage(with: URL(string: actionItem.commentatorAvatar), placeholderImage: noImage)
+        blogEntryTitleLabel.text = blogEntry.title
+        userHandleLabel.attributedText = colorTextByUserRank(text: comment.commentatorHandle, rank: comment.commentatorRank)
+        someTimeAgoLabel.text = " - \(timePassed) " + "ago".localized
+        
+        detailsLabel.text = comment.text
+        
+        if let avatar = comment.commentatorAvatar {
+            userImage.sd_setImage(with: URL(string: avatar), placeholderImage: noImage)
+        } else {
+            userImage.image = noImage
+        }
     }
 }

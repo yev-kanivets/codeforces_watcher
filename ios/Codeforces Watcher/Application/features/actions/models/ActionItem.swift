@@ -8,7 +8,7 @@
 
 import Foundation
 import HTMLString
-
+/*
 enum ActionItem {
     struct CommentItem {
         var shareText: String
@@ -59,3 +59,4 @@ enum ActionItem {
     case comment(CommentItem)
     case blogEntry(BlogEntryItem)
 }
+*/

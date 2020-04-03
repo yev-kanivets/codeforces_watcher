@@ -8,7 +8,7 @@
 
 import Foundation
 import ObjectMapper
-
+/*
 struct ActionsResponse: Mappable {
     var actions: [CFAction] = []
     
@@ -18,3 +18,4 @@ struct ActionsResponse: Mappable {
         actions <- map["result"]
     }
 }
+*/

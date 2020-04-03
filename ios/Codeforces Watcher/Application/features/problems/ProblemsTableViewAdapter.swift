@@ -43,9 +43,8 @@ class ProblemsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSo
         }
         
         /*let problem = problems[indexPath.row]
-        let shareText = buildShareText(title: problem.title, link: problem.link)
-        onProblemClick?(problem.link, shareText)
-        uncomment when merge Bohdan PR */
+        let shareText = buildShareText(problem.name, problem.link)
+        onProblemClick?(problem.link, shareText)*/
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -54,13 +53,5 @@ class ProblemsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSo
         } else {
             return 63
         }
-    }
-    
-    func buildShareText(_ title: String, _ link: String) -> String {
-        return """
-        \(title) - \(link)
-        
-        Shared through Codeforces Watcher. Find it on App Store.
-        """
     }
 }

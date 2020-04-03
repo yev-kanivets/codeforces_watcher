@@ -54,6 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func fetchData() {
+        newStore.dispatch(action: ActionsRequests.FetchActions(isInitializedByUser: false, language: "locale".localized))
         store.dispatch(ContestsRequests.FetchCodeforcesContests())
     }
     

@@ -9,11 +9,10 @@
 import UIKit
 import TinyConstraints
 import WebKit
-import ReSwift
+import common
 import FirebaseAnalytics
 
 class ActionsViewController: UIViewController, StoreSubscriber {
-    
     private let tableView = UITableView()
     private let tableAdapter = ActionsTableViewAdapter()
     private let refreshControl = UIRefreshControl()
@@ -23,31 +22,33 @@ class ActionsViewController: UIViewController, StoreSubscriber {
         
         setupView()
         setupTableView()
-        fetchActions()
+        //fetchActions()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        store.subscribe(self) { subcription in
+        newStore.subscribe(subscriber: self) { subcription in
             subcription.select { state in state.actions }
         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        store.unsubscribe(self)
+        newStore.unsubscribe(subscriber: self)
     }
     
-    func newState(state: ActionsState) {
-        if (state.status == .IDLE) {
+    func doNewState(state: Any) {
+        let state = state as! ActionsState
+        
+        if (state.status == .idle) {
             refreshControl.endRefreshing()
         }
         
-        tableAdapter.actionItems = state.actionItems
+        tableAdapter.actions = state.actions
         tableView.reloadData()
     }
     
-    func setupView() {
+    private func setupView() {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         view.backgroundColor = .white
         
@@ -60,7 +61,7 @@ class ActionsViewController: UIViewController, StoreSubscriber {
         fetchActions()
     }
     
-    func setupTableView() {
+    private func setupTableView() {
         tableView.run {
             $0.delegate = tableAdapter
             $0.dataSource = tableAdapter
@@ -87,15 +88,15 @@ class ActionsViewController: UIViewController, StoreSubscriber {
         }
     }
 
-    func fetchActions() {
-        store.dispatch(ActionsRequests.FetchActions())
+    private func fetchActions() {
+        newStore.dispatch(action: ActionsRequests.FetchActions(isInitializedByUser: true, language: "locale".localized))
     }
 
-    func buildViewTree() {
+    private func buildViewTree() {
         view.addSubview(tableView)
     }
 
-    func setConstraints() {
+    private func setConstraints() {
         tableView.edgesToSuperview()
     }
 }

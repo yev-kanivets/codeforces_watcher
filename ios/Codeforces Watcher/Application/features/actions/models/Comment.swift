@@ -8,7 +8,7 @@
 
 import Foundation
 import ObjectMapper
-
+/*
 struct Comment: Mappable {
     var id: Int!
     var text: String!
@@ -22,3 +22,4 @@ struct Comment: Mappable {
         commentatorHandle <- map["commentatorHandle"]
     }
 }
+*/

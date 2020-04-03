@@ -41,3 +41,11 @@ extension String {
         return formatter.date(from: self)!
     }
 }
+
+func buildShareText(_ title: String, _ link: String) -> String {
+    return """
+    \(title) - \(link)
+    
+    Shared through Codeforces Watcher. Find it on App Store.
+    """
+}

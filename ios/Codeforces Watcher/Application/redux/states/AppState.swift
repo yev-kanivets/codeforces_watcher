@@ -7,10 +7,9 @@ import Foundation
 import ReSwift
 
 struct AppState: StateType {
-    var actions = ActionsState()
     var contests = ContestsState()
 }
-
+/*
 struct ActionsState: StateType {
     var actionItems: [ActionItem] = []
     var status: Status = Status.IDLE
@@ -20,7 +19,7 @@ struct ActionsState: StateType {
         case PENDING
     }
 }
-
+*/
 struct ContestsState: StateType {
     var contestItems: [ContestItem] = []
     var status: Status = Status.IDLE

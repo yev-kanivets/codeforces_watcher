@@ -8,7 +8,7 @@
 
 import Foundation
 import Alamofire
-
+/*
 struct FetchUsersRequest {
     
     func execute(handles: String, completion: @escaping ([User]) -> ()) {
@@ -43,3 +43,4 @@ struct FetchUsersRequest {
         return handlesArray.joined(separator: ";")
     }
 }
+*/

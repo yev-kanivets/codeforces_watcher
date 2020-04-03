@@ -8,7 +8,7 @@
 
 import Foundation
 import ObjectMapper
-
+/*
 struct CFAction: Mappable {
     var timeSeconds: Int!
     var blogEntry: BlogEntry!
@@ -22,3 +22,4 @@ struct CFAction: Mappable {
         comment <- map["comment"]
     }
 }
+*/

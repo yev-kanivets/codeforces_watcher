@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 import ReSwift
-
+/*
 struct ActionsRequests {
     struct FetchActions: Request {
         func execute() {
@@ -81,3 +81,4 @@ struct ActionsRequests {
         }
     }
 }
+*/

@@ -10,11 +10,10 @@ func appReducer(action: Action, state: AppState?) -> AppState {
     guard let state = state else { fatalError() }
 
     return AppState(
-        actions: actionsReducer(action, state),
         contests: contestsReducer(action, state)
     )
 }
-
+/*
 func actionsReducer(_ action: Action, _ state: AppState) -> ActionsState {
     var newState = state.actions
     switch (action) {
@@ -32,7 +31,7 @@ func actionsReducer(_ action: Action, _ state: AppState) -> ActionsState {
         break
     }
     return newState
-}
+}*/
 
 func contestsReducer(_ action: Action, _ state: AppState) -> ContestsState {
     var newState = state.contests
