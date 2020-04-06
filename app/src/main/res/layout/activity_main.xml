@@ -95,6 +95,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:itemBackground="@color/white"
             app:menu="@menu/menu_main" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

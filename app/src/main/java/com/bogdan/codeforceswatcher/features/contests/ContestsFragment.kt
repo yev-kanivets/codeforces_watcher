@@ -12,14 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.MainActivity
+import com.bogdan.codeforceswatcher.util.Analytics
+import com.bogdan.codeforceswatcher.util.Refresh
 import io.xorum.codeforceswatcher.features.contests.models.Contest
 import io.xorum.codeforceswatcher.features.contests.redux.requests.ContestsRequests
 import io.xorum.codeforceswatcher.features.contests.redux.states.ContestsState
-import com.bogdan.codeforceswatcher.util.Analytics
-import com.bogdan.codeforceswatcher.util.Refresh
-import kotlinx.android.synthetic.main.fragment_contests.*
 import io.xorum.codeforceswatcher.redux.store
+import kotlinx.android.synthetic.main.fragment_contests.*
 import tw.geothings.rekotlin.StoreSubscriber
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
@@ -52,7 +51,13 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun newState(state: ContestsState) {
         swipeRefreshLayout.isRefreshing = (state.status == ContestsState.Status.PENDING)
-        contestsAdapter.setItems(state.contests.filter { it.phase == "BEFORE" }.sortedBy(Contest::startTimeSeconds))
+        val showingContests = state.contests.filter { it.phase == "BEFORE" }.sortedBy(Contest::startTimeSeconds).filter { state.filters.contains(it.platform) }
+        if (showingContests.isEmpty()) {
+            tvNoContest.visibility = View.VISIBLE
+        } else {
+            tvNoContest.visibility = View.GONE
+            contestsAdapter.setItems(showingContests)
+        }
     }
 
     override fun onRefresh() {

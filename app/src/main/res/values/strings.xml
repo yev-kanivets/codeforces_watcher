@@ -62,4 +62,5 @@ Download it now on Google Play - https://play.google.com/store/apps/details?id=c
     <string name="search_for_problems">Search for problems…</string>
     <string name="no_browser_has_been_found">No browser has been found, try to install one.</string>
     <string name="filters">Filters</string>
+    <string name="no_contests_found">No contests found</string>
 </resources>
