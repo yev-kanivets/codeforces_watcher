@@ -42,6 +42,7 @@ class FiltersAdapter(
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
         val title: TextView = view.tvTitle
         val ivContest: ImageView = view.ivContest
         val checkBox: CheckBox = view.checkbox

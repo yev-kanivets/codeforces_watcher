@@ -52,11 +52,11 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     override fun newState(state: ContestsState) {
         swipeRefreshLayout.isRefreshing = (state.status == ContestsState.Status.PENDING)
         val showingContests = state.contests.filter { it.phase == "BEFORE" }.sortedBy(Contest::startTimeSeconds).filter { state.filters.contains(it.platform) }
+        contestsAdapter.setItems(showingContests)
         if (showingContests.isEmpty()) {
             tvNoContest.visibility = View.VISIBLE
         } else {
             tvNoContest.visibility = View.GONE
-            contestsAdapter.setItems(showingContests)
         }
     }
 
