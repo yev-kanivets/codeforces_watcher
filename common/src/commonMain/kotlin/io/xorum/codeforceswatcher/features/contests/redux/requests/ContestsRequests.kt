@@ -33,7 +33,7 @@ class ContestsRequests {
         }
 
         private fun normalizeCodeforcesContests(contests: List<Contest>?) = contests?.map { it.copy(startTimeSeconds = it.startTimeSeconds * 1000) }.orEmpty()
-        
+
         private fun normalizeAllContests(contests: List<ContestResponse>?) = contests?.filter {
             val contest = it.toContest()
             contest.platform != Platform.CODEFORCES && contest.startTimeSeconds >= DateTime.now().unixMillis
@@ -47,4 +47,6 @@ class ContestsRequests {
 
         data class Failure(override val message: Message) : ToastAction
     }
+
+    class ChangeFilterCheckStatus(val platform: Platform, val isChecked: Boolean) : Action
 }
