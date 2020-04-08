@@ -109,14 +109,14 @@ class BlogEntryTableViewCell: UITableViewCell {
         let blogEntry = action.blogEntry
         guard let timePassed = TimeInterval((Int(Date().timeIntervalSince1970) - Int(action.timeSeconds))).socialDate else { return }
         
-        blogEntryTitleLabel.text = blogEntry.title
+        blogEntryTitleLabel.text = blogEntry.title.beautify()
         userHandleLabel.attributedText = colorTextByUserRank(text: blogEntry.authorHandle, rank: blogEntry.authorRank)
         someTimeAgoLabel.text = " - \(timePassed) " + "ago".localized
         
-        detailsLabel.text = blogEntry.content
+        detailsLabel.text = "created_or_updated_text".localized
         
         if let avatar = blogEntry.authorAvatar {
-            userImage.sd_setImage(with: URL(string: avatar), placeholderImage: noImage)
+            userImage.sd_setImage(with: URL(string: "https:\(avatar)"), placeholderImage: noImage)
         } else {
             userImage.image = noImage
         }

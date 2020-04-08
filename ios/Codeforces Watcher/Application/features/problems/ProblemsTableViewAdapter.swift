@@ -42,9 +42,9 @@ class ProblemsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSo
             return
         }
         
-        /*let problem = problems[indexPath.row]
+        let problem = problems[indexPath.row]
         let shareText = buildShareText(problem.name, problem.link)
-        onProblemClick?(problem.link, shareText)*/
+        onProblemClick?(problem.link, shareText)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
