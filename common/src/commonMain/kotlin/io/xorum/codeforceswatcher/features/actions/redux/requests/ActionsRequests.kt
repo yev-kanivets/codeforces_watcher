@@ -5,7 +5,10 @@ import io.xorum.codeforceswatcher.features.users.models.User
 import io.xorum.codeforceswatcher.features.users.redux.getUsers
 import io.xorum.codeforceswatcher.features.users.redux.models.UsersRequestResult
 import io.xorum.codeforceswatcher.network.CodeforcesApiClient
+import io.xorum.codeforceswatcher.network.PinnedPostsApiClient
+import io.xorum.codeforceswatcher.network.responses.PinnedPost
 import io.xorum.codeforceswatcher.redux.*
+import io.xorum.codeforceswatcher.util.settings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import tw.geothings.rekotlin.Action
@@ -82,5 +85,24 @@ class ActionsRequests {
         data class Success(val actions: List<CFAction>) : Action
 
         data class Failure(override val message: Message) : ToastAction
+    }
+
+    class FetchPinnedPost : Request() {
+        override suspend fun execute() {
+            val response = PinnedPostsApiClient.getPinnedPost()
+            response?.let {
+                store.dispatch(Success(it))
+            } ?: store.dispatch(Failure())
+        }
+
+        data class Success(val pinnedPost: PinnedPost) : Action
+
+        class Failure : Action
+    }
+
+    class RemovePinnedPost(val link: String) : Request() {
+        override suspend fun execute() {
+            settings.writePinnedPostLink(link)
+        }
     }
 }

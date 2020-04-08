@@ -17,4 +17,8 @@ interface Settings {
     fun readContestsFilters(): Set<Platform>
 
     fun writeContestsFilters(filters: Set<Platform>)
+
+    fun writePinnedPostLink(pinnedPostLink: String)
+
+    fun readPinnedPostLink(): String
 }

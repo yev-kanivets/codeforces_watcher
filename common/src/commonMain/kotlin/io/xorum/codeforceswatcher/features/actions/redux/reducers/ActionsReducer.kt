@@ -11,8 +11,8 @@ fun actionsReducer(action: Action, state: AppState): ActionsState {
     when (action) {
         is ActionsRequests.FetchActions.Success -> {
             newState = newState.copy(
-                actions = action.actions,
-                status = ActionsState.Status.IDLE
+                    actions = action.actions,
+                    status = ActionsState.Status.IDLE
             )
         }
         is ActionsRequests.FetchActions -> {
@@ -20,6 +20,14 @@ fun actionsReducer(action: Action, state: AppState): ActionsState {
         }
         is ActionsRequests.FetchActions.Failure -> {
             newState = newState.copy(status = ActionsState.Status.IDLE)
+        }
+
+        is ActionsRequests.FetchPinnedPost.Success -> {
+            newState = newState.copy(pinnedPost = action.pinnedPost)
+        }
+
+        is ActionsRequests.RemovePinnedPost -> {
+            newState = newState.copy(pinnedPost = null)
         }
     }
 

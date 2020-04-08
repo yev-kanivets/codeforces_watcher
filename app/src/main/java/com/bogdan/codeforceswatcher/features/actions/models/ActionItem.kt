@@ -6,6 +6,7 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.users.colorTextByUserRank
 import com.bogdan.codeforceswatcher.util.convertFromHtml
 import io.xorum.codeforceswatcher.features.actions.models.CFAction
+import io.xorum.codeforceswatcher.network.responses.PinnedPost
 import io.xorum.codeforceswatcher.util.avatar
 
 sealed class ActionItem {
@@ -54,6 +55,11 @@ sealed class ActionItem {
                 time = timeSeconds
             }
         }
+    }
+
+    class PinnedItem(pinnedPost: PinnedPost) : ActionItem() {
+        val title = pinnedPost.title
+        val link = pinnedPost.link
     }
 
     object Stub : ActionItem()

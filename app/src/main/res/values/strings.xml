@@ -35,8 +35,6 @@
     <string name="google_calendar_not_found">Sorry, but no Google Calendar found on this device</string>
     <string name="commented_by">"Commented by %1$s"</string>
     <string name="feature_isn_t_available_yet">This feature isn’t available yet.</string>
-    <string name="comment_url" translatable="false">https://codeforces.com/blog/entry/%1$d?#comment-%2$d</string>
-    <string name="blog_entry_url" translatable="false">https://codeforces.com/blog/entry/%1$d</string>
     <string name="share_with_friends">Share with friends</string>
     <string name="shared_through_cw">Shared through Codeforces WatchR. Find it on Google Play.</string>
     <string name="no_users">You don’t have any users to watch yet.\nAdd the first one using «+» at the bottom of the screen.</string>
@@ -63,4 +61,5 @@ Download it now on Google Play - https://play.google.com/store/apps/details?id=c
     <string name="no_browser_has_been_found">No browser has been found, try to install one.</string>
     <string name="filters">Filters</string>
     <string name="no_contests_found">No contests found</string>
+    <string name="click_to_see_details">Click to see details</string>
 </resources>
