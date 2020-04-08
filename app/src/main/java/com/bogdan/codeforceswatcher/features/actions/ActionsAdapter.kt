@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.actions.models.ActionItem
+import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.convertFromHtml
 import com.squareup.picasso.Picasso
 import io.xorum.codeforceswatcher.features.actions.redux.requests.ActionsRequests
@@ -106,8 +107,14 @@ class ActionsAdapter(
     private fun bindPinnedItem(viewHolder: PinnedItemViewHolder, pinnedItem: ActionItem.PinnedItem) = with(pinnedItem) {
         with(viewHolder) {
             tvTitle.text = title
-            onItemClickListener = { itemClickListener(pinnedItem.link, pinnedItem.title) }
-            onCrossClickListener = { store.dispatch(ActionsRequests.RemovePinnedPost(pinnedItem.link)) }
+            onItemClickListener = {
+                itemClickListener(pinnedItem.link, pinnedItem.title)
+                Analytics.logPinnedPostOpened()
+            }
+            onCrossClickListener = {
+                store.dispatch(ActionsRequests.RemovePinnedPost(pinnedItem.link))
+                Analytics.logPinnedPostClosed()
+            }
         }
     }
 

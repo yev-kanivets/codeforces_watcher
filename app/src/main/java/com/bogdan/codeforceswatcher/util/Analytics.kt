@@ -72,4 +72,16 @@ object Analytics {
             instance.logEvent("problem_opened", Bundle())
         }
     }
+
+    fun logPinnedPostOpened() {
+        if (isEnabled) {
+            instance.logEvent("actions_pinned_post_opened", Bundle())
+        }
+    }
+
+    fun logPinnedPostClosed() {
+        if (isEnabled) {
+            instance.logEvent("actions_pinned_post_closed", Bundle())
+        }
+    }
 }
