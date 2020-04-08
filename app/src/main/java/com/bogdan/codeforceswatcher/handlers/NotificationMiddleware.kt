@@ -47,7 +47,7 @@ class AndroidNotificationHandler : NotificationHandler {
         }
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.ic_launcher_antivirus)
                 .setContentTitle(context.getString(R.string.ratings_have_been_updated))
                 .setContentText(text)
                 .setContentIntent(pendingIntent)
