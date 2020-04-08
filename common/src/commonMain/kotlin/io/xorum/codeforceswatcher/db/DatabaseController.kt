@@ -19,7 +19,10 @@ class DatabaseController : StoreSubscriber<AppState> {
     }
 
     fun fetchAppState() = AppState(
-            contests = ContestsState(contests = DatabaseQueries.Contests.getAll()),
+            contests = ContestsState(
+                    contests = DatabaseQueries.Contests.getAll(),
+                    filters = settings.readContestsFilters().toMutableSet()
+            ),
             users = UsersState(
                     users = DatabaseQueries.Users.getAll(),
                     sortType = UsersState.SortType.getSortType(settings.readSpinnerSortPosition())

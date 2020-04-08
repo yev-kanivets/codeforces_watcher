@@ -47,4 +47,6 @@ class ContestsRequests {
 
         data class Failure(override val message: Message) : ToastAction
     }
+
+    class ChangeFilterCheckStatus(val platform: Platform, val isChecked: Boolean) : Action
 }
