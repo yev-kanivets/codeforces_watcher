@@ -1,5 +1,6 @@
 package io.xorum.codeforceswatcher.db
 
+import io.xorum.codeforceswatcher.features.contests.models.Platform
 import io.xorum.codeforceswatcher.features.contests.redux.states.ContestsState
 import io.xorum.codeforceswatcher.features.problems.redux.states.ProblemsState
 import io.xorum.codeforceswatcher.features.users.redux.states.UsersState
@@ -21,7 +22,7 @@ class DatabaseController : StoreSubscriber<AppState> {
     fun fetchAppState() = AppState(
             contests = ContestsState(
                     contests = DatabaseQueries.Contests.getAll(),
-                    filters = settings.readContestsFilters().toMutableSet()
+                    filters = settings.readContestsFilters().map { Platform.valueOf(it) }.toMutableSet()
             ),
             users = UsersState(
                     users = DatabaseQueries.Users.getAll(),
