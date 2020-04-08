@@ -50,13 +50,10 @@ class ActionsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSou
             return
         }
         
-        /*let action = actions[indexPath.row]
+        let action = actions[indexPath.row]
         let shareText = buildShareText(action.blogEntry.title, action.link)
         
-        onActionClick?(action.link, action.shareText)
-         
-        uncomment when Bohdan will add link
-        */
+        onActionClick?(action.link, shareText)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -71,33 +68,3 @@ class ActionsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSou
         return 122
     }
 }
-
-class Prefs : Settings {
-
-    func readContestsFilters() -> Set<String> {
-        fatalError()
-    }
-
-    func readProblemsIsFavourite() -> Bool {
-        fatalError()
-    }
-
-    func readSpinnerSortPosition() -> Int32 {
-        fatalError()
-    }
-
-    func writeContestsFilters(filters: Set<String>) {
-        fatalError()
-    }
-
-    func writeProblemsIsFavourite(isFavourite: Bool) {
-        fatalError()
-    }
-
-    func writeSpinnerSortPosition(spinnerSortPosition: Int32) {
-        fatalError()
-    }
-
-
-}
-

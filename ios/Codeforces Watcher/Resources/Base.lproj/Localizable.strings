@@ -8,6 +8,8 @@
 "ago" = "ago";
 
 "Recent Actions are on the way to your device..." = "Recent Actions are on the way to your device...";
+"created_or_updated_text" = "Created or updated the text, click to see details...";
+
 "Problems are on the way to your device..." = "Problems are on the way to your device...";
 "Contests are on the way to your device..." = "Contests are on the way to your device...";
 
@@ -23,4 +25,4 @@
 "Apple isn't a sponsor of any contests conducted on Codeforces" = "Apple isn't a sponsor of any contests conducted on Codeforces";
 
 "Filter" = "Filter";
-"locale" = "uk";
+"locale" = "en";

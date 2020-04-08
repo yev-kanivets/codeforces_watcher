@@ -119,14 +119,15 @@ class CommentTableViewCell: UITableViewCell {
         guard let comment = action.comment else { return }
         guard let timePassed = TimeInterval((Int(Date().timeIntervalSince1970) - Int(action.timeSeconds))).socialDate else { return }
         
-        blogEntryTitleLabel.text = blogEntry.title
+        blogEntryTitleLabel.text = blogEntry.title.beautify()
         userHandleLabel.attributedText = colorTextByUserRank(text: comment.commentatorHandle, rank: comment.commentatorRank)
+        
         someTimeAgoLabel.text = " - \(timePassed) " + "ago".localized
         
-        detailsLabel.text = comment.text
+        detailsLabel.text = comment.text.beautify()
         
         if let avatar = comment.commentatorAvatar {
-            userImage.sd_setImage(with: URL(string: avatar), placeholderImage: noImage)
+            userImage.sd_setImage(with: URL(string: "https:\(avatar)"), placeholderImage: noImage)
         } else {
             userImage.image = noImage
         }
