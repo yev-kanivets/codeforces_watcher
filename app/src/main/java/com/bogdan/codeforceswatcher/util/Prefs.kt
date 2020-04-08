@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import com.bogdan.codeforceswatcher.CwApp
+import io.xorum.codeforceswatcher.features.contests.models.Platform
 import io.xorum.codeforceswatcher.util.Settings
 
 class Prefs(private val context: Context) : Settings {
@@ -29,6 +30,17 @@ class Prefs(private val context: Context) : Settings {
     override fun writeProblemsIsFavourite(isFavourite: Boolean) {
         val editor = getDefaultPrefs().edit()
         editor.putBoolean(KEY_PROBLEMS_IS_FAVOURITE, isFavourite)
+        editor.apply()
+    }
+
+    override fun readContestsFilters(): Set<Platform> {
+        val defaultPrefs = getDefaultPrefs()
+        return defaultPrefs.getStringSet(KEY_CONTESTS_FILTERS, Platform.values().map { it.toString() }.toSet())?.map { Platform.valueOf(it) }?.toSet().orEmpty()
+    }
+
+    override fun writeContestsFilters(filters: Set<Platform>) {
+        val editor = getDefaultPrefs().edit()
+        editor.putStringSet(KEY_CONTESTS_FILTERS, filters.map { it.toString() }.toSet())
         editor.apply()
     }
 
@@ -77,6 +89,7 @@ class Prefs(private val context: Context) : Settings {
         private const val KEY_ALARM = "key_alarm"
         private const val APP_RATED = "app_rated"
         private const val LAUNCH_COUNT = "launch_count"
+        private const val KEY_CONTESTS_FILTERS = "key_contests_filters"
 
         @SuppressLint("StaticFieldLeak")
         private val prefs: Prefs = Prefs(CwApp.app)

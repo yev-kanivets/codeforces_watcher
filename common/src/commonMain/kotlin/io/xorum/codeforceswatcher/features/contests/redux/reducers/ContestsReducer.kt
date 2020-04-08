@@ -21,6 +21,13 @@ fun contestsReducer(action: Action, state: AppState): ContestsState {
         is ContestsRequests.FetchContests.Failure -> {
             newState = newState.copy(status = ContestsState.Status.IDLE)
         }
+
+        is ContestsRequests.ChangeFilterCheckStatus -> {
+            newState = newState.copy(
+                    filters = if (action.isChecked) state.contests.filters.plus(action.platform)
+                    else state.contests.filters.minus(action.platform)
+            )
+        }
     }
 
     return newState
