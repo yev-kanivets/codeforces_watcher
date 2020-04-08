@@ -12,7 +12,6 @@ import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.actions.models.ActionItem
 import com.bogdan.codeforceswatcher.util.Analytics
-import com.bogdan.codeforceswatcher.util.convertFromHtml
 import com.squareup.picasso.Picasso
 import io.xorum.codeforceswatcher.features.actions.redux.requests.ActionsRequests
 import io.xorum.codeforceswatcher.redux.store
@@ -78,8 +77,7 @@ class ActionsAdapter(
             tvHandleAndTime.text = TextUtils.concat(commentatorHandle, " - ${PrettyTime().format(Date(time * 1000))}")
             tvContent.text = content
             onItemClickListener = {
-                val cfAction = store.state.actions.actions[it]
-                itemClickListener(cfAction.link, cfAction.blogEntry.title.convertFromHtml())
+                itemClickListener(comment.link, comment.title)
             }
         }
 
@@ -94,8 +92,7 @@ class ActionsAdapter(
             tvHandleAndTime.text = TextUtils.concat(authorHandle, " - ${PrettyTime().format(Date(time * 1000))}")
             tvContent.text = CwApp.app.getString(R.string.created_or_updated_text)
             onItemClickListener = {
-                val cfAction = store.state.actions.actions[it]
-                itemClickListener(cfAction.link, blogEntry.blogTitle)
+                itemClickListener(blogEntry.link, blogEntry.blogTitle)
             }
         }
 

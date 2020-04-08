@@ -18,10 +18,10 @@ private const val API_LINK = "5e80f1750eb3ec0016e917ff.mockapi.io/api/v1/pinned_
 
 internal object PinnedPostsApiClient {
 
-    private val codeforcesApiClient = makePinnedPostApiClient()
+    private val pinnedPostApiClient = makePinnedPostApiClient()
 
     suspend fun getPinnedPost() = try {
-        codeforcesApiClient.get<PinnedPost>()
+        pinnedPostApiClient.get<PinnedPost>()
     } catch (t: Throwable) {
         null
     }
