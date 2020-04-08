@@ -3,6 +3,7 @@ package com.bogdan.codeforceswatcher.util
 import android.os.Bundle
 import com.bogdan.codeforceswatcher.CwApp
 import com.google.firebase.analytics.FirebaseAnalytics
+import io.xorum.codeforceswatcher.features.contests.models.Platform
 
 enum class Refresh { USERS, CONTESTS, ACTIONS, PROBLEMS }
 
@@ -12,10 +13,11 @@ object Analytics {
 
     private val instance = FirebaseAnalytics.getInstance(CwApp.app)
 
-    fun logAddContestToCalendarEvent(contestName: String) {
+    fun logAddContestToCalendarEvent(contestName: String, platform: Platform) {
         if (isEnabled) {
             val params = Bundle()
             params.putString("contest_name", contestName)
+            params.putSerializable("contest_platform", platform)
             instance.logEvent("add_contest_to_google_calendar", params)
         }
     }
