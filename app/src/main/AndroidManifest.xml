@@ -14,14 +14,17 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".features.contests.FiltersActivity" />
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".features.contests.FiltersActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".features.users.UserActivity" />
         <activity android:name=".features.actions.ActionActivity" />
         <activity android:name=".features.problems.ProblemActivity" />
         <activity
             android:name=".features.MainActivity"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

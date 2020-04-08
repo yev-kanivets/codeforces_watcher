@@ -51,7 +51,10 @@ class UsersAdapter(
 
         with(items[position] as UserItem.User) {
             with(holder as UserViewHolder) {
-                Picasso.get().load(avatar(avatarLink)).into(ivAvatar)
+                Picasso.get().load(avatar(avatarLink))
+                        .placeholder(R.drawable.no_avatar)
+                        .into(ivAvatar)
+
                 tvHandle.text = handle
                 tvRating.text = rating
                 tvDateLastRatingUpdate.text = dateOfLastRatingUpdate

@@ -14,6 +14,7 @@ import io.xorum.codeforceswatcher.features.actions.models.CFAction
 import io.xorum.codeforceswatcher.features.actions.redux.requests.ActionsRequests
 import io.xorum.codeforceswatcher.features.actions.redux.states.ActionsState
 import io.xorum.codeforceswatcher.redux.store
+import io.xorum.codeforceswatcher.util.settings
 import kotlinx.android.synthetic.main.fragment_users.*
 import tw.geothings.rekotlin.StoreSubscriber
 import java.util.*
@@ -47,12 +48,22 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
             }
 
     override fun newState(state: ActionsState) {
-        swipeRefreshLayout.isRefreshing = (state.status == ActionsState.Status.PENDING)
-        actionsAdapter.setItems(buildActionItems(state.actions))
+        if (state.status == ActionsState.Status.PENDING) {
+            swipeRefreshLayout.isRefreshing = true
+        } else {
+            swipeRefreshLayout.isRefreshing = false
+            val items = mutableListOf<ActionItem>()
+            state.pinnedPost?.let {
+                if (settings.readPinnedPostLink() != it.link) items.add(ActionItem.PinnedItem(it))
+            }
+            items.addAll(buildActionItems(state.actions))
+            actionsAdapter.setItems(items)
+        }
     }
 
     override fun onRefresh() {
         store.dispatch(ActionsRequests.FetchActions(true, Locale.getDefault().language))
+        store.dispatch(ActionsRequests.FetchPinnedPost())
         Analytics.logRefreshingData(Refresh.ACTIONS)
     }
 
@@ -69,8 +80,8 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
-        actionsAdapter = ActionsAdapter(requireContext()) { actionIndex ->
-            startActivity(ActionActivity.newIntent(requireContext(), store.state.actions.actions[actionIndex].id))
+        actionsAdapter = ActionsAdapter(requireContext()) { link, title ->
+            startActivity(ActionActivity.newIntent(requireContext(), link, title))
         }
         recyclerView.adapter = actionsAdapter
     }

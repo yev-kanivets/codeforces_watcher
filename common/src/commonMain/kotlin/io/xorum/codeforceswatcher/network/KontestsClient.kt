@@ -24,7 +24,6 @@ internal object KontestsApiClient {
     suspend fun getAllContests() = try {
         kontestsApiClient.get<List<ContestResponse>>(path = "all")
     } catch (t: Throwable) {
-        println("Here : throwable : ${t.message}")
         null
     }
 
