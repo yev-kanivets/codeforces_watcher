@@ -33,14 +33,14 @@ class Prefs(private val context: Context) : Settings {
         editor.apply()
     }
 
-    override fun readContestsFilters(): Set<Platform> {
+    override fun readContestsFilters(): Set<String> {
         val defaultPrefs = getDefaultPrefs()
-        return defaultPrefs.getStringSet(KEY_CONTESTS_FILTERS, Platform.values().map { it.toString() }.toSet())?.map { Platform.valueOf(it) }?.toSet().orEmpty()
+        return defaultPrefs.getStringSet(KEY_CONTESTS_FILTERS, Platform.values().map { it.toString() }.toSet()).orEmpty()
     }
 
-    override fun writeContestsFilters(filters: Set<Platform>) {
+    override fun writeContestsFilters(filters: Set<String>) {
         val editor = getDefaultPrefs().edit()
-        editor.putStringSet(KEY_CONTESTS_FILTERS, filters.map { it.toString() }.toSet())
+        editor.putStringSet(KEY_CONTESTS_FILTERS, filters)
         editor.apply()
     }
 

@@ -1,7 +1,5 @@
 package io.xorum.codeforceswatcher.util
 
-import io.xorum.codeforceswatcher.features.contests.models.Platform
-
 lateinit var settings: Settings
 
 interface Settings {
@@ -14,7 +12,7 @@ interface Settings {
 
     fun writeProblemsIsFavourite(isFavourite: Boolean)
 
-    fun readContestsFilters(): Set<Platform>
+    fun readContestsFilters(): Set<String>
 
-    fun writeContestsFilters(filters: Set<Platform>)
+    fun writeContestsFilters(filters: Set<String>)
 }

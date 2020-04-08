@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import common
 
 class ActionsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
     var actionItems: [ActionItem] = []
@@ -67,3 +68,33 @@ class ActionsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSou
         return 122
     }
 }
+
+class Prefs : Settings {
+
+    func readContestsFilters() -> Set<String> {
+        fatalError()
+    }
+
+    func readProblemsIsFavourite() -> Bool {
+        fatalError()
+    }
+
+    func readSpinnerSortPosition() -> Int32 {
+        fatalError()
+    }
+
+    func writeContestsFilters(filters: Set<String>) {
+        fatalError()
+    }
+
+    func writeProblemsIsFavourite(isFavourite: Bool) {
+        fatalError()
+    }
+
+    func writeSpinnerSortPosition(spinnerSortPosition: Int32) {
+        fatalError()
+    }
+
+
+}
+
