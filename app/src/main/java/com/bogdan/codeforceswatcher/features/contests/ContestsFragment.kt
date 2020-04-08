@@ -109,7 +109,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                     Toast.LENGTH_SHORT
             ).show()
         }
-        Analytics.logAddContestToCalendarEvent(contest.name)
+        Analytics.logAddContestToCalendarEvent(contest.name, contest.platform)
     }
 
     private fun getCalendarTime(time: Long): String {
