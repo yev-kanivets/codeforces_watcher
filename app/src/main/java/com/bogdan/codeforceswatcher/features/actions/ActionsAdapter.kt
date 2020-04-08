@@ -116,7 +116,7 @@ class ActionsAdapter(
     }
 
     fun setItems(actionsList: List<ActionItem>) {
-        items = if (actionsList.isEmpty()) listOf(ActionItem.Stub)
+        items = if (actionsList.isEmpty() || (actionsList.size == 1 && actionsList.first() is ActionItem.PinnedItem)) listOf(ActionItem.Stub)
         else actionsList
         notifyDataSetChanged()
     }
