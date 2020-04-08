@@ -9,20 +9,6 @@
 import Foundation
 import ObjectMapper
 
-struct User: Mappable {
-    var handle: String!
-    var avatar: String!
-    var rank: String!
-    
-    init?(map: Map) {}
-    
-    mutating func mapping(map: Map) {
-        handle <- map["handle"]
-        avatar <- map["avatar"]
-        rank <- map["rank"]
-    }
-}
-
 func colorTextByUserRank(text: String, rank: String?) -> NSMutableAttributedString {
     var color = UIColor()
     
