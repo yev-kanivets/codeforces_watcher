@@ -9,17 +9,7 @@ import ReSwift
 struct AppState: StateType {
     var contests = ContestsState()
 }
-/*
-struct ActionsState: StateType {
-    var actionItems: [ActionItem] = []
-    var status: Status = Status.IDLE
-    
-    enum Status {
-        case IDLE
-        case PENDING
-    }
-}
-*/
+
 struct ContestsState: StateType {
     var contestItems: [ContestItem] = []
     var status: Status = Status.IDLE

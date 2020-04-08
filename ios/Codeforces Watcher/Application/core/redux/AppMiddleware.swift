@@ -6,7 +6,7 @@
 import Foundation
 import ReSwift
 import common
-
+/*
 let appMiddleware: Middleware<AppState> = { dispatch, getState in
     return { next in
         return { action in
@@ -26,4 +26,4 @@ let appMiddleware: Middleware<AppState> = { dispatch, getState in
             next(action)
         }
     }
-}
+}*/

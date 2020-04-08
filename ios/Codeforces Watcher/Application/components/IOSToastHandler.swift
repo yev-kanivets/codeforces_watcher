@@ -16,10 +16,10 @@ class IOSToastHandler: ToastHandler {
         switch (message) {
         case _ as Message.NoConnection:
             text = "No connection".localized
-        /*case _ as Message.UserAlreadyAdded:
-            getString(R.string.user_already_added)
+        case _ as Message.UserAlreadyAdded:
+            text = "User already added".localized
         case _ as Message.FailedToFetchUser:
-            getString(R.string.failed_to_fetch_users)*/
+            text = "failed_to_fetch_users".localized
         case _ as Message.None:
             text = nil
         case let message as Message.Custom:
