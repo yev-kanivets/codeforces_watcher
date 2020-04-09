@@ -11,7 +11,6 @@ import common
 import FirebaseAnalytics
 
 class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResultsUpdating {
-    
     private let tableView = UITableView()
     private let tableAdapter = ProblemsTableViewAdapter()
     private let refreshControl = UIRefreshControl()

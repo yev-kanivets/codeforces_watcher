@@ -15,9 +15,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import tw.geothings.rekotlin.Action
 
-class ContestsRequests {
+open class ContestsRequests {
 
-    class FetchContests(val isInitiatedByUser: Boolean) : Request() {
+    open class FetchContests(val isInitiatedByUser: Boolean) : Request() {
 
         override suspend fun execute() {
             val responseCodeforces = CoroutineScope(Dispatchers.Default).async { codeforcesRepository.getCodeforcesContests() }
