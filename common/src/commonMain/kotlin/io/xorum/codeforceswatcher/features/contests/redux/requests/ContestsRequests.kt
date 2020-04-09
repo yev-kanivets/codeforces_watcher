@@ -4,15 +4,7 @@ import com.soywiz.klock.DateTime
 import io.xorum.codeforceswatcher.features.contests.models.Contest
 import io.xorum.codeforceswatcher.features.contests.models.Platform
 import io.xorum.codeforceswatcher.network.responses.ContestResponse
-import io.xorum.codeforceswatcher.redux.Message
-import io.xorum.codeforceswatcher.redux.Request
-import io.xorum.codeforceswatcher.redux.ToastAction
-import io.xorum.codeforceswatcher.redux.codeforcesRepository
-import io.xorum.codeforceswatcher.redux.kontestsRepository
-import io.xorum.codeforceswatcher.redux.store
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
+import io.xorum.codeforceswatcher.redux.*
 import tw.geothings.rekotlin.Action
 
 open class ContestsRequests {
@@ -20,10 +12,10 @@ open class ContestsRequests {
     open class FetchContests(val isInitiatedByUser: Boolean) : Request() {
 
         override suspend fun execute() {
-            val responseCodeforces = CoroutineScope(Dispatchers.Default).async { codeforcesRepository.getCodeforcesContests() }
-            val responseKontests = CoroutineScope(Dispatchers.Default).async { kontestsRepository.getAllContests() }
+            val responseCodeforces = codeforcesRepository.getCodeforcesContests()
+            val responseKontests = kontestsRepository.getAllContests()
 
-            val contests = normalizeCodeforcesContests(responseCodeforces.await()?.result) + normalizeAllContests(responseKontests.await())
+            val contests = normalizeCodeforcesContests(responseCodeforces?.result) + normalizeAllContests(responseKontests)
 
             if (contests.isEmpty()) {
                 dispatchFailure()
