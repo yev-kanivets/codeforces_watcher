@@ -28,7 +28,7 @@ class ActionsViewController: UIViewController, StoreSubscriber {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        newStore.subscribe(subscriber: self) { subscription in
+        store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
                 return KotlinBoolean(bool: oldState.actions == newState.actions)
             }.select { state in
@@ -39,7 +39,7 @@ class ActionsViewController: UIViewController, StoreSubscriber {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        newStore.unsubscribe(subscriber: self)
+        store.unsubscribe(subscriber: self)
     }
     
     private func setupView() {
@@ -102,6 +102,6 @@ class ActionsViewController: UIViewController, StoreSubscriber {
     }
 
     private func fetchActions() {
-        newStore.dispatch(action: ActionsRequests.FetchActions(isInitializedByUser: true, language: "locale".localized))
+        store.dispatch(action: ActionsRequests.FetchActions(isInitializedByUser: true, language: "locale".localized))
     }
 }

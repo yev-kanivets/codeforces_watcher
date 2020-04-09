@@ -50,7 +50,7 @@ class FilterTableViewCell: UITableViewCell {
     }
 
     @objc func switchTrigger(mySwitch: UISwitch) {
-        newStore.dispatch(action: ContestsRequests.ChangeFilterCheckStatus(platform: platform, isChecked: switchView.isOn))
+        store.dispatch(action: ContestsRequests.ChangeFilterCheckStatus(platform: platform, isChecked: switchView.isOn))
     }
     
     private func buildViewTree() {

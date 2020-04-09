@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import common
 
-let newStore = AppStoreKt.store
+let store = AppStoreKt.store
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -47,9 +47,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func fetchData() {
-        newStore.dispatch(action: ActionsRequests.FetchActions(isInitializedByUser: false, language: "locale".localized))
-        newStore.dispatch(action: ContestsRequests.FetchContests(isInitiatedByUser: false))
-        newStore.dispatch(action: ProblemsRequests.FetchProblems(isInitializedByUser: false))
+        store.dispatch(action: ActionsRequests.FetchActions(isInitializedByUser: false, language: "locale".localized))
+        store.dispatch(action: ContestsRequests.FetchContests(isInitiatedByUser: false))
+        store.dispatch(action: ProblemsRequests.FetchProblems(isInitializedByUser: false))
     }
     
     private func initAppStyle() {

@@ -43,5 +43,13 @@ class Prefs: Settings {
         UserDefaults.standard.removePersistentDomain(forName: domain)
         UserDefaults.standard.synchronize()
     }
+    
+    func readPinnedPostLink() -> String {
+        return ""
+    }
+    
+    func writePinnedPostLink(pinnedPostLink: String) {
+        
+    }
 }
 

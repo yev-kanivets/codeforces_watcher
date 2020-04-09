@@ -26,7 +26,7 @@ class ContestsViewController: UIViewController, StoreSubscriber {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        newStore.subscribe(subscriber: self) { subscription in
+        store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
                 return KotlinBoolean(bool: oldState.contests == newState.contests)
             }.select { state in
@@ -37,7 +37,7 @@ class ContestsViewController: UIViewController, StoreSubscriber {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        newStore.unsubscribe(subscriber: self)
+        store.unsubscribe(subscriber: self)
     }
 
     private func setupView() {
@@ -192,7 +192,7 @@ class ContestsViewController: UIViewController, StoreSubscriber {
         }
         
         tableAdapter.contests = state.contests
-        .filter { $0.phase == "BEFORE" && state.filters.contains($0.platform)}
+        .filter { $0.phase == "BEFORE" && state.filters.contains($0.platform) }
         .sorted(by: {
             $0.startTimeSeconds < $1.startTimeSeconds
         })
@@ -201,6 +201,6 @@ class ContestsViewController: UIViewController, StoreSubscriber {
     }
 
     private func fetchContests() {
-        newStore.dispatch(action: ContestsRequests.FetchContests(isInitiatedByUser: true))
+        store.dispatch(action: ContestsRequests.FetchContests(isInitiatedByUser: true))
     }
 }

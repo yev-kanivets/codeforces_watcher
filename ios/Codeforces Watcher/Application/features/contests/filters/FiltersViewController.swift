@@ -39,7 +39,7 @@ class FiltersViewController: UIViewController {
         
         tableView.registerForReuse(cellType: FilterTableViewCell.self)
         
-        let filters = newStore.state.contests.filters
+        let filters = store.state.contests.filters
         
         tableAdapter.filterItems = [
             FilterItem(title: "Codeforces", platform: Platform.codeforces, isOn: filters.contains(Platform.codeforces)),

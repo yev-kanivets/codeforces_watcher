@@ -27,7 +27,7 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        newStore.subscribe(subscriber: self) { subscription in
+        store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
                 return KotlinBoolean(bool: oldState.problems == newState.problems)
             }.select { state in
@@ -38,7 +38,7 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        newStore.unsubscribe(subscriber: self)
+        store.unsubscribe(subscriber: self)
     }
 
     private func setupView() {
@@ -108,14 +108,14 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
 
         var filteredProblems: [Problem] = []
 
-        for problem in newStore.state.problems.problems {
+        for problem in store.state.problems.problems {
             if (problem.contestName.lowercased().contains(text) || problem.enName.lowercased().contains(text) ||
                 problem.ruName.lowercased().contains(text)) {
                 filteredProblems.append(problem)
             }
         }
 
-        tableAdapter.problems = text.isEmpty ? newStore.state.problems.problems : filteredProblems
+        tableAdapter.problems = text.isEmpty ? store.state.problems.problems : filteredProblems
         tableView.reloadData()
     }
     
@@ -137,6 +137,6 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
     }
 
     private func fetchProblems() {
-        newStore.dispatch(action: ProblemsRequests.FetchProblems(isInitializedByUser: true))
+        store.dispatch(action: ProblemsRequests.FetchProblems(isInitializedByUser: true))
     }
 }
