@@ -15,18 +15,15 @@ import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.util.Analytics
-import com.bogdan.codeforceswatcher.util.convertFromHtml
-import io.xorum.codeforceswatcher.features.actions.models.CFAction
 import kotlinx.android.synthetic.main.activity_web_page.*
-import io.xorum.codeforceswatcher.redux.store
 
-class ActionActivity : AppCompatActivity() {
+class WebViewActivity : AppCompatActivity() {
 
     private val pageTitle: String
-        get() = intent.getStringExtra(ACTION_TITLE_ID).orEmpty()
+        get() = intent.getStringExtra(PAGE_TITLE_ID).orEmpty()
 
     private val link: String
-        get() = intent.getStringExtra(ACTION_LINK_ID).orEmpty()
+        get() = intent.getStringExtra(PAGE_LINK_ID).orEmpty()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,13 +110,13 @@ class ActionActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val ACTION_TITLE_ID = "action_title_id"
-        private const val ACTION_LINK_ID = "action_link_id"
+        private const val PAGE_TITLE_ID = "page_title_id"
+        private const val PAGE_LINK_ID = "page_link_id"
 
         fun newIntent(context: Context, link: String, title: String): Intent {
-            val intent = Intent(context, ActionActivity::class.java)
-            intent.putExtra(ACTION_TITLE_ID, title)
-            intent.putExtra(ACTION_LINK_ID, link)
+            val intent = Intent(context, WebViewActivity::class.java)
+            intent.putExtra(PAGE_TITLE_ID, title)
+            intent.putExtra(PAGE_LINK_ID, link)
             return intent
         }
     }

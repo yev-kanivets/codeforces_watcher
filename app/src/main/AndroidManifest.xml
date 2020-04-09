@@ -19,7 +19,7 @@
             android:name=".features.contests.FiltersActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".features.users.UserActivity" />
-        <activity android:name=".features.actions.ActionActivity" />
+        <activity android:name=".features.actions.WebViewActivity" />
         <activity android:name=".features.problems.ProblemActivity" />
         <activity
             android:name=".features.MainActivity"
@@ -35,7 +35,8 @@
         </activity>
         <activity
             android:name=".features.add_user.AddUserActivity"
-            android:label="Add User" />
+            android:label="Add User"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver
             android:name=".receiver.RatingUpdateReceiver"

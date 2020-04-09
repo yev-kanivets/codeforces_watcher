@@ -81,7 +81,7 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
         actionsAdapter = ActionsAdapter(requireContext()) { link, title ->
-            startActivity(ActionActivity.newIntent(requireContext(), link, title))
+            startActivity(WebViewActivity.newIntent(requireContext(), link, title))
         }
         recyclerView.adapter = actionsAdapter
     }
