@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import ObjectMapper
+import UIKit
 
 func colorTextByUserRank(text: String, rank: String?) -> NSMutableAttributedString {
     var color = UIColor()

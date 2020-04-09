@@ -9,7 +9,4 @@
 import Foundation
 import UIKit
 
-let codeforcesLink = "https://codeforces.com/"
-let codeforcesApiLink = "\(codeforcesLink)api/"
 let noImage = UIImage(named: "no-image.jpg")
-let kontestsApiLink = "https://www.kontests.net/api/v1/"

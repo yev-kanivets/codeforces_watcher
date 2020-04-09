@@ -96,9 +96,9 @@ class ContestTableViewCell: UITableViewCell {
 
     func bind(_ contest: Contest, completion: @escaping (() -> ())) {
         nameLabel.text = contest.name
-        timeLabel.text = TimeInterval(contest.startTimeSeconds).secondsToDateString()
-        onCalendarTap = completion
+        timeLabel.text = Double(contest.startTimeSeconds / 1000).secondsToDateString()
+        logoView.image = UIImage(named: ImageController.getImageNameByPlatform(contest.platform))
         
-        logoView.image = UIImage(named: contest.name)
+        onCalendarTap = completion
     }
 }
