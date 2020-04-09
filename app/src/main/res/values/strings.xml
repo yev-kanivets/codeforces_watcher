@@ -46,11 +46,11 @@
     <string name="share_cw_message">"I'm using Codeforces WatchR - open-source, free Android application, which leverages Codeforces API to bring more competitive programming to your Android device.
 Codeforces WatchR allows:
 
-1. Watch for activity of any Codeforces user.
-2. Sort users by rating and last participation date.
-3. Shortlist upcoming Codeforces contests.
-4. Watch for Recent Actions on Codeforces.
-5. Problems are coming soon…
+1. Shortlist and register for upcoming Competitive Programming contests: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start.
+2. Follow Recent Actions.
+3. Browse and search for Problems, add them to favourites.
+4. Watch for activity of any Codeforces user
+5. Sort users by rating and last participation date.
 
 Download it now on Google Play - https://play.google.com/store/apps/details?id=com.bogdan.codeforceswatcher"</string>
     <string name="actions_on_the_way">Recent actions on the way to your device…</string>
