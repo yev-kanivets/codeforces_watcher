@@ -50,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func fetchData() {
         newStore.dispatch(action: ActionsRequests.FetchActions(isInitializedByUser: false, language: "locale".localized))
         newStore.dispatch(action: ContestsRequests.FetchContests(isInitiatedByUser: false))
+        newStore.dispatch(action: ProblemsRequests.FetchProblems(isInitializedByUser: false))
     }
     
     private func initAppStyle() {
