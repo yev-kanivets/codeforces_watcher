@@ -132,12 +132,16 @@ class ContestsViewController: UIViewController, StoreSubscriber {
         let event = EKEvent(eventStore: eventStore)
         event.title = contest.name
         
-        /*let startTime = TimeInterval(contest.startTimeSeconds).secondsToDateString()
-        let startDate = Date(timeIntervalSince1970: TimeInterval(contest.startTimeSeconds))
+        let startDate = Date(timeIntervalSince1970: Double(contest.startTimeSeconds / 1000))
+        let endDate = Date(timeIntervalSince1970: Double(contest.startTimeSeconds / 1000 + contest.durationSeconds))
         
-        event.startDate = startDate
-        event.endDate = contest.endDate*/
-        event.calendar = eventStore.defaultCalendarForNewEvents
+        event.run {
+            $0.title = contest.name
+            $0.startDate = startDate
+            $0.endDate = endDate
+            $0.calendar = eventStore.defaultCalendarForNewEvents
+        }
+        
         do {
             try eventStore.save(event, span: .thisEvent)
         } catch let e as NSError {

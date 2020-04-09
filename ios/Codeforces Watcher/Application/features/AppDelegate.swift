@@ -8,7 +8,6 @@
 
 import UIKit
 import Firebase
-import ReSwift
 import common
 
 let newStore = AppStoreKt.store
