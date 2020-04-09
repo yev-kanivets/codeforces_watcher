@@ -88,7 +88,7 @@
 		24B599C93F574D973F8BE91E /* Pods-Codeforces Watcher-Codeforces WatcherUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Codeforces Watcher-Codeforces WatcherUITests.debug.xcconfig"; path = "Target Support Files/Pods-Codeforces Watcher-Codeforces WatcherUITests/Pods-Codeforces Watcher-Codeforces WatcherUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		297CD9C414FA273DDE07E54F /* Pods_Codeforces_WatcherTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Codeforces_WatcherTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		335241CE3F014FE63CF3A2E3 /* AppReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
-		335242613B8CB2FCFF5CD07A /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file.ttf; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		335242613B8CB2FCFF5CD07A /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		335242ABCB38C7140414CEC3 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		335242CD59B4556413229680 /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
 		335243CB89037FB5B889F9CD /* Font.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -194,11 +194,13 @@
 		3352401A97D8267FCF1ED0D5 /* features */ = {
 			isa = PBXGroup;
 			children = (
-				63EAA0C9243DFBD000C234A8 /* common */,
-				63736F1A23D1F29E001E9AB9 /* problems */,
-				63EB12F223CF24F10013A974 /* contests */,
 				33524334DF2CD89E83BDE8E8 /* users */,
 				335243E7E505EA092F706EDC /* actions */,
+				63EB12F223CF24F10013A974 /* contests */,
+				63736F1A23D1F29E001E9AB9 /* problems */,
+				63EAA0C9243DFBD000C234A8 /* common */,
+				33524D79129AF7DA2C68A75C /* AppDelegate.swift */,
+				63EB130023CF3F830013A974 /* MainViewController.swift */,
 			);
 			path = features;
 			sourceTree = "<group>";
@@ -222,7 +224,6 @@
 				335248C24FD35FB395EBDCF6 /* core */,
 				3352401A97D8267FCF1ED0D5 /* features */,
 				33524AFABB95461924E2C987 /* components */,
-				33524D79129AF7DA2C68A75C /* AppDelegate.swift */,
 				335241D485D2B84143D05D0B /* redux */,
 			);
 			path = Application;
@@ -314,8 +315,6 @@
 			children = (
 				63B932A223DEDB7600D9E254 /* ContestsRulesView.swift */,
 				3352449F83A3B6FE1CA12CE9 /* CardView.swift */,
-				638C392524361AC100DB33A3 /* IOSToastHandler.swift */,
-				638C39272437277F00DB33A3 /* Prefs.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -324,8 +323,8 @@
 			isa = PBXGroup;
 			children = (
 				335248926FCBDB39A48BE7D7 /* Base.lproj */,
-				33524E5965FC1E035C33B136 /* no-image.jpg */,
-				335242613B8CB2FCFF5CD07A /* Roboto-Regular.ttf */,
+				63EAA0D2243F278100C234A8 /* images */,
+				63EAA0D3243F278B00C234A8 /* fonts */,
 				B1E1B3F323C91D51006A7347 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -462,7 +461,7 @@
 		63EAA0C9243DFBD000C234A8 /* common */ = {
 			isa = PBXGroup;
 			children = (
-				63EB130023CF3F830013A974 /* MainViewController.swift */,
+				63EAA0D1243F264900C234A8 /* utils */,
 				63FB270823E1AA50005F19F1 /* WebViewController.swift */,
 			);
 			path = common;
@@ -493,6 +492,31 @@
 				63EAA0CF243EFF2400C234A8 /* FilterItem.swift */,
 			);
 			path = models;
+			sourceTree = "<group>";
+		};
+		63EAA0D1243F264900C234A8 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				638C392524361AC100DB33A3 /* IOSToastHandler.swift */,
+				638C39272437277F00DB33A3 /* Prefs.swift */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
+		63EAA0D2243F278100C234A8 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				33524E5965FC1E035C33B136 /* no-image.jpg */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
+		63EAA0D3243F278B00C234A8 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				335242613B8CB2FCFF5CD07A /* Roboto-Regular.ttf */,
+			);
+			path = fonts;
 			sourceTree = "<group>";
 		};
 		63EB12F223CF24F10013A974 /* contests */ = {
