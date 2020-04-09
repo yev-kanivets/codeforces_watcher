@@ -8,7 +8,7 @@
 
 import Foundation
 import ObjectMapper
-
+/*
 struct CodeforcesContest: Mappable {
     var startTimeSeconds: Double!
     var durationSeconds: Double!
@@ -26,4 +26,4 @@ struct CodeforcesContest: Mappable {
         id <- map["id"]
     }
 }
-
+*/

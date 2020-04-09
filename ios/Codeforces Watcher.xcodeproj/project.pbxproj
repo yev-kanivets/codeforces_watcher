@@ -21,7 +21,6 @@
 		335247826CC8C76840B8B161 /* ActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335249729ED261CE9723E0AA /* ActionsViewController.swift */; };
 		33524789EFFED3D6CA62DEE5 /* Pallete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33524E1ACEE6A061F4A33389 /* Pallete.swift */; };
 		335248243065D1A2585B79FE /* ActionsTableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3352491D524E714A6252E83E /* ActionsTableViewAdapter.swift */; };
-		3352489CDF4FE57F12AD76AA /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335243ED9980DC3C23AEE045 /* Request.swift */; };
 		335249EE055A0D7C9B31CE68 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33524EC038A57660683B8BFC /* UITableView+Extension.swift */; };
 		33524AE3A0B0A7C674038501 /* UITableViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3352498A40339DF8C6590EF4 /* UITableViewCell+Extension.swift */; };
 		33524B39CED3D72F41F01C9B /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3352449F83A3B6FE1CA12CE9 /* CardView.swift */; };
@@ -29,11 +28,9 @@
 		33524D7137C7D47F8BE95703 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33524702A30B2AD59D2D359E /* CommentTableViewCell.swift */; };
 		33524E698A1B05C3FAB1E720 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335243CB89037FB5B889F9CD /* Font.swift */; };
 		33524EA5619D62409125FD81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33524D79129AF7DA2C68A75C /* AppDelegate.swift */; };
-		33524EAD81AF3703F8777DDD /* AppMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33524F526EA086A75C8F9ABC /* AppMiddleware.swift */; };
 		33524EFE31B05A25F2D5082E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33524DABACD49E1E07FECDA6 /* User.swift */; };
 		33524FEAE56CD4737349DE6A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3352491960327B2FC4E36E63 /* Constants.swift */; };
 		6311376023D98E51008126B0 /* NoContestsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6311375F23D98E51008126B0 /* NoContestsTableViewCell.swift */; };
-		63223DF023E04734004F5A28 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63223DEF23E04734004F5A28 /* Platform.swift */; };
 		633B4CF623E078380099EF41 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633B4CF523E078380099EF41 /* FiltersViewController.swift */; };
 		633B4CF823E07F150099EF41 /* FiltersTableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633B4CF723E07F150099EF41 /* FiltersTableViewAdapter.swift */; };
 		633B4CFA23E083A10099EF41 /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633B4CF923E083A10099EF41 /* FilterTableViewCell.swift */; };
@@ -42,11 +39,9 @@
 		63715C5723D88FBB00BA064F /* NoProblemsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63715C5623D88FBB00BA064F /* NoProblemsTableViewCell.swift */; };
 		63736EFD23CF6405001E9AB9 /* ContestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736EFC23CF6405001E9AB9 /* ContestsViewController.swift */; };
 		63736F0023CF6557001E9AB9 /* ContestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736EFF23CF6557001E9AB9 /* ContestTableViewCell.swift */; };
-		63736F0323CF6616001E9AB9 /* CodeforcesContestsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F0223CF6616001E9AB9 /* CodeforcesContestsResponse.swift */; };
 		63736F0523CF6657001E9AB9 /* CodeforcesContest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F0423CF6657001E9AB9 /* CodeforcesContest.swift */; };
 		63736F0923CF67FC001E9AB9 /* ContestsTableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F0823CF67FC001E9AB9 /* ContestsTableViewAdapter.swift */; };
 		63736F0B23CF6899001E9AB9 /* ContestItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F0A23CF6899001E9AB9 /* ContestItem.swift */; };
-		63736F0E23D0675B001E9AB9 /* ContestsRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F0D23D0675B001E9AB9 /* ContestsRequests.swift */; };
 		63736F1F23D1F2FD001E9AB9 /* ProblemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F1E23D1F2FD001E9AB9 /* ProblemsViewController.swift */; };
 		63736F2123D1F336001E9AB9 /* ProblemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F2023D1F336001E9AB9 /* ProblemTableViewCell.swift */; };
 		63736F2223D1F336001E9AB9 /* ProblemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63736F2023D1F336001E9AB9 /* ProblemTableViewCell.swift */; };
@@ -62,9 +57,8 @@
 		6394361823BA116000B302A3 /* Codeforces_WatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6394361723BA116000B302A3 /* Codeforces_WatcherTests.swift */; };
 		6394362323BA116000B302A3 /* Codeforces_WatcherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6394362223BA116000B302A3 /* Codeforces_WatcherUITests.swift */; };
 		63A0E14723CDF579001F570C /* NoActionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A0E14623CDF579001F570C /* NoActionsTableViewCell.swift */; };
-		63A771A423E09AD600BB8F19 /* FilterChangeAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A771A323E09AD600BB8F19 /* FilterChangeAction.swift */; };
-		63B08A8D23E2FCA9000240B3 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B08A8C23E2FCA9000240B3 /* PersistenceController.swift */; };
 		63B932A323DEDB7600D9E254 /* ContestsRulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B932A223DEDB7600D9E254 /* ContestsRulesView.swift */; };
+		63EAA0D0243EFF2500C234A8 /* FilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0CF243EFF2400C234A8 /* FilterItem.swift */; };
 		63EB12EF23CF1B310013A974 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63EB12EE23CF1B310013A974 /* GoogleService-Info.plist */; };
 		63EB130123CF3F830013A974 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB130023CF3F830013A974 /* MainViewController.swift */; };
 		63FB270923E1AA50005F19F1 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FB270823E1AA50005F19F1 /* WebViewController.swift */; };
@@ -98,7 +92,6 @@
 		335242ABCB38C7140414CEC3 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		335242CD59B4556413229680 /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
 		335243CB89037FB5B889F9CD /* Font.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
-		335243ED9980DC3C23AEE045 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		3352444674908D3D5BDEDAD7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3352449F83A3B6FE1CA12CE9 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		335245916F723E42B7318479 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -116,9 +109,7 @@
 		33524E1ACEE6A061F4A33389 /* Pallete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pallete.swift; sourceTree = "<group>"; };
 		33524E5965FC1E035C33B136 /* no-image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "no-image.jpg"; sourceTree = "<group>"; };
 		33524EC038A57660683B8BFC /* UITableView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
-		33524F526EA086A75C8F9ABC /* AppMiddleware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppMiddleware.swift; sourceTree = "<group>"; };
 		6311375F23D98E51008126B0 /* NoContestsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoContestsTableViewCell.swift; sourceTree = "<group>"; };
-		63223DEF23E04734004F5A28 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		633B4CF523E078380099EF41 /* FiltersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 		633B4CF723E07F150099EF41 /* FiltersTableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersTableViewAdapter.swift; sourceTree = "<group>"; };
 		633B4CF923E083A10099EF41 /* FilterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
@@ -127,11 +118,9 @@
 		63715C5623D88FBB00BA064F /* NoProblemsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoProblemsTableViewCell.swift; sourceTree = "<group>"; };
 		63736EFC23CF6405001E9AB9 /* ContestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContestsViewController.swift; sourceTree = "<group>"; };
 		63736EFF23CF6557001E9AB9 /* ContestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContestTableViewCell.swift; sourceTree = "<group>"; };
-		63736F0223CF6616001E9AB9 /* CodeforcesContestsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeforcesContestsResponse.swift; sourceTree = "<group>"; };
 		63736F0423CF6657001E9AB9 /* CodeforcesContest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeforcesContest.swift; sourceTree = "<group>"; };
 		63736F0823CF67FC001E9AB9 /* ContestsTableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContestsTableViewAdapter.swift; sourceTree = "<group>"; };
 		63736F0A23CF6899001E9AB9 /* ContestItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContestItem.swift; sourceTree = "<group>"; };
-		63736F0D23D0675B001E9AB9 /* ContestsRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContestsRequests.swift; sourceTree = "<group>"; };
 		63736F1E23D1F2FD001E9AB9 /* ProblemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemsViewController.swift; sourceTree = "<group>"; };
 		63736F2023D1F336001E9AB9 /* ProblemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemTableViewCell.swift; sourceTree = "<group>"; };
 		63736F2423D1F3EC001E9AB9 /* ProblemsTableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemsTableViewAdapter.swift; sourceTree = "<group>"; };
@@ -147,9 +136,8 @@
 		6394362223BA116000B302A3 /* Codeforces_WatcherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codeforces_WatcherUITests.swift; sourceTree = "<group>"; };
 		6394362423BA116000B302A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63A0E14623CDF579001F570C /* NoActionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoActionsTableViewCell.swift; sourceTree = "<group>"; };
-		63A771A323E09AD600BB8F19 /* FilterChangeAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterChangeAction.swift; sourceTree = "<group>"; };
-		63B08A8C23E2FCA9000240B3 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		63B932A223DEDB7600D9E254 /* ContestsRulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContestsRulesView.swift; sourceTree = "<group>"; };
+		63EAA0CF243EFF2400C234A8 /* FilterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterItem.swift; sourceTree = "<group>"; };
 		63EB12EE23CF1B310013A974 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		63EB130023CF3F830013A974 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		63FB270823E1AA50005F19F1 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -206,6 +194,7 @@
 		3352401A97D8267FCF1ED0D5 /* features */ = {
 			isa = PBXGroup;
 			children = (
+				63EAA0C9243DFBD000C234A8 /* common */,
 				63736F1A23D1F29E001E9AB9 /* problems */,
 				63EB12F223CF24F10013A974 /* contests */,
 				33524334DF2CD89E83BDE8E8 /* users */,
@@ -292,16 +281,6 @@
 			path = reducers;
 			sourceTree = "<group>";
 		};
-		335246CC320CF1B3978EF9B8 /* redux */ = {
-			isa = PBXGroup;
-			children = (
-				33524F526EA086A75C8F9ABC /* AppMiddleware.swift */,
-				335243ED9980DC3C23AEE045 /* Request.swift */,
-				63A771A323E09AD600BB8F19 /* FilterChangeAction.swift */,
-			);
-			path = redux;
-			sourceTree = "<group>";
-		};
 		335247F739C05D9BDD4FD646 /* tableView */ = {
 			isa = PBXGroup;
 			children = (
@@ -326,7 +305,6 @@
 				33524E078256F0CC0DE2C912 /* design */,
 				33524054482033852C86FC29 /* extensions */,
 				3352491960327B2FC4E36E63 /* Constants.swift */,
-				335246CC320CF1B3978EF9B8 /* redux */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -334,10 +312,8 @@
 		33524AFABB95461924E2C987 /* components */ = {
 			isa = PBXGroup;
 			children = (
+				63B932A223DEDB7600D9E254 /* ContestsRulesView.swift */,
 				3352449F83A3B6FE1CA12CE9 /* CardView.swift */,
-				63EB130023CF3F830013A974 /* MainViewController.swift */,
-				63FB270823E1AA50005F19F1 /* WebViewController.swift */,
-				63B08A8C23E2FCA9000240B3 /* PersistenceController.swift */,
 				638C392524361AC100DB33A3 /* IOSToastHandler.swift */,
 				638C39272437277F00DB33A3 /* Prefs.swift */,
 			);
@@ -390,7 +366,6 @@
 			children = (
 				63736EFF23CF6557001E9AB9 /* ContestTableViewCell.swift */,
 				6311375F23D98E51008126B0 /* NoContestsTableViewCell.swift */,
-				633B4CF923E083A10099EF41 /* FilterTableViewCell.swift */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -398,21 +373,11 @@
 		63736F0123CF65C1001E9AB9 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				63736F0223CF6616001E9AB9 /* CodeforcesContestsResponse.swift */,
 				63603E6623DF00D700F86BC0 /* CommonContest.swift */,
 				63736F0423CF6657001E9AB9 /* CodeforcesContest.swift */,
 				63736F0A23CF6899001E9AB9 /* ContestItem.swift */,
-				63223DEF23E04734004F5A28 /* Platform.swift */,
 			);
 			path = models;
-			sourceTree = "<group>";
-		};
-		63736F0C23CF72D6001E9AB9 /* requests */ = {
-			isa = PBXGroup;
-			children = (
-				63736F0D23D0675B001E9AB9 /* ContestsRequests.swift */,
-			);
-			path = requests;
 			sourceTree = "<group>";
 		};
 		63736F1A23D1F29E001E9AB9 /* problems */ = {
@@ -494,17 +459,50 @@
 			path = "Codeforces WatcherUITests";
 			sourceTree = "<group>";
 		};
+		63EAA0C9243DFBD000C234A8 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				63EB130023CF3F830013A974 /* MainViewController.swift */,
+				63FB270823E1AA50005F19F1 /* WebViewController.swift */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		63EAA0CA243DFBF500C234A8 /* filters */ = {
+			isa = PBXGroup;
+			children = (
+				63EAA0CE243EFF1800C234A8 /* models */,
+				63EAA0CB243DFC0200C234A8 /* cells */,
+				633B4CF523E078380099EF41 /* FiltersViewController.swift */,
+				633B4CF723E07F150099EF41 /* FiltersTableViewAdapter.swift */,
+			);
+			path = filters;
+			sourceTree = "<group>";
+		};
+		63EAA0CB243DFC0200C234A8 /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				633B4CF923E083A10099EF41 /* FilterTableViewCell.swift */,
+			);
+			path = cells;
+			sourceTree = "<group>";
+		};
+		63EAA0CE243EFF1800C234A8 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				63EAA0CF243EFF2400C234A8 /* FilterItem.swift */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
 		63EB12F223CF24F10013A974 /* contests */ = {
 			isa = PBXGroup;
 			children = (
-				63736F0C23CF72D6001E9AB9 /* requests */,
+				63EAA0CA243DFBF500C234A8 /* filters */,
 				63736F0123CF65C1001E9AB9 /* models */,
 				63736EFE23CF6523001E9AB9 /* cells */,
 				63736EFC23CF6405001E9AB9 /* ContestsViewController.swift */,
-				63B932A223DEDB7600D9E254 /* ContestsRulesView.swift */,
 				63736F0823CF67FC001E9AB9 /* ContestsTableViewAdapter.swift */,
-				633B4CF523E078380099EF41 /* FiltersViewController.swift */,
-				633B4CF723E07F150099EF41 /* FiltersTableViewAdapter.swift */,
 			);
 			path = contests;
 			sourceTree = "<group>";
@@ -780,13 +778,13 @@
 				63603E6723DF00D700F86BC0 /* CommonContest.swift in Sources */,
 				33524D7137C7D47F8BE95703 /* CommentTableViewCell.swift in Sources */,
 				63736F2523D1F3EC001E9AB9 /* ProblemsTableViewAdapter.swift in Sources */,
+				63EAA0D0243EFF2500C234A8 /* FilterItem.swift in Sources */,
 				33524585031C11024879680D /* BlogEntryTableViewCell.swift in Sources */,
 				63736F2923D1F5DB001E9AB9 /* ProblemItem.swift in Sources */,
 				63736F0B23CF6899001E9AB9 /* ContestItem.swift in Sources */,
 				63715C5723D88FBB00BA064F /* NoProblemsTableViewCell.swift in Sources */,
 				638C39282437277F00DB33A3 /* Prefs.swift in Sources */,
 				63736F0523CF6657001E9AB9 /* CodeforcesContest.swift in Sources */,
-				63223DF023E04734004F5A28 /* Platform.swift in Sources */,
 				63736F2123D1F336001E9AB9 /* ProblemTableViewCell.swift in Sources */,
 				335247826CC8C76840B8B161 /* ActionsViewController.swift in Sources */,
 				63736F1F23D1F2FD001E9AB9 /* ProblemsViewController.swift in Sources */,
@@ -794,7 +792,6 @@
 				33524EA5619D62409125FD81 /* AppDelegate.swift in Sources */,
 				63EB130123CF3F830013A974 /* MainViewController.swift in Sources */,
 				335240BE358E7469D97B1472 /* String+Extension.swift in Sources */,
-				63B08A8D23E2FCA9000240B3 /* PersistenceController.swift in Sources */,
 				33524BC0E57CE4F3A2D1EC04 /* UIColor+Extension.swift in Sources */,
 				3352406FDC5916F705E86498 /* ScopeFunc.swift in Sources */,
 				638C392624361AC200DB33A3 /* IOSToastHandler.swift in Sources */,
@@ -807,15 +804,10 @@
 				633B4CF623E078380099EF41 /* FiltersViewController.swift in Sources */,
 				63A0E14723CDF579001F570C /* NoActionsTableViewCell.swift in Sources */,
 				335249EE055A0D7C9B31CE68 /* UITableView+Extension.swift in Sources */,
-				63736F0323CF6616001E9AB9 /* CodeforcesContestsResponse.swift in Sources */,
 				33524AE3A0B0A7C674038501 /* UITableViewCell+Extension.swift in Sources */,
 				63736F0023CF6557001E9AB9 /* ContestTableViewCell.swift in Sources */,
-				33524EAD81AF3703F8777DDD /* AppMiddleware.swift in Sources */,
-				3352489CDF4FE57F12AD76AA /* Request.swift in Sources */,
-				63736F0E23D0675B001E9AB9 /* ContestsRequests.swift in Sources */,
 				335246BCD127357ADEB97750 /* AppReducer.swift in Sources */,
 				63736F0923CF67FC001E9AB9 /* ContestsTableViewAdapter.swift in Sources */,
-				63A771A423E09AD600BB8F19 /* FilterChangeAction.swift in Sources */,
 				33524310AF68A1EE4EE68D0A /* AppState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -48,6 +48,14 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
         buildViewTree()
         setConstraints()
     }
+    
+    private func buildViewTree() {
+        view.addSubview(tableView)
+    }
+
+    private func setConstraints() {
+        tableView.edgesToSuperview()
+    }
 
     private func setupTableView() {
         tableView.run {
@@ -131,13 +139,5 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
 
     private func fetchProblems() {
         newStore.dispatch(action: ProblemsRequests.FetchProblems(isInitializedByUser: true))
-    }
-
-    private func buildViewTree() {
-        view.addSubview(tableView)
-    }
-
-    private func setConstraints() {
-        tableView.edgesToSuperview()
     }
 }

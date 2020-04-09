@@ -11,7 +11,11 @@ import common
 
 class Prefs: Settings {
     func readContestsFilters() -> Set<String> {
-        return Set()
+        if let savedFilters = (UserDefaults.standard.value(forKey: "contestsFilters")) as? Array<String> {
+            return Set(savedFilters)
+        } else {
+            return Platform.Companion().defaultFilterValueToSave
+        }
     }
 
     func readProblemsIsFavourite() -> Bool {
@@ -23,7 +27,7 @@ class Prefs: Settings {
     }
 
     func writeContestsFilters(filters: Set<String>) {
-        //UserDefaults.standard.setValue(filters, forKey: "filters")
+        UserDefaults.standard.setValue(Array(filters), forKey: "contestsFilters")
     }
 
     func writeProblemsIsFavourite(isFavourite: Bool) {
@@ -32,6 +36,12 @@ class Prefs: Settings {
 
     func writeSpinnerSortPosition(spinnerSortPosition: Int32) {
         
+    }
+    
+    func resetAllDefaults() {
+        let domain = Bundle.main.bundleIdentifier!
+        UserDefaults.standard.removePersistentDomain(forName: domain)
+        UserDefaults.standard.synchronize()
     }
 }
 

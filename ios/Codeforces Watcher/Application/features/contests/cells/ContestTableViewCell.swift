@@ -8,9 +8,10 @@
 
 import UIKit
 import EventKit
+import common
 
 class ContestTableViewCell: UITableViewCell {
-    private var onCalendarTap: (() -> ())!
+    private var onCalendarTap: (() -> ())?
     private let cardView = CardView()
     
     private var logoView = UIImageView().apply {
@@ -45,7 +46,7 @@ class ContestTableViewCell: UITableViewCell {
     }
     
     @objc func calendarIconTapped(recognizer: UITapGestureRecognizer) {
-        onCalendarTap()
+        onCalendarTap?()
     }
 
     private func setupView() {
@@ -93,10 +94,11 @@ class ContestTableViewCell: UITableViewCell {
         }
     }
 
-    func bind(_ contestItem: ContestItem, completion: @escaping (() -> ())) {
-        nameLabel.text = contestItem.name
-        timeLabel.text = contestItem.startTime
+    func bind(_ contest: Contest, completion: @escaping (() -> ())) {
+        nameLabel.text = contest.name
+        timeLabel.text = TimeInterval(contest.startTimeSeconds).secondsToDateString()
         onCalendarTap = completion
-        logoView.image = contestItem.icon
+        
+        logoView.image = UIImage(named: contest.name)
     }
 }

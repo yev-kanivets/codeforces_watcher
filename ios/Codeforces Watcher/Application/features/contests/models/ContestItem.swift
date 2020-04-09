@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import common
-
+/*
 struct ContestItem {
     var name: String!
     var startTime: String!
@@ -54,3 +54,4 @@ struct ContestItem {
         icon = UIImage(named: site.rawValue)
     }
 }
+*/
