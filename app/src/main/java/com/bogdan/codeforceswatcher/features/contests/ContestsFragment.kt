@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.features.actions.WebViewActivity
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Refresh
 import io.xorum.codeforceswatcher.features.contests.models.Contest
@@ -31,7 +32,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         ContestsAdapter(
                 requireContext(),
                 addToCalendarClickListener = { addContestToCalendar(it) },
-                itemClickListener = { showContestPage(it.link) }
+                itemClickListener = { startActivity(WebViewActivity.newIntent(requireContext(), it.link, it.name)) }
         )
     }
 
@@ -79,18 +80,8 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
-
         recyclerView.adapter = contestsAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-    }
-
-    private fun showContestPage(url: String) {
-        try {
-            val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(url))
-            startActivity(intent)
-        } catch (t: ActivityNotFoundException) {
-            Toast.makeText(requireContext(), getString(R.string.no_browser_has_been_found), Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun addContestToCalendar(contest: Contest) {
@@ -109,7 +100,7 @@ class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                     Toast.LENGTH_SHORT
             ).show()
         }
-        Analytics.logAddContestToCalendarEvent(contest.name)
+        Analytics.logAddContestToCalendarEvent(contest.name, contest.platform)
     }
 
     private fun getCalendarTime(time: Long): String {

@@ -68,6 +68,7 @@ class CwApp : Application() {
         store.dispatch(ContestsRequests.FetchContests(false))
         store.dispatch(UsersRequests.FetchUsers(Source.BACKGROUND))
         store.dispatch(ProblemsRequests.FetchProblems(false))
+        store.dispatch(ActionsRequests.FetchPinnedPost())
     }
 
     private fun startAlarm() {

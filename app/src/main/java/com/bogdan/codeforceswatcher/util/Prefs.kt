@@ -11,6 +11,17 @@ class Prefs(private val context: Context) : Settings {
 
     private val ratePeriod = 5
 
+    override fun writePinnedPostLink(pinnedPostLink: String) {
+        val editor = getDefaultPrefs().edit()
+        editor.putString(KEY_PINNED_POST, pinnedPostLink)
+        editor.apply()
+    }
+
+    override fun readPinnedPostLink(): String {
+        val defaultPrefs = getDefaultPrefs()
+        return defaultPrefs.getString(KEY_PINNED_POST, "").orEmpty()
+    }
+
     override fun readSpinnerSortPosition(): Int {
         val defaultPrefs = getDefaultPrefs()
         return (defaultPrefs.getString(KEY_SPINNER_SORT_POSITION, "0") ?: "0").toInt()
@@ -33,14 +44,14 @@ class Prefs(private val context: Context) : Settings {
         editor.apply()
     }
 
-    override fun readContestsFilters(): Set<Platform> {
+    override fun readContestsFilters(): Set<String> {
         val defaultPrefs = getDefaultPrefs()
-        return defaultPrefs.getStringSet(KEY_CONTESTS_FILTERS, Platform.values().map { it.toString() }.toSet())?.map { Platform.valueOf(it) }?.toSet().orEmpty()
+        return defaultPrefs.getStringSet(KEY_CONTESTS_FILTERS, Platform.values().map { it.toString() }.toSet()).orEmpty()
     }
 
-    override fun writeContestsFilters(filters: Set<Platform>) {
+    override fun writeContestsFilters(filters: Set<String>) {
         val editor = getDefaultPrefs().edit()
-        editor.putStringSet(KEY_CONTESTS_FILTERS, filters.map { it.toString() }.toSet())
+        editor.putStringSet(KEY_CONTESTS_FILTERS, filters)
         editor.apply()
     }
 
@@ -90,6 +101,7 @@ class Prefs(private val context: Context) : Settings {
         private const val APP_RATED = "app_rated"
         private const val LAUNCH_COUNT = "launch_count"
         private const val KEY_CONTESTS_FILTERS = "key_contests_filters"
+        private const val KEY_PINNED_POST = "key_pinned_post"
 
         @SuppressLint("StaticFieldLeak")
         private val prefs: Prefs = Prefs(CwApp.app)

@@ -15,15 +15,15 @@ import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.util.Analytics
-import com.bogdan.codeforceswatcher.util.convertFromHtml
-import io.xorum.codeforceswatcher.features.actions.models.CFAction
 import kotlinx.android.synthetic.main.activity_web_page.*
-import io.xorum.codeforceswatcher.redux.store
 
-class ActionActivity : AppCompatActivity() {
+class WebViewActivity : AppCompatActivity() {
 
-    private lateinit var pageTitle: String
-    private lateinit var link: String
+    private val pageTitle: String
+        get() = intent.getStringExtra(PAGE_TITLE_ID).orEmpty()
+
+    private val link: String
+        get() = intent.getStringExtra(PAGE_LINK_ID).orEmpty()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,23 +32,9 @@ class ActionActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        initData()
         initViews()
         Analytics.logActionOpened()
     }
-
-    private fun initData() {
-        val cfAction = store.state.actions.actions.find { it.id == intent.getIntExtra(ACTION_ID, -1) }
-                ?: throw IllegalStateException()
-
-        pageTitle = cfAction.blogEntry.title.convertFromHtml()
-        link = buildPageLink(cfAction)
-    }
-
-    private fun buildPageLink(cfAction: CFAction) = cfAction.comment?.let {
-        getString(R.string.comment_url, cfAction.blogEntry.id, cfAction.comment?.id)
-    } ?: getString(R.string.blog_entry_url, cfAction.blogEntry.id)
-
 
     private fun initViews() {
         title = pageTitle
@@ -124,11 +110,13 @@ class ActionActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val ACTION_ID = "action_id"
+        private const val PAGE_TITLE_ID = "page_title_id"
+        private const val PAGE_LINK_ID = "page_link_id"
 
-        fun newIntent(context: Context, actionId: Int): Intent {
-            val intent = Intent(context, ActionActivity::class.java)
-            intent.putExtra(ACTION_ID, actionId)
+        fun newIntent(context: Context, link: String, title: String): Intent {
+            val intent = Intent(context, WebViewActivity::class.java)
+            intent.putExtra(PAGE_TITLE_ID, title)
+            intent.putExtra(PAGE_LINK_ID, link)
             return intent
         }
     }

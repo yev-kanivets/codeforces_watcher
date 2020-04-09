@@ -6,6 +6,7 @@ import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.users.colorTextByUserRank
 import com.bogdan.codeforceswatcher.util.convertFromHtml
 import io.xorum.codeforceswatcher.features.actions.models.CFAction
+import io.xorum.codeforceswatcher.network.responses.PinnedPost
 import io.xorum.codeforceswatcher.util.avatar
 
 sealed class ActionItem {
@@ -13,19 +14,16 @@ sealed class ActionItem {
     class CommentItem(action: CFAction) : ActionItem() {
 
         var commentatorHandle: CharSequence
-        var title: String
+        var title: String = action.blogEntry.title.convertFromHtml()
         var content: String
         var commentatorAvatar: String
-        var time: Long
+        val time: Long = action.timeSeconds
+        val link = action.link
 
         init {
             val comment = action.comment ?: throw NullPointerException()
-
             commentatorAvatar = avatar(comment.commentatorAvatar ?: throw IllegalStateException())
             commentatorHandle = buildHandle(comment.commentatorHandle, comment.commentatorRank)
-
-            title = action.blogEntry.title.convertFromHtml()
-            time = action.timeSeconds
             content = comment.text.convertFromHtml()
         }
 
@@ -41,19 +39,24 @@ sealed class ActionItem {
 
     class BlogEntryItem(action: CFAction) : ActionItem() {
 
-        var authorHandle: CharSequence
-        var blogTitle: String
-        var authorAvatar: String
-        var time: Long
+        val authorHandle: CharSequence
+        val blogTitle: String
+        val authorAvatar: String
+        val time: Long = action.timeSeconds
+        val link = action.link
 
         init {
             with(action) {
                 authorAvatar = avatar(blogEntry.authorAvatar ?: throw IllegalStateException())
                 authorHandle = colorTextByUserRank(blogEntry.authorHandle, blogEntry.authorRank)
                 blogTitle = blogEntry.title.convertFromHtml()
-                time = timeSeconds
             }
         }
+    }
+
+    class PinnedItem(pinnedPost: PinnedPost) : ActionItem() {
+        val title = pinnedPost.title
+        val link = pinnedPost.link
     }
 
     object Stub : ActionItem()
