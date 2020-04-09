@@ -42,17 +42,6 @@ class ActionsViewController: UIViewController, StoreSubscriber {
         newStore.unsubscribe(subscriber: self)
     }
     
-    func doNewState(state: Any) {
-        let state = state as! ActionsState
-        
-        if (state.status == .idle) {
-            refreshControl.endRefreshing()
-        }
-        
-        tableAdapter.actions = state.actions
-        tableView.reloadData()
-    }
-    
     private func setupView() {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         view.backgroundColor = .white
@@ -61,9 +50,12 @@ class ActionsViewController: UIViewController, StoreSubscriber {
         setConstraints()
     }
     
-    @objc private func refreshActions(_ sender: Any) {
-        Analytics.logEvent("actions_list_refresh", parameters: [:])
-        fetchActions()
+    private func buildViewTree() {
+        view.addSubview(tableView)
+    }
+
+    private func setConstraints() {
+        tableView.edgesToSuperview()
     }
     
     private func setupTableView() {
@@ -92,16 +84,24 @@ class ActionsViewController: UIViewController, StoreSubscriber {
             $0.tintColor = Pallete.colorPrimaryDark
         }
     }
+    
+    func doNewState(state: Any) {
+        let state = state as! ActionsState
+        
+        if (state.status == .idle) {
+            refreshControl.endRefreshing()
+        }
+        
+        tableAdapter.actions = state.actions
+        tableView.reloadData()
+    }
+    
+    @objc private func refreshActions(_ sender: Any) {
+        Analytics.logEvent("actions_list_refresh", parameters: [:])
+        fetchActions()
+    }
 
     private func fetchActions() {
         newStore.dispatch(action: ActionsRequests.FetchActions(isInitializedByUser: true, language: "locale".localized))
-    }
-
-    private func buildViewTree() {
-        view.addSubview(tableView)
-    }
-
-    private func setConstraints() {
-        tableView.edgesToSuperview()
     }
 }

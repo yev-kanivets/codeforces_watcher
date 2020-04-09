@@ -115,8 +115,9 @@ class BlogEntryTableViewCell: UITableViewCell {
         
         detailsLabel.text = "created_or_updated_text".localized
         
-        if let avatar = blogEntry.authorAvatar {
-            userImage.sd_setImage(with: URL(string: "https:\(avatar)"), placeholderImage: noImage)
+        if var avatar = blogEntry.authorAvatar {
+            avatar = LinkValidatorKt.avatar(avatarLink: avatar)
+            userImage.sd_setImage(with: URL(string: avatar), placeholderImage: noImage)
         } else {
             userImage.image = noImage
         }

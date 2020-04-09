@@ -4,9 +4,9 @@
 //
 
 import Foundation
+import HTMLString
 
 extension String {
-    
     mutating func deleteHtmlTags() {
         self = self.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
     }
@@ -14,7 +14,7 @@ extension String {
     func beautify() -> String {
         var newString = self
         newString.deleteHtmlTags()
-        newString = newString.removingHTMLEntities
+        newString.removeHTMLEntities()
         newString = newString.replacingOccurrences(of: "$$$", with: "")
 
         return newString

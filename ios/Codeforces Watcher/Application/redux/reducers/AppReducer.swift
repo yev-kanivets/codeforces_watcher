@@ -5,7 +5,7 @@
 
 import Foundation
 import ReSwift
-
+/*
 func appReducer(action: Action, state: AppState?) -> AppState {
     guard let state = state else { fatalError() }
 
@@ -41,3 +41,4 @@ func contestsReducer(_ action: Action, _ state: AppState) -> ContestsState {
     }
     return newState
 }
+*/

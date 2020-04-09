@@ -11,12 +11,6 @@ import Firebase
 import ReSwift
 import common
 
-let store = ReSwift.Store<AppState>(
-    reducer: appReducer,
-    state: AppState(),
-    middleware: [appMiddleware]
-)
-
 let newStore = AppStoreKt.store
 
 @UIApplicationMain
@@ -55,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func fetchData() {
         newStore.dispatch(action: ActionsRequests.FetchActions(isInitializedByUser: false, language: "locale".localized))
-        store.dispatch(ContestsRequests.FetchCodeforcesContests())
+        newStore.dispatch(action: ContestsRequests.FetchContests(isInitiatedByUser: false))
     }
     
     private func initAppStyle() {

@@ -9,20 +9,19 @@
 import UIKit
 
 class FiltersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
+    var filterItems: [FilterItem] = []
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Platform.allCases.count - 2
+        return filterItems.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return tableView.dequeueReusableCell(cellType: FilterTableViewCell.self).apply {
-            let platform = Platform.allCases[indexPath.row]
-            $0.bind(platform: platform) { isOn in
-                store.dispatch(FilterChangeAction(platform: platform, isOn: isOn))
-            }
+            $0.bind(filterItems[indexPath.row])
         }
     }
 }

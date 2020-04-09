@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import common
 
 class FilterTableViewCell: UITableViewCell {
     private var logoView = UIImageView().apply {
@@ -28,7 +29,7 @@ class FilterTableViewCell: UITableViewCell {
         $0.onTintColor = Pallete.colorPrimary
     }
     
-    private var onSwitchChanged: ((Bool) -> ())!
+    private var platform: Platform!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -45,19 +46,18 @@ class FilterTableViewCell: UITableViewCell {
         
         buildViewTree()
         setConstraints()
-        
-        switchView.addTarget(self, action: #selector(switchTrigger), for: UIControl.Event.valueChanged)
+        setInteractions()
     }
 
     @objc func switchTrigger(mySwitch: UISwitch) {
-        onSwitchChanged(switchView.isOn)
+        newStore.dispatch(action: ContestsRequests.ChangeFilterCheckStatus(platform: platform, isChecked: switchView.isOn))
     }
     
-    func buildViewTree() {
+    private func buildViewTree() {
         [logoView, nameLabel, switchView].forEach(self.addSubview)
     }
     
-    func setConstraints() {
+    private func setConstraints() {
         logoView.run {
             $0.leadingToSuperview(offset: 16)
             $0.height(40)
@@ -76,10 +76,14 @@ class FilterTableViewCell: UITableViewCell {
         }
     }
     
-    func bind(platform: Platform, completion: @escaping ((_ isOn: Bool) -> ())) {
-        logoView.image = UIImage(named: platform.rawValue)
-        nameLabel.text = platform.rawValue
-        switchView.isOn = store.state.contests.filters[platform]!
-        onSwitchChanged = completion
+    private func setInteractions() {
+        switchView.addTarget(self, action: #selector(switchTrigger), for: UIControl.Event.valueChanged)
+    }
+    
+    func bind(_ filterItem: FilterItem) {
+        logoView.image = UIImage(named: filterItem.title)
+        nameLabel.text = filterItem.title
+        switchView.isOn = filterItem.isOn
+        platform = filterItem.platform
     }
 }

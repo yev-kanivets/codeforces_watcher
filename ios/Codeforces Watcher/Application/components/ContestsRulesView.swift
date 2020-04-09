@@ -46,7 +46,7 @@ class ContestsRulesView: UIView {
     }
 
     private func setConstraints() {
-        self.height(63)
+        height(63)
         cardView.edgesToSuperview(insets: UIEdgeInsets(top: 8, left: 8, bottom: 0, right: 8))
     
         titleLabel.run {

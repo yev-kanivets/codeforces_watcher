@@ -126,8 +126,9 @@ class CommentTableViewCell: UITableViewCell {
         
         detailsLabel.text = comment.text.beautify()
         
-        if let avatar = comment.commentatorAvatar {
-            userImage.sd_setImage(with: URL(string: "https:\(avatar)"), placeholderImage: noImage)
+        if var avatar = comment.commentatorAvatar {
+            avatar = LinkValidatorKt.avatar(avatarLink: avatar)
+            userImage.sd_setImage(with: URL(string: avatar), placeholderImage: noImage)
         } else {
             userImage.image = noImage
         }

@@ -5,7 +5,7 @@
 
 import Foundation
 import ReSwift
-
+/*
 struct AppState: StateType {
     var contests = ContestsState()
 }
@@ -29,4 +29,4 @@ struct ContestsState: StateType {
             }
         }
     }
-}
+}*/

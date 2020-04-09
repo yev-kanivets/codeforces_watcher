@@ -8,7 +8,7 @@
 
 import Foundation
 import ObjectMapper
-
+/*
 struct CommonContest: Mappable {
     var name: String!
     var phase: String!
@@ -30,3 +30,4 @@ struct CommonContest: Mappable {
         link <- map["url"]
     }
 }
+*/
