@@ -81,7 +81,7 @@ class ActionsViewController: UIViewController, StoreSubscriber {
 
         refreshControl.run {
             $0.addTarget(self, action: #selector(refreshActions(_:)), for: .valueChanged)
-            $0.tintColor = Pallete.colorPrimaryDark
+            $0.tintColor = Palette.colorPrimaryDark
         }
     }
 

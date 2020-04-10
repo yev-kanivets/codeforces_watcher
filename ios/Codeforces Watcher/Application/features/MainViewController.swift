@@ -11,6 +11,7 @@ import UIKit
 
 class MainViewController: UITabBarController {
     private let controllers = [
+        UsersViewController().apply(title: "Users", iconNamed: "usersIcon"),
         ActionsViewController().apply(title: "Actions", iconNamed: "actionsIcon"),
         ContestsViewController().apply(title: "Contests", iconNamed: "contestsIcon"),
         ProblemsViewController().apply(title: "Problems", iconNamed: "problemsIcon")

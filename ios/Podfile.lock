@@ -65,6 +65,47 @@ PODS:
   - GoogleUtilities/UserDefaults (6.4.0):
     - GoogleUtilities/Logger
   - HTMLString (5.0.0)
+  - MaterialComponents/AnimationTiming (105.0.1)
+  - MaterialComponents/Availability (105.0.1)
+  - MaterialComponents/Buttons (105.0.1):
+    - MaterialComponents/Elevation
+    - MaterialComponents/Ink
+    - MaterialComponents/private/Math
+    - MaterialComponents/Ripple
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Shapes
+    - MaterialComponents/Typography
+    - MDFInternationalization
+    - MDFTextAccessibility
+  - MaterialComponents/Elevation (105.0.1):
+    - MaterialComponents/Availability
+    - MaterialComponents/private/Color
+    - MaterialComponents/private/Math
+  - MaterialComponents/Ink (105.0.1):
+    - MaterialComponents/Availability
+    - MaterialComponents/private/Color
+    - MaterialComponents/private/Math
+  - MaterialComponents/private/Application (105.0.1)
+  - MaterialComponents/private/Color (105.0.1):
+    - MaterialComponents/Availability
+  - MaterialComponents/private/Math (105.0.1)
+  - MaterialComponents/Ripple (105.0.1):
+    - MaterialComponents/AnimationTiming
+    - MaterialComponents/private/Color
+    - MaterialComponents/private/Math
+  - MaterialComponents/ShadowElevations (105.0.1)
+  - MaterialComponents/ShadowLayer (105.0.1):
+    - MaterialComponents/ShadowElevations
+  - MaterialComponents/Shapes (105.0.1):
+    - MaterialComponents/private/Color
+    - MaterialComponents/private/Math
+    - MaterialComponents/ShadowLayer
+  - MaterialComponents/Typography (105.0.1):
+    - MaterialComponents/private/Application
+    - MaterialComponents/private/Math
+  - MDFInternationalization (2.0.0)
+  - MDFTextAccessibility (2.0.0)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
     - nanopb/encode (= 0.3.9011)
@@ -84,6 +125,7 @@ DEPENDENCIES:
   - Fabric (~> 1.10.2)
   - Firebase/Analytics
   - HTMLString (~> 5.0)
+  - MaterialComponents/Buttons
   - PKHUD (~> 5.0)
   - SDWebImage (~> 5.0)
   - TinyConstraints
@@ -105,6 +147,9 @@ SPEC REPOS:
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
     - HTMLString
+    - MaterialComponents
+    - MDFInternationalization
+    - MDFTextAccessibility
     - nanopb
     - PKHUD
     - SDWebImage
@@ -131,12 +176,15 @@ SPEC CHECKSUMS:
   GoogleDataTransportCCTSupport: 202d7cdf9c4a7d81a2bb7f7e7e1ba6faa421b1f2
   GoogleUtilities: 29bd0d8f850efbd28cff6d99e8b7da1f8d236bcf
   HTMLString: 20374dc0195423d02569e87561f01153fca0c364
+  MaterialComponents: cfc2fbc3a380238821ea1786d237e21b32d8514e
+  MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
+  MDFTextAccessibility: 85c09a1bd9c321f494348e632a25063bcda35a53
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
   SDWebImage: 4ca2dc4eefae4224bea8f504251cda485a363745
   TinyConstraints: 8dd91295e56797648c7bc335dd20e1d91ec4c192
   Toaster: c1a81b376edcc2470157b4d1ee1e9341d3b96455
 
-PODFILE CHECKSUM: 497b6eafc862ffdc24a290bf7fd0539302ddecd7
+PODFILE CHECKSUM: ca2d5031d23fac0a962a7c1e25a5dfb991675b24
 
 COCOAPODS: 1.8.4

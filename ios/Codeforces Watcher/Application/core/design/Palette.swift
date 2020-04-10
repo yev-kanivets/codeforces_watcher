@@ -1,5 +1,5 @@
 //
-//  Pallete.swift
+//  Palette.swift
 //  Codeforces Watcher
 //
 //  Created by Den Matyash on 1/6/20.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class Pallete {
+public class Palette {
     
     public static let colorPrimary = UIColor(rgb: 0x1289CE)
     public static let colorPrimaryDark = UIColor(rgb: 0x1266CE)

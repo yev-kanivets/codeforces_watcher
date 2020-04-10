@@ -15,16 +15,18 @@ class ProblemTableViewCell: UITableViewCell {
 
     private let nameLabel = UILabel().apply {
         $0.font = Font.textHeading
-        $0.textColor = Pallete.black
+        $0.textColor = Palette.black
     }
 
     private let contestLabel = UILabel().apply {
         $0.font = Font.textSubheadingBig
-        $0.textColor = Pallete.grey
+        $0.textColor = Palette.grey
     }
 
-    private let starIcon = UIImageView(image: UIImage(named: "starIcon")).apply {
-        $0.isHidden = true
+    private var problem: Problem!
+
+    private let starIcon = UIImageView(image: UIImage(named: "starIcon")?.withRenderingMode(.alwaysTemplate)).apply {
+        $0.tintColor = Palette.grey
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -38,10 +40,11 @@ class ProblemTableViewCell: UITableViewCell {
     }
 
     private func setupView() {
-        self.selectionStyle = .none
+        selectionStyle = .none
 
         buildViewTree()
         setConstraints()
+        setInteractions()
     }
 
     private func buildViewTree() {
@@ -70,9 +73,24 @@ class ProblemTableViewCell: UITableViewCell {
             $0.trailingToSuperview(offset: 48)
         }
     }
+    
+    private func setInteractions() {
+        starIcon.run {
+            $0.isUserInteractionEnabled = true
+            $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(starTapped)))
+        }
+    }
+    
+    @objc func starTapped() {
+        starIcon.tintColor = problem.isFavourite ? Palette.grey : Palette.colorAccent
+        store.dispatch(action: ProblemsRequests.ChangeStatusFavourite(problem: problem))
+    }
 
-    func bind(_ problemItem: Problem) {
-        nameLabel.text = "\(problemItem.contestId)\(problemItem.index): \(problemItem.name)"
-        contestLabel.text = problemItem.contestName
+    func bind(_ problem: Problem) {
+        nameLabel.text = "\(problem.contestId)\(problem.index): \(problem.name)"
+        contestLabel.text = problem.contestName
+        self.problem = problem
+        
+        starIcon.tintColor = problem.isFavourite ? Palette.colorAccent : Palette.grey
     }
 }

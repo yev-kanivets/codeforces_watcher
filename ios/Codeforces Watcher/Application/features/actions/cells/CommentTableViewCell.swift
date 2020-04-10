@@ -15,7 +15,7 @@ class CommentTableViewCell: UITableViewCell {
 
     private let blogEntryTitleLabel = UILabel().apply {
         $0.font = Font.textHeading
-        $0.textColor = Pallete.blue
+        $0.textColor = Palette.blue
     }
 
     private let userImage = UIImageView().apply {
@@ -23,29 +23,29 @@ class CommentTableViewCell: UITableViewCell {
             $0.cornerRadius = 18
             $0.masksToBounds = true
             $0.borderWidth = 1
-            $0.borderColor = Pallete.colorPrimary.cgColor
+            $0.borderColor = Palette.colorPrimary.cgColor
         }
     }
 
     private let commentedByLabel = UILabel().apply {
         $0.text = "Commented by".localized + " "
-        $0.textColor = Pallete.grey
+        $0.textColor = Palette.grey
         $0.font = Font.textSubheading
     }
 
     private let userHandleLabel = UILabel().apply {
-        $0.textColor = Pallete.green
+        $0.textColor = Palette.green
         $0.font = Font.textSubheading
     }
 
     private let someTimeAgoLabel = UILabel().apply {
-        $0.textColor = Pallete.grey
+        $0.textColor = Palette.grey
         $0.font = Font.textSubheading
     }
 
     private let detailsLabel = UILabel().apply {
         $0.numberOfLines = 3
-        $0.textColor = Pallete.grey
+        $0.textColor = Palette.grey
         $0.font = Font.textBody
     }
 

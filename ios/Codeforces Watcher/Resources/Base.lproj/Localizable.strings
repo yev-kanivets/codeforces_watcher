@@ -29,3 +29,6 @@
 
 "User already added" = "User already added";
 "failed_to_fetch_users" = "Failed to fetch user(s)! Wait or check handle(s)…";
+
+"Users" = "Users";
+"no_favourite_problems_explanation" = "You don’t have any favourite problems yet.\nAdd the first one using «∞» at the bottom of the screen.";

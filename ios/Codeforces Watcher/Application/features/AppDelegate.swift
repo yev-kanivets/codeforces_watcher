@@ -55,14 +55,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func initAppStyle() {
         UINavigationBar.appearance().run {
             $0.isTranslucent = false
-            $0.barTintColor = Pallete.colorPrimary
-            $0.tintColor = Pallete.white
-            $0.titleTextAttributes = [NSAttributedString.Key.foregroundColor: Pallete.white,
+            $0.barTintColor = Palette.colorPrimary
+            $0.tintColor = Palette.white
+            $0.titleTextAttributes = [NSAttributedString.Key.foregroundColor: Palette.white,
                                       NSAttributedString.Key.font: Font.textPageTitle]
         }
 
         UITabBar.appearance().run {
             $0.isTranslucent = false
+        }
+        
+        UITabBar.appearance().run {
+            $0.itemPositioning = .centered
         }
 
         window = UIWindow(frame: UIScreen.main.bounds)

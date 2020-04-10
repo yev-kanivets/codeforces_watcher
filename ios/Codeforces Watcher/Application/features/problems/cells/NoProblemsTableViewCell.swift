@@ -16,8 +16,7 @@ class NoProblemsTableViewCell: UITableViewCell {
 
     private let noProblemsLabel = UILabel().apply {
         $0.font = Font.textHeading
-        $0.textColor = Pallete.black
-        $0.text = "Problems are on the way to your device...".localized
+        $0.textColor = Palette.black
         $0.numberOfLines = 0
     }
 
@@ -54,5 +53,9 @@ class NoProblemsTableViewCell: UITableViewCell {
             $0.leadingToSuperview(offset: 16)
             $0.trailingToSuperview(offset: 16)
         }
+    }
+    
+    func bind(_ text: String) {
+        noProblemsLabel.text = text.localized
     }
 }

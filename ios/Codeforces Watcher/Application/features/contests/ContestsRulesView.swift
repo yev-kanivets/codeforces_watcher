@@ -16,13 +16,13 @@ class ContestsRulesView: UIView {
     private let titleLabel = UILabel().apply {
         $0.text = "Official Codeforces rules".localized
         $0.font = Font.textHeading
-        $0.textColor = Pallete.black
+        $0.textColor = Palette.black
     }
 
     private let subtitleLabel = UILabel().apply {
         $0.text = "Apple isn't a sponsor of any contests conducted on Codeforces".localized
         $0.font = Font.textSubheadingBig
-        $0.textColor = Pallete.grey
+        $0.textColor = Palette.grey
     }
 
     public override init(frame: CGRect) {
