@@ -10,9 +10,10 @@ import common
 import Toaster
 
 class IOSToastHandler: ToastHandler {
+    
     func handle(message: Message) {
         var text: String?
-        
+
         switch (message) {
         case _ as Message.NoConnection:
             text = "No connection".localized
@@ -27,7 +28,7 @@ class IOSToastHandler: ToastHandler {
         default:
             break
         }
-        
+
         if let text = text {
             Toast(text: text).show()
         }

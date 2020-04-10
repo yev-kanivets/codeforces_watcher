@@ -11,24 +11,25 @@ import UIKit
 import common
 
 class FiltersViewController: UIViewController {
+    
     private let tableView = UITableView()
     private let tableAdapter = FiltersTableViewAdapter()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupView()
         setupTableView()
     }
-    
+
     private func setupView() {
         view.backgroundColor = Pallete.white
         title = "Filter".localized
-        
+
         buildViewTree()
         setConstraints()
     }
-    
+
     private func setupTableView() {
         tableView.run {
             $0.delegate = tableAdapter
@@ -36,11 +37,11 @@ class FiltersViewController: UIViewController {
             $0.separatorStyle = .none
             $0.rowHeight = 58
         }
-        
+
         tableView.registerForReuse(cellType: FilterTableViewCell.self)
-        
+
         let filters = store.state.contests.filters
-        
+
         tableAdapter.filterItems = [
             FilterItem(title: "Codeforces", platform: Platform.codeforces, isOn: filters.contains(Platform.codeforces)),
             FilterItem(title: "Codeforces Gym", platform: Platform.codeforcesGym, isOn: filters.contains(Platform.codeforcesGym)),
@@ -53,14 +54,14 @@ class FiltersViewController: UIViewController {
             FilterItem(title: "HackerEarth", platform: Platform.hackerearth, isOn: filters.contains(Platform.hackerearth)),
             FilterItem(title: "Kick Start", platform: Platform.kickStart, isOn: filters.contains(Platform.kickStart))
         ]
-        
+
         tableView.reloadData()
     }
-    
+
     private func buildViewTree() {
         view.addSubview(tableView)
     }
-    
+
     private func setConstraints() {
         tableView.edgesToSuperview()
     }

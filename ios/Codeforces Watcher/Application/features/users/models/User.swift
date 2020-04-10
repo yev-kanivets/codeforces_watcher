@@ -11,7 +11,7 @@ import UIKit
 
 func colorTextByUserRank(text: String, rank: String?) -> NSMutableAttributedString {
     var color = UIColor()
-    
+
     switch (rank) {
     case nil:
         color = Pallete.black
@@ -36,13 +36,13 @@ func colorTextByUserRank(text: String, rank: String?) -> NSMutableAttributedStri
     default:
         color = Pallete.grey
     }
-    
+
     let attributedText = NSMutableAttributedString.init(string: text)
     attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: NSRange(location: 0, length: text.count))
-    
+
     if (rank == "legendary grandmaster") {
         attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: Pallete.black, range: NSRange(location: 0, length: 1))
     }
-    
+
     return attributedText
 }

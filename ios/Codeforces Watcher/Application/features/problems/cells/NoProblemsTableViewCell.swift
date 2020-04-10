@@ -11,15 +11,16 @@ import UIKit
 import TinyConstraints
 
 class NoProblemsTableViewCell: UITableViewCell {
-    private let noProblemsImageView = UIImageView(image: UIImage(named: "noItemsImage"))
     
+    private let noProblemsImageView = UIImageView(image: UIImage(named: "noItemsImage"))
+
     private let noProblemsLabel = UILabel().apply {
         $0.font = Font.textHeading
         $0.textColor = Pallete.black
         $0.text = "Problems are on the way to your device...".localized
         $0.numberOfLines = 0
     }
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
@@ -29,24 +30,24 @@ class NoProblemsTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
         setupView()
     }
-    
+
     private func setupView() {
         self.selectionStyle = .none
-        
+
         buildViewTree()
         setConstraints()
     }
-    
+
     func buildViewTree() {
         [noProblemsImageView, noProblemsLabel].forEach(self.addSubview)
     }
-    
+
     func setConstraints() {
         noProblemsImageView.run {
             $0.centerXToSuperview()
             $0.centerYToSuperview(offset: -(16 + noProblemsLabel.frame.height))
         }
-        
+
         noProblemsLabel.run {
             $0.topToBottom(of: noProblemsImageView, offset: 16)
             $0.textAlignment = .center

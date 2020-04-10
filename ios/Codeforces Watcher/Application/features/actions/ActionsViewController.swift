@@ -13,21 +13,21 @@ import common
 import FirebaseAnalytics
 
 class ActionsViewController: UIViewController, StoreSubscriber {
-    
+
     private let tableView = UITableView()
     private let tableAdapter = ActionsTableViewAdapter()
     private let refreshControl = UIRefreshControl()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
         setupTableView()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
                 return KotlinBoolean(bool: oldState.actions == newState.actions)
@@ -36,20 +36,20 @@ class ActionsViewController: UIViewController, StoreSubscriber {
             }
         }
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         store.unsubscribe(subscriber: self)
     }
-    
+
     private func setupView() {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         view.backgroundColor = .white
-        
+
         buildViewTree()
         setConstraints()
     }
-    
+
     private func buildViewTree() {
         view.addSubview(tableView)
     }
@@ -57,16 +57,16 @@ class ActionsViewController: UIViewController, StoreSubscriber {
     private func setConstraints() {
         tableView.edgesToSuperview()
     }
-    
+
     private func setupTableView() {
         tableView.run {
             $0.delegate = tableAdapter
             $0.dataSource = tableAdapter
             $0.separatorStyle = .none
         }
-        
+
         [CommentTableViewCell.self, BlogEntryTableViewCell.self, NoActionsTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
-        
+
         tableAdapter.onActionClick = { (link, shareText) in
             let webViewController = WebViewController().apply {
                 $0.link = link
@@ -76,26 +76,26 @@ class ActionsViewController: UIViewController, StoreSubscriber {
             }
             self.navigationController?.pushViewController(webViewController, animated: true)
         }
-        
+
         tableView.refreshControl = refreshControl
-        
+
         refreshControl.run {
             $0.addTarget(self, action: #selector(refreshActions(_:)), for: .valueChanged)
             $0.tintColor = Pallete.colorPrimaryDark
         }
     }
-    
+
     func doNewState(state: Any) {
         let state = state as! ActionsState
-        
+
         if (state.status == .idle) {
             refreshControl.endRefreshing()
         }
-        
+
         tableAdapter.actions = state.actions
         tableView.reloadData()
     }
-    
+
     @objc private func refreshActions(_ sender: Any) {
         Analytics.logEvent("actions_list_refresh", parameters: [:])
         fetchActions()

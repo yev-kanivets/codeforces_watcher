@@ -11,7 +11,7 @@ import common
 
 class ActionsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
     var actions: [CFAction] = []
-    
+
     var onActionClick: ((String, String) -> ())?
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -22,7 +22,7 @@ class ActionsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSou
         if (actions.isEmpty) {
             return 1
         }
-        
+
         return actions.count
     }
 
@@ -30,10 +30,10 @@ class ActionsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSou
         if (actions.isEmpty) {
             return tableView.dequeueReusableCell(cellType: NoActionsTableViewCell.self)
         }
-        
+
         let action = actions[indexPath.row]
         let isComment = action.comment != nil
-        
+
         if (isComment) {
             return tableView.dequeueReusableCell(cellType: CommentTableViewCell.self).apply {
                 $0.bind(action)
@@ -44,18 +44,18 @@ class ActionsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSou
             }
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (actions.isEmpty) {
             return
         }
-        
+
         let action = actions[indexPath.row]
         let shareText = buildShareText(action.blogEntry.title, action.link)
-        
+
         onActionClick?(action.link, shareText)
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if (actions.isEmpty) {
             return tableView.frame.height
@@ -63,7 +63,7 @@ class ActionsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSou
             return UITableView.automaticDimension
         }
     }
-    
+
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 122
     }

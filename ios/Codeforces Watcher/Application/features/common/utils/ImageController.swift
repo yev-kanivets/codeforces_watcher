@@ -10,6 +10,7 @@ import Foundation
 import common
 
 struct ImageController {
+
     static func getImageNameByPlatform(_ platform: Platform) -> String {
         switch (platform) {
         case .codeforces, .codeforcesGym:

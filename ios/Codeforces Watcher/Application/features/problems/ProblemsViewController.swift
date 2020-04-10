@@ -11,6 +11,7 @@ import common
 import FirebaseAnalytics
 
 class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResultsUpdating {
+    
     private let tableView = UITableView()
     private let tableAdapter = ProblemsTableViewAdapter()
     private let refreshControl = UIRefreshControl()
@@ -26,7 +27,7 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
                 return KotlinBoolean(bool: oldState.problems == newState.problems)
@@ -47,7 +48,7 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
         buildViewTree()
         setConstraints()
     }
-    
+
     private func buildViewTree() {
         view.addSubview(tableView)
     }
@@ -99,7 +100,7 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
                 $0.backgroundColor = .white
             }
         }
-        
+
         tableView.tableHeaderView = searchController.searchBar
     }
 
@@ -118,10 +119,10 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
         tableAdapter.problems = text.isEmpty ? store.state.problems.problems : filteredProblems
         tableView.reloadData()
     }
-    
+
     func doNewState(state: Any) {
         let state = state as! ProblemsState
-        
+
         if (state.status == ProblemsState.Status.idle) {
             refreshControl.endRefreshing()
         }

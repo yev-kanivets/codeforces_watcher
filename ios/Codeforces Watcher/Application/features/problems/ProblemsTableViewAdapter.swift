@@ -11,10 +11,11 @@ import UIKit
 import common
 
 class ProblemsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
+    
     var problems: [Problem] = []
-    
+
     var onProblemClick: ((String, String) -> ())?
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -23,7 +24,7 @@ class ProblemsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSo
         if (problems.isEmpty) {
             return 1
         }
-        
+
         return problems.count
     }
 
@@ -31,22 +32,22 @@ class ProblemsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSo
         if (problems.isEmpty) {
             return tableView.dequeueReusableCell(cellType: NoProblemsTableViewCell.self)
         }
-        
+
         return tableView.dequeueReusableCell(cellType: ProblemTableViewCell.self).apply {
             $0.bind(problems[indexPath.row])
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (problems.isEmpty) {
             return
         }
-        
+
         let problem = problems[indexPath.row]
         let shareText = buildShareText(problem.name, problem.link)
         onProblemClick?(problem.link, shareText)
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if (problems.isEmpty) {
             return tableView.frame.height - 2 * tableView.tableHeaderView!.frame.height

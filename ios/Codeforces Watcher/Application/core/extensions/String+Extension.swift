@@ -7,6 +7,7 @@ import Foundation
 import HTMLString
 
 extension String {
+    
     mutating func deleteHtmlTags() {
         self = self.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
     }
@@ -33,7 +34,7 @@ extension String {
             return string
         }
     }
-    
+
     func dateStringToDate() -> Date {
         let formatter = DateFormatter().apply {
             $0.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
@@ -44,8 +45,8 @@ extension String {
 
 func buildShareText(_ title: String, _ link: String) -> String {
     return """
-    \(title) - \(link)
-    
-    Shared through Codeforces Watcher. Find it on App Store.
-    """
+           \(title) - \(link)
+
+           Shared through Codeforces Watcher. Find it on App Store.
+           """
 }

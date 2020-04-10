@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 public class Pallete {
+    
     public static let colorPrimary = UIColor(rgb: 0x1289CE)
     public static let colorPrimaryDark = UIColor(rgb: 0x1266CE)
     public static let colorAccent = UIColor(rgb: 0xFFCA00)

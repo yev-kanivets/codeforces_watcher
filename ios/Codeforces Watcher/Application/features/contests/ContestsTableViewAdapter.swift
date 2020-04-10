@@ -11,11 +11,12 @@ import UIKit
 import common
 
 class ContestsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
-    var contests: [Contest] = []
     
+    var contests: [Contest] = []
+
     var onCalendarTap: ((Contest) -> ())?
     var onContestClick: ((Contest) -> ())?
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -24,7 +25,7 @@ class ContestsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSo
         if (contests.isEmpty) {
             return 1
         }
-        
+
         return contests.count
     }
 
@@ -32,18 +33,18 @@ class ContestsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSo
         if (contests.isEmpty) {
             return tableView.dequeueReusableCell(cellType: NoContestsTableViewCell.self)
         }
-        
+
         return tableView.dequeueReusableCell(cellType: ContestTableViewCell.self).apply {
             $0.bind(contests[indexPath.row]) {
                 self.onCalendarTap?(self.contests[indexPath.row])
             }
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         onContestClick?(contests[indexPath.row])
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if (contests.isEmpty) {
             return tableView.frame.height - 2 * tableView.tableHeaderView!.frame.height

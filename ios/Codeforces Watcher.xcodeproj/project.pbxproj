@@ -24,6 +24,7 @@
 		33524B39CED3D72F41F01C9B /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3352449F83A3B6FE1CA12CE9 /* CardView.swift */; };
 		33524BC0E57CE4F3A2D1EC04 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335245916F723E42B7318479 /* UIColor+Extension.swift */; };
 		33524D7137C7D47F8BE95703 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33524702A30B2AD59D2D359E /* CommentTableViewCell.swift */; };
+		33524DD18E818A18FEE9B1E8 /* ContestsRulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335241B8E54D2F60B3D7E581 /* ContestsRulesView.swift */; };
 		33524E698A1B05C3FAB1E720 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335243CB89037FB5B889F9CD /* Font.swift */; };
 		33524EA5619D62409125FD81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33524D79129AF7DA2C68A75C /* AppDelegate.swift */; };
 		33524EFE31B05A25F2D5082E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33524DABACD49E1E07FECDA6 /* User.swift */; };
@@ -49,7 +50,6 @@
 		6394361823BA116000B302A3 /* Codeforces_WatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6394361723BA116000B302A3 /* Codeforces_WatcherTests.swift */; };
 		6394362323BA116000B302A3 /* Codeforces_WatcherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6394362223BA116000B302A3 /* Codeforces_WatcherUITests.swift */; };
 		63A0E14723CDF579001F570C /* NoActionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A0E14623CDF579001F570C /* NoActionsTableViewCell.swift */; };
-		63B932A323DEDB7600D9E254 /* ContestsRulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B932A223DEDB7600D9E254 /* ContestsRulesView.swift */; };
 		63EAA0D0243EFF2500C234A8 /* FilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0CF243EFF2400C234A8 /* FilterItem.swift */; };
 		63EAA0D5243F611100C234A8 /* ImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0D4243F611100C234A8 /* ImageController.swift */; };
 		63EB12EF23CF1B310013A974 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63EB12EE23CF1B310013A974 /* GoogleService-Info.plist */; };
@@ -80,6 +80,7 @@
 /* Begin PBXFileReference section */
 		24B599C93F574D973F8BE91E /* Pods-Codeforces Watcher-Codeforces WatcherUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Codeforces Watcher-Codeforces WatcherUITests.debug.xcconfig"; path = "Target Support Files/Pods-Codeforces Watcher-Codeforces WatcherUITests/Pods-Codeforces Watcher-Codeforces WatcherUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		297CD9C414FA273DDE07E54F /* Pods_Codeforces_WatcherTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Codeforces_WatcherTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		335241B8E54D2F60B3D7E581 /* ContestsRulesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContestsRulesView.swift; sourceTree = "<group>"; };
 		335242613B8CB2FCFF5CD07A /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		335242ABCB38C7140414CEC3 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		335242CD59B4556413229680 /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
@@ -123,7 +124,6 @@
 		6394362223BA116000B302A3 /* Codeforces_WatcherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codeforces_WatcherUITests.swift; sourceTree = "<group>"; };
 		6394362423BA116000B302A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63A0E14623CDF579001F570C /* NoActionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoActionsTableViewCell.swift; sourceTree = "<group>"; };
-		63B932A223DEDB7600D9E254 /* ContestsRulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContestsRulesView.swift; sourceTree = "<group>"; };
 		63EAA0CF243EFF2400C234A8 /* FilterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterItem.swift; sourceTree = "<group>"; };
 		63EAA0D4243F611100C234A8 /* ImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageController.swift; sourceTree = "<group>"; };
 		63EB12EE23CF1B310013A974 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -283,7 +283,6 @@
 		33524AFABB95461924E2C987 /* components */ = {
 			isa = PBXGroup;
 			children = (
-				63B932A223DEDB7600D9E254 /* ContestsRulesView.swift */,
 				3352449F83A3B6FE1CA12CE9 /* CardView.swift */,
 			);
 			path = components;
@@ -470,6 +469,7 @@
 				63736EFE23CF6523001E9AB9 /* cells */,
 				63736EFC23CF6405001E9AB9 /* ContestsViewController.swift */,
 				63736F0823CF67FC001E9AB9 /* ContestsTableViewAdapter.swift */,
+				335241B8E54D2F60B3D7E581 /* ContestsRulesView.swift */,
 			);
 			path = contests;
 			sourceTree = "<group>";
@@ -736,7 +736,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				33524E698A1B05C3FAB1E720 /* Font.swift in Sources */,
-				63B932A323DEDB7600D9E254 /* ContestsRulesView.swift in Sources */,
 				33524789EFFED3D6CA62DEE5 /* Pallete.swift in Sources */,
 				33524FEAE56CD4737349DE6A /* Constants.swift in Sources */,
 				33524EFE31B05A25F2D5082E /* User.swift in Sources */,
@@ -771,6 +770,7 @@
 				33524AE3A0B0A7C674038501 /* UITableViewCell+Extension.swift in Sources */,
 				63736F0023CF6557001E9AB9 /* ContestTableViewCell.swift in Sources */,
 				63736F0923CF67FC001E9AB9 /* ContestsTableViewAdapter.swift in Sources */,
+				33524DD18E818A18FEE9B1E8 /* ContestsRulesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
