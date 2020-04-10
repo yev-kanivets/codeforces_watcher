@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import ReSwift
+import common
 import FirebaseAnalytics
 
 class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResultsUpdating {
-
+    
     private let tableView = UITableView()
     private let tableAdapter = ProblemsTableViewAdapter()
     private let refreshControl = UIRefreshControl()
@@ -27,24 +27,37 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        store.subscribe(self) { subcription in
-            subcription.select { state in state.problems }
+
+        store.subscribe(subscriber: self) { subscription in
+            subscription.skipRepeats { oldState, newState in
+                return KotlinBoolean(bool: oldState.problems == newState.problems)
+            }.select { state in
+                return state.problems
+            }
         }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        store.unsubscribe(self)
+        store.unsubscribe(subscriber: self)
     }
 
-    func setupView() {
+    private func setupView() {
         view.backgroundColor = .white
 
         buildViewTree()
         setConstraints()
     }
 
-    func setupTableView() {
+    private func buildViewTree() {
+        view.addSubview(tableView)
+    }
+
+    private func setConstraints() {
+        tableView.edgesToSuperview()
+    }
+
+    private func setupTableView() {
         tableView.run {
             $0.delegate = tableAdapter
             $0.dataSource = tableAdapter
@@ -72,7 +85,7 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
         }
     }
 
-    func setupSearchView() {
+    private func setupSearchView() {
         searchController.run {
             $0.searchResultsUpdater = self
             $0.obscuresBackgroundDuringPresentation = false
@@ -87,32 +100,34 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
                 $0.backgroundColor = .white
             }
         }
-        
+
         tableView.tableHeaderView = searchController.searchBar
     }
 
     func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text else { return }
+        guard let text = searchController.searchBar.text?.lowercased() else { return }
 
-        var filteredProblemItems: [ProblemItem] = []
+        var filteredProblems: [Problem] = []
 
-        for problem in store.state.problems.problemItems {
-            if (problem.round.lowercased().contains(text.lowercased()) || problem.englishTitle.lowercased().contains(text.lowercased()) ||
-                problem.russianTitle.lowercased().contains(text.lowercased())) {
-                filteredProblemItems.append(problem)
+        for problem in store.state.problems.problems {
+            if (problem.contestName.lowercased().contains(text) || problem.enName.lowercased().contains(text) ||
+                problem.ruName.lowercased().contains(text)) {
+                filteredProblems.append(problem)
             }
         }
 
-        tableAdapter.problemItems = text.isEmpty ? store.state.problems.problemItems : filteredProblemItems
+        tableAdapter.problems = text.isEmpty ? store.state.problems.problems : filteredProblems
         tableView.reloadData()
     }
 
-    func newState(state: ProblemsState) {
-        if (state.status == ProblemsState.Status.IDLE) {
+    func doNewState(state: Any) {
+        let state = state as! ProblemsState
+
+        if (state.status == ProblemsState.Status.idle) {
             refreshControl.endRefreshing()
         }
 
-        tableAdapter.problemItems = state.problemItems
+        tableAdapter.problems = state.problems
         updateSearchResults(for: searchController)
         tableView.reloadData()
     }
@@ -122,15 +137,7 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
         fetchProblems()
     }
 
-    func fetchProblems() {
-        store.dispatch(ProblemsRequests.FetchProblems())
-    }
-
-    func buildViewTree() {
-        view.addSubview(tableView)
-    }
-
-    func setConstraints() {
-        tableView.edgesToSuperview()
+    private func fetchProblems() {
+        store.dispatch(action: ProblemsRequests.FetchProblems(isInitializedByUser: true))
     }
 }

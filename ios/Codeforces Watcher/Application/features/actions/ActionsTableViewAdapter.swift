@@ -10,8 +10,8 @@ import UIKit
 import common
 
 class ActionsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
-    var actionItems: [ActionItem] = []
-    
+    var actions: [CFAction] = []
+
     var onActionClick: ((String, String) -> ())?
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -19,82 +19,52 @@ class ActionsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSou
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (actionItems.isEmpty) {
+        if (actions.isEmpty) {
             return 1
         }
-        
-        return actionItems.count
+
+        return actions.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (actionItems.isEmpty) {
+        if (actions.isEmpty) {
             return tableView.dequeueReusableCell(cellType: NoActionsTableViewCell.self)
         }
-        
-        switch (actionItems[indexPath.row]) {
-        case .comment(let actionItem):
+
+        let action = actions[indexPath.row]
+        let isComment = action.comment != nil
+
+        if (isComment) {
             return tableView.dequeueReusableCell(cellType: CommentTableViewCell.self).apply {
-                $0.bind(actionItem: actionItem)
+                $0.bind(action)
             }
-        case .blogEntry(let actionItem):
+        } else {
             return tableView.dequeueReusableCell(cellType: BlogEntryTableViewCell.self).apply {
-                $0.bind(actionItem: actionItem)
+                $0.bind(action)
             }
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (actionItems.isEmpty) {
+        if (actions.isEmpty) {
             return
         }
-        
-        switch (actionItems[indexPath.row]) {
-        case .comment(let actionItem):
-            onActionClick?(actionItem.link, actionItem.shareText)
-        case .blogEntry(let actionItem):
-            onActionClick?(actionItem.link, actionItem.shareText)
-        }
+
+        let action = actions[indexPath.row]
+        let shareText = buildShareText(action.blogEntry.title, action.link)
+
+        onActionClick?(action.link, shareText)
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (actionItems.isEmpty) {
+        if (actions.isEmpty) {
             return tableView.frame.height
         } else {
             return UITableView.automaticDimension
         }
     }
-    
+
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 122
     }
 }
-
-class Prefs : Settings {
-
-    func readContestsFilters() -> Set<String> {
-        fatalError()
-    }
-
-    func readProblemsIsFavourite() -> Bool {
-        fatalError()
-    }
-
-    func readSpinnerSortPosition() -> Int32 {
-        fatalError()
-    }
-
-    func writeContestsFilters(filters: Set<String>) {
-        fatalError()
-    }
-
-    func writeProblemsIsFavourite(isFavourite: Bool) {
-        fatalError()
-    }
-
-    func writeSpinnerSortPosition(spinnerSortPosition: Int32) {
-        fatalError()
-    }
-
-
-}
-

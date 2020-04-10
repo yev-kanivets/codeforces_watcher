@@ -9,6 +9,7 @@
 import Foundation
 
 extension Double {
+
     func secondsToDateString() -> String {
         let date = Date(timeIntervalSince1970: self)
         let dayTimePeriodFormatter = DateFormatter().apply {

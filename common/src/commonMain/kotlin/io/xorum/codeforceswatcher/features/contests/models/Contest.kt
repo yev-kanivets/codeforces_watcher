@@ -3,7 +3,14 @@ package io.xorum.codeforceswatcher.features.contests.models
 import io.xorum.codeforceswatcher.DbContest
 import kotlinx.serialization.Serializable
 
-enum class Platform { CODEFORCES, CODEFORCES_GYM, TOPCODER, ATCODER, CS_ACADEMY, CODECHEF, HACKERRANK, HACKEREARTH, KICK_START, LEETCODE }
+enum class Platform {
+    CODEFORCES, CODEFORCES_GYM, TOPCODER, ATCODER, CS_ACADEMY, CODECHEF, HACKERRANK, HACKEREARTH, KICK_START, LEETCODE;
+
+    companion object {
+        val defaultFilterValueToSave: Set<String>
+            get() = Platform.values().map { it.toString() }.toSet()
+    }
+}
 
 @Serializable
 data class Contest(

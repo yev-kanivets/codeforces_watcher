@@ -1,10 +1,3 @@
-/* 
-  Localizable.strings
-  Codeforces Watcher
-
-  Created by Den Matyash on 1/10/20.
-  Copyright © 2020 xorum.io. All rights reserved.
-*/
 "Codeforces Watcher" = "Codeforces WatchR";
 
 "Contests" = "Contests";
@@ -15,6 +8,8 @@
 "ago" = "ago";
 
 "Recent Actions are on the way to your device..." = "Recent Actions are on the way to your device...";
+"created_or_updated_text" = "Created or updated the text, click to see details...";
+
 "Problems are on the way to your device..." = "Problems are on the way to your device...";
 "Contests are on the way to your device..." = "Contests are on the way to your device...";
 
@@ -30,3 +25,7 @@
 "Apple isn't a sponsor of any contests conducted on Codeforces" = "Apple isn't a sponsor of any contests conducted on Codeforces";
 
 "Filter" = "Filter";
+"locale" = "en";
+
+"User already added" = "User already added";
+"failed_to_fetch_users" = "Failed to fetch user(s)! Wait or check handle(s)…";

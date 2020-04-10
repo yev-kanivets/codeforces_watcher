@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import HTMLString
 
 extension String {
     
@@ -14,7 +15,7 @@ extension String {
     func beautify() -> String {
         var newString = self
         newString.deleteHtmlTags()
-        newString = newString.removingHTMLEntities
+        newString.removeHTMLEntities()
         newString = newString.replacingOccurrences(of: "$$$", with: "")
 
         return newString
@@ -33,11 +34,19 @@ extension String {
             return string
         }
     }
-    
+
     func dateStringToDate() -> Date {
         let formatter = DateFormatter().apply {
             $0.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         }
         return formatter.date(from: self)!
     }
+}
+
+func buildShareText(_ title: String, _ link: String) -> String {
+    return """
+           \(title) - \(link)
+
+           Shared through Codeforces Watcher. Find it on App Store.
+           """
 }

@@ -8,45 +8,48 @@
 
 import Foundation
 import UIKit
+import common
 
 class ProblemsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
-    var problemItems: [ProblemItem] = []
     
+    var problems: [Problem] = []
+
     var onProblemClick: ((String, String) -> ())?
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (problemItems.isEmpty) {
+        if (problems.isEmpty) {
             return 1
         }
-        
-        return problemItems.count
+
+        return problems.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (problemItems.isEmpty) {
+        if (problems.isEmpty) {
             return tableView.dequeueReusableCell(cellType: NoProblemsTableViewCell.self)
         }
-        
+
         return tableView.dequeueReusableCell(cellType: ProblemTableViewCell.self).apply {
-            $0.bind(problemItems[indexPath.row])
+            $0.bind(problems[indexPath.row])
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (problemItems.isEmpty) {
+        if (problems.isEmpty) {
             return
         }
-        
-        let problem = problemItems[indexPath.row]
-        onProblemClick?(problem.link, problem.shareText)
+
+        let problem = problems[indexPath.row]
+        let shareText = buildShareText(problem.name, problem.link)
+        onProblemClick?(problem.link, shareText)
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (problemItems.isEmpty) {
+        if (problems.isEmpty) {
             return tableView.frame.height - 2 * tableView.tableHeaderView!.frame.height
         } else {
             return 63

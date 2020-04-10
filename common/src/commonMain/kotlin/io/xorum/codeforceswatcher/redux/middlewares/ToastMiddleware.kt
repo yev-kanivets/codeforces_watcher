@@ -10,13 +10,13 @@ interface ToastHandler {
     fun handle(message: Message)
 }
 
-var toastHandler: ToastHandler? = null
+val toastHandlers = mutableListOf<ToastHandler>()
 
 val toastMiddleware: Middleware<StateType> = { _, _ ->
     { next ->
         { action ->
             if (action is ToastAction) {
-                toastHandler?.handle(action.message)
+                toastHandlers.forEach { it.handle(action.message) }
             }
             next(action)
         }

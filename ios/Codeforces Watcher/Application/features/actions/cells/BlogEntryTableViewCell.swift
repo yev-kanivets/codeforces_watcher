@@ -8,15 +8,17 @@
 
 import UIKit
 import SDWebImage
+import common
 
 class BlogEntryTableViewCell: UITableViewCell {
-    private let cardView = CardView()
     
+    private let cardView = CardView()
+
     private let blogEntryTitleLabel = UILabel().apply {
         $0.font = Font.textHeading
         $0.textColor = Pallete.black
     }
-    
+
     private let userImage = UIImageView().apply {
         $0.layer.run {
             $0.cornerRadius = 18
@@ -25,22 +27,22 @@ class BlogEntryTableViewCell: UITableViewCell {
             $0.borderColor = Pallete.colorPrimary.cgColor
         }
     }
-    
+
     private let userHandleLabel = UILabel().apply {
         $0.textColor = Pallete.green
         $0.font = Font.textSubheading
     }
-    
+
     private let someTimeAgoLabel = UILabel().apply {
         $0.textColor = Pallete.grey
         $0.font = Font.textSubheading
     }
-    
+
     private let detailsLabel = UILabel().apply {
         $0.numberOfLines = 1
         $0.textColor = Pallete.grey
         $0.font = Font.textBody
-        
+
         $0.text = "Created or updated the text, click to see details..."
     }
 
@@ -56,14 +58,14 @@ class BlogEntryTableViewCell: UITableViewCell {
 
     private func setupView() {
         self.selectionStyle = .none
-        
+
         buildViewTree()
         setConstraints()
     }
 
     private func buildViewTree() {
         contentView.addSubview(cardView)
-        
+
         [blogEntryTitleLabel, userImage, userHandleLabel, someTimeAgoLabel, detailsLabel].forEach(cardView.addSubview)
     }
 
@@ -76,26 +78,26 @@ class BlogEntryTableViewCell: UITableViewCell {
             $0.height(36)
             $0.width(36)
         }
-        
+
         blogEntryTitleLabel.run {
             $0.topToSuperview(offset: 8)
             $0.trailingToSuperview(offset: 8)
             $0.leadingToTrailing(of: userImage, offset: 8)
         }
-        
+
         userHandleLabel.run {
             $0.leadingToTrailing(of: userImage, offset: 8)
             $0.trailingToLeading(of: someTimeAgoLabel)
             $0.topToBottom(of: blogEntryTitleLabel, offset: 4)
             $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         }
-        
+
         someTimeAgoLabel.run {
             $0.topToBottom(of: blogEntryTitleLabel, offset: 4)
             $0.leadingToTrailing(of: userHandleLabel)
             $0.trailingToSuperview(offset: 8)
         }
-        
+
         detailsLabel.run {
             $0.topToBottom(of: userImage, offset: 14)
             $0.leadingToSuperview(offset: 8)
@@ -104,10 +106,21 @@ class BlogEntryTableViewCell: UITableViewCell {
         }
     }
 
-    func bind(actionItem: ActionItem.BlogEntryItem) {
-        blogEntryTitleLabel.text = actionItem.blogTitle
-        userHandleLabel.attributedText = actionItem.authorHandle
-        someTimeAgoLabel.text = " - \(actionItem.time) " + "ago".localized
-        userImage.sd_setImage(with: URL(string: actionItem.authorAvatar), placeholderImage: noImage)
+    func bind(_ action: CFAction) {
+        let blogEntry = action.blogEntry
+        guard let timePassed = TimeInterval((Int(Date().timeIntervalSince1970) - Int(action.timeSeconds))).socialDate else { return }
+
+        blogEntryTitleLabel.text = blogEntry.title.beautify()
+        userHandleLabel.attributedText = colorTextByUserRank(text: blogEntry.authorHandle, rank: blogEntry.authorRank)
+        someTimeAgoLabel.text = " - \(timePassed) " + "ago".localized
+
+        detailsLabel.text = "created_or_updated_text".localized
+
+        if var avatar = blogEntry.authorAvatar {
+            avatar = LinkValidatorKt.avatar(avatarLink: avatar)
+            userImage.sd_setImage(with: URL(string: avatar), placeholderImage: noImage)
+        } else {
+            userImage.image = noImage
+        }
     }
 }

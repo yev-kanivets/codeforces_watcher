@@ -7,20 +7,22 @@
 //
 
 import UIKit
+import common
 
 class ProblemTableViewCell: UITableViewCell {
-    private let cardView = CardView()
     
+    private let cardView = CardView()
+
     private let nameLabel = UILabel().apply {
         $0.font = Font.textHeading
         $0.textColor = Pallete.black
     }
-    
+
     private let contestLabel = UILabel().apply {
         $0.font = Font.textSubheadingBig
         $0.textColor = Pallete.grey
     }
-    
+
     private let starIcon = UIImageView(image: UIImage(named: "starIcon")).apply {
         $0.isHidden = true
     }
@@ -37,31 +39,31 @@ class ProblemTableViewCell: UITableViewCell {
 
     private func setupView() {
         self.selectionStyle = .none
-        
+
         buildViewTree()
         setConstraints()
     }
 
     private func buildViewTree() {
         contentView.addSubview(cardView)
-        
+
         [nameLabel, contestLabel, starIcon].forEach(cardView.addSubview)
     }
 
     private func setConstraints() {
         cardView.edgesToSuperview(insets: UIEdgeInsets(top: 8, left: 8, bottom: 0, right: 8))
-        
+
         starIcon.run {
             $0.trailingToSuperview(offset: 10)
             $0.centerYToSuperview()
         }
-    
+
         nameLabel.run {
             $0.topToSuperview(offset: 8)
             $0.leadingToSuperview(offset: 8)
             $0.trailingToSuperview(offset: 48)
         }
-        
+
         contestLabel.run {
             $0.topToBottom(of: nameLabel, offset: 4)
             $0.leadingToSuperview(offset: 8)
@@ -69,8 +71,8 @@ class ProblemTableViewCell: UITableViewCell {
         }
     }
 
-    func bind(_ problemItem: ProblemItem) {
-        nameLabel.text = problemItem.title
-        contestLabel.text = problemItem.round
+    func bind(_ problemItem: Problem) {
+        nameLabel.text = "\(problemItem.contestId)\(problemItem.index): \(problemItem.name)"
+        contestLabel.text = problemItem.contestName
     }
 }

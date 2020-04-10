@@ -8,7 +8,7 @@ import UIKit
 
 extension UITableView {
 
-    func scrollToTop(_ animated:Bool){
+    func scrollToTop(_ animated: Bool) {
         self.setContentOffset(CGPoint.zero, animated: animated)
     }
 

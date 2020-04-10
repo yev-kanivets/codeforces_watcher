@@ -8,43 +8,45 @@
 
 import Foundation
 import UIKit
+import common
 
 class ContestsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
-    var contestItems: [ContestItem] = []
     
-    var onCalendarTap: ((ContestItem) -> ())?
-    var onContestClick: ((ContestItem) -> ())!
-    
+    var contests: [Contest] = []
+
+    var onCalendarTap: ((Contest) -> ())?
+    var onContestClick: ((Contest) -> ())?
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (contestItems.isEmpty) {
+        if (contests.isEmpty) {
             return 1
         }
-        
-        return contestItems.count
+
+        return contests.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (contestItems.isEmpty) {
+        if (contests.isEmpty) {
             return tableView.dequeueReusableCell(cellType: NoContestsTableViewCell.self)
         }
-        
+
         return tableView.dequeueReusableCell(cellType: ContestTableViewCell.self).apply {
-            $0.bind(contestItems[indexPath.row]) {
-                self.onCalendarTap?(self.contestItems[indexPath.row])
+            $0.bind(contests[indexPath.row]) {
+                self.onCalendarTap?(self.contests[indexPath.row])
             }
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        return onContestClick(contestItems[indexPath.row])
+        onContestClick?(contests[indexPath.row])
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (contestItems.isEmpty) {
+        if (contests.isEmpty) {
             return tableView.frame.height - 2 * tableView.tableHeaderView!.frame.height
         } else {
             return 63
