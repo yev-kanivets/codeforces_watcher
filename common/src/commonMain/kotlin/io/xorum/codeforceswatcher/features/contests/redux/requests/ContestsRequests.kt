@@ -7,9 +7,9 @@ import io.xorum.codeforceswatcher.network.responses.ContestResponse
 import io.xorum.codeforceswatcher.redux.*
 import tw.geothings.rekotlin.Action
 
-open class ContestsRequests {
+class ContestsRequests {
 
-    open class FetchContests(val isInitiatedByUser: Boolean) : Request() {
+    class FetchContests(val isInitiatedByUser: Boolean) : Request() {
 
         override suspend fun execute() {
             val responseCodeforces = codeforcesRepository.getCodeforcesContests()

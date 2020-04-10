@@ -1,16 +1,16 @@
 //
-//  ImageController.swift
+//  Platform+Extension.swift
 //  Codeforces Watcher
 //
-//  Created by Den Matyash on 4/9/20.
+//  Created by Den Matyash on 4/10/20.
 //  Copyright © 2020 xorum.io. All rights reserved.
 //
 
 import Foundation
 import common
 
-struct ImageController {
-
+extension Platform {
+    
     static func getImageNameByPlatform(_ platform: Platform) -> String {
         switch (platform) {
         case .codeforces, .codeforcesGym:

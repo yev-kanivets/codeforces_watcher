@@ -82,7 +82,7 @@ class FilterTableViewCell: UITableViewCell {
     }
 
     func bind(_ filterItem: FilterItem) {
-        logoView.image = UIImage(named: ImageController.getImageNameByPlatform(filterItem.platform))
+        logoView.image = UIImage(named: Platform.getImageNameByPlatform(filterItem.platform))
         nameLabel.text = filterItem.title
         switchView.isOn = filterItem.isOn
         platform = filterItem.platform

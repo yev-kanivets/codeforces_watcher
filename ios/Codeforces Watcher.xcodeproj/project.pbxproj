@@ -51,7 +51,7 @@
 		6394362323BA116000B302A3 /* Codeforces_WatcherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6394362223BA116000B302A3 /* Codeforces_WatcherUITests.swift */; };
 		63A0E14723CDF579001F570C /* NoActionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A0E14623CDF579001F570C /* NoActionsTableViewCell.swift */; };
 		63EAA0D0243EFF2500C234A8 /* FilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0CF243EFF2400C234A8 /* FilterItem.swift */; };
-		63EAA0D5243F611100C234A8 /* ImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0D4243F611100C234A8 /* ImageController.swift */; };
+		63EAA0D9244047DF00C234A8 /* Platform+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0D8244047DF00C234A8 /* Platform+Extension.swift */; };
 		63EB12EF23CF1B310013A974 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63EB12EE23CF1B310013A974 /* GoogleService-Info.plist */; };
 		63EB130123CF3F830013A974 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB130023CF3F830013A974 /* MainViewController.swift */; };
 		63FB270923E1AA50005F19F1 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FB270823E1AA50005F19F1 /* WebViewController.swift */; };
@@ -125,7 +125,7 @@
 		6394362423BA116000B302A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63A0E14623CDF579001F570C /* NoActionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoActionsTableViewCell.swift; sourceTree = "<group>"; };
 		63EAA0CF243EFF2400C234A8 /* FilterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterItem.swift; sourceTree = "<group>"; };
-		63EAA0D4243F611100C234A8 /* ImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageController.swift; sourceTree = "<group>"; };
+		63EAA0D8244047DF00C234A8 /* Platform+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Platform+Extension.swift"; sourceTree = "<group>"; };
 		63EB12EE23CF1B310013A974 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		63EB130023CF3F830013A974 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		63FB270823E1AA50005F19F1 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -202,6 +202,7 @@
 				335242CD59B4556413229680 /* TimeInterval+Extension.swift */,
 				63603E6823DF2ADC00F86BC0 /* Double+Extension.swift */,
 				335247F739C05D9BDD4FD646 /* tableView */,
+				63EAA0D8244047DF00C234A8 /* Platform+Extension.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -439,7 +440,6 @@
 		63EAA0D1243F264900C234A8 /* utils */ = {
 			isa = PBXGroup;
 			children = (
-				63EAA0D4243F611100C234A8 /* ImageController.swift */,
 				638C392524361AC100DB33A3 /* IOSToastHandler.swift */,
 				638C39272437277F00DB33A3 /* Prefs.swift */,
 			);
@@ -748,10 +748,10 @@
 				63715C5723D88FBB00BA064F /* NoProblemsTableViewCell.swift in Sources */,
 				638C39282437277F00DB33A3 /* Prefs.swift in Sources */,
 				63736F2123D1F336001E9AB9 /* ProblemTableViewCell.swift in Sources */,
-				63EAA0D5243F611100C234A8 /* ImageController.swift in Sources */,
 				335247826CC8C76840B8B161 /* ActionsViewController.swift in Sources */,
 				63736F1F23D1F2FD001E9AB9 /* ProblemsViewController.swift in Sources */,
 				33524B39CED3D72F41F01C9B /* CardView.swift in Sources */,
+				63EAA0D9244047DF00C234A8 /* Platform+Extension.swift in Sources */,
 				33524EA5619D62409125FD81 /* AppDelegate.swift in Sources */,
 				63EB130123CF3F830013A974 /* MainViewController.swift in Sources */,
 				335240BE358E7469D97B1472 /* String+Extension.swift in Sources */,
