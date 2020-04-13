@@ -13,10 +13,13 @@ class ContestsRulesView: UIView {
     
     private let cardView = CardView()
 
-    private let titleLabel = UILabel().apply {
+    private let titleLabel = HeadingLabel().apply {
         $0.text = "Official Codeforces rules".localized
+<<<<<<< HEAD:ios/Codeforces Watcher/Application/features/contests/ContestsRulesView.swift
         $0.font = Font.textHeading
         $0.textColor = Palette.black
+=======
+>>>>>>> #116. Implement pinned post.:ios/Codeforces Watcher/Application/components/ContestsRulesView.swift
     }
 
     private let subtitleLabel = UILabel().apply {

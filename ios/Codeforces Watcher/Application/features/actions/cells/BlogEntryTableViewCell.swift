@@ -14,6 +14,7 @@ class BlogEntryTableViewCell: UITableViewCell {
     
     private let cardView = CardView()
 
+<<<<<<< HEAD
     private let blogEntryTitleLabel = UILabel().apply {
         $0.font = Font.textHeading
         $0.textColor = Palette.black
@@ -37,13 +38,28 @@ class BlogEntryTableViewCell: UITableViewCell {
         $0.textColor = Palette.grey
         $0.font = Font.textSubheading
     }
-
-    private let detailsLabel = UILabel().apply {
+=======
+    private let blogEntryTitleLabel = HeadingLabel().apply {
         $0.numberOfLines = 1
+    }
+
+    private let userImage = CircleImageView()
+
+    private let userHandleLabel = SubheadingLabel()
+
+    private let someTimeAgoLabel = SubheadingLabel()
+>>>>>>> #116. Implement pinned post.
+
+    private let detailsLabel = BodyLabel().apply {
+        $0.numberOfLines = 1
+<<<<<<< HEAD
         $0.textColor = Palette.grey
         $0.font = Font.textBody
 
         $0.text = "Created or updated the text, click to see details..."
+=======
+        $0.text = "created_or_updated_text".localized
+>>>>>>> #116. Implement pinned post.
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -113,8 +129,6 @@ class BlogEntryTableViewCell: UITableViewCell {
         blogEntryTitleLabel.text = blogEntry.title.beautify()
         userHandleLabel.attributedText = colorTextByUserRank(text: blogEntry.authorHandle, rank: blogEntry.authorRank)
         someTimeAgoLabel.text = " - \(timePassed) " + "ago".localized
-
-        detailsLabel.text = "created_or_updated_text".localized
 
         if var avatar = blogEntry.authorAvatar {
             avatar = LinkValidatorKt.avatar(avatarLink: avatar)

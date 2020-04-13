@@ -32,11 +32,15 @@ class Prefs: Settings {
     }
     
     func writeProblemsIsFavourite(isFavourite: Bool) {
+<<<<<<< HEAD:ios/Codeforces Watcher/Application/utils/Prefs.swift
         UserDefaults.standard.setValue(isFavourite, forKey: "isFavouriteProblems")
     }
 
     func readSpinnerSortPosition() -> Int32 {
         return 0
+=======
+        
+>>>>>>> #116. Implement pinned post.:ios/Codeforces Watcher/Application/utils/Prefs.swift
     }
 
     func writeSpinnerSortPosition(spinnerSortPosition: Int32) {
@@ -44,10 +48,15 @@ class Prefs: Settings {
     }
 
     func readPinnedPostLink() -> String {
-        return ""
+        if let pinnedPostLink = (UserDefaults.standard.value(forKey: "pinnedPostLink")) as? String {
+            return pinnedPostLink
+        } else {
+            return ""
+        }
     }
 
     func writePinnedPostLink(pinnedPostLink: String) {
+<<<<<<< HEAD:ios/Codeforces Watcher/Application/utils/Prefs.swift
         
     }
     
@@ -55,6 +64,9 @@ class Prefs: Settings {
         let domain = Bundle.main.bundleIdentifier!
         UserDefaults.standard.removePersistentDomain(forName: domain)
         UserDefaults.standard.synchronize()
+=======
+        UserDefaults.standard.setValue(pinnedPostLink, forKey: "pinnedPostLink")
+>>>>>>> #116. Implement pinned post.:ios/Codeforces Watcher/Application/utils/Prefs.swift
     }
 }
 

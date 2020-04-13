@@ -14,11 +14,14 @@ class NoContestsTableViewCell: UITableViewCell {
     
     private let noContestsImageView = UIImageView(image: UIImage(named: "noItemsImage"))
 
+<<<<<<< HEAD
     private let noContestsLabel = UILabel().apply {
         $0.font = Font.textHeading
         $0.textColor = Palette.black
+=======
+    private let noContestsLabel = HeadingLabel().apply {
+>>>>>>> #116. Implement pinned post.
         $0.text = "Contests are on the way to your device...".localized
-        $0.numberOfLines = 0
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

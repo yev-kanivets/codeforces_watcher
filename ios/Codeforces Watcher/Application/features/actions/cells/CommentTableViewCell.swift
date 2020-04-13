@@ -13,6 +13,7 @@ class CommentTableViewCell: UITableViewCell {
 
     private let cardView = CardView()
 
+<<<<<<< HEAD
     private let blogEntryTitleLabel = UILabel().apply {
         $0.font = Font.textHeading
         $0.textColor = Palette.blue
@@ -26,9 +27,18 @@ class CommentTableViewCell: UITableViewCell {
             $0.borderColor = Palette.colorPrimary.cgColor
         }
     }
+=======
+    private let blogEntryTitleLabel = HeadingLabel().apply {
+        $0.textColor = Pallete.blue
+        $0.numberOfLines = 1
+    }
 
-    private let commentedByLabel = UILabel().apply {
+    private let userImage = CircleImageView()
+>>>>>>> #116. Implement pinned post.
+
+    private let commentedByLabel = SubheadingLabel().apply {
         $0.text = "Commented by".localized + " "
+<<<<<<< HEAD
         $0.textColor = Palette.grey
         $0.font = Font.textSubheading
     }
@@ -42,11 +52,21 @@ class CommentTableViewCell: UITableViewCell {
         $0.textColor = Palette.grey
         $0.font = Font.textSubheading
     }
+=======
+    }
 
-    private let detailsLabel = UILabel().apply {
+    private let userHandleLabel = SubheadingLabel()
+
+    private let someTimeAgoLabel = SubheadingLabel()
+>>>>>>> #116. Implement pinned post.
+
+    private let detailsLabel = BodyLabel().apply {
         $0.numberOfLines = 3
+<<<<<<< HEAD
         $0.textColor = Palette.grey
         $0.font = Font.textBody
+=======
+>>>>>>> #116. Implement pinned post.
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

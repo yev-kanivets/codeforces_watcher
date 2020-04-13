@@ -13,10 +13,14 @@ class ProblemTableViewCell: UITableViewCell {
     
     private let cardView = CardView()
 
+<<<<<<< HEAD
     private let nameLabel = UILabel().apply {
         $0.font = Font.textHeading
         $0.textColor = Palette.black
     }
+=======
+    private let nameLabel = HeadingLabel()
+>>>>>>> #116. Implement pinned post.
 
     private let contestLabel = UILabel().apply {
         $0.font = Font.textSubheadingBig

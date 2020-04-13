@@ -12,6 +12,7 @@ import common
 
 class FilterTableViewCell: UITableViewCell {
     
+<<<<<<< HEAD
     private var logoView = UIImageView().apply {
         $0.layer.run {
             $0.cornerRadius = 20
@@ -25,6 +26,11 @@ class FilterTableViewCell: UITableViewCell {
         $0.font = Font.textHeading
         $0.textColor = Palette.black
     }
+=======
+    private var logoView = CircleImageView()
+
+    private let nameLabel = HeadingLabel()
+>>>>>>> #116. Implement pinned post.
 
     private let switchView = UISwitch().apply {
         $0.onTintColor = Palette.colorPrimary

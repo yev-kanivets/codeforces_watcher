@@ -15,6 +15,7 @@ class ContestTableViewCell: UITableViewCell {
     private var onCalendarTap: (() -> ())?
     private let cardView = CardView()
 
+<<<<<<< HEAD
     private var logoView = UIImageView().apply {
         $0.layer.run {
             $0.cornerRadius = 18
@@ -28,6 +29,11 @@ class ContestTableViewCell: UITableViewCell {
         $0.font = Font.textHeading
         $0.textColor = Palette.black
     }
+=======
+    private var logoView = CircleImageView()
+
+    private let nameLabel = HeadingLabel()
+>>>>>>> #116. Implement pinned post.
 
     private let timeLabel = UILabel().apply {
         $0.font = Font.textSubheadingBig
