@@ -63,9 +63,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         UITabBar.appearance().run {
             $0.isTranslucent = false
-        }
-        
-        UITabBar.appearance().run {
             $0.itemPositioning = .centered
         }
 

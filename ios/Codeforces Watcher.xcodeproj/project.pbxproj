@@ -53,6 +53,7 @@
 		63EAA0D0243EFF2500C234A8 /* FilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0CF243EFF2400C234A8 /* FilterItem.swift */; };
 		63EAA0D9244047DF00C234A8 /* Platform+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0D8244047DF00C234A8 /* Platform+Extension.swift */; };
 		63EAA0DB244051F100C234A8 /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0DA244051F100C234A8 /* UsersViewController.swift */; };
+		63EAA0E72444719C00C234A8 /* UIViewControllerWithFab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0E62444719C00C234A8 /* UIViewControllerWithFab.swift */; };
 		63EB12EF23CF1B310013A974 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63EB12EE23CF1B310013A974 /* GoogleService-Info.plist */; };
 		63EB130123CF3F830013A974 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB130023CF3F830013A974 /* MainViewController.swift */; };
 		63FB270923E1AA50005F19F1 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FB270823E1AA50005F19F1 /* WebViewController.swift */; };
@@ -128,6 +129,7 @@
 		63EAA0CF243EFF2400C234A8 /* FilterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterItem.swift; sourceTree = "<group>"; };
 		63EAA0D8244047DF00C234A8 /* Platform+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Platform+Extension.swift"; sourceTree = "<group>"; };
 		63EAA0DA244051F100C234A8 /* UsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
+		63EAA0E62444719C00C234A8 /* UIViewControllerWithFab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerWithFab.swift; sourceTree = "<group>"; };
 		63EB12EE23CF1B310013A974 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		63EB130023CF3F830013A974 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		63FB270823E1AA50005F19F1 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -203,8 +205,8 @@
 				335245D036E21019422CD972 /* ScopeFunc.swift */,
 				335242CD59B4556413229680 /* TimeInterval+Extension.swift */,
 				63603E6823DF2ADC00F86BC0 /* Double+Extension.swift */,
-				335247F739C05D9BDD4FD646 /* tableView */,
 				63EAA0D8244047DF00C234A8 /* Platform+Extension.swift */,
+				335247F739C05D9BDD4FD646 /* tableView */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -214,6 +216,7 @@
 			children = (
 				335248C24FD35FB395EBDCF6 /* core */,
 				3352401A97D8267FCF1ED0D5 /* features */,
+				63EAA0D1243F264900C234A8 /* utils */,
 				33524AFABB95461924E2C987 /* components */,
 			);
 			path = Application;
@@ -407,8 +410,8 @@
 		63EAA0C9243DFBD000C234A8 /* common */ = {
 			isa = PBXGroup;
 			children = (
-				63EAA0D1243F264900C234A8 /* utils */,
 				63FB270823E1AA50005F19F1 /* WebViewController.swift */,
+				63EAA0E62444719C00C234A8 /* UIViewControllerWithFab.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -760,6 +763,7 @@
 				335240BE358E7469D97B1472 /* String+Extension.swift in Sources */,
 				33524BC0E57CE4F3A2D1EC04 /* UIColor+Extension.swift in Sources */,
 				3352406FDC5916F705E86498 /* ScopeFunc.swift in Sources */,
+				63EAA0E72444719C00C234A8 /* UIViewControllerWithFab.swift in Sources */,
 				638C392624361AC200DB33A3 /* IOSToastHandler.swift in Sources */,
 				63FB270923E1AA50005F19F1 /* WebViewController.swift in Sources */,
 				633B4CF823E07F150099EF41 /* FiltersTableViewAdapter.swift in Sources */,

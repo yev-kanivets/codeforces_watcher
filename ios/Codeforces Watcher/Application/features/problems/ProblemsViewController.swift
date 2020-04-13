@@ -9,19 +9,14 @@
 import UIKit
 import common
 import FirebaseAnalytics
-import MaterialComponents.MaterialButtons
 
-class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResultsUpdating {
+class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearchResultsUpdating {
     
     private let tableView = UITableView()
     private let tableAdapter = ProblemsTableViewAdapter()
     private let refreshControl = UIRefreshControl()
     private let searchController = UISearchController(searchResultsController: nil)
-    private let fabButton = MDCFloatingButton().apply {
-        $0.backgroundColor = Palette.colorAccent
-        $0.tintColor = Palette.white
-    }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,7 +28,6 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        fabButton.isHidden = false
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
                 return KotlinBoolean(bool: oldState.problems == newState.problems)
@@ -45,7 +39,6 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        fabButton.isHidden = true
         store.unsubscribe(subscriber: self)
     }
 
@@ -54,12 +47,10 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
 
         buildViewTree()
         setConstraints()
-        setInteractions()
         updateFabButton(store.state.problems.isFavourite)
     }
     
     private func buildViewTree() {
-        tabBarController?.view.addSubview(fabButton)
         [tableView].forEach(view.addSubview)
     }
 
@@ -67,10 +58,6 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
         edgesForExtendedLayout = []
         
         tableView.edgesToSuperview()
-        fabButton.run {
-            $0.bottomToSuperview(offset: -16)
-            $0.centerXToSuperview()
-        }
     }
 
     private func setupTableView() {
@@ -101,14 +88,8 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
         }
     }
     
-    private func setInteractions() {
-        fabButton.addTarget(self, action: #selector(fabButtonTapped), for: .touchUpInside)
-    }
-    
-    @objc func fabButtonTapped() {
-        var isFavourite = store.state.problems.isFavourite
-        
-        isFavourite = !isFavourite
+    override func fabButtonTapped() {
+        let isFavourite = !store.state.problems.isFavourite
         
         store.dispatch(action: ProblemsActions.ChangeTypeProblems(isFavourite: isFavourite))
         
@@ -116,7 +97,7 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
     }
 
     private func updateFabButton(_ isFavourite: Bool) {
-        fabButton.setImage(UIImage(named: isFavourite ? "infinityIcon" : "starIcon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        setFabImage(named: isFavourite ? "infinityIcon" : "starIcon")
     }
 
     private func setupSearchView() {
@@ -143,15 +124,14 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
 
         var filteredProblems: [Problem] = []
 
-        for problem in store.state.problems.problems {
+        for problem in tableAdapter.problems {
             if (problem.contestName.lowercased().contains(text) || problem.enName.lowercased().contains(text) ||
                 problem.ruName.lowercased().contains(text)) {
                 filteredProblems.append(problem)
             }
         }
 
-        tableAdapter.problems = text.isEmpty ? store.state.problems.problems : filteredProblems
-        tableAdapter.favouriteProblems = tableAdapter.problems.filter { $0.isFavourite }
+        tableAdapter.visibleProblems = text.isEmpty ? tableAdapter.problems : filteredProblems
         
         tableView.reloadData()
     }
@@ -163,11 +143,12 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
             refreshControl.endRefreshing()
         }
 
-        tableAdapter.problems = state.problems
-        tableAdapter.favouriteProblems = state.problems.filter { $0.isFavourite }
+        tableAdapter.run {
+            $0.problems = state.isFavourite ? state.problems.filter { $0.isFavourite } : state.problems
+            $0.isFavourite = state.isFavourite
+        }
         
         updateSearchResults(for: searchController)
-        tableView.reloadData()
     }
 
     @objc private func refreshProblems(_ sender: Any) {

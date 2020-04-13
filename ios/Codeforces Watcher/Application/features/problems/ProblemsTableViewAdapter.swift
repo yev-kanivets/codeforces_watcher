@@ -13,7 +13,7 @@ import common
 class ProblemsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
     
     var problems: [Problem] = []
-    var favouriteProblems: [Problem] = []
+    var visibleProblems: [Problem] = []
 
     var onProblemClick: ((String, String) -> ())?
 
@@ -21,55 +21,40 @@ class ProblemsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSo
         return 1
     }
     
-    var isFavourite: Bool {
-        get {
-            return store.state.problems.isFavourite
-        }
-    }
+    var isFavourite = false
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (isFavourite && favouriteProblems.isEmpty || !isFavourite && problems.isEmpty) {
+        if (visibleProblems.isEmpty) {
             return 1
         }
         
-        return isFavourite ? favouriteProblems.count : problems.count
+        return visibleProblems.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (isFavourite) {
-            if (favouriteProblems.isEmpty) {
-                return tableView.dequeueReusableCell(cellType: NoProblemsTableViewCell.self).apply {
-                    $0.bind("no_favourite_problems_explanation")
-                }
+        if (visibleProblems.isEmpty) {
+            return tableView.dequeueReusableCell(cellType: NoProblemsTableViewCell.self).apply {
+                $0.bind(isFavourite ? "no_favourite_problems_explanation" : "Problems are on the way to your device...")
             }
-            return tableView.dequeueReusableCell(cellType: ProblemTableViewCell.self).apply {
-                $0.bind(favouriteProblems[indexPath.row])
-            }
-        } else {
-            if (problems.isEmpty) {
-                return tableView.dequeueReusableCell(cellType: NoProblemsTableViewCell.self).apply {
-                    $0.bind("Problems are on the way to your device...")
-                }
-            }
-
-            return tableView.dequeueReusableCell(cellType: ProblemTableViewCell.self).apply {
-                $0.bind(problems[indexPath.row])
-            }
+        }
+        
+        return tableView.dequeueReusableCell(cellType: ProblemTableViewCell.self).apply {
+            $0.bind(visibleProblems[indexPath.row])
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (isFavourite && favouriteProblems.isEmpty || !isFavourite && problems.isEmpty) {
+        if (visibleProblems.isEmpty) {
             return
         }
 
-        let problem = isFavourite ? favouriteProblems[indexPath.row] : problems[indexPath.row]
+        let problem = visibleProblems[indexPath.row]
         let shareText = buildShareText(problem.name, problem.link)
         onProblemClick?(problem.link, shareText)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (!isFavourite && problems.isEmpty || isFavourite && favouriteProblems.isEmpty) {
+        if (visibleProblems.isEmpty) {
             return tableView.frame.height - 2 * tableView.tableHeaderView!.frame.height
         } else {
             return 63

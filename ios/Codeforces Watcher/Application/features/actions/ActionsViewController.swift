@@ -12,12 +12,12 @@ import WebKit
 import common
 import FirebaseAnalytics
 
-class ActionsViewController: UIViewController, StoreSubscriber {
+class ActionsViewController: UIViewControllerWithFab, StoreSubscriber {
 
     private let tableView = UITableView()
     private let tableAdapter = ActionsTableViewAdapter()
     private let refreshControl = UIRefreshControl()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -43,11 +43,12 @@ class ActionsViewController: UIViewController, StoreSubscriber {
     }
 
     private func setupView() {
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         view.backgroundColor = .white
 
         buildViewTree()
         setConstraints()
+        setFabImage(named: "shareImage")
     }
 
     private func buildViewTree() {
@@ -94,6 +95,14 @@ class ActionsViewController: UIViewController, StoreSubscriber {
 
         tableAdapter.actions = state.actions
         tableView.reloadData()
+    }
+    
+    override func fabButtonTapped() {
+        let activityController = UIActivityViewController(activityItems: ["cw_share_message".localized], applicationActivities: nil).apply {
+            $0.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        }
+        
+        present(activityController, animated: true)
     }
 
     @objc private func refreshActions(_ sender: Any) {

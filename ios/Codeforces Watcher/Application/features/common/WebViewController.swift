@@ -44,8 +44,9 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
 
     @objc func shareTapped() {
-        let activityController = UIActivityViewController(activityItems: [shareText!], applicationActivities: nil)
-        activityController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        let activityController = UIActivityViewController(activityItems: [shareText!], applicationActivities: nil).apply {
+            $0.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        }
 
         present(activityController, animated: true, completion: nil)
 
