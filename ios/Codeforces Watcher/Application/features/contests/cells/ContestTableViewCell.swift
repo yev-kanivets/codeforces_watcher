@@ -20,18 +20,18 @@ class ContestTableViewCell: UITableViewCell {
             $0.cornerRadius = 18
             $0.masksToBounds = true
             $0.borderWidth = 1
-            $0.borderColor = Pallete.colorPrimary.cgColor
+            $0.borderColor = Palette.colorPrimary.cgColor
         }
     }
 
     private let nameLabel = UILabel().apply {
         $0.font = Font.textHeading
-        $0.textColor = Pallete.black
+        $0.textColor = Palette.black
     }
 
     private let timeLabel = UILabel().apply {
         $0.font = Font.textSubheadingBig
-        $0.textColor = Pallete.grey
+        $0.textColor = Palette.grey
     }
 
     private let calendarAddIcon = UIImageView(image: UIImage(named: "calendarAddIcon"))

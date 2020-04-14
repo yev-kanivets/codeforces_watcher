@@ -19,20 +19,24 @@ class ProblemsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSo
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+    
+    var noProblemsExplanation: String = ""
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (problems.isEmpty) {
             return 1
         }
-
+        
         return problems.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (problems.isEmpty) {
-            return tableView.dequeueReusableCell(cellType: NoProblemsTableViewCell.self)
+            return tableView.dequeueReusableCell(cellType: NoProblemsTableViewCell.self).apply {
+                $0.bind(noProblemsExplanation)
+            }
         }
-
+        
         return tableView.dequeueReusableCell(cellType: ProblemTableViewCell.self).apply {
             $0.bind(problems[indexPath.row])
         }

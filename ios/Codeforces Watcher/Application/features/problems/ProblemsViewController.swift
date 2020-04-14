@@ -10,13 +10,14 @@ import UIKit
 import common
 import FirebaseAnalytics
 
-class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResultsUpdating {
+class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearchResultsUpdating {
     
     private let tableView = UITableView()
     private let tableAdapter = ProblemsTableViewAdapter()
     private let refreshControl = UIRefreshControl()
     private let searchController = UISearchController(searchResultsController: nil)
-
+    private var problems: [Problem] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,7 +28,7 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
                 return KotlinBoolean(bool: oldState.problems == newState.problems)
@@ -47,13 +48,16 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
 
         buildViewTree()
         setConstraints()
+        updateFabButton(store.state.problems.isFavourite)
     }
-
+    
     private func buildViewTree() {
-        view.addSubview(tableView)
+        [tableView].forEach(view.addSubview)
     }
 
     private func setConstraints() {
+        edgesForExtendedLayout = []
+        
         tableView.edgesToSuperview()
     }
 
@@ -81,8 +85,16 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
 
         refreshControl.run {
             $0.addTarget(self, action: #selector(refreshProblems(_:)), for: .valueChanged)
-            $0.tintColor = Pallete.colorPrimaryDark
+            $0.tintColor = Palette.colorPrimaryDark
         }
+    }
+    
+    override func fabButtonTapped() {
+        store.dispatch(action: ProblemsActions.ChangeTypeProblems(isFavourite: !store.state.problems.isFavourite))
+    }
+
+    private func updateFabButton(_ isFavourite: Bool) {
+        setFabImage(named: isFavourite ? "infinityIcon" : "starIcon")
     }
 
     private func setupSearchView() {
@@ -109,27 +121,35 @@ class ProblemsViewController: UIViewController, StoreSubscriber, UISearchResults
 
         var filteredProblems: [Problem] = []
 
-        for problem in store.state.problems.problems {
+        for problem in problems {
             if (problem.contestName.lowercased().contains(text) || problem.enName.lowercased().contains(text) ||
                 problem.ruName.lowercased().contains(text)) {
                 filteredProblems.append(problem)
             }
         }
 
-        tableAdapter.problems = text.isEmpty ? store.state.problems.problems : filteredProblems
+        tableAdapter.problems = text.isEmpty ? problems : filteredProblems
+        
         tableView.reloadData()
     }
 
     func doNewState(state: Any) {
         let state = state as! ProblemsState
+        
+        problems = state.isFavourite ? state.problems.filter { $0.isFavourite } : state.problems
 
         if (state.status == ProblemsState.Status.idle) {
             refreshControl.endRefreshing()
         }
+        
+        updateFabButton(state.isFavourite)
 
-        tableAdapter.problems = state.problems
+        tableAdapter.run {
+            $0.problems = problems
+            $0.noProblemsExplanation = state.isFavourite ? "no_favourite_problems_explanation" : "Problems are on the way to your device..."
+        }
+        
         updateSearchResults(for: searchController)
-        tableView.reloadData()
     }
 
     @objc private func refreshProblems(_ sender: Any) {

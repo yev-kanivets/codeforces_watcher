@@ -23,7 +23,7 @@ class FiltersViewController: UIViewController {
     }
 
     private func setupView() {
-        view.backgroundColor = Pallete.white
+        view.backgroundColor = Palette.white
         title = "Filter".localized
 
         buildViewTree()

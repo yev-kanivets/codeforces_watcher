@@ -16,7 +16,7 @@ class NoActionsTableViewCell: UITableViewCell {
 
     private let noActionsLabel = UILabel().apply {
         $0.font = Font.textHeading
-        $0.textColor = Pallete.black
+        $0.textColor = Palette.black
         $0.text = "Recent Actions are on the way to your device...".localized
         $0.numberOfLines = 0
     }

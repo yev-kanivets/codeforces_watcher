@@ -14,34 +14,34 @@ func colorTextByUserRank(text: String, rank: String?) -> NSMutableAttributedStri
 
     switch (rank) {
     case nil:
-        color = Pallete.black
+        color = Palette.black
     case "newbie":
-        color = Pallete.grey
+        color = Palette.grey
     case "pupil":
-        color = Pallete.green
+        color = Palette.green
     case "specialist":
-        color = Pallete.blueGreen
+        color = Palette.blueGreen
     case "expert":
-        color = Pallete.blue
+        color = Palette.blue
     case "candidate master":
-        color = Pallete.purple
+        color = Palette.purple
     case "master":
-        color = Pallete.orange
+        color = Palette.orange
     case "international master":
-        color = Pallete.orange
+        color = Palette.orange
     case "grandmaster":
-        color = Pallete.red
+        color = Palette.red
     case "international grandmaster", "legendary grandmaster":
-        color = Pallete.red
+        color = Palette.red
     default:
-        color = Pallete.grey
+        color = Palette.grey
     }
 
     let attributedText = NSMutableAttributedString.init(string: text)
     attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: NSRange(location: 0, length: text.count))
 
     if (rank == "legendary grandmaster") {
-        attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: Pallete.black, range: NSRange(location: 0, length: 1))
+        attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: Palette.black, range: NSRange(location: 0, length: 1))
     }
 
     return attributedText
