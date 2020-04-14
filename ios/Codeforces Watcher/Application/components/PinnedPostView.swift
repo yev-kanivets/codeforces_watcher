@@ -54,8 +54,6 @@ class PinnedPostView: UIView {
     }
     
     private func setConstraints() {
-        height(63)
-        
         cardView.edgesToSuperview(insets: UIEdgeInsets(top: 8, left: 8, bottom: 0, right: 8))
         
         infoImage.run {
@@ -63,6 +61,7 @@ class PinnedPostView: UIView {
             $0.topToSuperview(offset: 8)
             $0.height(36)
             $0.width(36)
+            $0.bottomToSuperview(offset: -8)
         }
         
         headingLabel.run {

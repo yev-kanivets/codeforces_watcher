@@ -53,7 +53,6 @@
 		63EAA0D0243EFF2500C234A8 /* FilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0CF243EFF2400C234A8 /* FilterItem.swift */; };
 		63EAA0D9244047DF00C234A8 /* Platform+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0D8244047DF00C234A8 /* Platform+Extension.swift */; };
 		63EAA0DB244051F100C234A8 /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0DA244051F100C234A8 /* UsersViewController.swift */; };
-		63EAA0E32444532300C234A8 /* PinnedPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0E22444532300C234A8 /* PinnedPostTableViewCell.swift */; };
 		63EAA0E524445ABB00C234A8 /* CircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0E424445ABB00C234A8 /* CircleImageView.swift */; };
 		63EAA0E72444719C00C234A8 /* UIViewControllerWithFab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0E62444719C00C234A8 /* UIViewControllerWithFab.swift */; };
 		63EAA0EA244474DC00C234A8 /* SubheadingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0E9244474DC00C234A8 /* SubheadingLabel.swift */; };
@@ -136,7 +135,6 @@
 		63EAA0CF243EFF2400C234A8 /* FilterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterItem.swift; sourceTree = "<group>"; };
 		63EAA0D8244047DF00C234A8 /* Platform+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Platform+Extension.swift"; sourceTree = "<group>"; };
 		63EAA0DA244051F100C234A8 /* UsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
-		63EAA0E22444532300C234A8 /* PinnedPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedPostTableViewCell.swift; sourceTree = "<group>"; };
 		63EAA0E424445ABB00C234A8 /* CircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImageView.swift; sourceTree = "<group>"; };
 		63EAA0E62444719C00C234A8 /* UIViewControllerWithFab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerWithFab.swift; sourceTree = "<group>"; };
 		63EAA0E9244474DC00C234A8 /* SubheadingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubheadingLabel.swift; sourceTree = "<group>"; };
@@ -269,7 +267,6 @@
 				63A0E14623CDF579001F570C /* NoActionsTableViewCell.swift */,
 				33524702A30B2AD59D2D359E /* CommentTableViewCell.swift */,
 				335247DA370CF1DDFB7D2F20 /* BlogEntryTableViewCell.swift */,
-				63EAA0E22444532300C234A8 /* PinnedPostTableViewCell.swift */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -774,7 +771,6 @@
 				33524E698A1B05C3FAB1E720 /* Font.swift in Sources */,
 				33524789EFFED3D6CA62DEE5 /* Palette.swift in Sources */,
 				33524FEAE56CD4737349DE6A /* Constants.swift in Sources */,
-				63EAA0E32444532300C234A8 /* PinnedPostTableViewCell.swift in Sources */,
 				33524EFE31B05A25F2D5082E /* User.swift in Sources */,
 				6311376023D98E51008126B0 /* NoContestsTableViewCell.swift in Sources */,
 				63736EFD23CF6405001E9AB9 /* ContestsViewController.swift in Sources */,
