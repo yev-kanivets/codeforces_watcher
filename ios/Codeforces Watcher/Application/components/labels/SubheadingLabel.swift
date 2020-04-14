@@ -21,7 +21,7 @@ class SubheadingLabel: UILabel {
     }
     
     private func setupView() {
-        textColor = Pallete.grey
+        textColor = Palette.grey
         font = Font.textSubheading
     }
 }

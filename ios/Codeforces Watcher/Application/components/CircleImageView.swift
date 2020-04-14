@@ -34,7 +34,7 @@ class CircleImageView: UIImageView {
         layer.run {
             $0.masksToBounds = true
             $0.borderWidth = 1
-            $0.borderColor = Pallete.colorPrimary.cgColor
+            $0.borderColor = Palette.colorPrimary.cgColor
         }
     }
 }

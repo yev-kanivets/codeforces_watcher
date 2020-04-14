@@ -53,13 +53,14 @@
 		63EAA0D0243EFF2500C234A8 /* FilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0CF243EFF2400C234A8 /* FilterItem.swift */; };
 		63EAA0D9244047DF00C234A8 /* Platform+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0D8244047DF00C234A8 /* Platform+Extension.swift */; };
 		63EAA0DB244051F100C234A8 /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0DA244051F100C234A8 /* UsersViewController.swift */; };
-		63EAA0E72444719C00C234A8 /* UIViewControllerWithFab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0E62444719C00C234A8 /* UIViewControllerWithFab.swift */; };
 		63EAA0E32444532300C234A8 /* PinnedPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0E22444532300C234A8 /* PinnedPostTableViewCell.swift */; };
 		63EAA0E524445ABB00C234A8 /* CircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0E424445ABB00C234A8 /* CircleImageView.swift */; };
+		63EAA0E72444719C00C234A8 /* UIViewControllerWithFab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0E62444719C00C234A8 /* UIViewControllerWithFab.swift */; };
 		63EAA0EA244474DC00C234A8 /* SubheadingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0E9244474DC00C234A8 /* SubheadingLabel.swift */; };
 		63EAA0EC2444760300C234A8 /* BodyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0EB2444760300C234A8 /* BodyLabel.swift */; };
 		63EAA0EE244476C100C234A8 /* HeadingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0ED244476C100C234A8 /* HeadingLabel.swift */; };
 		63EAA0F024447EB000C234A8 /* PinnedPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0EF24447EB000C234A8 /* PinnedPostView.swift */; };
+		63EAA0F22445AA3100C234A8 /* SubheadingBigLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0F12445AA3100C234A8 /* SubheadingBigLabel.swift */; };
 		63EB12EF23CF1B310013A974 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63EB12EE23CF1B310013A974 /* GoogleService-Info.plist */; };
 		63EB130123CF3F830013A974 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB130023CF3F830013A974 /* MainViewController.swift */; };
 		63FB270923E1AA50005F19F1 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FB270823E1AA50005F19F1 /* WebViewController.swift */; };
@@ -135,13 +136,14 @@
 		63EAA0CF243EFF2400C234A8 /* FilterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterItem.swift; sourceTree = "<group>"; };
 		63EAA0D8244047DF00C234A8 /* Platform+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Platform+Extension.swift"; sourceTree = "<group>"; };
 		63EAA0DA244051F100C234A8 /* UsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
-		63EAA0E62444719C00C234A8 /* UIViewControllerWithFab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerWithFab.swift; sourceTree = "<group>"; };
 		63EAA0E22444532300C234A8 /* PinnedPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedPostTableViewCell.swift; sourceTree = "<group>"; };
 		63EAA0E424445ABB00C234A8 /* CircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImageView.swift; sourceTree = "<group>"; };
+		63EAA0E62444719C00C234A8 /* UIViewControllerWithFab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerWithFab.swift; sourceTree = "<group>"; };
 		63EAA0E9244474DC00C234A8 /* SubheadingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubheadingLabel.swift; sourceTree = "<group>"; };
 		63EAA0EB2444760300C234A8 /* BodyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyLabel.swift; sourceTree = "<group>"; };
 		63EAA0ED244476C100C234A8 /* HeadingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingLabel.swift; sourceTree = "<group>"; };
 		63EAA0EF24447EB000C234A8 /* PinnedPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedPostView.swift; sourceTree = "<group>"; };
+		63EAA0F12445AA3100C234A8 /* SubheadingBigLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubheadingBigLabel.swift; sourceTree = "<group>"; };
 		63EB12EE23CF1B310013A974 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		63EB130023CF3F830013A974 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		63FB270823E1AA50005F19F1 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -491,6 +493,7 @@
 				63EAA0EB2444760300C234A8 /* BodyLabel.swift */,
 				63EAA0ED244476C100C234A8 /* HeadingLabel.swift */,
 				63EAA0E9244474DC00C234A8 /* SubheadingLabel.swift */,
+				63EAA0F12445AA3100C234A8 /* SubheadingBigLabel.swift */,
 			);
 			path = labels;
 			sourceTree = "<group>";
@@ -809,6 +812,7 @@
 				33524AE3A0B0A7C674038501 /* UITableViewCell+Extension.swift in Sources */,
 				63736F0023CF6557001E9AB9 /* ContestTableViewCell.swift in Sources */,
 				63736F0923CF67FC001E9AB9 /* ContestsTableViewAdapter.swift in Sources */,
+				63EAA0F22445AA3100C234A8 /* SubheadingBigLabel.swift in Sources */,
 				63EAA0EA244474DC00C234A8 /* SubheadingLabel.swift in Sources */,
 				33524DD18E818A18FEE9B1E8 /* ContestsRulesView.swift in Sources */,
 			);

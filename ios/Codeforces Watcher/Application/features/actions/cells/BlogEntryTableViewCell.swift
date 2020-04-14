@@ -14,52 +14,16 @@ class BlogEntryTableViewCell: UITableViewCell {
     
     private let cardView = CardView()
 
-<<<<<<< HEAD
-    private let blogEntryTitleLabel = UILabel().apply {
-        $0.font = Font.textHeading
-        $0.textColor = Palette.black
-    }
-
-    private let userImage = UIImageView().apply {
-        $0.layer.run {
-            $0.cornerRadius = 18
-            $0.masksToBounds = true
-            $0.borderWidth = 1
-            $0.borderColor = Palette.colorPrimary.cgColor
-        }
-    }
-
-    private let userHandleLabel = UILabel().apply {
-        $0.textColor = Palette.green
-        $0.font = Font.textSubheading
-    }
-
-    private let someTimeAgoLabel = UILabel().apply {
-        $0.textColor = Palette.grey
-        $0.font = Font.textSubheading
-    }
-=======
     private let blogEntryTitleLabel = HeadingLabel().apply {
         $0.numberOfLines = 1
     }
-
     private let userImage = CircleImageView()
-
     private let userHandleLabel = SubheadingLabel()
-
     private let someTimeAgoLabel = SubheadingLabel()
->>>>>>> #116. Implement pinned post.
 
     private let detailsLabel = BodyLabel().apply {
         $0.numberOfLines = 1
-<<<<<<< HEAD
-        $0.textColor = Palette.grey
-        $0.font = Font.textBody
-
-        $0.text = "Created or updated the text, click to see details..."
-=======
         $0.text = "created_or_updated_text".localized
->>>>>>> #116. Implement pinned post.
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

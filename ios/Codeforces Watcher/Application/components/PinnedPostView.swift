@@ -14,12 +14,11 @@ class PinnedPostView: UIView {
     private let cardView = CardView()
     private let infoImage = CircleImageView().apply {
         $0.image = UIImage(named: "infoIcon")?.withRenderingMode(.alwaysTemplate)
-        $0.tintColor = Pallete.colorPrimary
+        $0.tintColor = Palette.colorPrimary
     }
     
     private let headingLabel = HeadingLabel().apply {
-        $0.textColor = Pallete.blue
-        //$0.text = "What's new in 1.6.5"
+        $0.textColor = Palette.blue
     }
     
     private let subheadingLabel = SubheadingLabel().apply {
@@ -27,7 +26,7 @@ class PinnedPostView: UIView {
     }
     
     private let crossImage = UIImageView(image: UIImage(named: "crossIcon")?.withRenderingMode(.alwaysTemplate)).apply {
-        $0.tintColor = Pallete.grey
+        $0.tintColor = Palette.grey
     }
     
     private var pinnedPost: PinnedPost!

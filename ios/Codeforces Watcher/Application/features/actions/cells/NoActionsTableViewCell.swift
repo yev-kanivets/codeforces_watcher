@@ -14,13 +14,7 @@ class NoActionsTableViewCell: UITableViewCell {
     
     private let noActionsImageView = UIImageView(image: UIImage(named: "noItemsImage"))
 
-<<<<<<< HEAD
-    private let noActionsLabel = UILabel().apply {
-        $0.font = Font.textHeading
-        $0.textColor = Palette.black
-=======
     private let noActionsLabel = HeadingLabel().apply {
->>>>>>> #116. Implement pinned post.
         $0.text = "Recent Actions are on the way to your device...".localized
     }
 

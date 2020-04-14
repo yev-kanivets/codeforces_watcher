@@ -86,7 +86,7 @@ class ActionsRequests {
 
     class FetchPinnedPost : Request() {
         override suspend fun execute() {
-            val response = PinnedPostsApiClient.getPinnedPost()
+            val response = pinnedPostsApiClient.getPinnedPost()
             response?.let {
                 store.dispatch(Success(it))
             } ?: store.dispatch(Failure(Message.Custom("Failed to fetch pinned post")))

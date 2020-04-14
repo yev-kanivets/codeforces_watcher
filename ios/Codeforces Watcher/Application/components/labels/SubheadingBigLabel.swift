@@ -1,15 +1,15 @@
 //
-//  HeadingLabel.swift
+//  SubheadingBigLabel.swift
 //  Codeforces Watcher
 //
-//  Created by Den Matyash on 4/13/20.
+//  Created by Den Matyash on 4/14/20.
 //  Copyright © 2020 xorum.io. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class HeadingLabel: UILabel {
+class SubheadingBigLabel: UILabel {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -21,8 +21,8 @@ class HeadingLabel: UILabel {
     }
     
     private func setupView() {
-        numberOfLines = 0
-        textColor = Palette.black
-        font = Font.textHeading
+        textColor = Palette.grey
+        font = Font.textSubheadingBig
+        numberOfLines = 1
     }
 }

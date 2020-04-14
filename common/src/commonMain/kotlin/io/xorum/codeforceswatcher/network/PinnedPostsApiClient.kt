@@ -16,13 +16,14 @@ import kotlinx.serialization.json.Json.Companion.nonstrict
 
 private const val API_LINK = "5e80f1750eb3ec0016e917ff.mockapi.io/api/v1/pinned_post"
 
-internal object PinnedPostsApiClient {
+internal class PinnedPostsApiClient {
 
     private val pinnedPostApiClient = makePinnedPostApiClient()
 
     suspend fun getPinnedPost() = try {
         pinnedPostApiClient.get<PinnedPost>()
     } catch (t: Throwable) {
+        println("ErrorMessage" + t.message)
         null
     }
 

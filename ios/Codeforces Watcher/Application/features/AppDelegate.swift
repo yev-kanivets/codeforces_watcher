@@ -56,19 +56,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func initAppStyle() {
         UINavigationBar.appearance().run {
             $0.isTranslucent = false
-<<<<<<< HEAD
             $0.barTintColor = Palette.colorPrimary
             $0.tintColor = Palette.white
-            $0.titleTextAttributes = [NSAttributedString.Key.foregroundColor: Palette.white,
-                                      NSAttributedString.Key.font: Font.textPageTitle]
-=======
-            $0.barTintColor = Pallete.colorPrimary
-            $0.tintColor = Pallete.white
             $0.titleTextAttributes = [
-                NSAttributedString.Key.foregroundColor: Pallete.white,
+                NSAttributedString.Key.foregroundColor: Palette.white,
                 NSAttributedString.Key.font: Font.textPageTitle
             ]
->>>>>>> #116. Implement pinned post.
         }
 
         UITabBar.appearance().run {
