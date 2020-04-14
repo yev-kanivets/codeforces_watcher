@@ -18,31 +18,29 @@ class Prefs: Settings {
             return Platform.Companion().defaultFilterValueToSave
         }
     }
+    
+    func writeContestsFilters(filters: Set<String>) {
+        UserDefaults.standard.setValue(Array(filters), forKey: "contestsFilters")
+    }
 
     func readProblemsIsFavourite() -> Bool {
-        return false
+        if let savedIsFavourite = (UserDefaults.standard.value(forKey: "isFavouriteProblems")) as? Bool {
+            return savedIsFavourite
+        } else {
+            return false
+        }
+    }
+    
+    func writeProblemsIsFavourite(isFavourite: Bool) {
+        UserDefaults.standard.setValue(isFavourite, forKey: "isFavouriteProblems")
     }
 
     func readSpinnerSortPosition() -> Int32 {
         return 0
     }
 
-    func writeContestsFilters(filters: Set<String>) {
-        UserDefaults.standard.setValue(Array(filters), forKey: "contestsFilters")
-    }
-
-    func writeProblemsIsFavourite(isFavourite: Bool) {
-
-    }
-
     func writeSpinnerSortPosition(spinnerSortPosition: Int32) {
 
-    }
-
-    func resetAllDefaults() {
-        let domain = Bundle.main.bundleIdentifier!
-        UserDefaults.standard.removePersistentDomain(forName: domain)
-        UserDefaults.standard.synchronize()
     }
 
     func readPinnedPostLink() -> String {
@@ -50,7 +48,13 @@ class Prefs: Settings {
     }
 
     func writePinnedPostLink(pinnedPostLink: String) {
-
+        
+    }
+    
+    func resetAllDefaults() {
+        let domain = Bundle.main.bundleIdentifier!
+        UserDefaults.standard.removePersistentDomain(forName: domain)
+        UserDefaults.standard.synchronize()
     }
 }
 

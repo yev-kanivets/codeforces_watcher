@@ -98,7 +98,7 @@ class ActionsViewController: UIViewControllerWithFab, StoreSubscriber {
     }
     
     override func fabButtonTapped() {
-        let activityController = UIActivityViewController(activityItems: ["cw_share_message".localized], applicationActivities: nil).apply {
+        let activityController = UIActivityViewController(activityItems: ["share_cw_message".localized], applicationActivities: nil).apply {
             $0.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         }
         

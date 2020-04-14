@@ -16,6 +16,7 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
     private let tableAdapter = ProblemsTableViewAdapter()
     private let refreshControl = UIRefreshControl()
     private let searchController = UISearchController(searchResultsController: nil)
+    private var problems: [Problem] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,11 +90,7 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
     }
     
     override func fabButtonTapped() {
-        let isFavourite = !store.state.problems.isFavourite
-        
-        store.dispatch(action: ProblemsActions.ChangeTypeProblems(isFavourite: isFavourite))
-        
-        updateFabButton(isFavourite)
+        store.dispatch(action: ProblemsActions.ChangeTypeProblems(isFavourite: !store.state.problems.isFavourite))
     }
 
     private func updateFabButton(_ isFavourite: Bool) {
@@ -124,28 +121,32 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
 
         var filteredProblems: [Problem] = []
 
-        for problem in tableAdapter.problems {
+        for problem in problems {
             if (problem.contestName.lowercased().contains(text) || problem.enName.lowercased().contains(text) ||
                 problem.ruName.lowercased().contains(text)) {
                 filteredProblems.append(problem)
             }
         }
 
-        tableAdapter.visibleProblems = text.isEmpty ? tableAdapter.problems : filteredProblems
+        tableAdapter.problems = text.isEmpty ? problems : filteredProblems
         
         tableView.reloadData()
     }
 
     func doNewState(state: Any) {
         let state = state as! ProblemsState
+        
+        problems = state.isFavourite ? state.problems.filter { $0.isFavourite } : state.problems
 
         if (state.status == ProblemsState.Status.idle) {
             refreshControl.endRefreshing()
         }
+        
+        updateFabButton(state.isFavourite)
 
         tableAdapter.run {
-            $0.problems = state.isFavourite ? state.problems.filter { $0.isFavourite } : state.problems
-            $0.isFavourite = state.isFavourite
+            $0.problems = problems
+            $0.noProblemsExplanation = state.isFavourite ? "no_favourite_problems_explanation" : "Problems are on the way to your device..."
         }
         
         updateSearchResults(for: searchController)
