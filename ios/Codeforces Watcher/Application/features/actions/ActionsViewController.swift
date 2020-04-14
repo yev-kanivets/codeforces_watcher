@@ -17,6 +17,9 @@ class ActionsViewController: UIViewControllerWithFab, StoreSubscriber {
     private let tableView = UITableView()
     private let tableAdapter = ActionsTableViewAdapter()
     private let refreshControl = UIRefreshControl()
+    private let pinnedPostView = PinnedPostView()
+    
+    private var pinnedPost: PinnedPost!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +51,7 @@ class ActionsViewController: UIViewControllerWithFab, StoreSubscriber {
 
         buildViewTree()
         setConstraints()
+        setInteractions()
         setFabImage(named: "shareImage")
     }
 
@@ -57,6 +61,13 @@ class ActionsViewController: UIViewControllerWithFab, StoreSubscriber {
 
     private func setConstraints() {
         tableView.edgesToSuperview()
+    }
+    
+    private func setInteractions() {
+        pinnedPostView.run {
+            $0.isUserInteractionEnabled = true
+            $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(pinnedPostTapped)))
+        }
     }
 
     private func setupTableView() {
@@ -88,13 +99,40 @@ class ActionsViewController: UIViewControllerWithFab, StoreSubscriber {
 
     func doNewState(state: Any) {
         let state = state as! ActionsState
-
+        
         if (state.status == .idle) {
             refreshControl.endRefreshing()
+            
+            if let pinnedPost = state.pinnedPost {
+                let shouldShowPinnedPost = SettingsKt.settings.readPinnedPostLink() != pinnedPost.link && tableView.tableHeaderView == nil && !state.actions.isEmpty
+                
+                if (shouldShowPinnedPost) {
+                    self.pinnedPost = pinnedPost
+                    
+                    showPinnedPost()
+                }
+            } else {
+                tableView.tableHeaderView = nil
+            }
+        }
+        
+        tableAdapter.actions = state.actions
+
+        tableView.reloadData()
+    }
+    
+    private func showPinnedPost() {
+        pinnedPostView.bind(pinnedPost)
+        
+        tableView.run {
+            $0.tableHeaderView = pinnedPostView
+            $0.tableHeaderView?.widthToSuperview()
         }
 
-        tableAdapter.actions = state.actions
-        tableView.reloadData()
+        pinnedPostView.run {
+            $0.setNeedsLayout()
+            $0.layoutIfNeeded()
+        }
     }
     
     override func fabButtonTapped() {
@@ -105,12 +143,20 @@ class ActionsViewController: UIViewControllerWithFab, StoreSubscriber {
         present(activityController, animated: true)
     }
 
-    @objc private func refreshActions(_ sender: Any) {
-        Analytics.logEvent("actions_list_refresh", parameters: [:])
-        fetchActions()
+    @objc func pinnedPostTapped() {
+        let webViewController = WebViewController().apply {
+            $0.link = pinnedPost.link
+            $0.shareText = buildShareText(pinnedPost.title, pinnedPost.link)
+            $0.openEventName = "actions_pinned_post_opened"
+        }
+
+        navigationController?.pushViewController(webViewController, animated: true)
     }
 
-    private func fetchActions() {
+    @objc private func refreshActions(_ sender: Any) {
+        Analytics.logEvent("actions_list_refresh", parameters: [:])
+        
         store.dispatch(action: ActionsRequests.FetchActions(isInitializedByUser: true, language: "locale".localized))
+        store.dispatch(action: ActionsRequests.FetchPinnedPost())
     }
 }

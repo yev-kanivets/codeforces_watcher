@@ -13,15 +13,11 @@ class ProblemTableViewCell: UITableViewCell {
     
     private let cardView = CardView()
 
-    private let nameLabel = UILabel().apply {
-        $0.font = Font.textHeading
-        $0.textColor = Palette.black
+    private let nameLabel = HeadingLabel().apply {
+        $0.numberOfLines = 1
     }
 
-    private let contestLabel = UILabel().apply {
-        $0.font = Font.textSubheadingBig
-        $0.textColor = Palette.grey
-    }
+    private let contestLabel = SubheadingBigLabel()
 
     private var problem: Problem!
 

@@ -13,40 +13,23 @@ class CommentTableViewCell: UITableViewCell {
 
     private let cardView = CardView()
 
-    private let blogEntryTitleLabel = UILabel().apply {
-        $0.font = Font.textHeading
+    private let blogEntryTitleLabel = HeadingLabel().apply {
         $0.textColor = Palette.blue
+        $0.numberOfLines = 1
     }
 
-    private let userImage = UIImageView().apply {
-        $0.layer.run {
-            $0.cornerRadius = 18
-            $0.masksToBounds = true
-            $0.borderWidth = 1
-            $0.borderColor = Palette.colorPrimary.cgColor
-        }
-    }
+    private let userImage = CircleImageView()
 
-    private let commentedByLabel = UILabel().apply {
+    private let commentedByLabel = SubheadingLabel().apply {
         $0.text = "Commented by".localized + " "
-        $0.textColor = Palette.grey
-        $0.font = Font.textSubheading
     }
 
-    private let userHandleLabel = UILabel().apply {
-        $0.textColor = Palette.green
-        $0.font = Font.textSubheading
-    }
+    private let userHandleLabel = SubheadingLabel()
 
-    private let someTimeAgoLabel = UILabel().apply {
-        $0.textColor = Palette.grey
-        $0.font = Font.textSubheading
-    }
+    private let someTimeAgoLabel = SubheadingLabel()
 
-    private let detailsLabel = UILabel().apply {
+    private let detailsLabel = BodyLabel().apply {
         $0.numberOfLines = 3
-        $0.textColor = Palette.grey
-        $0.font = Font.textBody
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

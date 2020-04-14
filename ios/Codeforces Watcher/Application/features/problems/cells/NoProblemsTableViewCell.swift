@@ -14,10 +14,9 @@ class NoProblemsTableViewCell: UITableViewCell {
     
     private let noProblemsImageView = UIImageView(image: UIImage(named: "noItemsImage"))
 
-    private let noProblemsLabel = UILabel().apply {
-        $0.font = Font.textHeading
-        $0.textColor = Palette.black
-        $0.numberOfLines = 0
+
+    private let noProblemsLabel = HeadingLabel().apply {
+        $0.text = "Problems are on the way to your device...".localized
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

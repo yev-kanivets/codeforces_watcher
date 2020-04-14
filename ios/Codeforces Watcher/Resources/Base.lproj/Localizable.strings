@@ -30,6 +30,7 @@
 "User already added" = "User already added";
 "failed_to_fetch_users" = "Failed to fetch user(s)! Wait or check handle(s)…";
 
+"Click to see details" = "Click to see details";
 "Users" = "Users";
 "no_favourite_problems_explanation" = "You don’t have any favourite problems yet.\nAdd the first one using «∞» at the bottom of the screen.";
 "share_cw_message" = "I'm using Codeforces WatchR - open-source, free IOS application, which leverages Codeforces API to bring more competitive programming to your IOS device. \n Codeforces WatchR allows: \n\n 1. Shortlist and register for upcoming Competitive Programming contests: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start. \n 2. Follow Recent Actions. \n 3. Browse and search for Problems, add them to favourites. \n 4. Watch for activity of any Codeforces user \n 5. Sort users by rating and last participation date. \n\n Download it now on App Store - https://apps.apple.com/us/app/codeforces-watchr-contests/id1495591299";

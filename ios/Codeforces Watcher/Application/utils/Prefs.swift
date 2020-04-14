@@ -44,11 +44,15 @@ class Prefs: Settings {
     }
 
     func readPinnedPostLink() -> String {
-        return ""
+        if let pinnedPostLink = (UserDefaults.standard.value(forKey: "pinnedPostLink")) as? String {
+            return pinnedPostLink
+        } else {
+            return ""
+        }
     }
 
     func writePinnedPostLink(pinnedPostLink: String) {
-        
+        UserDefaults.standard.setValue(pinnedPostLink, forKey: "pinnedPostLink")
     }
     
     func resetAllDefaults() {

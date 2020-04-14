@@ -12,19 +12,8 @@ import common
 
 class FilterTableViewCell: UITableViewCell {
     
-    private var logoView = UIImageView().apply {
-        $0.layer.run {
-            $0.cornerRadius = 20
-            $0.masksToBounds = true
-            $0.borderWidth = 1
-            $0.borderColor = Palette.colorPrimary.cgColor
-        }
-    }
-
-    private let nameLabel = UILabel().apply {
-        $0.font = Font.textHeading
-        $0.textColor = Palette.black
-    }
+    private var logoView = CircleImageView()
+    private let nameLabel = HeadingLabel()
 
     private let switchView = UISwitch().apply {
         $0.onTintColor = Palette.colorPrimary

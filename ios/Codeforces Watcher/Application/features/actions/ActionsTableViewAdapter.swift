@@ -13,7 +13,7 @@ class ActionsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSou
     var actions: [CFAction] = []
 
     var onActionClick: ((String, String) -> ())?
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

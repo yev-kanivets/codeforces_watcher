@@ -14,36 +14,16 @@ class BlogEntryTableViewCell: UITableViewCell {
     
     private let cardView = CardView()
 
-    private let blogEntryTitleLabel = UILabel().apply {
-        $0.font = Font.textHeading
-        $0.textColor = Palette.black
-    }
-
-    private let userImage = UIImageView().apply {
-        $0.layer.run {
-            $0.cornerRadius = 18
-            $0.masksToBounds = true
-            $0.borderWidth = 1
-            $0.borderColor = Palette.colorPrimary.cgColor
-        }
-    }
-
-    private let userHandleLabel = UILabel().apply {
-        $0.textColor = Palette.green
-        $0.font = Font.textSubheading
-    }
-
-    private let someTimeAgoLabel = UILabel().apply {
-        $0.textColor = Palette.grey
-        $0.font = Font.textSubheading
-    }
-
-    private let detailsLabel = UILabel().apply {
+    private let blogEntryTitleLabel = HeadingLabel().apply {
         $0.numberOfLines = 1
-        $0.textColor = Palette.grey
-        $0.font = Font.textBody
+    }
+    private let userImage = CircleImageView()
+    private let userHandleLabel = SubheadingLabel()
+    private let someTimeAgoLabel = SubheadingLabel()
 
-        $0.text = "Created or updated the text, click to see details..."
+    private let detailsLabel = BodyLabel().apply {
+        $0.numberOfLines = 1
+        $0.text = "created_or_updated_text".localized
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -113,8 +93,6 @@ class BlogEntryTableViewCell: UITableViewCell {
         blogEntryTitleLabel.text = blogEntry.title.beautify()
         userHandleLabel.attributedText = colorTextByUserRank(text: blogEntry.authorHandle, rank: blogEntry.authorRank)
         someTimeAgoLabel.text = " - \(timePassed) " + "ago".localized
-
-        detailsLabel.text = "created_or_updated_text".localized
 
         if var avatar = blogEntry.authorAvatar {
             avatar = LinkValidatorKt.avatar(avatarLink: avatar)

@@ -50,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         store.dispatch(action: ActionsRequests.FetchActions(isInitializedByUser: false, language: "locale".localized))
         store.dispatch(action: ContestsRequests.FetchContests(isInitiatedByUser: false))
         store.dispatch(action: ProblemsRequests.FetchProblems(isInitializedByUser: false))
+        store.dispatch(action: ActionsRequests.FetchPinnedPost())
     }
 
     private func initAppStyle() {
@@ -57,8 +58,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             $0.isTranslucent = false
             $0.barTintColor = Palette.colorPrimary
             $0.tintColor = Palette.white
-            $0.titleTextAttributes = [NSAttributedString.Key.foregroundColor: Palette.white,
-                                      NSAttributedString.Key.font: Font.textPageTitle]
+            $0.titleTextAttributes = [
+                NSAttributedString.Key.foregroundColor: Palette.white,
+                NSAttributedString.Key.font: Font.textPageTitle
+            ]
         }
 
         UITabBar.appearance().run {
