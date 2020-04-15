@@ -41,6 +41,14 @@ extension String {
         }
         return formatter.date(from: self)!
     }
+    
+    var attributed: NSMutableAttributedString { return NSMutableAttributedString(string: self) }
+    
+    func colorString(color: UIColor) -> NSAttributedString {
+        return self.attributed.apply {
+            $0.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: NSRange(location: 0, length: self.count))
+        }
+    }
 }
 
 func buildShareText(_ title: String, _ link: String) -> String {

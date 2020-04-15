@@ -13,6 +13,26 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
     private let tableView = UITableView()
     private let tableAdapter = UsersTableViewAdapter()
     private let refreshControl = UIRefreshControl()
+    private lazy var bottomInputCardView = BottomInputCardView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 136)).apply {
+        $0.shouldMoveFurther = {
+            self.addUser()
+        }
+    }
+    
+    override var inputAccessoryView: UIView? {
+        get {
+            return bottomInputCardView
+        }
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        resignFirstResponder()
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         store.subscribe(subscriber: self) { subscription in
@@ -40,6 +60,7 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
         
         buildViewTree()
         setConstraints()
+        setInteractions()
         setFabImage(named: "plusIcon")
     }
     
@@ -49,6 +70,16 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
     
     private func setConstraints() {
         tableView.edgesToSuperview()
+    }
+    
+    private func setInteractions() {
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOutside)).apply {
+            $0.cancelsTouchesInView = false
+        })
+    }
+    
+    @objc func didTapOutside(_ tapGestureRecognizer: UITapGestureRecognizer) {
+        hideBottomInputView()
     }
     
     private func setupTableView() {
@@ -73,7 +104,25 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
     }
     
     override func fabButtonTapped() {
-        // open inputAccesoryView
+        showBottomInputView()
+    }
+    
+    private func addUser() {
+        hideBottomInputView()
+        
+        let handle = bottomInputCardView.textField.text ?? ""
+        store.dispatch(action: AddUserRequests.AddUser(handle: handle))
+        // log userAdded
+    }
+    
+    private func showBottomInputView() {
+        becomeFirstResponder()
+        bottomInputCardView.textField.becomeFirstResponder()
+    }
+    
+    private func hideBottomInputView() {
+        bottomInputCardView.textField.resignFirstResponder()
+        resignFirstResponder()
     }
     
     func doNewState(state: Any) {

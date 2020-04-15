@@ -12,12 +12,13 @@ import common
 class UserTableViewCell: UITableViewCell {
     private let cardView = CardView()
     
-    private let userImage = CircleImageView()
+    private let userImage = CircleImageView().apply {
+        $0.image = noImage
+    }
     private let handleLabel = HeadingLabel()
     private let ratingUpdateDateLabel = SubheadingBigLabel()
     
     private let ratingLabel = HeadingLabel()
-    private let arrowView = UIView()
     private let ratingUpdateLabel = SubheadingBigLabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -40,7 +41,7 @@ class UserTableViewCell: UITableViewCell {
     private func buildViewTree() {
         addSubview(cardView)
         
-        [userImage, handleLabel, ratingUpdateDateLabel, ratingLabel, arrowView, ratingUpdateLabel].forEach(cardView.addSubview)
+        [userImage, handleLabel, ratingUpdateDateLabel, ratingLabel, ratingUpdateLabel].forEach(cardView.addSubview)
     }
     
     private func setConstraints() {
@@ -56,7 +57,7 @@ class UserTableViewCell: UITableViewCell {
         handleLabel.run {
             $0.topToSuperview(offset: 8)
             $0.leadingToTrailing(of: userImage, offset: 8)
-            $0.trailingToLeading(of: ratingLabel, offset: 4)
+            $0.trailingToLeading(of: ratingLabel, relation: .equalOrLess)
         }
         
         ratingUpdateDateLabel.run {
@@ -69,9 +70,35 @@ class UserTableViewCell: UITableViewCell {
             $0.topToSuperview(offset: 8)
             $0.trailingToSuperview(offset: 8)
         }
+        
+        ratingUpdateLabel.run {
+            $0.topToBottom(of: ratingLabel, offset: 4)
+            $0.trailing(to: ratingLabel)
+            $0.bottomToSuperview(offset: -8)
+        }
     }
     
     func bind(_ user: User) {
+        let avatar = LinkValidatorKt.avatar(avatarLink: user.avatar)
+        userImage.sd_setImage(with: URL(string: avatar), placeholderImage: noImage)
         
+        handleLabel.attributedText = colorTextByUserRank(text: user.handle, rank: user.rank)
+        
+        if let rating = user.rating {
+            ratingLabel.attributedText = colorTextByUserRank(text: String(rating.intValue), rank: user.rank)
+        }
+        
+        if let ratingChange = user.ratingChanges.last {
+            var delta = ratingChange.newRating - ratingChange.oldRating
+            let isRatingIncreased = delta >= 0
+            delta = abs(delta)
+            
+            let ratingUpdateString = (isRatingIncreased ? "▲" : "▼") + " \(delta)"
+            
+            ratingUpdateLabel.attributedText = ratingUpdateString.colorString(color: isRatingIncreased ? Palette.brightGreen : Palette.red)
+            ratingUpdateDateLabel.text = "Last rating update: " + Double(ratingChange.ratingUpdateTimeSeconds).secondsToUserUpdateDateString()
+        } else {
+            ratingUpdateDateLabel.text = "No rating update".localized
+        }
     }
 }

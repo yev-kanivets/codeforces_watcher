@@ -66,7 +66,7 @@ class PinnedPostView: UIView {
         
         headingLabel.run {
             $0.topToSuperview(offset: 8)
-            $0.trailingToLeading(of: crossImage)
+            $0.trailingToLeading(of: crossImage, relation: .equalOrLess)
             $0.leadingToTrailing(of: infoImage, offset: 8)
         }
         

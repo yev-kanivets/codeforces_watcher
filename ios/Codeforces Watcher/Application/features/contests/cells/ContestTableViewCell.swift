@@ -83,7 +83,7 @@ class ContestTableViewCell: UITableViewCell {
 
     func bind(_ contest: Contest, completion: @escaping (() -> ())) {
         nameLabel.text = contest.name
-        timeLabel.text = Double(contest.startTimeSeconds / 1000).secondsToDateString()
+        timeLabel.text = Double(contest.startTimeSeconds / 1000).secondsToContestDateString()
         logoView.image = UIImage(named: Platform.getImageNameByPlatform(contest.platform))
 
         onCalendarTap = completion

@@ -37,7 +37,7 @@ func colorTextByUserRank(text: String, rank: String?) -> NSMutableAttributedStri
         color = Palette.grey
     }
 
-    let attributedText = NSMutableAttributedString.init(string: text)
+    let attributedText = NSMutableAttributedString(string: text)
     attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: NSRange(location: 0, length: text.count))
 
     if (rank == "legendary grandmaster") {

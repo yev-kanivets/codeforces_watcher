@@ -60,6 +60,8 @@
 		63EAA0F62445EA6600C234A8 /* UsersTableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0F52445EA6600C234A8 /* UsersTableViewAdapter.swift */; };
 		63EAA0F92445EC9100C234A8 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0F82445EC9100C234A8 /* UserTableViewCell.swift */; };
 		63EAA0FB2446FF6A00C234A8 /* NoItemsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0FA2446FF6A00C234A8 /* NoItemsTableViewCell.swift */; };
+		63EAA0FE24470BA000C234A8 /* BottomInputCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0FD24470BA000C234A8 /* BottomInputCardView.swift */; };
+		63EAA1002447121500C234A8 /* CommonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0FF2447121500C234A8 /* CommonTextField.swift */; };
 		63EB12EF23CF1B310013A974 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63EB12EE23CF1B310013A974 /* GoogleService-Info.plist */; };
 		63EB130123CF3F830013A974 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB130023CF3F830013A974 /* MainViewController.swift */; };
 		63FB270923E1AA50005F19F1 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FB270823E1AA50005F19F1 /* WebViewController.swift */; };
@@ -142,6 +144,8 @@
 		63EAA0F52445EA6600C234A8 /* UsersTableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTableViewAdapter.swift; sourceTree = "<group>"; };
 		63EAA0F82445EC9100C234A8 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		63EAA0FA2446FF6A00C234A8 /* NoItemsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoItemsTableViewCell.swift; sourceTree = "<group>"; };
+		63EAA0FD24470BA000C234A8 /* BottomInputCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomInputCardView.swift; sourceTree = "<group>"; };
+		63EAA0FF2447121500C234A8 /* CommonTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTextField.swift; sourceTree = "<group>"; };
 		63EB12EE23CF1B310013A974 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		63EB130023CF3F830013A974 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		63FB270823E1AA50005F19F1 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -303,11 +307,12 @@
 		33524AFABB95461924E2C987 /* components */ = {
 			isa = PBXGroup;
 			children = (
+				63EAA0FC24470B8B00C234A8 /* cardViews */,
 				63EAA0E8244474BB00C234A8 /* labels */,
-				3352449F83A3B6FE1CA12CE9 /* CardView.swift */,
 				63EAA0E424445ABB00C234A8 /* CircleImageView.swift */,
 				335241B8E54D2F60B3D7E581 /* ContestsRulesView.swift */,
 				63EAA0EF24447EB000C234A8 /* PinnedPostView.swift */,
+				63EAA0FF2447121500C234A8 /* CommonTextField.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -501,6 +506,15 @@
 				63EAA0F82445EC9100C234A8 /* UserTableViewCell.swift */,
 			);
 			path = cells;
+			sourceTree = "<group>";
+		};
+		63EAA0FC24470B8B00C234A8 /* cardViews */ = {
+			isa = PBXGroup;
+			children = (
+				3352449F83A3B6FE1CA12CE9 /* CardView.swift */,
+				63EAA0FD24470BA000C234A8 /* BottomInputCardView.swift */,
+			);
+			path = cardViews;
 			sourceTree = "<group>";
 		};
 		63EB12F223CF24F10013A974 /* contests */ = {
@@ -776,6 +790,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63EAA0EE244476C100C234A8 /* HeadingLabel.swift in Sources */,
+				63EAA0FE24470BA000C234A8 /* BottomInputCardView.swift in Sources */,
 				33524E698A1B05C3FAB1E720 /* Font.swift in Sources */,
 				33524789EFFED3D6CA62DEE5 /* Palette.swift in Sources */,
 				33524FEAE56CD4737349DE6A /* Constants.swift in Sources */,
@@ -812,6 +827,7 @@
 				335248243065D1A2585B79FE /* ActionsTableViewAdapter.swift in Sources */,
 				633B4CF623E078380099EF41 /* FiltersViewController.swift in Sources */,
 				63EAA0EC2444760300C234A8 /* BodyLabel.swift in Sources */,
+				63EAA1002447121500C234A8 /* CommonTextField.swift in Sources */,
 				335249EE055A0D7C9B31CE68 /* UITableView+Extension.swift in Sources */,
 				33524AE3A0B0A7C674038501 /* UITableViewCell+Extension.swift in Sources */,
 				63736F0023CF6557001E9AB9 /* ContestTableViewCell.swift in Sources */,

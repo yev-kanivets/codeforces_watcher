@@ -10,10 +10,18 @@ import Foundation
 
 extension Double {
 
-    func secondsToDateString() -> String {
+    func secondsToContestDateString() -> String {
         let date = Date(timeIntervalSince1970: self)
         let dayTimePeriodFormatter = DateFormatter().apply {
             $0.dateFormat = "HH:mm MMM d, EEEE"
+        }
+        return dayTimePeriodFormatter.string(from: date)
+    }
+    
+    func secondsToUserUpdateDateString() -> String {
+        let date = Date(timeIntervalSince1970: self)
+        let dayTimePeriodFormatter = DateFormatter().apply {
+            $0.dateFormat = "MMM d, yyyy"
         }
         return dayTimePeriodFormatter.string(from: date)
     }
