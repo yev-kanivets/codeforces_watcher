@@ -28,7 +28,9 @@ class ActionsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSou
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (actions.isEmpty) {
-            return tableView.dequeueReusableCell(cellType: NoActionsTableViewCell.self)
+            return tableView.dequeueReusableCell(cellType: NoItemsTableViewCell.self).apply {
+                $0.bind(imageName: "noItemsImage", explanation: "actions_explanation")
+            }
         }
 
         let action = actions[indexPath.row]

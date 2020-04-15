@@ -94,7 +94,7 @@ class ContestsViewController: UIViewControllerWithFab, StoreSubscriber {
             }
         }
 
-        [ContestTableViewCell.self, NoContestsTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
+        [ContestTableViewCell.self, NoItemsTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
 
         tableAdapter.onContestClick = { (contest) in
             let webViewController = WebViewController().apply {

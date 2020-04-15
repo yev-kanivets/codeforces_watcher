@@ -77,7 +77,7 @@ class ActionsViewController: UIViewControllerWithFab, StoreSubscriber {
             $0.separatorStyle = .none
         }
 
-        [CommentTableViewCell.self, BlogEntryTableViewCell.self, NoActionsTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
+        [CommentTableViewCell.self, BlogEntryTableViewCell.self, NoItemsTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
 
         tableAdapter.onActionClick = { (link, shareText) in
             let webViewController = WebViewController().apply {
