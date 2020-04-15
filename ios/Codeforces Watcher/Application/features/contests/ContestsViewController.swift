@@ -12,7 +12,7 @@ import EventKit
 import FirebaseAnalytics
 import common
 
-class ContestsViewController: UIViewController, StoreSubscriber {
+class ContestsViewController: UIViewControllerWithFab, StoreSubscriber {
     
     private let contestsRulesView = ContestsRulesView()
     private let tableView = UITableView()
@@ -24,6 +24,7 @@ class ContestsViewController: UIViewController, StoreSubscriber {
 
         setupView()
         setupTableView()
+        setFabImage(named: "eyeIcon")
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -82,7 +83,7 @@ class ContestsViewController: UIViewController, StoreSubscriber {
             self.addEventToCalendar(contest) { success, NSError in
                 if (success) {
                     DispatchQueue.main.async {
-                        Analytics.logEvent("add_contest_to_google_calendar", parameters: [:])
+                        Analytics.logEvent("add_contest_to_google_calendar", parameters: ["contest_platform": contest.platform, "contest_name": contest.name])
                         self.showAlertWithOK(title: contest.name, message: "Has been added to your calendar".localized)
                     }
                 } else {
@@ -119,15 +120,13 @@ class ContestsViewController: UIViewController, StoreSubscriber {
     }
 
     @objc func contestsRulesTapped(sender: Any) {
+        let rulesLink = "https://codeforces.com/blog/entry/4088"
+        
         let webViewController = WebViewController().apply {
-            $0.link = "https://codeforces.com/blog/entry/4088"
-            $0.shareText = """
-                           Check Official Codeforces rules
-
-                           Shared through Codeforces Watcher. Find it on App Store.
-                           """
+            $0.link = rulesLink
+            $0.shareText = buildShareText("Official Codeforces rules".localized, rulesLink)
         }
-        self.navigationController?.pushViewController(webViewController, animated: true)
+        navigationController?.pushViewController(webViewController, animated: true)
     }
 
     private func saveContestEvent(eventStore: EKEventStore, contest: Contest, completion: ((Bool, NSError?) -> Void)?) {
@@ -184,6 +183,14 @@ class ContestsViewController: UIViewController, StoreSubscriber {
     @objc private func refreshContests(_ sender: Any) {
         Analytics.logEvent("contests_list_refresh", parameters: [:])
         fetchContests()
+    }
+    
+    override func fabButtonTapped() {
+        let contestsLink = "https://clist.by/"
+        
+        if let url = URL(string: contestsLink) {
+            UIApplication.shared.open(url)
+        }
     }
 
     func doNewState(state: Any) {

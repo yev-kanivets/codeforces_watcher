@@ -29,10 +29,10 @@ class UIViewControllerWithFab: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tabBarController?.view.addSubview(fabButton)
+        tabBarController?.tabBar.addSubview(fabButton)
         
         fabButton.run {
-            $0.bottomToSuperview(offset: -16)
+            $0.topToSuperview(offset: -22)
             $0.centerXToSuperview()
         }
         
