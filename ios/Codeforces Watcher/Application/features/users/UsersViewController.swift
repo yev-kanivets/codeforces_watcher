@@ -8,12 +8,14 @@
 
 import UIKit
 import common
+import FirebaseAnalytics
+import PKHUD
 
 class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
     private let tableView = UITableView()
     private let tableAdapter = UsersTableViewAdapter()
     private let refreshControl = UIRefreshControl()
-    private lazy var bottomInputCardView = BottomInputCardView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 136)).apply {
+    private lazy var bottomInputCardView = AddUserCardView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 136)).apply {
         $0.shouldMoveFurther = {
             self.addUser()
         }
@@ -40,6 +42,14 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
                 return KotlinBoolean(bool: oldState.users == newState.users)
             }.select { state in
                 return state.users
+            }
+        }
+        
+        store.subscribe(subscriber: self) { subscription in
+            subscription.skipRepeats { oldState, newState in
+                return KotlinBoolean(bool: oldState.addUserState == newState.addUserState)
+            }.select { state in
+                return state.addUserState
             }
         }
     }
@@ -99,8 +109,8 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
     }
     
     @objc func refreshUsers() {
-        store.dispatch(action: UsersRequests.FetchUsers(source: Source.user))
-        // add analytics
+        store.dispatch(action: UsersRequests.FetchUsers(source: Source.user, language: "locale".localized))
+        Analytics.logEvent("users_list_refresh", parameters: [:])
     }
     
     override func fabButtonTapped() {
@@ -108,11 +118,12 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
     }
     
     private func addUser() {
-        hideBottomInputView()
+        PKHUD.sharedHUD.userInteractionOnUnderlyingViewsEnabled = true
+        
+        HUD.show(.progress, onView: UIApplication.shared.windows.last)
         
         let handle = bottomInputCardView.textField.text ?? ""
-        store.dispatch(action: AddUserRequests.AddUser(handle: handle))
-        // log userAdded
+        store.dispatch(action: AddUserRequests.AddUser(handle: handle, language: "locale".localized))
     }
     
     private func showBottomInputView() {
@@ -123,16 +134,34 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
     private func hideBottomInputView() {
         bottomInputCardView.textField.resignFirstResponder()
         resignFirstResponder()
+
+        bottomInputCardView.textField.text = ""
     }
     
     func doNewState(state: Any) {
-        let state = state as! UsersState
-        
-        if (state.status == .idle) {
-            refreshControl.endRefreshing()
+        if let state = state as? UsersState {
+            if (state.status == .idle) {
+                refreshControl.endRefreshing()
+            }
+            
+            tableAdapter.users = state.users
+            tableView.reloadData()
         }
         
-        tableAdapter.users = state.users
-        tableView.reloadData()
+        if let state = state as? AddUserState {
+            if (state.status != .pending) {
+                HUD.hide(afterDelay: 0)
+            }
+            
+            if (state.status == .done) {
+                hideBottomInputView()
+                
+                tableAdapter.users = store.state.users.users
+                tableView.reloadData()
+                
+                Analytics.logEvent("user_added", parameters: [:])
+                store.dispatch(action: AddUserActions.ClearAddUserState())
+            }
+        }
     }
 }

@@ -1,3 +1,4 @@
+"locale" = "en";
 "Codeforces Watcher" = "Codeforces WatchR";
 
 "Contests" = "Contests";
@@ -25,7 +26,6 @@
 "Apple isn't a sponsor of any contests conducted on Codeforces" = "Apple isn't a sponsor of any contests conducted on Codeforces";
 
 "Filter" = "Filter";
-"locale" = "en";
 
 "User already added" = "User already added";
 "failed_to_fetch_users" = "Failed to fetch user(s)! Wait or check handle(s)…";
@@ -37,6 +37,5 @@
 "no_users_explanation" = "You don’t have any users to watch yet.\nAdd the first one using «+» at the bottom of the screen.";
 
 "Add user" = "Add user";
-"Add" = "Add";
-"Enter handle" = "Enter handle";
+"Enter user handle" = "Enter user handle";
 "No rating update" = "No rating update";

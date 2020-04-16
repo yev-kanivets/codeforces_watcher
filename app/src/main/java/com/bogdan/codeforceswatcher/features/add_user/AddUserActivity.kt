@@ -14,6 +14,7 @@ import io.xorum.codeforceswatcher.features.add_user.redux.states.AddUserState
 import io.xorum.codeforceswatcher.redux.store
 import kotlinx.android.synthetic.main.activity_add_user.*
 import tw.geothings.rekotlin.StoreSubscriber
+import java.util.*
 
 class AddUserActivity : AppCompatActivity(), OnClickListener, StoreSubscriber<AddUserState> {
 
@@ -76,7 +77,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener, StoreSubscriber<Ad
     override fun onClick(v: View) {
         when (v.id) {
             R.id.btnAdd -> {
-                store.dispatch(AddUserRequests.AddUser(etHandle.text.toString()))
+                store.dispatch(AddUserRequests.AddUser(etHandle.text.toString(), Locale.getDefault().language))
                 Analytics.logUserAdded()
             }
             else -> {

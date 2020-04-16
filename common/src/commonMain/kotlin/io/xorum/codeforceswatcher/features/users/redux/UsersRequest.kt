@@ -7,8 +7,8 @@ import io.xorum.codeforceswatcher.redux.Message
 import io.xorum.codeforceswatcher.redux.codeforcesRepository
 import kotlinx.coroutines.delay
 
-suspend fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean): UsersRequestResult {
-    val response = codeforcesRepository.getUsers(handles)
+suspend fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean, lang: String): UsersRequestResult {
+    val response = codeforcesRepository.getUsers(handles, lang)
 
     return response?.result?.let { users ->
         if (users.isEmpty()) {

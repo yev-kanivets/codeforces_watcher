@@ -9,12 +9,19 @@ import tw.geothings.rekotlin.Action
 
 class AddUserRequests {
 
-    class AddUser(private val handle: String) : Request() {
+    class AddUser(
+            private val handle: String,
+            private val language: String
+    ) : Request() {
         override suspend fun execute() {
-            when (val result = getUsers(handle, true)) {
+            when (val result = getUsers(handle, true, lang = defineLang())) {
                 is UsersRequestResult.Failure -> store.dispatch(Failure(result.error.message))
                 is UsersRequestResult.Success -> result.users.firstOrNull()?.let { user -> addUser(user) }
             }
+        }
+
+        private fun defineLang(): String {
+            return if (language == "ru" || language == "uk") "ru" else "en"
         }
 
         private fun addUser(user: User) {

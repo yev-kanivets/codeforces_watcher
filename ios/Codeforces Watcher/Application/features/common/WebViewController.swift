@@ -22,13 +22,12 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     var link: String!
     var shareText: String!
 
-    var openEventName: String! = ""
-    var shareEventName: String! = ""
+    var openEventName: String?
+    var shareEventName: String?
 
     override func viewDidLoad() {
-        PKHUD.sharedHUD.contentView = PKHUDProgressView()
         PKHUD.sharedHUD.userInteractionOnUnderlyingViewsEnabled = true
-        PKHUD.sharedHUD.show()
+        HUD.show(.progress, onView: UIApplication.shared.windows.last)
 
         onLoadViewLogEvent()
 
@@ -40,7 +39,7 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        PKHUD.sharedHUD.hide(afterDelay: 0)
+        HUD.hide(afterDelay: 0)
     }
 
     @objc func shareTapped() {
@@ -53,27 +52,29 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         onShareViewLogEvent()
     }
 
-    func onLoadViewLogEvent() {
-        guard !openEventName.isEmpty else { return }
-        Analytics.logEvent(openEventName, parameters: [:])
+    private func onLoadViewLogEvent() {
+        if let openEventName = openEventName {
+            Analytics.logEvent(openEventName, parameters: [:])
+        }
     }
 
-    func onShareViewLogEvent() {
-        guard !shareEventName.isEmpty else { return }
-        Analytics.logEvent(shareEventName, parameters: [:])
+    private func onShareViewLogEvent() {
+        if let shareEventName = shareEventName {
+            Analytics.logEvent(shareEventName, parameters: [:])
+        }
     }
 
-    func openWebPage() {
+    private func openWebPage() {
         if let url = URL(string: link) {
             webView.load(URLRequest(url: url))
         }
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        PKHUD.sharedHUD.hide(afterDelay: 0)
+        HUD.hide(afterDelay: 0)
     }
 
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        PKHUD.sharedHUD.hide(afterDelay: 0)
+        HUD.hide(afterDelay: 0)
     }
 }

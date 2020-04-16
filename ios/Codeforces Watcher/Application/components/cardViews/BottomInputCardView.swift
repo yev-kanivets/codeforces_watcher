@@ -10,21 +10,21 @@ import Foundation
 import UIKit
 import MaterialComponents.MDCButton
 
-class BottomInputCardView: UIView, UITextFieldDelegate {
+class AddUserCardView: UIView, UITextFieldDelegate {
     private let whiteView = CardView()
     
     private let explanationLabel = SubheadingBigLabel().apply {
-        $0.text = "Add user".localized
+        $0.text = "Enter user handle".localized
     }
     
     lazy var textField = CommonTextField().apply {
         $0.delegate = self
-        $0.placeholder = "Enter handle".localized
     }
     
     private let button = MDCButton().apply {
         $0.backgroundColor = Palette.colorPrimary
-        $0.setTitle("Add".localized.uppercased(), for: .normal)
+        $0.titleLabel?.font = Font.textBody
+        $0.setTitle("Add user".localized.uppercased(), for: .normal)
     }
     
     var shouldMoveFurther: (() -> ())?

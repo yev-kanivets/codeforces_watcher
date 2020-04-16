@@ -21,9 +21,10 @@ internal class CodeforcesRepository {
 
     private val codeforcesApiClient = makeCodeforcesApiClient()
 
-    suspend fun getUsers(handles: String) = try {
+    suspend fun getUsers(handles: String, lang: String) = try {
         codeforcesApiClient.get<UsersResponse>(path = "user.info") {
             parameter("handles", handles)
+            parameter("lang", lang)
         }
     } catch (t: Throwable) {
         null

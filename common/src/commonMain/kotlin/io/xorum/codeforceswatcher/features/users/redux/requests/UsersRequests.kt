@@ -17,13 +17,16 @@ enum class Source(val isToastNeeded: Boolean) {
 
 class UsersRequests {
 
-    class FetchUsers(private val source: Source) : Request() {
+    class FetchUsers(
+            private val source: Source,
+            private val language: String
+    ) : Request() {
 
         override suspend fun execute() {
             // Use this delay because actions, problems and contests requests managed to work out(and Codeforces didn't block them)
             if (source == Source.BACKGROUND) delay(1500)
             val users = store.state.users.users
-            when (val result = getUsers(getHandles(users), true)) {
+            when (val result = getUsers(getHandles(users), true, lang = defineLang())) {
                 is UsersRequestResult.Failure -> {
                     store.dispatch(Failure(if (source.isToastNeeded) result.error.message else Message.None))
                 }
@@ -31,6 +34,10 @@ class UsersRequests {
                     store.dispatch(Success(result.users, getDifferenceAndUpdate(users, result.users), source))
                 }
             }
+        }
+
+        private fun defineLang(): String {
+            return if (language == "ru" || language == "uk") "ru" else "en"
         }
 
         private fun getDifferenceAndUpdate(users: List<User>, updatedUsers: List<User>): List<Pair<String, Int>> {

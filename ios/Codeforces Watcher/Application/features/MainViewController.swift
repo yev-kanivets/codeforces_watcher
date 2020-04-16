@@ -14,7 +14,7 @@ class MainViewController: UITabBarController {
     private let controllers = [
         UsersViewController().apply(title: "Users", iconNamed: "usersIcon"),
         ContestsViewController().apply(title: "Contests", iconNamed: "contestsIcon"),
-        UIViewController().apply(title: "", iconNamed: ""),
+        UIViewController(),
         ActionsViewController().apply(title: "Actions", iconNamed: "actionsIcon"),
         ProblemsViewController().apply(title: "Problems", iconNamed: "problemsIcon")
     ]
@@ -30,6 +30,9 @@ class MainViewController: UITabBarController {
 
     private func setupView() {
         viewControllers = controllers.map { UINavigationController(rootViewController: $0) }
+        if let tabBarArray = tabBar.items {
+            tabBarArray[2].isEnabled = false
+        }
     }
 }
 

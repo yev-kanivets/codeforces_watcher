@@ -27,7 +27,7 @@ class ActionsRequests {
         private suspend fun buildUiDataAndDispatch(actions: List<CFAction>) {
             val handles = buildHandles(actions)
 
-            when (val result = getUsers(handles, false)) {
+            when (val result = getUsers(handles, false, defineLang())) {
                 is UsersRequestResult.Success -> {
                     store.dispatch(Success(buildUiData(actions, result.users)))
                 }
