@@ -1,5 +1,5 @@
 //
-//  BottomInputCardView.swift
+//  AddUserCardView.swift
 //  Codeforces Watcher
 //
 //  Created by Den Matyash on 4/15/20.
@@ -21,9 +21,8 @@ class AddUserCardView: UIView, UITextFieldDelegate {
         $0.delegate = self
     }
     
-    private let button = MDCButton().apply {
+    private let button = CommonButton().apply {
         $0.backgroundColor = Palette.colorPrimary
-        $0.titleLabel?.font = Font.textBody
         $0.setTitle("Add user".localized.uppercased(), for: .normal)
     }
     

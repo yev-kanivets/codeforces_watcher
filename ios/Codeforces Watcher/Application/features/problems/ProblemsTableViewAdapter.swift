@@ -33,7 +33,7 @@ class ProblemsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (problems.isEmpty) {
             return tableView.dequeueReusableCell(cellType: NoItemsTableViewCell.self).apply {
-                $0.bind(imageName: "noItemsImage", explanation: "problems_explanation")
+                $0.bind(imageName: "noItemsImage", explanation: noProblemsExplanation)
             }
         }
         

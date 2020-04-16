@@ -57,7 +57,7 @@ class ContestTableViewCell: UITableViewCell {
     }
 
     private func setConstraints() {
-        cardView.edgesToSuperview(insets: UIEdgeInsets(top: 8, left: 8, bottom: 0, right: 8))
+        cardView.edgesToSuperview(insets: UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8))
 
         logoView.run {
             $0.leadingToSuperview(offset: 8)

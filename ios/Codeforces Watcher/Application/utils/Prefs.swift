@@ -36,11 +36,15 @@ class Prefs: Settings {
     }
 
     func readSpinnerSortPosition() -> Int32 {
-        return 0
+        if let spinnerSortPosition = (UserDefaults.standard.value(forKey: "spinnerSortPosition")) as? Int32 {
+            return spinnerSortPosition
+        } else {
+            return 0
+        }
     }
 
     func writeSpinnerSortPosition(spinnerSortPosition: Int32) {
-
+        UserDefaults.standard.setValue(spinnerSortPosition, forKey: "spinnerSortPosition")
     }
 
     func readPinnedPostLink() -> String {

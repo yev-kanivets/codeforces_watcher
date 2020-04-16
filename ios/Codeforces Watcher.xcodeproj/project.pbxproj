@@ -60,8 +60,11 @@
 		63EAA0F62445EA6600C234A8 /* UsersTableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0F52445EA6600C234A8 /* UsersTableViewAdapter.swift */; };
 		63EAA0F92445EC9100C234A8 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0F82445EC9100C234A8 /* UserTableViewCell.swift */; };
 		63EAA0FB2446FF6A00C234A8 /* NoItemsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0FA2446FF6A00C234A8 /* NoItemsTableViewCell.swift */; };
-		63EAA0FE24470BA000C234A8 /* BottomInputCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0FD24470BA000C234A8 /* BottomInputCardView.swift */; };
+		63EAA0FE24470BA000C234A8 /* AddUserCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0FD24470BA000C234A8 /* AddUserCardView.swift */; };
 		63EAA1002447121500C234A8 /* CommonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0FF2447121500C234A8 /* CommonTextField.swift */; };
+		63EAA102244854CA00C234A8 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63EAA101244854CA00C234A8 /* Roboto-Medium.ttf */; };
+		63EAA1052448554400C234A8 /* CommonButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA1042448554400C234A8 /* CommonButton.swift */; };
+		63EAA1072448749200C234A8 /* UsersPickerViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA1062448749200C234A8 /* UsersPickerViewAdapter.swift */; };
 		63EB12EF23CF1B310013A974 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63EB12EE23CF1B310013A974 /* GoogleService-Info.plist */; };
 		63EB130123CF3F830013A974 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB130023CF3F830013A974 /* MainViewController.swift */; };
 		63FB270923E1AA50005F19F1 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FB270823E1AA50005F19F1 /* WebViewController.swift */; };
@@ -144,8 +147,11 @@
 		63EAA0F52445EA6600C234A8 /* UsersTableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTableViewAdapter.swift; sourceTree = "<group>"; };
 		63EAA0F82445EC9100C234A8 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		63EAA0FA2446FF6A00C234A8 /* NoItemsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoItemsTableViewCell.swift; sourceTree = "<group>"; };
-		63EAA0FD24470BA000C234A8 /* BottomInputCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomInputCardView.swift; sourceTree = "<group>"; };
+		63EAA0FD24470BA000C234A8 /* AddUserCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserCardView.swift; sourceTree = "<group>"; };
 		63EAA0FF2447121500C234A8 /* CommonTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTextField.swift; sourceTree = "<group>"; };
+		63EAA101244854CA00C234A8 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		63EAA1042448554400C234A8 /* CommonButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonButton.swift; sourceTree = "<group>"; };
+		63EAA1062448749200C234A8 /* UsersPickerViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersPickerViewAdapter.swift; sourceTree = "<group>"; };
 		63EB12EE23CF1B310013A974 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		63EB130023CF3F830013A974 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		63FB270823E1AA50005F19F1 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -245,6 +251,7 @@
 				63EAA0F72445EAB700C234A8 /* cells */,
 				63EAA0DA244051F100C234A8 /* UsersViewController.swift */,
 				63EAA0F52445EA6600C234A8 /* UsersTableViewAdapter.swift */,
+				63EAA1062448749200C234A8 /* UsersPickerViewAdapter.swift */,
 			);
 			path = users;
 			sourceTree = "<group>";
@@ -307,6 +314,7 @@
 		33524AFABB95461924E2C987 /* components */ = {
 			isa = PBXGroup;
 			children = (
+				63EAA1032448553500C234A8 /* buttons */,
 				63EAA0FC24470B8B00C234A8 /* cardViews */,
 				63EAA0E8244474BB00C234A8 /* labels */,
 				63EAA0E424445ABB00C234A8 /* CircleImageView.swift */,
@@ -484,6 +492,7 @@
 		63EAA0D3243F278B00C234A8 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
+				63EAA101244854CA00C234A8 /* Roboto-Medium.ttf */,
 				335242613B8CB2FCFF5CD07A /* Roboto-Regular.ttf */,
 			);
 			path = fonts;
@@ -512,9 +521,17 @@
 			isa = PBXGroup;
 			children = (
 				3352449F83A3B6FE1CA12CE9 /* CardView.swift */,
-				63EAA0FD24470BA000C234A8 /* BottomInputCardView.swift */,
+				63EAA0FD24470BA000C234A8 /* AddUserCardView.swift */,
 			);
 			path = cardViews;
+			sourceTree = "<group>";
+		};
+		63EAA1032448553500C234A8 /* buttons */ = {
+			isa = PBXGroup;
+			children = (
+				63EAA1042448554400C234A8 /* CommonButton.swift */,
+			);
+			path = buttons;
 			sourceTree = "<group>";
 		};
 		63EB12F223CF24F10013A974 /* contests */ = {
@@ -641,6 +658,7 @@
 				33524345B234AE1F2804F64E /* Localizable.strings in Resources */,
 				335246D95DF6B3B3E10A22C7 /* LaunchScreen.storyboard in Resources */,
 				335243F2682C1A8F3A9AE1CA /* no-image.jpg in Resources */,
+				63EAA102244854CA00C234A8 /* Roboto-Medium.ttf in Resources */,
 				B1E1B3F423C91D51006A7347 /* Assets.xcassets in Resources */,
 				335243A8CBE3634A99524B33 /* Roboto-Regular.ttf in Resources */,
 				63EB12EF23CF1B310013A974 /* GoogleService-Info.plist in Resources */,
@@ -790,7 +808,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63EAA0EE244476C100C234A8 /* HeadingLabel.swift in Sources */,
-				63EAA0FE24470BA000C234A8 /* BottomInputCardView.swift in Sources */,
+				63EAA0FE24470BA000C234A8 /* AddUserCardView.swift in Sources */,
 				33524E698A1B05C3FAB1E720 /* Font.swift in Sources */,
 				33524789EFFED3D6CA62DEE5 /* Palette.swift in Sources */,
 				33524FEAE56CD4737349DE6A /* Constants.swift in Sources */,
@@ -816,8 +834,10 @@
 				33524BC0E57CE4F3A2D1EC04 /* UIColor+Extension.swift in Sources */,
 				3352406FDC5916F705E86498 /* ScopeFunc.swift in Sources */,
 				63EAA0E72444719C00C234A8 /* UIViewControllerWithFab.swift in Sources */,
+				63EAA1052448554400C234A8 /* CommonButton.swift in Sources */,
 				638C392624361AC200DB33A3 /* IOSToastHandler.swift in Sources */,
 				63FB270923E1AA50005F19F1 /* WebViewController.swift in Sources */,
+				63EAA1072448749200C234A8 /* UsersPickerViewAdapter.swift in Sources */,
 				633B4CF823E07F150099EF41 /* FiltersTableViewAdapter.swift in Sources */,
 				63EAA0F62445EA6600C234A8 /* UsersTableViewAdapter.swift in Sources */,
 				335240DCD1989E341210D5E1 /* TimeInterval+Extension.swift in Sources */,
