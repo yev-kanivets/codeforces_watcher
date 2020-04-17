@@ -51,7 +51,7 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
         
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
-                return KotlinBoolean(bool: oldState.users == newState.users && oldState.addUserState == newState.addUserState)
+                return KotlinBoolean(bool: oldState.users == newState.users)
             }.select { state in
                 return state.users
             }
@@ -179,7 +179,7 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
         HUD.show(.progress, onView: UIApplication.shared.windows.last)
         
         let handle = bottomInputCardView.textField.text ?? ""
-        store.dispatch(action: AddUserRequests.AddUser(handle: handle, language: "locale".localized))
+        store.dispatch(action: UsersRequests.AddUser(handle: handle, language: "locale".localized))
     }
     
     private func showBottomInputView() {
@@ -198,10 +198,10 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
         resignFirstResponder()
     }
     
-    private func sortUsers() {
+    private func sortUsers(_ sortType: UsersState.SortType) {
         var sortedUsers = users
         
-        switch(store.state.users.sortType) {
+        switch(sortType) {
         case .default_:
             sortedUsers.reverse()
         case .ratingDown:
@@ -237,23 +237,23 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
         
         users = state.users
         sortTextField.isHidden = users.isEmpty
-        sortUsers()
+        sortUsers(state.sortType)
         
-        switch(store.state.addUserState.status) {
+        switch(state.addUserStatus) {
         case .done:
             HUD.hide(afterDelay: 0)
             
             hideBottomInputView()
 
             Analytics.logEvent("user_added", parameters: [:])
-            store.dispatch(action: AddUserActions.ClearAddUserState())
+            store.dispatch(action: UsersActions.ClearAddUserState())
         case .idle:
             HUD.hide(afterDelay: 0)
         default:
             break
         }
         
-        let currentOption = pickerAdapter.options[Int(store.state.users.sortType.position)]
+        let currentOption = pickerAdapter.options[Int(state.sortType.position)]
         sortTextField.text = "Sort".localizedFormat(args: currentOption)
     }
 }

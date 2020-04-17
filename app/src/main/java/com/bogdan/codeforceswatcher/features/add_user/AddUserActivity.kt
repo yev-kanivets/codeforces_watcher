@@ -8,15 +8,15 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.util.Analytics
-import io.xorum.codeforceswatcher.features.add_user.redux.actions.AddUserActions
-import io.xorum.codeforceswatcher.features.add_user.redux.requests.AddUserRequests
-import io.xorum.codeforceswatcher.features.add_user.redux.states.AddUserState
+import io.xorum.codeforceswatcher.features.users.redux.actions.UsersActions
+import io.xorum.codeforceswatcher.features.users.redux.requests.UsersRequests
+import io.xorum.codeforceswatcher.features.users.redux.states.UsersState
 import io.xorum.codeforceswatcher.redux.store
 import kotlinx.android.synthetic.main.activity_add_user.*
 import tw.geothings.rekotlin.StoreSubscriber
 import java.util.*
 
-class AddUserActivity : AppCompatActivity(), OnClickListener, StoreSubscriber<AddUserState> {
+class AddUserActivity : AppCompatActivity(), OnClickListener, StoreSubscriber<UsersState> {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +33,8 @@ class AddUserActivity : AppCompatActivity(), OnClickListener, StoreSubscriber<Ad
         super.onStart()
         store.subscribe(this) { state ->
             state.skipRepeats { oldState, newState ->
-                oldState.addUserState == newState.addUserState
-            }.select { it.addUserState }
+                oldState.users == newState.users
+            }.select { it.users }
         }
     }
 
@@ -45,7 +45,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener, StoreSubscriber<Ad
 
     override fun onStop() {
         super.onStop()
-        store.dispatch(AddUserActions.ClearAddUserState())
+        store.dispatch(UsersActions.ClearAddUserState())
         store.unsubscribe(this)
     }
 
@@ -60,13 +60,13 @@ class AddUserActivity : AppCompatActivity(), OnClickListener, StoreSubscriber<Ad
         imm?.hideSoftInputFromWindow(etHandle.windowToken, 0)
     }
 
-    override fun newState(state: AddUserState) {
-        progressBar.visibility = when (state.status) {
-            AddUserState.Status.IDLE -> INVISIBLE
-            AddUserState.Status.PENDING -> VISIBLE
-            AddUserState.Status.DONE -> INVISIBLE
+    override fun newState(state: UsersState) {
+        progressBar.visibility = when (state.addUserStatus) {
+            UsersState.Status.IDLE -> INVISIBLE
+            UsersState.Status.PENDING -> VISIBLE
+            UsersState.Status.DONE -> INVISIBLE
         }
-        if (state.status == AddUserState.Status.DONE) finish()
+        if (state.addUserStatus == UsersState.Status.DONE) finish()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -77,7 +77,7 @@ class AddUserActivity : AppCompatActivity(), OnClickListener, StoreSubscriber<Ad
     override fun onClick(v: View) {
         when (v.id) {
             R.id.btnAdd -> {
-                store.dispatch(AddUserRequests.AddUser(etHandle.text.toString(), Locale.getDefault().language))
+                store.dispatch(UsersRequests.AddUser(etHandle.text.toString(), Locale.getDefault().language))
                 Analytics.logUserAdded()
             }
             else -> {

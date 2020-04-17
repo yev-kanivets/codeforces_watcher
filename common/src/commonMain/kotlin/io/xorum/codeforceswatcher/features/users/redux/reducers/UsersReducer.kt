@@ -1,6 +1,5 @@
 package io.xorum.codeforceswatcher.features.users.redux.reducers
 
-import io.xorum.codeforceswatcher.features.add_user.redux.requests.AddUserRequests
 import io.xorum.codeforceswatcher.features.users.redux.actions.UsersActions
 import io.xorum.codeforceswatcher.features.users.redux.requests.UsersRequests
 import io.xorum.codeforceswatcher.features.users.redux.states.UsersState
@@ -22,14 +21,23 @@ fun usersReducer(action: Action, state: AppState): UsersState {
         is UsersRequests.FetchUsers.Failure -> {
             newState = newState.copy(status = UsersState.Status.IDLE)
         }
-        is AddUserRequests.AddUser.Success -> {
-            newState = newState.copy(users = state.users.users.plus(action.user))
-        }
         is UsersRequests.DeleteUser -> {
             newState = newState.copy(users = state.users.users.minus(action.user))
         }
         is UsersActions.Sort -> {
             newState = newState.copy(sortType = action.sortType)
+        }
+        is UsersRequests.AddUser -> {
+            newState = newState.copy(addUserStatus = UsersState.Status.PENDING)
+        }
+        is UsersRequests.AddUser.Failure -> {
+            newState = newState.copy(addUserStatus = UsersState.Status.IDLE)
+        }
+        is UsersRequests.AddUser.Success -> {
+            newState = newState.copy(users = state.users.users.plus(action.user), addUserStatus = UsersState.Status.DONE)
+        }
+        is UsersActions.ClearAddUserState -> {
+            newState = newState.copy(addUserStatus = UsersState.Status.IDLE)
         }
     }
 
