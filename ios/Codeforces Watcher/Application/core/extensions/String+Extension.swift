@@ -34,12 +34,10 @@ extension String {
             return string
         }
     }
-
-    func dateStringToDate() -> Date {
-        let formatter = DateFormatter().apply {
-            $0.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        }
-        return formatter.date(from: self)!
+    
+    func localizedFormat(args: CVarArg...) -> String {
+        let format = self.localized
+        return String(format: format, arguments: args)
     }
     
     var attributed: NSMutableAttributedString { return NSMutableAttributedString(string: self) }
@@ -52,9 +50,5 @@ extension String {
 }
 
 func buildShareText(_ title: String, _ link: String) -> String {
-    return """
-           \(title) - \(link)
-
-           Shared through Codeforces Watcher. Find it on App Store.
-           """
+    return "share_text".localizedFormat(args: title, link)
 }

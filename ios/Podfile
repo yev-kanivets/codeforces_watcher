@@ -18,6 +18,7 @@ target 'Codeforces Watcher' do
   	pod 'PKHUD', '~> 5.0'
 	pod 'MaterialComponents/Buttons'
 	pod 'Toast-Swift', '~> 5.0.1'
+	pod 'Charts'
 
   	target 'Codeforces WatcherTests' do
     	inherit! :search_paths

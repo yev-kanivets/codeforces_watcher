@@ -16,22 +16,17 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
     private let tableAdapter = UsersTableViewAdapter()
     private let refreshControl = UIRefreshControl()
     
-    private lazy var sortTextField = UITextField(frame: CGRect(x: 0, y: 0, width: self.navigationController!.navigationBar.frame.size.width, height: self.navigationController!.navigationBar.frame.size.height)).apply {
+    private let sortTextField = UITextField().apply {
         $0.font = Font.textHeading
         $0.textColor = Palette.white
         $0.tintColor = .clear
-    
         $0.textAlignment = .right
-        $0.allowsEditingTextAttributes = false
     }
     private let pickerView = UIPickerView()
     private let pickerAdapter = UsersPickerViewAdapter()
     
-    private lazy var bottomInputCardView = AddUserCardView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 136)).apply {
+    private let bottomInputCardView = AddUserCardView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 136)).apply {
         $0.isHidden = true
-        $0.shouldMoveFurther = {
-            self.addUser()
-        }
     }
     
     private var users: [User] = []
@@ -66,10 +61,17 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         store.unsubscribe(subscriber: self)
+        
+        bottomInputCardView.isHidden = true
+        sortTextField.isHidden = true
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        bottomInputCardView.shouldMoveFurther = {
+            self.addUser()
+        }
         
         setupView()
         setupTableView()
@@ -99,8 +101,6 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
             $0.selectRow(Int(store.state.users.sortType.position), inComponent: 0, animated: false)
         }
         
-        navigationItem.titleView = sortTextField
-        
         let doneButton = UIBarButtonItem(title: "Done".localized, style: .plain, target: self, action: #selector(doneTapped))
         
         let toolBar = UIToolbar().apply {
@@ -123,20 +123,29 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
     
     private func buildViewTree() {
         view.addSubview(tableView)
+        navigationController?.navigationBar.addSubview(sortTextField)
     }
     
     private func setConstraints() {
         tableView.edgesToSuperview()
+        sortTextField.run {
+            $0.topToSuperview()
+            $0.bottomToSuperview()
+            $0.trailingToSuperview(offset: 8)
+        }
     }
     
     private func setInteractions() {
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOutside)).apply {
-            $0.cancelsTouchesInView = false
-        })
+        [navigationController?.navigationBar, view].forEach {
+            ($0 as AnyObject).addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOutside)).apply {
+                $0.cancelsTouchesInView = false
+            })
+        }
     }
     
-    @objc func didTapOutside(_ tapGestureRecognizer: UITapGestureRecognizer) {
+    @objc func didTapOutside() {
         hideBottomInputView()
+        sortTextField.resignFirstResponder()
     }
     
     private func setupTableView() {
@@ -145,6 +154,10 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
             $0.dataSource = tableAdapter
             $0.separatorStyle = .none
             $0.refreshControl = refreshControl
+        }
+        
+        tableAdapter.onUserTap = { user in
+            self.navigationController?.pushViewController(UserViewController(user), animated: true)
         }
 
         [UserTableViewCell.self, NoItemsTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
@@ -181,10 +194,11 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
     }
     
     private func hideBottomInputView() {
-        bottomInputCardView.textField.resignFirstResponder()
+        bottomInputCardView.textField.run {
+            $0.text = ""
+            $0.resignFirstResponder()
+        }
         resignFirstResponder()
-
-        bottomInputCardView.textField.text = ""
     }
     
     private func sortUsers() {

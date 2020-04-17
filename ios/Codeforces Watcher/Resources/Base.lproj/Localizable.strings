@@ -39,3 +39,12 @@
 "Add user" = "Add user";
 "Enter user handle" = "Enter user handle";
 "No rating update" = "No rating update";
+"Done" = "Done";
+"Rating changes" = "Rating changes";
+
+"None" = "None";
+"Rank" = "Rank: %@";
+"Name" = "Name: %@ %@";
+"Current rating" = "Current rating: %@";
+"Max rating" = "Max rating: %@";
+"share_text" = "%@ - %@\n\nShared through Codeforces Watcher. Find it on App Store.";

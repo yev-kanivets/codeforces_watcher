@@ -12,6 +12,7 @@ import common
 
 class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
     var users: [User] = []
+    var onUserTap: ((User) -> ())?
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -38,7 +39,11 @@ class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSourc
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (users.isEmpty) {
+            return
+        }
         
+        onUserTap?(users[indexPath.row])
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

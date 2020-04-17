@@ -1,5 +1,8 @@
 PODS:
   - Alamofire (4.9.1)
+  - Charts (3.5.0):
+    - Charts/Core (= 3.5.0)
+  - Charts/Core (3.5.0)
   - common (0.0.1-SNAPSHOT)
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
@@ -120,6 +123,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.9.1)
+  - Charts
   - common (from `../common`)
   - Crashlytics (~> 3.14.0)
   - Fabric (~> 1.10.2)
@@ -134,6 +138,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - Charts
     - Crashlytics
     - Fabric
     - Firebase
@@ -162,6 +167,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  Charts: 40a08591df1f8ad5c223ddedfb1a06da92f24f7c
   common: b488d96f02c83385301e4b1df8634fcebccda734
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
@@ -185,6 +191,6 @@ SPEC CHECKSUMS:
   TinyConstraints: 8dd91295e56797648c7bc335dd20e1d91ec4c192
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: e1a33287b6507548320aa5042ec8f02e22a08454
+PODFILE CHECKSUM: e21de4e9d02b29cdbb0570b7bffbfaa88fae0226
 
 COCOAPODS: 1.8.4
