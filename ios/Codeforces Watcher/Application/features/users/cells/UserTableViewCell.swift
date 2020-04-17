@@ -99,7 +99,7 @@ class UserTableViewCell: UITableViewCell {
             let ratingUpdateString = (isRatingIncreased ? "▲" : "▼") + " \(delta)"
             
             ratingUpdateLabel.attributedText = ratingUpdateString.colorString(color: isRatingIncreased ? Palette.brightGreen : Palette.red)
-            ratingUpdateDateLabel.text = "Last rating update: " + Double(ratingChange.ratingUpdateTimeSeconds).secondsToUserUpdateDateString()
+            ratingUpdateDateLabel.text = "Last rating update".localizedFormat(args: Double(ratingChange.ratingUpdateTimeSeconds).secondsToUserUpdateDateString())
         } else {
             ratingUpdateDateLabel.text = "No rating update".localized
         }

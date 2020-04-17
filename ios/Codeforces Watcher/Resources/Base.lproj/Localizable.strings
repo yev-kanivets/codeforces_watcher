@@ -48,5 +48,16 @@
 "Current rating" = "Current rating: %@";
 "Max rating" = "Max rating: %@";
 "Sort" = "Sort by %@ ▼";
+
+"default" = "default";
+"rating_up" = "↑rating";
+"rating_down" = "↓rating";
+"update_up" = "↑update";
+"update_down" = "↓update";
+
+"Last rating update" = "Last rating update: %@";
+
 "share_text" = "%@ - %@\n\nShared through Codeforces Watcher. Find it on App Store.";
 "Check upcoming programming contests" = "Check upcoming programming contests";
+
+

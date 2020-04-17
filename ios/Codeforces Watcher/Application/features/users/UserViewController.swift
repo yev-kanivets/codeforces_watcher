@@ -21,7 +21,6 @@ class UserViewController: UIViewControllerWithCross {
         $0.textColor = Palette.grey
     }
     private let lineChartView = LineChartView()
-    private let markerLabel = UILabel()
     
     private let user: User
     

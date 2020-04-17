@@ -90,7 +90,7 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
                 let sortType = UsersState.SortTypeCompanion().getSortType(sortType: Int32(position))
                 store.dispatch(action: UsersActions.Sort(sortType: sortType))
             }
-            $0.options = ["default", "↓rating", "↑rating", "↓update", "↑update"]
+            $0.options = ["default", "rating_up", "rating_down", "update_up", "update_down"].map { $0.localized }
         }
         pickerView.run {
             $0.backgroundColor = Palette.white
