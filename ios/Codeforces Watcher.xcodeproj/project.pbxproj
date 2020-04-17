@@ -49,6 +49,7 @@
 		63B342FF2448B8AB00734CC5 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B342FE2448B8AA00734CC5 /* UserViewController.swift */; };
 		63B343022449C16100734CC5 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B343012449C16000734CC5 /* UIViewController+Extension.swift */; };
 		63B343042449C31C00734CC5 /* UIViewControllerWithCross.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B343032449C31C00734CC5 /* UIViewControllerWithCross.swift */; };
+		63B343072449E3BE00734CC5 /* ChartMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B343062449E3BE00734CC5 /* ChartMarker.swift */; };
 		63EAA0D0243EFF2500C234A8 /* FilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0CF243EFF2400C234A8 /* FilterItem.swift */; };
 		63EAA0D9244047DF00C234A8 /* Platform+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0D8244047DF00C234A8 /* Platform+Extension.swift */; };
 		63EAA0DB244051F100C234A8 /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0DA244051F100C234A8 /* UsersViewController.swift */; };
@@ -138,6 +139,7 @@
 		63B342FE2448B8AA00734CC5 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		63B343012449C16000734CC5 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		63B343032449C31C00734CC5 /* UIViewControllerWithCross.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerWithCross.swift; sourceTree = "<group>"; };
+		63B343062449E3BE00734CC5 /* ChartMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartMarker.swift; sourceTree = "<group>"; };
 		63EAA0CF243EFF2400C234A8 /* FilterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterItem.swift; sourceTree = "<group>"; };
 		63EAA0D8244047DF00C234A8 /* Platform+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Platform+Extension.swift"; sourceTree = "<group>"; };
 		63EAA0DA244051F100C234A8 /* UsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 		33524334DF2CD89E83BDE8E8 /* users */ = {
 			isa = PBXGroup;
 			children = (
+				63B343052449E39600734CC5 /* models */,
 				63B343002448B8BA00734CC5 /* adapters */,
 				63EAA0F72445EAB700C234A8 /* cells */,
 				63EAA0DA244051F100C234A8 /* UsersViewController.swift */,
@@ -438,6 +441,14 @@
 				63EAA1062448749200C234A8 /* UsersPickerViewAdapter.swift */,
 			);
 			path = adapters;
+			sourceTree = "<group>";
+		};
+		63B343052449E39600734CC5 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				63B343062449E3BE00734CC5 /* ChartMarker.swift */,
+			);
+			path = models;
 			sourceTree = "<group>";
 		};
 		63EAA0C9243DFBD000C234A8 /* common */ = {
@@ -862,6 +873,7 @@
 				63EAA0F22445AA3100C234A8 /* SubheadingBigLabel.swift in Sources */,
 				63B343022449C16100734CC5 /* UIViewController+Extension.swift in Sources */,
 				63EAA0EA244474DC00C234A8 /* SubheadingLabel.swift in Sources */,
+				63B343072449E3BE00734CC5 /* ChartMarker.swift in Sources */,
 				33524DD18E818A18FEE9B1E8 /* ContestsRulesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

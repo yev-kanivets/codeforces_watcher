@@ -21,6 +21,7 @@ class UserViewController: UIViewControllerWithCross {
         $0.textColor = Palette.grey
     }
     private let lineChartView = LineChartView()
+    private let markerLabel = UILabel()
     
     private let user: User
     
@@ -61,6 +62,10 @@ class UserViewController: UIViewControllerWithCross {
             return
         }
         
+        let markerView = ChartMarker().apply {
+            $0.chartView = lineChartView
+        }
+        
         lineChartView.run {
             $0.rightAxis.enabled = false
             $0.legend.enabled = false
@@ -70,6 +75,7 @@ class UserViewController: UIViewControllerWithCross {
                 $0.labelCount = 3
             }
             $0.drawMarkers = true
+            $0.marker = markerView
         }
         
         let dataEntries = user.ratingChanges.map {
@@ -145,15 +151,5 @@ class UserViewController: UIViewControllerWithCross {
         nameLabel.text = "Name".localizedFormat(args: user.firstName ?? "", user.lastName ?? none)
         currentRatingLabel.text = "Current rating".localizedFormat(args: user.rating ?? none)
         maxRatingLabel.text = "Max rating".localizedFormat(args: user.maxRating ?? none)
-    }
-}
-
-class xAxisFormatter: IAxisValueFormatter {
-    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        let date = Date(timeIntervalSince1970: value)
-        let dayTimePeriodFormatter = DateFormatter().apply {
-            $0.dateFormat = "MMM, yyyy"
-        }
-        return dayTimePeriodFormatter.string(from: date)
     }
 }

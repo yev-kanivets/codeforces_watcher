@@ -30,9 +30,10 @@ internal class CodeforcesRepository {
         null
     }
 
-    suspend fun getRating(handle: String) = try {
+    suspend fun getRating(handle: String, lang: String) = try {
         codeforcesApiClient.get<RatingChangeResponse>(path = "user.rating") {
             parameter("handle", handle)
+            parameter("lang", lang)
         }
     } catch (t: Throwable) {
         null

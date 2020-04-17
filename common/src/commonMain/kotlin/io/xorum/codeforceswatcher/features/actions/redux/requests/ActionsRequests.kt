@@ -89,12 +89,12 @@ class ActionsRequests {
             val response = pinnedPostsApiClient.getPinnedPost()
             response?.let {
                 store.dispatch(Success(it))
-            } ?: store.dispatch(Failure(Message.Custom("Failed to fetch pinned post")))
+            } ?: store.dispatch(Failure())
         }
 
         data class Success(val pinnedPost: PinnedPost) : Action
 
-        data class Failure(override val message: Message) : ToastAction
+        class Failure() : Action
     }
 
     class RemovePinnedPost(val link: String) : Request() {

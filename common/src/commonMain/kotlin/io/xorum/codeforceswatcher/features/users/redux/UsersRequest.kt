@@ -16,17 +16,17 @@ suspend fun getUsers(handles: String, isRatingUpdatesNeeded: Boolean, lang: Stri
         }
 
         if (isRatingUpdatesNeeded) {
-            loadRatingUpdates(users)
+            loadRatingUpdates(users, lang)
         } else {
             UsersRequestResult.Success(users)
         }
     } ?: UsersRequestResult.Failure(response?.comment.toError() ?: Error.Internet())
 }
 
-suspend fun loadRatingUpdates(userList: List<User>): UsersRequestResult {
+suspend fun loadRatingUpdates(userList: List<User>, lang: String): UsersRequestResult {
     for (user in userList) {
         delay(250) // Because Codeforces blocks frequent queries
-        val response = codeforcesRepository.getRating(user.handle)
+        val response = codeforcesRepository.getRating(user.handle, lang)
         response?.result?.let { ratingChanges ->
             user.ratingChanges = ratingChanges
         } ?: return UsersRequestResult.Failure(response?.comment.toError() ?: Error.Response())
