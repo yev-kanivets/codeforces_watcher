@@ -61,9 +61,6 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         store.unsubscribe(subscriber: self)
-        
-        bottomInputCardView.isHidden = true
-        sortTextField.isHidden = true
     }
     
     override func viewDidLoad() {
@@ -157,7 +154,7 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
         }
         
         tableAdapter.onUserTap = { user in
-            self.navigationController?.pushViewController(UserViewController(user), animated: true)
+            self.presentModal(UserViewController(user))
         }
 
         [UserTableViewCell.self, NoItemsTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
@@ -257,6 +254,6 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
         }
         
         let currentOption = pickerAdapter.options[Int(store.state.users.sortType.position)]
-        sortTextField.text = "Sort by: \(currentOption) ▼"
+        sortTextField.text = "Sort".localizedFormat(args: currentOption)
     }
 }

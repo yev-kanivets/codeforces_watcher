@@ -78,7 +78,7 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
                 $0.shareEventName = "problem_shared"
             }
             self.searchController.isActive = false
-            self.navigationController?.pushViewController(webViewController, animated: true)
+            self.presentModal(webViewController)
         }
 
         tableView.refreshControl = refreshControl

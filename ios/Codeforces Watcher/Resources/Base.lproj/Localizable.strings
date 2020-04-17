@@ -47,4 +47,6 @@
 "Name" = "Name: %@ %@";
 "Current rating" = "Current rating: %@";
 "Max rating" = "Max rating: %@";
+"Sort" = "Sort by %@ ▼";
 "share_text" = "%@ - %@\n\nShared through Codeforces Watcher. Find it on App Store.";
+"Check upcoming programming contests" = "Check upcoming programming contests";

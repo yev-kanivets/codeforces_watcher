@@ -86,7 +86,7 @@ class ActionsViewController: UIViewControllerWithFab, StoreSubscriber {
                 $0.openEventName = "action_opened"
                 $0.shareEventName = "action_share_comment"
             }
-            self.navigationController?.pushViewController(webViewController, animated: true)
+            self.presentModal(webViewController)
         }
 
         tableView.refreshControl = refreshControl
@@ -150,7 +150,7 @@ class ActionsViewController: UIViewControllerWithFab, StoreSubscriber {
             $0.openEventName = "actions_pinned_post_opened"
         }
 
-        navigationController?.pushViewController(webViewController, animated: true)
+        self.presentModal(webViewController)
     }
 
     @objc private func refreshActions(_ sender: Any) {

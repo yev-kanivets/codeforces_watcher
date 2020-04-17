@@ -11,7 +11,7 @@ import WebKit
 import FirebaseAnalytics
 import PKHUD
 
-class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
+class WebViewController: UIViewControllerWithCross, WKUIDelegate, WKNavigationDelegate {
 
     private lazy var webView = WKWebView(frame: .zero, configuration: WKWebViewConfiguration()).apply {
         $0.uiDelegate = self
@@ -26,8 +26,11 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     var shareEventName: String?
 
     override func viewDidLoad() {
-        PKHUD.sharedHUD.userInteractionOnUnderlyingViewsEnabled = true
-        HUD.show(.progress, onView: UIApplication.shared.windows.last)
+        PKHUD.sharedHUD.run {
+            $0.userInteractionOnUnderlyingViewsEnabled = true
+            $0.contentView = PKHUDProgressView()
+            $0.show()
+        }
 
         onLoadViewLogEvent()
 
@@ -39,7 +42,7 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        HUD.hide(afterDelay: 0)
+        PKHUD.sharedHUD.hide(afterDelay: 0)
     }
 
     @objc func shareTapped() {
@@ -47,7 +50,7 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             $0.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         }
 
-        present(activityController, animated: true, completion: nil)
+        present(activityController, animated: true)
 
         onShareViewLogEvent()
     }
@@ -71,10 +74,10 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        HUD.hide(afterDelay: 0)
+        PKHUD.sharedHUD.hide(afterDelay: 0)
     }
 
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        HUD.hide(afterDelay: 0)
+        PKHUD.sharedHUD.hide(afterDelay: 0)
     }
 }

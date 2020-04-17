@@ -10,17 +10,16 @@ import UIKit
 import common
 import Charts
 
-class UserViewController: UIViewController {
+class UserViewController: UIViewControllerWithCross {
     private let userImage = CircleImageView()
     private let rankLabel = BodyLabel()
     private let nameLabel = BodyLabel()
     private let currentRatingLabel = BodyLabel()
     private let maxRatingLabel = BodyLabel()
-    
     private let ratingChangesLabel = HeadingLabel().apply {
         $0.text = "Rating changes".localized
+        $0.textColor = Palette.grey
     }
-    
     private let lineChartView = LineChartView()
     
     private let user: User
@@ -38,6 +37,7 @@ class UserViewController: UIViewController {
         super.viewDidLoad()
 
         setupView()
+        setupChart()
     }
     
     private func setupView() {
@@ -53,7 +53,41 @@ class UserViewController: UIViewController {
     
     @objc func removeTapped() {
         store.dispatch(action: UsersRequests.DeleteUser(user: user))
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
+    }
+    
+    private func setupChart() {
+        if user.ratingChanges.isEmpty {
+            return
+        }
+        
+        lineChartView.run {
+            $0.rightAxis.enabled = false
+            $0.legend.enabled = false
+            $0.xAxis.run {
+                $0.labelPosition = .bottom
+                $0.valueFormatter = xAxisFormatter()
+                $0.labelCount = 3
+            }
+            $0.drawMarkers = true
+        }
+        
+        let dataEntries = user.ratingChanges.map {
+            ChartDataEntry(x: Double($0.ratingUpdateTimeSeconds), y: Double($0.newRating), data: $0.contestName)
+        }
+        
+        let dataSet = LineChartDataSet(entries: dataEntries).apply {
+            $0.lineWidth = 1.3
+            $0.circleRadius = 3.5
+            $0.circleHoleRadius = 2
+            $0.circleHoleColor = Palette.white
+        }
+        
+        let data = LineChartData(dataSet: dataSet).apply {
+            $0.setDrawValues(false)
+        }
+        
+        lineChartView.data = data
     }
     
     private func buildViewTree() {
@@ -97,7 +131,7 @@ class UserViewController: UIViewController {
             $0.leadingToSuperview(offset: 16)
             $0.trailingToSuperview(offset: 16)
             $0.topToBottom(of: ratingChangesLabel, offset: 16)
-            $0.bottomToSuperview(offset: 16)
+            $0.bottomToSuperview(offset: -16)
         }
     }
     
@@ -111,5 +145,15 @@ class UserViewController: UIViewController {
         nameLabel.text = "Name".localizedFormat(args: user.firstName ?? "", user.lastName ?? none)
         currentRatingLabel.text = "Current rating".localizedFormat(args: user.rating ?? none)
         maxRatingLabel.text = "Max rating".localizedFormat(args: user.maxRating ?? none)
+    }
+}
+
+class xAxisFormatter: IAxisValueFormatter {
+    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        let date = Date(timeIntervalSince1970: value)
+        let dayTimePeriodFormatter = DateFormatter().apply {
+            $0.dateFormat = "MMM, yyyy"
+        }
+        return dayTimePeriodFormatter.string(from: date)
     }
 }

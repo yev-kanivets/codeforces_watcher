@@ -47,6 +47,8 @@
 		6394361823BA116000B302A3 /* Codeforces_WatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6394361723BA116000B302A3 /* Codeforces_WatcherTests.swift */; };
 		6394362323BA116000B302A3 /* Codeforces_WatcherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6394362223BA116000B302A3 /* Codeforces_WatcherUITests.swift */; };
 		63B342FF2448B8AB00734CC5 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B342FE2448B8AA00734CC5 /* UserViewController.swift */; };
+		63B343022449C16100734CC5 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B343012449C16000734CC5 /* UIViewController+Extension.swift */; };
+		63B343042449C31C00734CC5 /* UIViewControllerWithCross.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B343032449C31C00734CC5 /* UIViewControllerWithCross.swift */; };
 		63EAA0D0243EFF2500C234A8 /* FilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0CF243EFF2400C234A8 /* FilterItem.swift */; };
 		63EAA0D9244047DF00C234A8 /* Platform+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0D8244047DF00C234A8 /* Platform+Extension.swift */; };
 		63EAA0DB244051F100C234A8 /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA0DA244051F100C234A8 /* UsersViewController.swift */; };
@@ -134,6 +136,8 @@
 		6394362223BA116000B302A3 /* Codeforces_WatcherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codeforces_WatcherUITests.swift; sourceTree = "<group>"; };
 		6394362423BA116000B302A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63B342FE2448B8AA00734CC5 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		63B343012449C16000734CC5 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		63B343032449C31C00734CC5 /* UIViewControllerWithCross.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerWithCross.swift; sourceTree = "<group>"; };
 		63EAA0CF243EFF2400C234A8 /* FilterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterItem.swift; sourceTree = "<group>"; };
 		63EAA0D8244047DF00C234A8 /* Platform+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Platform+Extension.swift"; sourceTree = "<group>"; };
 		63EAA0DA244051F100C234A8 /* UsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
@@ -228,6 +232,7 @@
 				335242CD59B4556413229680 /* TimeInterval+Extension.swift */,
 				63603E6823DF2ADC00F86BC0 /* Double+Extension.swift */,
 				63EAA0D8244047DF00C234A8 /* Platform+Extension.swift */,
+				63B343012449C16000734CC5 /* UIViewController+Extension.swift */,
 				335247F739C05D9BDD4FD646 /* tableView */,
 			);
 			path = extensions;
@@ -441,6 +446,7 @@
 				63FB270823E1AA50005F19F1 /* WebViewController.swift */,
 				63EAA0E62444719C00C234A8 /* UIViewControllerWithFab.swift */,
 				63EAA0FA2446FF6A00C234A8 /* NoItemsTableViewCell.swift */,
+				63B343032449C31C00734CC5 /* UIViewControllerWithCross.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -842,6 +848,7 @@
 				335240DCD1989E341210D5E1 /* TimeInterval+Extension.swift in Sources */,
 				633B4CFA23E083A10099EF41 /* FilterTableViewCell.swift in Sources */,
 				63B342FF2448B8AB00734CC5 /* UserViewController.swift in Sources */,
+				63B343042449C31C00734CC5 /* UIViewControllerWithCross.swift in Sources */,
 				63EAA0DB244051F100C234A8 /* UsersViewController.swift in Sources */,
 				63603E6923DF2ADC00F86BC0 /* Double+Extension.swift in Sources */,
 				335248243065D1A2585B79FE /* ActionsTableViewAdapter.swift in Sources */,
@@ -853,6 +860,7 @@
 				63736F0023CF6557001E9AB9 /* ContestTableViewCell.swift in Sources */,
 				63736F0923CF67FC001E9AB9 /* ContestsTableViewAdapter.swift in Sources */,
 				63EAA0F22445AA3100C234A8 /* SubheadingBigLabel.swift in Sources */,
+				63B343022449C16100734CC5 /* UIViewController+Extension.swift in Sources */,
 				63EAA0EA244474DC00C234A8 /* SubheadingLabel.swift in Sources */,
 				33524DD18E818A18FEE9B1E8 /* ContestsRulesView.swift in Sources */,
 			);
