@@ -34,19 +34,21 @@ extension String {
             return string
         }
     }
-
-    func dateStringToDate() -> Date {
-        let formatter = DateFormatter().apply {
-            $0.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+    
+    func localizedFormat(args: CVarArg...) -> String {
+        let format = self.localized
+        return String(format: format, arguments: args)
+    }
+    
+    var attributed: NSMutableAttributedString { return NSMutableAttributedString(string: self) }
+    
+    func colorString(color: UIColor) -> NSAttributedString {
+        return self.attributed.apply {
+            $0.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: NSRange(location: 0, length: self.count))
         }
-        return formatter.date(from: self)!
     }
 }
 
 func buildShareText(_ title: String, _ link: String) -> String {
-    return """
-           \(title) - \(link)
-
-           Shared through Codeforces Watcher. Find it on App Store.
-           """
+    return "share_text".localizedFormat(args: title, link)
 }

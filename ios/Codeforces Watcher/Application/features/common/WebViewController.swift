@@ -11,7 +11,7 @@ import WebKit
 import FirebaseAnalytics
 import PKHUD
 
-class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
+class WebViewController: UIViewControllerWithCross, WKUIDelegate, WKNavigationDelegate {
 
     private lazy var webView = WKWebView(frame: .zero, configuration: WKWebViewConfiguration()).apply {
         $0.uiDelegate = self
@@ -22,13 +22,15 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     var link: String!
     var shareText: String!
 
-    var openEventName: String! = ""
-    var shareEventName: String! = ""
+    var openEventName: String?
+    var shareEventName: String?
 
     override func viewDidLoad() {
-        PKHUD.sharedHUD.contentView = PKHUDProgressView()
-        PKHUD.sharedHUD.userInteractionOnUnderlyingViewsEnabled = true
-        PKHUD.sharedHUD.show()
+        PKHUD.sharedHUD.run {
+            $0.userInteractionOnUnderlyingViewsEnabled = true
+            $0.contentView = PKHUDProgressView()
+            $0.show()
+        }
 
         onLoadViewLogEvent()
 
@@ -48,22 +50,24 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             $0.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         }
 
-        present(activityController, animated: true, completion: nil)
+        present(activityController, animated: true)
 
         onShareViewLogEvent()
     }
 
-    func onLoadViewLogEvent() {
-        guard !openEventName.isEmpty else { return }
-        Analytics.logEvent(openEventName, parameters: [:])
+    private func onLoadViewLogEvent() {
+        if let openEventName = openEventName {
+            Analytics.logEvent(openEventName, parameters: [:])
+        }
     }
 
-    func onShareViewLogEvent() {
-        guard !shareEventName.isEmpty else { return }
-        Analytics.logEvent(shareEventName, parameters: [:])
+    private func onShareViewLogEvent() {
+        if let shareEventName = shareEventName {
+            Analytics.logEvent(shareEventName, parameters: [:])
+        }
     }
 
-    func openWebPage() {
+    private func openWebPage() {
         if let url = URL(string: link) {
             webView.load(URLRequest(url: url))
         }

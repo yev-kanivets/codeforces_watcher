@@ -16,7 +16,9 @@ class ContestTableViewCell: UITableViewCell {
     private let cardView = CardView()
 
     private var logoView = CircleImageView()
-    private let nameLabel = HeadingLabel()
+    private let nameLabel = HeadingLabel().apply {
+        $0.numberOfLines = 1
+    }
 
     private let timeLabel = SubheadingBigLabel()
 
@@ -55,7 +57,7 @@ class ContestTableViewCell: UITableViewCell {
     }
 
     private func setConstraints() {
-        cardView.edgesToSuperview(insets: UIEdgeInsets(top: 8, left: 8, bottom: 0, right: 8))
+        cardView.edgesToSuperview(insets: UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8))
 
         logoView.run {
             $0.leadingToSuperview(offset: 8)
@@ -83,7 +85,7 @@ class ContestTableViewCell: UITableViewCell {
 
     func bind(_ contest: Contest, completion: @escaping (() -> ())) {
         nameLabel.text = contest.name
-        timeLabel.text = Double(contest.startTimeSeconds / 1000).secondsToDateString()
+        timeLabel.text = Double(contest.startTimeSeconds / 1000).secondsToContestDateString()
         logoView.image = UIImage(named: Platform.getImageNameByPlatform(contest.platform))
 
         onCalendarTap = completion

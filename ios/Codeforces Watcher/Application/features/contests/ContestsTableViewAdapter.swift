@@ -31,7 +31,9 @@ class ContestsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSo
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (contests.isEmpty) {
-            return tableView.dequeueReusableCell(cellType: NoContestsTableViewCell.self)
+            return tableView.dequeueReusableCell(cellType: NoItemsTableViewCell.self).apply {
+                $0.bind(imageName: "noItemsImage", explanation: "contests_explanation")
+            }
         }
 
         return tableView.dequeueReusableCell(cellType: ContestTableViewCell.self).apply {

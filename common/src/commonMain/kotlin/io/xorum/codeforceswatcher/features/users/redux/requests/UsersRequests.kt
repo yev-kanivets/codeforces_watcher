@@ -8,6 +8,7 @@ import io.xorum.codeforceswatcher.redux.Message
 import io.xorum.codeforceswatcher.redux.Request
 import io.xorum.codeforceswatcher.redux.ToastAction
 import io.xorum.codeforceswatcher.redux.store
+import io.xorum.codeforceswatcher.util.defineLang
 import kotlinx.coroutines.delay
 import tw.geothings.rekotlin.Action
 
@@ -17,13 +18,16 @@ enum class Source(val isToastNeeded: Boolean) {
 
 class UsersRequests {
 
-    class FetchUsers(private val source: Source) : Request() {
+    class FetchUsers(
+            private val source: Source,
+            private val language: String
+    ) : Request() {
 
         override suspend fun execute() {
             // Use this delay because actions, problems and contests requests managed to work out(and Codeforces didn't block them)
             if (source == Source.BACKGROUND) delay(1500)
             val users = store.state.users.users
-            when (val result = getUsers(getHandles(users), true)) {
+            when (val result = getUsers(getHandles(users), true, lang = language.defineLang())) {
                 is UsersRequestResult.Failure -> {
                     store.dispatch(Failure(if (source.isToastNeeded) result.error.message else Message.None))
                 }
@@ -66,5 +70,34 @@ class UsersRequests {
         override suspend fun execute() {
             DatabaseQueries.Users.delete(user.id)
         }
+    }
+
+    class AddUser(
+            private val handle: String,
+            private val language: String
+    ) : Request() {
+
+        override suspend fun execute() {
+            when (val result = getUsers(handle, true, lang = language.defineLang())) {
+                is UsersRequestResult.Failure -> store.dispatch(Failure(result.error.message))
+                is UsersRequestResult.Success -> result.users.firstOrNull()?.let { user -> addUser(user) }
+            }
+        }
+
+        private fun addUser(user: User) {
+            val foundUser = DatabaseQueries.Users.getAll()
+                    .find { currentUser -> currentUser.handle == user.handle }
+
+            if (foundUser == null) {
+                user.id = DatabaseQueries.Users.insert(user)
+                store.dispatch(Success(user))
+            } else {
+                store.dispatch(Failure(Message.UserAlreadyAdded))
+            }
+        }
+
+        data class Success(val user: User) : Action
+
+        data class Failure(override val message: Message) : ToastAction
     }
 }

@@ -23,7 +23,7 @@ class CardView: UIView {
         }
     }
 
-    private let contentView = UIView().apply {
+    let contentView = UIView().apply {
         $0.backgroundColor = .white
         $0.layer.run {
             $0.masksToBounds = true

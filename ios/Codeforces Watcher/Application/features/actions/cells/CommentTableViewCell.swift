@@ -18,7 +18,9 @@ class CommentTableViewCell: UITableViewCell {
         $0.numberOfLines = 1
     }
 
-    private let userImage = CircleImageView()
+    private let userImage = CircleImageView().apply {
+        $0.image = noImage
+    }
 
     private let commentedByLabel = SubheadingLabel().apply {
         $0.text = "Commented by".localized + " "
@@ -56,7 +58,7 @@ class CommentTableViewCell: UITableViewCell {
     }
 
     private func setConstraints() {
-        cardView.edgesToSuperview(insets: UIEdgeInsets(top: 8, left: 8, bottom: 0, right: 8))
+        cardView.edgesToSuperview(insets: UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8))
 
         userImage.run {
             $0.leadingToSuperview(offset: 8)
@@ -113,8 +115,6 @@ class CommentTableViewCell: UITableViewCell {
         if var avatar = comment.commentatorAvatar {
             avatar = LinkValidatorKt.avatar(avatarLink: avatar)
             userImage.sd_setImage(with: URL(string: avatar), placeholderImage: noImage)
-        } else {
-            userImage.image = noImage
         }
     }
 }

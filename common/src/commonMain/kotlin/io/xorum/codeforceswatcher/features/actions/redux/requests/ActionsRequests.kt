@@ -7,6 +7,7 @@ import io.xorum.codeforceswatcher.features.users.redux.models.UsersRequestResult
 import io.xorum.codeforceswatcher.network.PinnedPostsApiClient
 import io.xorum.codeforceswatcher.network.responses.PinnedPost
 import io.xorum.codeforceswatcher.redux.*
+import io.xorum.codeforceswatcher.util.defineLang
 import io.xorum.codeforceswatcher.util.settings
 import tw.geothings.rekotlin.Action
 
@@ -18,7 +19,7 @@ class ActionsRequests {
     ) : Request() {
 
         override suspend fun execute() {
-            val response = codeforcesRepository.getActions(lang = defineLang())
+            val response = codeforcesRepository.getActions(lang = language.defineLang())
             response?.result?.let { actions ->
                 buildUiDataAndDispatch(actions)
             } ?: dispatchFailure()
@@ -27,7 +28,7 @@ class ActionsRequests {
         private suspend fun buildUiDataAndDispatch(actions: List<CFAction>) {
             val handles = buildHandles(actions)
 
-            when (val result = getUsers(handles, false)) {
+            when (val result = getUsers(handles, false, language.defineLang())) {
                 is UsersRequestResult.Success -> {
                     store.dispatch(Success(buildUiData(actions, result.users)))
                 }
@@ -75,10 +76,6 @@ class ActionsRequests {
                 (action.timeSeconds != action.blogEntry.creationTimeSeconds &&
                         action.timeSeconds != action.blogEntry.modificationTimeSeconds)
 
-        private fun defineLang(): String {
-            return if (language == "ru" || language == "uk") "ru" else "en"
-        }
-
         data class Success(val actions: List<CFAction>) : Action
 
         data class Failure(override val message: Message) : ToastAction
@@ -89,12 +86,12 @@ class ActionsRequests {
             val response = pinnedPostsApiClient.getPinnedPost()
             response?.let {
                 store.dispatch(Success(it))
-            } ?: store.dispatch(Failure(Message.Custom("Failed to fetch pinned post")))
+            } ?: store.dispatch(Failure())
         }
 
         data class Success(val pinnedPost: PinnedPost) : Action
 
-        data class Failure(override val message: Message) : ToastAction
+        class Failure() : Action
     }
 
     class RemovePinnedPost(val link: String) : Request() {

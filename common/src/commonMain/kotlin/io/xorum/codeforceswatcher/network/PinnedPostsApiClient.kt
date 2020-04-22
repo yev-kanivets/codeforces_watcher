@@ -23,7 +23,6 @@ internal class PinnedPostsApiClient {
     suspend fun getPinnedPost() = try {
         pinnedPostApiClient.get<PinnedPost>()
     } catch (t: Throwable) {
-        println("ErrorMessage" + t.message)
         null
     }
 

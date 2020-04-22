@@ -23,6 +23,7 @@ import io.xorum.codeforceswatcher.features.users.redux.states.UsersState.SortTyp
 import io.xorum.codeforceswatcher.redux.store
 import kotlinx.android.synthetic.main.fragment_users.*
 import tw.geothings.rekotlin.StoreSubscriber
+import java.util.*
 
 class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         StoreSubscriber<UsersState> {
@@ -31,7 +32,7 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     private lateinit var usersAdapter: UsersAdapter
 
     override fun onRefresh() {
-        store.dispatch(UsersRequests.FetchUsers(Source.USER))
+        store.dispatch(UsersRequests.FetchUsers(Source.USER, Locale.getDefault().language))
         Analytics.logRefreshingData(Refresh.USERS)
     }
 
@@ -54,7 +55,6 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         usersAdapter.setItems(state.users.sort(state.sortType).map { UserItem.User(it) })
         adjustSpinnerSortVisibility(state.users.isEmpty())
     }
-
     private fun adjustSpinnerSortVisibility(isUsersListEmpty: Boolean) {
         spSort.visibility = if (isUsersListEmpty) View.GONE else View.VISIBLE
         requireActivity().findViewById<TextView>(R.id.tvSortBy).visibility =

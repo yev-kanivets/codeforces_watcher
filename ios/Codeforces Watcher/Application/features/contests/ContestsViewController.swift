@@ -94,7 +94,7 @@ class ContestsViewController: UIViewControllerWithFab, StoreSubscriber {
             }
         }
 
-        [ContestTableViewCell.self, NoContestsTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
+        [ContestTableViewCell.self, NoItemsTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
 
         tableAdapter.onContestClick = { (contest) in
             let webViewController = WebViewController().apply {
@@ -104,7 +104,7 @@ class ContestsViewController: UIViewControllerWithFab, StoreSubscriber {
                 $0.shareEventName = "contest_shared"
             }
 
-            self.navigationController?.pushViewController(webViewController, animated: true)
+            self.presentModal(webViewController)
         }
 
         tableView.refreshControl = refreshControl
@@ -126,7 +126,7 @@ class ContestsViewController: UIViewControllerWithFab, StoreSubscriber {
             $0.link = rulesLink
             $0.shareText = buildShareText("Official Codeforces rules".localized, rulesLink)
         }
-        navigationController?.pushViewController(webViewController, animated: true)
+        self.presentModal(webViewController)
     }
 
     private func saveContestEvent(eventStore: EKEventStore, contest: Contest, completion: ((Bool, NSError?) -> Void)?) {
@@ -177,7 +177,7 @@ class ContestsViewController: UIViewControllerWithFab, StoreSubscriber {
         let okButton = UIAlertAction(title: "OK", style: .cancel)
         alertController.addAction(okButton)
 
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 
     @objc private func refreshContests(_ sender: Any) {
@@ -188,9 +188,11 @@ class ContestsViewController: UIViewControllerWithFab, StoreSubscriber {
     override func fabButtonTapped() {
         let contestsLink = "https://clist.by/"
         
-        if let url = URL(string: contestsLink) {
-            UIApplication.shared.open(url)
+        let webViewController = WebViewController().apply {
+            $0.link = contestsLink
+            $0.shareText = buildShareText("Check upcoming programming contests".localized, contestsLink)
         }
+        presentModal(webViewController)
     }
 
     func doNewState(state: Any) {

@@ -68,7 +68,7 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
             $0.separatorStyle = .none
         }
 
-        [ProblemTableViewCell.self, NoProblemsTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
+        [ProblemTableViewCell.self, NoItemsTableViewCell.self].forEach(tableView.registerForReuse(cellType:))
 
         tableAdapter.onProblemClick = { (link, shareText) in
             let webViewController = WebViewController().apply {
@@ -78,7 +78,7 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
                 $0.shareEventName = "problem_shared"
             }
             self.searchController.isActive = false
-            self.navigationController?.pushViewController(webViewController, animated: true)
+            self.presentModal(webViewController)
         }
 
         tableView.refreshControl = refreshControl

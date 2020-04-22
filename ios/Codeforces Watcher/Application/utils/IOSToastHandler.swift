@@ -7,7 +7,7 @@
 //
 
 import common
-import Toaster
+import Toast_Swift
 
 class IOSToastHandler: ToastHandler {
     
@@ -30,7 +30,7 @@ class IOSToastHandler: ToastHandler {
         }
 
         if let text = text {
-            Toast(text: text).show()
+            UIApplication.shared.windows.last?.makeToast(text)
         }
     }
 }
