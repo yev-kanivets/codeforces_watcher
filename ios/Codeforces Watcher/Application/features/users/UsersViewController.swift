@@ -12,6 +12,7 @@ import FirebaseAnalytics
 import PKHUD
 
 class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
+    
     private let tableView = UITableView()
     private let tableAdapter = UsersTableViewAdapter()
     private let refreshControl = UIRefreshControl()
@@ -25,7 +26,9 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
     private let pickerView = UIPickerView()
     private let pickerAdapter = UsersPickerViewAdapter()
     
-    private let bottomInputCardView = AddUserCardView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 136)).apply {
+    private let bottomInputCardView = AddUserCardView(
+        frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 136)
+    ).apply {
         $0.isHidden = true
     }
     
@@ -98,9 +101,14 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
             $0.selectRow(Int(store.state.users.sortType.position), inComponent: 0, animated: false)
         }
         
-        let doneButton = UIBarButtonItem(title: "Done".localized, style: .plain, target: self, action: #selector(doneTapped))
+        let doneButton = UIBarButtonItem(
+            title: "Done".localized, 
+            style: .plain, 
+            target: self, 
+            action: #selector(doneTapped)
+        )
         
-        let toolBar = UIToolbar().apply {
+        let toolbar = UIToolbar().apply {
             $0.sizeToFit()
             $0.setItems([doneButton], animated: false)
             $0.isUserInteractionEnabled = true
@@ -110,7 +118,7 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
         
         sortTextField.run {
             $0.inputView = pickerView
-            $0.inputAccessoryView = toolBar
+            $0.inputAccessoryView = toolbar
         }
     }
     
@@ -206,19 +214,19 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
             sortedUsers.reverse()
         case .ratingDown:
             sortedUsers.sort(by: {
-                $0.rating?.intValue ?? Int.min > $1.rating?.intValue ?? Int.min
+                $0.rating?.intValue ?? Int.min < $1.rating?.intValue ?? Int.min
             })
         case .ratingUp:
             sortedUsers.sort(by: {
-                $0.rating?.intValue ?? Int.min < $1.rating?.intValue ?? Int.min
+                $0.rating?.intValue ?? Int.min > $1.rating?.intValue ?? Int.min
             })
         case .updateDown:
             sortedUsers.sort(by: {
-                $0.ratingChanges.last?.ratingUpdateTimeSeconds ?? Int64.min > $1.ratingChanges.last?.ratingUpdateTimeSeconds ?? Int64.min
+                $0.ratingChanges.last?.ratingUpdateTimeSeconds ?? Int64.min < $1.ratingChanges.last?.ratingUpdateTimeSeconds ?? Int64.min
             })
         case .updateUp:
             sortedUsers.sort(by: {
-                $0.ratingChanges.last?.ratingUpdateTimeSeconds ?? Int64.min < $1.ratingChanges.last?.ratingUpdateTimeSeconds ?? Int64.min
+                $0.ratingChanges.last?.ratingUpdateTimeSeconds ?? Int64.min > $1.ratingChanges.last?.ratingUpdateTimeSeconds ?? Int64.min
             })
         default:
             break
@@ -239,7 +247,7 @@ class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
         sortTextField.isHidden = users.isEmpty
         sortUsers(state.sortType)
         
-        switch(state.addUserStatus) {
+        switch (state.addUserStatus) {
         case .done:
             HUD.hide(afterDelay: 0)
             

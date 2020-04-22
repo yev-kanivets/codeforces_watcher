@@ -8,6 +8,7 @@ import io.xorum.codeforceswatcher.redux.Message
 import io.xorum.codeforceswatcher.redux.Request
 import io.xorum.codeforceswatcher.redux.ToastAction
 import io.xorum.codeforceswatcher.redux.store
+import io.xorum.codeforceswatcher.util.defineLang
 import kotlinx.coroutines.delay
 import tw.geothings.rekotlin.Action
 
@@ -26,7 +27,7 @@ class UsersRequests {
             // Use this delay because actions, problems and contests requests managed to work out(and Codeforces didn't block them)
             if (source == Source.BACKGROUND) delay(1500)
             val users = store.state.users.users
-            when (val result = getUsers(getHandles(users), true, lang = defineLang())) {
+            when (val result = getUsers(getHandles(users), true, lang = language.defineLang())) {
                 is UsersRequestResult.Failure -> {
                     store.dispatch(Failure(if (source.isToastNeeded) result.error.message else Message.None))
                 }
@@ -34,10 +35,6 @@ class UsersRequests {
                     store.dispatch(Success(result.users, getDifferenceAndUpdate(users, result.users), source))
                 }
             }
-        }
-
-        private fun defineLang(): String {
-            return if (language == "ru" || language == "uk") "ru" else "en"
         }
 
         private fun getDifferenceAndUpdate(users: List<User>, updatedUsers: List<User>): List<Pair<String, Int>> {
@@ -79,15 +76,12 @@ class UsersRequests {
             private val handle: String,
             private val language: String
     ) : Request() {
+
         override suspend fun execute() {
-            when (val result = getUsers(handle, true, lang = defineLang())) {
+            when (val result = getUsers(handle, true, lang = language.defineLang())) {
                 is UsersRequestResult.Failure -> store.dispatch(Failure(result.error.message))
                 is UsersRequestResult.Success -> result.users.firstOrNull()?.let { user -> addUser(user) }
             }
-        }
-
-        private fun defineLang(): String {
-            return if (language == "ru" || language == "uk") "ru" else "en"
         }
 
         private fun addUser(user: User) {

@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class CommonTextField: UITextField {
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()

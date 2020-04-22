@@ -11,6 +11,7 @@ import UIKit
 import MaterialComponents.MDCButton
 
 class UIViewControllerWithFab: UIViewController {
+    
     let fabButton = MDCFloatingButton().apply {
         $0.backgroundColor = Palette.colorAccent
         $0.tintColor = Palette.white

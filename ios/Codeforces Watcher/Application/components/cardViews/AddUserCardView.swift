@@ -11,6 +11,7 @@ import UIKit
 import MaterialComponents.MDCButton
 
 class AddUserCardView: UIView, UITextFieldDelegate {
+    
     private let whiteView = CardView()
     
     private let explanationLabel = SubheadingBigLabel().apply {

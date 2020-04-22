@@ -11,6 +11,7 @@ import common
 import Charts
 
 class UserViewController: UIViewControllerWithCross {
+    
     private let userImage = CircleImageView()
     private let rankLabel = BodyLabel()
     private let nameLabel = BodyLabel()
@@ -44,11 +45,16 @@ class UserViewController: UIViewControllerWithCross {
         title = user.handle
         view.backgroundColor = Palette.white
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "removeIcon"), style: .plain, target: self, action: #selector(removeTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(named: "removeIcon"), 
+            style: .plain, 
+            target: self, 
+            action: #selector(removeTapped)
+        )
         
         buildViewTree()
         setConstraints()
-        setData()
+        bind()
     }
     
     @objc func removeTapped() {
@@ -57,9 +63,7 @@ class UserViewController: UIViewControllerWithCross {
     }
     
     private func setupChart() {
-        if user.ratingChanges.isEmpty {
-            return
-        }
+        guard !user.ratingChanges.isEmpty else { return }
         
         let markerView = ChartMarker().apply {
             $0.chartView = lineChartView
@@ -140,7 +144,7 @@ class UserViewController: UIViewControllerWithCross {
         }
     }
     
-    private func setData() {
+    private func bind() {
         let avatar = LinkValidatorKt.avatar(avatarLink: user.avatar)
         userImage.sd_setImage(with: URL(string: avatar), placeholderImage: noImage)
         

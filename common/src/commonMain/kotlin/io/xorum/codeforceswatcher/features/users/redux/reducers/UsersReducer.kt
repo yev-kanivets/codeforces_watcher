@@ -34,7 +34,7 @@ fun usersReducer(action: Action, state: AppState): UsersState {
             newState = newState.copy(addUserStatus = UsersState.Status.IDLE)
         }
         is UsersRequests.AddUser.Success -> {
-            newState = newState.copy(users = state.users.users.plus(action.user), addUserStatus = UsersState.Status.DONE)
+            newState = newState.copy(users = newState.users.plus(action.user), addUserStatus = UsersState.Status.DONE)
         }
         is UsersActions.ClearAddUserState -> {
             newState = newState.copy(addUserStatus = UsersState.Status.IDLE)

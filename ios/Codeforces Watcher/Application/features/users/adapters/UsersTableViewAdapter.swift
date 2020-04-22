@@ -11,6 +11,7 @@ import UIKit
 import common
 
 class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
+
     var users: [User] = []
     var onUserTap: ((User) -> ())?
 
@@ -19,15 +20,12 @@ class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSourc
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (users.isEmpty) {
-            return 1
-        }
-
+        guard !users.isEmpty else { return 1 }
         return users.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (users.isEmpty) {
+        guard !users.isEmpty else {
             return tableView.dequeueReusableCell(cellType: NoItemsTableViewCell.self).apply {
                 $0.bind(imageName: "alienImage", explanation: "no_users_explanation")
             }
@@ -39,15 +37,13 @@ class UsersTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSourc
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (users.isEmpty) {
-            return
-        }
-        
+        guard !users.isEmpty else { return }
+
         onUserTap?(users[indexPath.row])
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (users.isEmpty) {
+        if users.isEmpty {
             return tableView.frame.height
         } else {
             return UITableView.automaticDimension

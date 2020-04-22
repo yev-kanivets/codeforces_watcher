@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class UsersPickerViewAdapter: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
+    
     var options: [String] = []
     var optionSelected: ((Int) -> ())?
     

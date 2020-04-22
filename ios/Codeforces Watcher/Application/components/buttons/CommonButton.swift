@@ -10,9 +10,14 @@ import UIKit
 import TinyConstraints
 
 class CommonButton: UIButton {
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func setupView() {
@@ -22,9 +27,5 @@ class CommonButton: UIButton {
             $0.cornerRadius = 18
             $0.masksToBounds = true
         }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
