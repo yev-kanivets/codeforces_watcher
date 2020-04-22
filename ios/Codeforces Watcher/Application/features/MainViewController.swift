@@ -12,7 +12,7 @@ import MaterialComponents.MDCButton
 
 class MainViewController: UITabBarController {
     private let controllers = [
-        UsersViewController().apply(title: "Users", iconNamed: "usersIcon"),
+        UsersViewController().apply(title: "Users", iconNamed: "usersIcon", isTitleVisible: false),
         ContestsViewController().apply(title: "Contests", iconNamed: "contestsIcon"),
         UIViewController(),
         ActionsViewController().apply(title: "Actions", iconNamed: "actionsIcon"),
@@ -38,10 +38,10 @@ class MainViewController: UITabBarController {
 
 fileprivate extension UIViewController {
 
-    func apply(title: String, iconNamed: String) -> UIViewController {
+    func apply(title: String, iconNamed: String, isTitleVisible: Bool = true) -> UIViewController {
         let tabBarItem = UITabBarItem(title: title.localized, image: UIImage(named: iconNamed), selectedImage: nil)
 
-        self.title = title.localized
+        if isTitleVisible { self.title = title.localized }
         self.tabBarItem = tabBarItem
 
         return self
