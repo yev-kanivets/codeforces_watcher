@@ -119,13 +119,15 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text?.lowercased() else { return }
 
-        var filteredProblems: [Problem] = []
-
-        for problem in problems {
-            if (problem.contestName.lowercased().contains(text) || problem.enName.lowercased().contains(text) ||
-                problem.ruName.lowercased().contains(text)) {
-                filteredProblems.append(problem)
+        let filteredProblems = problems.filter {
+            var shouldAdd = false
+            
+            ["\($0.contestId)\($0.index)", $0.enName, $0.ruName, $0.contestName].forEach {
+                if $0.lowercased().contains(text) {
+                    shouldAdd = true
+                }
             }
+            return shouldAdd
         }
 
         tableAdapter.problems = text.isEmpty ? problems : filteredProblems
@@ -146,7 +148,7 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
 
         tableAdapter.run {
             $0.problems = problems
-            $0.noProblemsExplanation = state.isFavourite ? "no_favourite_problems_explanation" : "Problems are on the way to your device..."
+            $0.noProblemsExplanation = state.isFavourite ? "no_favourite_problems_explanation" : "problems_explanation"
         }
         
         updateSearchResults(for: searchController)
