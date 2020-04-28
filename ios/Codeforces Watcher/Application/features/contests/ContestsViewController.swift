@@ -116,7 +116,7 @@ class ContestsViewController: UIViewControllerWithFab, StoreSubscriber {
     }
 
     @objc func filterTapped(sender: Any) {
-        navigationController?.pushViewController(FiltersViewController(), animated: true)
+        presentModal(FiltersViewController())
     }
 
     @objc func contestsRulesTapped(sender: Any) {
@@ -126,7 +126,7 @@ class ContestsViewController: UIViewControllerWithFab, StoreSubscriber {
             $0.link = rulesLink
             $0.shareText = buildShareText("Official Codeforces rules".localized, rulesLink)
         }
-        self.presentModal(webViewController)
+        presentModal(webViewController)
     }
 
     private func saveContestEvent(eventStore: EKEventStore, contest: Contest, completion: ((Bool, NSError?) -> Void)?) {

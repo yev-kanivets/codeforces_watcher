@@ -10,10 +10,28 @@ import Foundation
 import UIKit
 import common
 
-class FiltersViewController: UIViewController {
+class FiltersViewController: UIViewControllerWithCross, StoreSubscriber {
     
     private let tableView = UITableView()
     private let tableAdapter = FiltersTableViewAdapter()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        store.subscribe(subscriber: self) { subscription in
+            subscription.skipRepeats() { oldState, newState in
+                return KotlinBoolean(bool: oldState.contests == newState.contests)
+            }.select { state in
+                return state.contests
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        store.unsubscribe(subscriber: self)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,8 +57,20 @@ class FiltersViewController: UIViewController {
         }
 
         tableView.registerForReuse(cellType: FilterTableViewCell.self)
+    }
 
-        let filters = store.state.contests.filters
+    private func buildViewTree() {
+        view.addSubview(tableView)
+    }
+
+    private func setConstraints() {
+        tableView.edgesToSuperview()
+    }
+    
+    func doNewState(state: Any) {
+        let state = state as! ContestsState
+        
+        let filters = state.filters
 
         tableAdapter.filterItems = [
             FilterItem(title: "Codeforces", platform: Platform.codeforces, isOn: filters.contains(Platform.codeforces)),
@@ -56,13 +86,5 @@ class FiltersViewController: UIViewController {
         ]
 
         tableView.reloadData()
-    }
-
-    private func buildViewTree() {
-        view.addSubview(tableView)
-    }
-
-    private func setConstraints() {
-        tableView.edgesToSuperview()
     }
 }

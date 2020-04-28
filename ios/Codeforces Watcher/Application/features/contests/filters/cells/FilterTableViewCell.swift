@@ -32,15 +32,11 @@ class FilterTableViewCell: UITableViewCell {
     }
 
     private func setupView() {
-        self.selectionStyle = .none
+        selectionStyle = .none
 
         buildViewTree()
         setConstraints()
         setInteractions()
-    }
-
-    @objc func switchTrigger(mySwitch: UISwitch) {
-        store.dispatch(action: ContestsRequests.ChangeFilterCheckStatus(platform: platform, isChecked: switchView.isOn))
     }
 
     private func buildViewTree() {
@@ -68,6 +64,10 @@ class FilterTableViewCell: UITableViewCell {
 
     private func setInteractions() {
         switchView.addTarget(self, action: #selector(switchTrigger), for: UIControl.Event.valueChanged)
+    }
+    
+    @objc func switchTrigger(mySwitch: UISwitch) {
+        store.dispatch(action: ContestsRequests.ChangeFilterCheckStatus(platform: platform, isChecked: switchView.isOn))
     }
 
     func bind(_ filterItem: FilterItem) {
