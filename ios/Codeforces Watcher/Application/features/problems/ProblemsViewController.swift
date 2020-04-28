@@ -44,7 +44,7 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
     }
 
     private func setupView() {
-        view.backgroundColor = .white
+        view.backgroundColor = Palette.white
 
         buildViewTree()
         setConstraints()
@@ -52,7 +52,7 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
     }
     
     private func buildViewTree() {
-        [tableView].forEach(view.addSubview)
+        view.addSubview(tableView)
     }
 
     private func setConstraints() {
