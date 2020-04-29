@@ -105,7 +105,7 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
 
             $0.searchBar.run {
                 $0.placeholder = "Search for problems...".localized
-                $0.returnKeyType = .done
+                $0.returnKeyType = .search
                 $0.tintColor = .darkGray
                 $0.barStyle = .default
                 $0.searchBarStyle = .minimal
@@ -173,11 +173,16 @@ extension ProblemsViewController: UISearchBarDelegate {
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        refreshControl.endRefreshing()
         tableView.refreshControl = nil
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         tableView.refreshControl = refreshControl
+        searchController.searchBar.setShowsCancelButton(false, animated: true)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        tableView.refreshControl = refreshControl
+        searchController.dismiss(animated: false, completion: nil)
     }
 }
