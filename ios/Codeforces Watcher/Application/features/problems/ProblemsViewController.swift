@@ -11,13 +11,13 @@ import common
 import FirebaseAnalytics
 
 class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearchResultsUpdating {
-    
+
     private let tableView = UITableView()
     private let tableAdapter = ProblemsTableViewAdapter()
     private let refreshControl = UIRefreshControl()
     private let searchController = UISearchController(searchResultsController: nil)
     private var problems: [Problem] = []
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,7 +28,7 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         store.subscribe(subscriber: self) { subscription in
             subscription.skipRepeats { oldState, newState in
                 return KotlinBoolean(bool: oldState.problems == newState.problems)
@@ -50,14 +50,14 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
         setConstraints()
         updateFabButton(store.state.problems.isFavourite)
     }
-    
+
     private func buildViewTree() {
         view.addSubview(tableView)
     }
 
     private func setConstraints() {
         edgesForExtendedLayout = []
-        
+
         tableView.edgesToSuperview()
     }
 
@@ -88,7 +88,7 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
             $0.tintColor = Palette.colorPrimaryDark
         }
     }
-    
+
     override func fabButtonTapped() {
         store.dispatch(action: ProblemsActions.ChangeTypeProblems(isFavourite: !store.state.problems.isFavourite))
     }
@@ -110,6 +110,7 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
                 $0.barStyle = .default
                 $0.searchBarStyle = .minimal
                 $0.backgroundColor = .white
+                $0.delegate = self
             }
         }
 
@@ -121,7 +122,7 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
 
         let filteredProblems = problems.filter {
             var shouldAdd = false
-            
+
             ["\($0.contestId)\($0.index)", $0.enName, $0.ruName, $0.contestName].forEach {
                 if $0.lowercased().contains(text) {
                     shouldAdd = true
@@ -131,26 +132,26 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
         }
 
         tableAdapter.problems = text.isEmpty ? problems : filteredProblems
-        
+
         tableView.reloadData()
     }
 
     func doNewState(state: Any) {
         let state = state as! ProblemsState
-        
+
         problems = state.isFavourite ? state.problems.filter { $0.isFavourite } : state.problems
 
         if (state.status == ProblemsState.Status.idle) {
             refreshControl.endRefreshing()
         }
-        
+
         updateFabButton(state.isFavourite)
 
         tableAdapter.run {
             $0.problems = problems
             $0.noProblemsExplanation = state.isFavourite ? "no_favourite_problems_explanation" : "problems_explanation"
         }
-        
+
         updateSearchResults(for: searchController)
     }
 
@@ -161,5 +162,22 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
 
     private func fetchProblems() {
         store.dispatch(action: ProblemsRequests.FetchProblems(isInitializedByUser: true))
+    }
+}
+
+// Fix for https://github.com/xorum-io/codeforces_watcher/issues/139
+extension ProblemsViewController: UISearchBarDelegate {
+
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        return !refreshControl.isRefreshing
+    }
+
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        refreshControl.endRefreshing()
+        tableView.refreshControl = nil
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        tableView.refreshControl = refreshControl
     }
 }
