@@ -53,7 +53,7 @@ class ActionsTableViewAdapter: NSObject, UITableViewDelegate, UITableViewDataSou
         }
 
         let action = actions[indexPath.row]
-        let shareText = buildShareText(action.blogEntry.title, action.link)
+        let shareText = buildShareText(action.blogEntry.title.beautify(), action.link)
 
         onActionClick?(action.link, shareText)
     }
