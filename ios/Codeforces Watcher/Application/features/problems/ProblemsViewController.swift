@@ -77,7 +77,7 @@ class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearch
                 $0.openEventName = "problem_opened"
                 $0.shareEventName = "problem_shared"
             }
-            self.searchController.isActive = false
+            self.searchController.dismiss(animated: false)
             self.presentModal(webViewController)
         }
 
@@ -183,6 +183,6 @@ extension ProblemsViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         tableView.refreshControl = refreshControl
-        searchController.dismiss(animated: false, completion: nil)
+        searchController.dismiss(animated: false)
     }
 }
