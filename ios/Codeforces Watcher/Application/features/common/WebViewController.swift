@@ -26,23 +26,26 @@ class WebViewController: UIViewControllerWithCross, WKUIDelegate, WKNavigationDe
     var shareEventName: String?
 
     override func viewDidLoad() {
-        PKHUD.sharedHUD.run {
-            $0.userInteractionOnUnderlyingViewsEnabled = true
-            $0.contentView = PKHUDProgressView()
-            $0.show()
-        }
-
-        onLoadViewLogEvent()
-
         super.viewDidLoad()
         view = webView
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "shareImage"), style: .plain, target: self, action: #selector(shareTapped))
         openWebPage()
+        showLoading()
+        onLoadViewLogEvent()
+    }
+    
+    private func showLoading() {
+        PKHUD.sharedHUD.userInteractionOnUnderlyingViewsEnabled = true
+        HUD.show(.progress, onView: UIApplication.shared.windows.last)
+    }
+    
+    private func hideLoading() {
+        HUD.hide(afterDelay: 0)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        PKHUD.sharedHUD.hide(afterDelay: 0)
+        hideLoading()
     }
 
     @objc func shareTapped() {
@@ -74,10 +77,10 @@ class WebViewController: UIViewControllerWithCross, WKUIDelegate, WKNavigationDe
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        PKHUD.sharedHUD.hide(afterDelay: 0)
+        hideLoading()
     }
 
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        PKHUD.sharedHUD.hide(afterDelay: 0)
+        hideLoading()
     }
 }
