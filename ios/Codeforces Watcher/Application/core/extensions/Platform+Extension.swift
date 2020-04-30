@@ -14,7 +14,7 @@ extension Platform {
     static func getImageNameByPlatform(_ platform: Platform) -> String {
         switch (platform) {
         case .codeforces, .codeforcesGym:
-            return "CodeforcesWithMask"
+            return "Codeforces"
         case .atcoder:
             return "AtCoder"
         case .codechef:
