@@ -1,0 +1,61 @@
+"locale" = "en";
+"Codeforces Watcher" = "Codeforces WatchR";
+
+"Contests" = "प्रतियोगिताएं";
+"Actions" = "एक्शन";
+"Problems" = "प्रॉब्लेमस";
+
+"Commented by" = "कमेंटेड बाय";
+"ago" = "ago";
+
+"actions_explanation" = "आपके डिवाइस पर आने वाली हाल की क्रियाएं…";
+"created_or_updated_text" = "टेक्स्ट बनाया या अपडेट किया गया, विवरण देखने के लिए क्लिक करें…";
+
+"problems_explanation" = "Problems are on the way to your device...";
+"contests_explanation" = "Contests are on the way to your device...";
+
+"Has been added to your calendar" = "Has been added to your calendar";
+"Can't add contest to Calendar without permission" = "Can't add contest to Calendar without permission";
+
+"OK" = "OK";
+"No connection" = "ऑफ़लाइन";
+
+"Search for problems..." = "Search for problems...";
+
+"Official Codeforces rules" = "Official Codeforces rules";
+"Apple isn't a sponsor of any contests conducted on Codeforces" = "Apple isn't a sponsor of any contests conducted on Codeforces";
+
+"Filter" = "Filter";
+
+"User already added" = "यूजर पहले से मौजूद है";
+"failed_to_fetch_users" = "यूजरनेम मौजूद नहीं! एक बार यूजरनेम जाँच करले…";
+
+"Click to see details" = "Click to see details";
+"Users" = "यूजर्स";
+"no_favourite_problems_explanation" = "You don’t have any favourite problems yet.\nAdd the first one using «∞» at the bottom of the screen.";
+"share_cw_message" = "I'm using Codeforces WatchR - open-source, free IOS application, which leverages Codeforces API to bring more competitive programming to your IOS device. \n Codeforces WatchR allows: \n\n 1. Shortlist and register for upcoming Competitive Programming contests: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start. \n 2. Follow Recent Actions. \n 3. Browse and search for Problems, add them to favourites. \n 4. Watch for activity of any Codeforces user \n 5. Sort users by rating and last participation date. \n\n Download it now on App Store - https://apps.apple.com/us/app/codeforces-watchr-contests/id1495591299";
+"no_users_explanation" = "आपके पास अभी तक देखने के लिए कोई यूजर नहीं है।\nपहले एक को जोड़ें स्क्रीन के नीचे दिए «+» बटन दबाकर.";
+
+"Add user" = "Add user";
+"Enter user handle" = "Enter user handle";
+"No rating update" = "कोई रेटिंग परिवर्तन नहीं";
+"Done" = "Done";
+"Rating changes" = "रेटिंग में बदलाव";
+
+"None" = "कोई परिणाम नही";
+"Rank" = "रैंक: %@";
+"Name" = "नाम: %@ %@";
+"Current rating" = "वर्तमान रेटिंग: %@";
+"Max rating" = "अधिकतम रेटिंग: %@";
+"Sort" = "सॉर्ट करें %@ ▼";
+
+"default" = "िफ़ॉल्ट";
+"rating_up" = "↑रेटिंग";
+"rating_down" = "↓रेटिंग";
+"update_up" = "↑अपडेट";
+"update_down" = "↓अपडेट";
+
+"Last rating update" = "अंतिम रेटिंग बदलाव: %@";
+
+"share_text" = "%@ - %@\n\nShared through Codeforces Watcher. Find it on App Store.";
+"Check upcoming programming contests" = "Check upcoming programming contests";
