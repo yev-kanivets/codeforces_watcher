@@ -159,6 +159,7 @@
 		63EB12EE23CF1B310013A974 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		63EB130023CF3F830013A974 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		63F02BFC246083C300B1CD2C /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = ../hi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		63F02BFD24608D2600B1CD2C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ../ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		63FB270823E1AA50005F19F1 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		AD211ABD1A4E948672A26359 /* Pods_Codeforces_Watcher_Codeforces_WatcherUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Codeforces_Watcher_Codeforces_WatcherUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1E1B3E723C9033A006A7347 /* Pods_Codeforces_Watcher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Codeforces_Watcher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -653,6 +654,7 @@
 				en,
 				Base,
 				hi,
+				ru,
 			);
 			mainGroup = 639435F423BA115C00B302A3;
 			productRefGroup = 639435FE23BA115C00B302A3 /* Products */;
@@ -917,6 +919,7 @@
 			children = (
 				3352466D562397EB9C2CE83E /* Base */,
 				63F02BFC246083C300B1CD2C /* hi */,
+				63F02BFD24608D2600B1CD2C /* ru */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
