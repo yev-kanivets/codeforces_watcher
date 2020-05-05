@@ -21,16 +21,20 @@
     <string name="by_ascending_update">↑ update</string>
     <string name="add">Add</string>
     <string name="enter_handle">Enter handle</string>
+
     <string name="like_codeforces_watcher">Do you like Codeforces WatchR?</string>
     <string name="rate_it_on_gp">Rate it on Google Play!</string>
     <string name="maybe_later">Maybe Later</string>
     <string name="no_thank_you">No, Thank You</string>
     <string name="yes_very">Yes!</string>
+
     <string name="google_play_not_found">Google Play not found</string>
+
     <string name="users">Users</string>
     <string name="contests">Contests</string>
     <string name="actions">Actions</string>
     <string name="problems">Problems</string>
+
     <string name="empty" translatable="false" />
     <string name="google_calendar_not_found">Sorry, but no Google Calendar found on this device</string>
     <string name="commented_by">"Commented by %1$s"</string>
@@ -39,6 +43,7 @@
     <string name="shared_through_cw">Shared through Codeforces WatchR. Find it on Google Play.</string>
     <string name="no_users">You don’t have any users to watch yet.\nAdd the first one using «+» at the bottom of the screen.</string>
     <string name="no_favourite_problems">You don’t have any favourite problems yet.\nAdd the first one using «∞» at the bottom of the screen.</string>
+
     <string name="share_cw">Share Codeforces WatchR</string>
     <string name="help_cw_make_more_social">Help us make Codeforces and Codeforces WatchR more social by sharing it with your friends.</string>
     <string name="share">Share</string>
