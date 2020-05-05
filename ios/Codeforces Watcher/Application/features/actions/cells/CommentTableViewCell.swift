@@ -116,5 +116,7 @@ class CommentTableViewCell: UITableViewCell {
             avatar = LinkValidatorKt.avatar(avatarLink: avatar)
             userImage.sd_setImage(with: URL(string: avatar), placeholderImage: noImage)
         }
+        
+        print(comment.commentatorRank)
     }
 }
