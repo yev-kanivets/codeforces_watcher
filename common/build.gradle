@@ -18,7 +18,7 @@ kotlin {
                 implementation "io.ktor:ktor-client-core:$ktor_version"
                 implementation "io.ktor:ktor-client-serialization:$ktor_version"
                 implementation "io.ktor:ktor-client-logging:$ktor_version"
-                api "io.xorum:ReKamp-jvm:$reKamp_version"
+                api "io.xorum:ReKamp:$reKamp_version"
             }
         }
 
