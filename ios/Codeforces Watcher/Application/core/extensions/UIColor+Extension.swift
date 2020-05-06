@@ -41,13 +41,10 @@ func colorTextByUserRank(text: String, rank: String?) -> NSMutableAttributedStri
         color = Palette.blue
     case "candidate master", "кандидат в мастера":
         color = Palette.purple
-    case "master", "мастер":
+    case "master", "мастер", "international master", "международный мастер":
         color = Palette.orange
-    case "international master", "международный мастер":
-        color = Palette.orange
-    case "grandmaster", "гроссмейстер":
-        color = Palette.red
-    case "international grandmaster", "legendary grandmaster", "международный гроссмейстер", "легендарный гроссмейстер":
+    case "grandmaster", "international grandmaster", "legendary grandmaster",
+         "гроссмейстер", "международный гроссмейстер", "легендарный гроссмейстер":
         color = Palette.red
     default:
         color = Palette.grey
