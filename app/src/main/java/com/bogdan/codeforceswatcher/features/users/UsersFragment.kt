@@ -25,8 +25,7 @@ import kotlinx.android.synthetic.main.fragment_users.*
 import tw.geothings.rekotlin.StoreSubscriber
 import java.util.*
 
-class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
-        StoreSubscriber<UsersState> {
+class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSubscriber<UsersState> {
 
     private lateinit var spSort: AppCompatSpinner
     private lateinit var usersAdapter: UsersAdapter

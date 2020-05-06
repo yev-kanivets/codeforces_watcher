@@ -19,8 +19,7 @@ import kotlinx.android.synthetic.main.fragment_users.*
 import tw.geothings.rekotlin.StoreSubscriber
 import java.util.*
 
-class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
-        StoreSubscriber<ActionsState> {
+class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSubscriber<ActionsState> {
 
     private lateinit var actionsAdapter: ActionsAdapter
 

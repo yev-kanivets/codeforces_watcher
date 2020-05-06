@@ -25,8 +25,7 @@ import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
-        StoreSubscriber<ContestsState> {
+class ContestsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSubscriber<ContestsState> {
 
     private val contestsAdapter by lazy {
         ContestsAdapter(

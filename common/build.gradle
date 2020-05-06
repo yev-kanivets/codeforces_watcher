@@ -72,17 +72,17 @@ kotlin {
             }
 
             sourceSets["iOS64Main"].dependsOn(sourceSets.iOSMain)
-            sourceSets["iOS64Main"].dependencies { api "io.xorum:ReKamp-iosarm64:$reKamp_version" }
+            sourceSets["iOS64Main"].dependencies { api "io.xorum:ReKamp-iosArm64:$reKamp_version" }
 
             sourceSets["iOS32Main"].dependsOn(sourceSets.iOSMain)
-            sourceSets["iOS32Main"].dependencies { api "io.xorum:ReKamp-iosarm32:$reKamp_version" }
+            sourceSets["iOS32Main"].dependencies { api "io.xorum:ReKamp-iosArm32:$reKamp_version" }
         } else {
             iosX64('iosX') {
                 compilations.main.extraOpts '-Xobjc-generics'
             }
 
             sourceSets["iosXMain"].dependsOn(sourceSets.iOSMain)
-            sourceSets["iosXMain"].dependencies { api "io.xorum:ReKamp-iosx64:$reKamp_version" }
+            sourceSets["iosXMain"].dependencies { api "io.xorum:ReKamp-iosX64:$reKamp_version" }
         }
     }
 

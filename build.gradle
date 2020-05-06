@@ -6,7 +6,7 @@ buildscript {
     ext.sqlDelight_version = '1.2.2'
     ext.ktor_version = '1.2.6'
     ext.klock_version = '1.8.4'
-    ext.reKamp_version = "1.0.0"
+    ext.reKamp_version = '0.9.9'
 
     repositories {
         google()
@@ -18,7 +18,7 @@ buildscript {
         maven { url "https://dl.bintray.com/xorum-io/ReKamp" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.1'
+        classpath 'com.android.tools.build:gradle:3.6.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
         classpath 'io.fabric.tools:gradle:1.31.2'
