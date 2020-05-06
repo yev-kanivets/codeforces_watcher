@@ -12,7 +12,7 @@ import WebKit
 import common
 import FirebaseAnalytics
 
-class ActionsViewController: UIViewControllerWithFab, StoreSubscriber {
+class ActionsViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
 
     private let tableView = UITableView()
     private let tableAdapter = ActionsTableViewAdapter()

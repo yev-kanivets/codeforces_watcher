@@ -11,7 +11,7 @@ import common
 import FirebaseAnalytics
 import PKHUD
 
-class UsersViewController: UIViewControllerWithFab, StoreSubscriber {
+class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
     
     private let tableView = UITableView()
     private let tableAdapter = UsersTableViewAdapter()

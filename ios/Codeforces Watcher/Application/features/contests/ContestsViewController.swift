@@ -12,7 +12,7 @@ import EventKit
 import FirebaseAnalytics
 import common
 
-class ContestsViewController: UIViewControllerWithFab, StoreSubscriber {
+class ContestsViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
     
     private let contestsRulesView = ContestsRulesView()
     private let tableView = UITableView()
