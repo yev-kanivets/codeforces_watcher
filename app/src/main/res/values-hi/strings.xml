@@ -34,8 +34,6 @@
     <string name="google_calendar_not_found">क्षमा करें, लेकिन इस उपकरण पर Google Calendar नहीं मिला</string>
     <string name="commented_by">"कमेंटेड बाय %1$s"</string>
     <string name="feature_isn_t_available_yet">यह सुविधा अभी तक उपलब्ध नहीं है|</string>
-    <string name="comment_url" translatable="false">https://codeforces.com/blog/entry/%1$d?#comment-%2$d</string>
-    <string name="blog_entry_url" translatable="false">https://codeforces.com/blog/entry/%1$d</string>
     <string name="share_with_friends">दोस्तों के साथ शेयर करें</string>
     <string name="shared_through_cw">Shared through Codeforces WatchR. Find it on Google Play.</string>
     <string name="no_users">आपके पास अभी तक देखने के लिए कोई यूजर नहीं है।\nपहले एक को जोड़ें स्क्रीन के नीचे दिए «+» बटन दबाकर.</string>
