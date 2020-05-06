@@ -22,6 +22,7 @@ class MainViewController: UITabBarController {
     required init() {
         super.init(nibName: nil, bundle: nil)
         setupView()
+        feedbackController.updateCountOpeningScreen()
     }
 
     required init?(coder aDecoder: NSCoder) {

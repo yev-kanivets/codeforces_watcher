@@ -59,3 +59,10 @@
 
 "share_text" = "%@ - %@\n\nОтправлено через Codeforces WatchR. Найдите его в App Store.";
 "Check upcoming programming contests" = "Cледите за предстоящими контестами по программированию";
+
+"yes" = "Да!";
+"rate_us_first_title" = "Вам нравится Codeforces WatchR?";
+"rate_us_second_title" = "Не могли бы вы дать нам обратную связь?";
+"rate_us_third_title" = "Тогда что насчет оценки в App Store?";
+"not_really" = "Не совсем";
+"no_thanks" = "Нет, спасибо";
