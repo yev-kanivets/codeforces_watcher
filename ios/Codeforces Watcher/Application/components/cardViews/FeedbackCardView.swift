@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import StoreKit
+import common
 
 class FeedbackCardView: UIView {
     private var feedbackItem: FeedbackItem!
