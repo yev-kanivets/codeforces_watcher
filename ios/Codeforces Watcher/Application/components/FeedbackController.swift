@@ -126,7 +126,7 @@ class FeedbackController {
         updateLockoutPeriod(timeInHours: timeInHours)
         
         return isNeededAtAll && !isLockoutPeriod &&
-            (countScreenOpening >= 10 && timeInHours >= 72 || countScreenOpening >= 1)
+            (countScreenOpening >= 10 && timeInHours >= 72)
     }
 
     private func updateLockoutPeriod(timeInHours: Int) {

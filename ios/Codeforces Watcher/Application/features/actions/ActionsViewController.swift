@@ -20,7 +20,7 @@ class ActionsViewController: UIViewControllerWithFab, StoreSubscriber {
     private let pinnedPostView = PinnedPostCardView()
     
     private var pinnedPost: PinnedPost!
-    private let rateUsCardView = RateUsCardView()
+    private let feedbackCardView = FeedbackCardView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,8 +105,8 @@ class ActionsViewController: UIViewControllerWithFab, StoreSubscriber {
             refreshControl.endRefreshing()
             
             if (feedbackController.shouldShowFeedbackCell()) {
-                showRateUs()
-                rateUsCardView.callback = {
+                showFeedbackCardView()
+                feedbackCardView.callback = {
                     self.doNewState(state: state)
                 }
             } else if let pinnedPost = state.pinnedPost {
@@ -127,15 +127,15 @@ class ActionsViewController: UIViewControllerWithFab, StoreSubscriber {
         tableView.reloadData()
     }
     
-    private func showRateUs() {
-        rateUsCardView.bind()
+    private func showFeedbackCardView() {
+        feedbackCardView.bind()
         
         tableView.run {
-            $0.tableHeaderView = rateUsCardView
+            $0.tableHeaderView = feedbackCardView
             $0.tableHeaderView?.widthToSuperview()
         }
         
-        rateUsCardView.run {
+        feedbackCardView.run {
             $0.setNeedsLayout()
             $0.layoutIfNeeded()
         }

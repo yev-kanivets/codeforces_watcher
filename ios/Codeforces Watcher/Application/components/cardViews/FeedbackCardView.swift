@@ -1,5 +1,5 @@
 //
-//  RateUsCardView.swift
+//  FeedbackCardView.swift
 //  Codeforces Watcher
 //
 //  Created by Den Matyash on 5/6/20.
@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import StoreKit
 
-class RateUsCardView: UIView {
+class FeedbackCardView: UIView {
     private var feedbackItem: FeedbackItem!
     var callback: () -> () = {}
 
