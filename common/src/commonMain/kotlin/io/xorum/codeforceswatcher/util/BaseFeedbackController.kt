@@ -1,6 +1,7 @@
 package io.xorum.codeforceswatcher.util
 
-abstract class IFeedbackController {
+abstract class BaseFeedbackController {
+
     abstract var countScreenOpening: Int
 
     abstract var startTimeWhenShown: Long
@@ -14,7 +15,7 @@ abstract class IFeedbackController {
     var feedbackItem: FeedbackItem
         get() = when(currentShowingItem) {
             0 -> buildEnjoyingItem()
-            1 -> { isNeededAtAll = false; buildEmailItem() }
+            1 -> { buildEmailItem().also { isNeededAtAll = false } }
             2 -> buildRateItem()
             else -> {
                 throw IllegalStateException()
@@ -22,11 +23,23 @@ abstract class IFeedbackController {
         }
         set(v) {}
 
-    abstract fun buildEmailItem(): FeedbackItem
+    abstract fun buildEnjoyingItem(
+            positiveButtonClick: () -> Unit = { currentShowingItem = 2 },
+            negativeButtonClick: () -> Unit = { currentShowingItem = 1 },
+            neutralButtonClick: () -> Unit = { turnOnLockoutPeriod() }
+    ): FeedbackItem
 
-    abstract fun buildEnjoyingItem(): FeedbackItem
+    abstract fun buildEmailItem(
+            positiveButtonClick: () -> Unit = { showEmailApp() },
+            negativeButtonClick: () -> Unit = { turnOnLockoutPeriod() },
+            neutralButtonClick: () -> Unit = { turnOnLockoutPeriod() }
+    ): FeedbackItem
 
-    abstract fun buildRateItem(): FeedbackItem
+    abstract fun buildRateItem(
+            positiveButtonClick: () -> Unit = { showAppStore().also { isNeededAtAll = false } },
+            negativeButtonClick: () -> Unit = { turnOnLockoutPeriod() },
+            neutralButtonClick: () -> Unit = { turnOnLockoutPeriod() }
+    ): FeedbackItem
 
     abstract fun showEmailApp()
 
@@ -65,6 +78,18 @@ abstract class IFeedbackController {
 
     fun updateCountOpeningScreen() {
         countScreenOpening++
+    }
+
+    companion object {
+        const val KEY_CURRENT_SHOWING_ITEM = "key_current_showing_item"
+
+        const val KEY_COUNT_SCREEN_OPENING = "key_count_app_opening"
+
+        const val KEY_START_TIME_SHOWING = "key_first_time_shown"
+
+        const val KEY_IS_NEEDED_AT_ALL = "key_is_needed_to_show"
+
+        const val KEY_IS_LOCKOUT_PERIOD = "key_is_lockout_period"
     }
 }
 
