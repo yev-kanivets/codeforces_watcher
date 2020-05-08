@@ -1,5 +1,5 @@
 //
-//  PinnedPostView.swift
+//  PinnedPostCardView.swift
 //  Codeforces Watcher
 //
 //  Created by Den Matyash on 4/13/20.
@@ -10,7 +10,7 @@ import UIKit
 import common
 import FirebaseAnalytics
 
-class PinnedPostView: UIView {
+class PinnedPostCardView: UIView {
     private let cardView = CardView()
     private let infoImage = CircleImageView().apply {
         $0.image = UIImage(named: "infoIcon")?.withRenderingMode(.alwaysTemplate)

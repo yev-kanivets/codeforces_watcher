@@ -12,6 +12,8 @@ import common
 
 let store = AppStoreKt.store
 
+let feedbackController = FeedbackController()
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

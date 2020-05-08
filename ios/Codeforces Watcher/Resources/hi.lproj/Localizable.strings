@@ -59,3 +59,10 @@
 
 "share_text" = "%@ - %@\n\nShared through Codeforces Watcher. Find it on App Store.";
 "Check upcoming programming contests" = "Check upcoming programming contests";
+
+"yes" = "Yes!";
+"rate_us_first_title" = "Enjoying our Codeforces WatchR App?";
+"rate_us_second_title" = "Would you mind giving us some feedback?";
+"rate_us_third_title" = "How about a rating on the App Store, then?";
+"not_really" = "Not really";
+"no_thanks" = "No, thanks";

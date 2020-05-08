@@ -17,9 +17,10 @@ class ActionsViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
     private let tableView = UITableView()
     private let tableAdapter = ActionsTableViewAdapter()
     private let refreshControl = UIRefreshControl()
-    private let pinnedPostView = PinnedPostView()
+    private let pinnedPostView = PinnedPostCardView()
     
     private var pinnedPost: PinnedPost!
+    private let feedbackCardView = FeedbackCardView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,8 +104,13 @@ class ActionsViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
         if (state.status == .idle) {
             refreshControl.endRefreshing()
             
-            if let pinnedPost = state.pinnedPost {
-                let shouldShowPinnedPost = SettingsKt.settings.readPinnedPostLink() != pinnedPost.link && tableView.tableHeaderView == nil && !state.actions.isEmpty
+            if (feedbackController.shouldShowFeedbackCell()) {
+                showFeedbackCardView()
+                feedbackCardView.callback = {
+                    self.doNewState(state: state)
+                }
+            } else if let pinnedPost = state.pinnedPost {
+                let shouldShowPinnedPost = SettingsKt.settings.readPinnedPostLink() != pinnedPost.link && tableView.tableHeaderView != pinnedPostView && !state.actions.isEmpty
                 
                 if (shouldShowPinnedPost) {
                     self.pinnedPost = pinnedPost
@@ -119,6 +125,20 @@ class ActionsViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
         tableAdapter.actions = state.actions
 
         tableView.reloadData()
+    }
+    
+    private func showFeedbackCardView() {
+        feedbackCardView.bind()
+        
+        tableView.run {
+            $0.tableHeaderView = feedbackCardView
+            $0.tableHeaderView?.widthToSuperview()
+        }
+        
+        feedbackCardView.run {
+            $0.setNeedsLayout()
+            $0.layoutIfNeeded()
+        }
     }
     
     private func showPinnedPost() {
@@ -150,7 +170,7 @@ class ActionsViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
             $0.openEventName = "actions_pinned_post_opened"
         }
 
-        self.presentModal(webViewController)
+        presentModal(webViewController)
     }
 
     @objc private func refreshActions(_ sender: Any) {
