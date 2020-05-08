@@ -63,4 +63,11 @@ Codeforces WatchR позволяет:
     <string name="search_for_problems">Поиск задач…</string>
     <string name="no_browser_has_been_found">Браузер не найден, попробуйте установить его.</string>
     <string name="no_contests_found">Контестов не найдено</string>
+
+    <string name="yes">Да!</string>
+    <string name="rate_us_first_title">Вам нравится Codeforces WatchR?</string>
+    <string name="rate_us_second_title">Не могли бы вы дать нам обратную связь?</string>
+    <string name="rate_us_third_title">Тогда что насчет оценки в Google Play?</string>
+    <string name="not_really">Не совсем</string>
+    <string name="no_thanks">Нет, спасибо</string>
 </resources>

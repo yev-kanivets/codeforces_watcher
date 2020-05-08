@@ -66,6 +66,7 @@ class FeedbackController: BaseFeedbackController {
             neutralButtonClick: neutralButtonClick
         )
     }
+    
     override func buildRateItem(
         positiveButtonClick: @escaping () -> Void,
         negativeButtonClick: @escaping () -> Void,
