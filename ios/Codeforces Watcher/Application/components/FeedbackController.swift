@@ -37,7 +37,11 @@ class FeedbackController: BaseFeedbackController {
         set(value) { UserDefaults.standard.set(value, forKey: Companion().KEY_IS_LOCKOUT_PERIOD) }
     }
     
-    override func buildEnjoyingItem(positiveButtonClick: @escaping () -> Void, negativeButtonClick: @escaping () -> Void, neutralButtonClick: @escaping () -> Void) -> FeedbackItem {
+    override func buildEnjoyingItem(
+        positiveButtonClick: @escaping () -> Void,
+        negativeButtonClick: @escaping () -> Void,
+        neutralButtonClick: @escaping () -> Void
+    ) -> FeedbackItem {
         FeedbackItem(
             textPositiveButton: "yes".localized,
             textNegativeButton: "not_really".localized,
@@ -48,7 +52,11 @@ class FeedbackController: BaseFeedbackController {
         )
     }
     
-    override func buildEmailItem(positiveButtonClick: @escaping () -> Void, negativeButtonClick: @escaping () -> Void, neutralButtonClick: @escaping () -> Void) -> FeedbackItem {
+    override func buildEmailItem(
+        positiveButtonClick: @escaping () -> Void,
+        negativeButtonClick: @escaping () -> Void,
+        neutralButtonClick: @escaping () -> Void
+    ) -> FeedbackItem {
         FeedbackItem(
             textPositiveButton: "yes".localized,
             textNegativeButton: "no_thanks".localized,
@@ -58,7 +66,11 @@ class FeedbackController: BaseFeedbackController {
             neutralButtonClick: neutralButtonClick
         )
     }
-    override func buildRateItem(positiveButtonClick: @escaping () -> Void, negativeButtonClick: @escaping () -> Void, neutralButtonClick: @escaping () -> Void) -> FeedbackItem {
+    override func buildRateItem(
+        positiveButtonClick: @escaping () -> Void,
+        negativeButtonClick: @escaping () -> Void,
+        neutralButtonClick: @escaping () -> Void
+    ) -> FeedbackItem {
         FeedbackItem(
             textPositiveButton: "yes".localized,
             textNegativeButton: "no_thanks".localized,
