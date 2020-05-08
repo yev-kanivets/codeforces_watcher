@@ -59,7 +59,7 @@ abstract class BaseFeedbackController {
         val timeInHours = calculateTimeInHours(startTimeWhenShown, currentTimeMillis())
         updateLockoutPeriod(timeInHours)
 
-        return isNeededAtAll && !isLockoutPeriod && (countScreenOpening >= 10 && timeInHours >= 72 || countScreenOpening >= 1)
+        return isNeededAtAll && !isLockoutPeriod && (countScreenOpening >= 10 && timeInHours >= 72)
     }
 
     fun updateLockoutPeriod(timeInHours: Int) {
