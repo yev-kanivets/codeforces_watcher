@@ -7,6 +7,7 @@ import com.bogdan.codeforceswatcher.features.users.colorTextByUserRank
 import com.bogdan.codeforceswatcher.util.convertFromHtml
 import io.xorum.codeforceswatcher.features.actions.models.CFAction
 import io.xorum.codeforceswatcher.network.responses.PinnedPost
+import io.xorum.codeforceswatcher.util.FeedbackData
 import io.xorum.codeforceswatcher.util.avatar
 
 sealed class ActionItem {
@@ -57,6 +58,15 @@ sealed class ActionItem {
     class PinnedItem(pinnedPost: PinnedPost) : ActionItem() {
         val title = pinnedPost.title
         val link = pinnedPost.link
+    }
+
+    class FeedbackItem(feedbackData: FeedbackData): ActionItem() {
+        val textPositiveButton = feedbackData.textPositiveButton
+        val textNegativeButton = feedbackData.textNegativeButton
+        val textTitle = feedbackData.textTitle
+        val positiveButtonClick = feedbackData.positiveButtonClick
+        val negativeButtonClick = feedbackData.negativeButtonClick
+        val neutralButtonClick = feedbackData.neutralButtonClick
     }
 
     object Stub : ActionItem()

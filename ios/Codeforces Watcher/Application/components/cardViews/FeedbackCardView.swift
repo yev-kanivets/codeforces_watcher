@@ -12,7 +12,7 @@ import StoreKit
 import common
 
 class FeedbackCardView: UIView {
-    private var feedbackItem: FeedbackItem!
+    private var feedbackItem: FeedbackData!
     var callback: () -> () = {}
 
     private let cardView = CardView()
@@ -107,7 +107,7 @@ class FeedbackCardView: UIView {
     }
 
     public func bind() {
-        feedbackItem = feedbackController.feedbackItem
+        feedbackItem = feedbackController.feedbackData
 
         titleLabel.text = feedbackItem.textTitle
         positiveButton.setTitle(feedbackItem.textPositiveButton, for: .normal)
