@@ -20,12 +20,6 @@
     <string name="by_ascending_update">↑ अपडेट</string>
     <string name="add">जोड़ें</string>
     <string name="enter_handle">हैंडल दर्ज करें</string>
-    <string name="like_codeforces_watcher">क्या आपको Codeforces WatchR पसंद है?</string>
-    <string name="rate_it_on_gp">इसे Google Play पर रेट करें!</string>
-    <string name="maybe_later">शायद बाद में</string>
-    <string name="no_thank_you">नहीं धन्यवाद</string>
-    <string name="yes_very">हाँ!</string>
-    <string name="google_play_not_found">Google Play नहीं मिला</string>
     <string name="users">यूजर्स</string>
     <string name="contests">प्रतियोगिताएं</string>
     <string name="actions">एक्शन</string>

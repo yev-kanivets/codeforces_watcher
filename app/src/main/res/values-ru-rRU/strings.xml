@@ -22,14 +22,6 @@
     <string name="add">Добавить</string>
     <string name="enter_handle">Введите хэндл</string>
 
-    <string name="like_codeforces_watcher">Вам нравится Codeforces WatchR?</string>
-    <string name="rate_it_on_gp">Оцените его на Google Play!</string>
-    <string name="maybe_later">Может быть позже</string>
-    <string name="no_thank_you">Нет, спасибо</string>
-    <string name="yes_very">Да!</string>
-
-    <string name="google_play_not_found">Google Play не найден</string>
-
     <string name="users">Люди</string>
     <string name="contests">Контесты</string>
     <string name="actions">Действия</string>

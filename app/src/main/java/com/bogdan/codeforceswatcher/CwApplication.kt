@@ -45,7 +45,6 @@ class CwApp : Application() {
             Prefs.get().writeAlarm()
         }
 
-        Prefs.get().addLaunchCount()
         FeedbackController.get().updateCountOpeningScreen()
     }
 

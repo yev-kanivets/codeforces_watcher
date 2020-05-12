@@ -9,8 +9,6 @@ import io.xorum.codeforceswatcher.util.Settings
 
 class Prefs(private val context: Context) : Settings {
 
-    private val ratePeriod = 5
-
     override fun writePinnedPostLink(pinnedPostLink: String) {
         val editor = getDefaultPrefs().edit()
         editor.putString(KEY_PINNED_POST, pinnedPostLink)
@@ -66,29 +64,6 @@ class Prefs(private val context: Context) : Settings {
         editor.apply()
     }
 
-    fun addLaunchCount() {
-        val defaultPrefs = getDefaultPrefs()
-        val editor = defaultPrefs.edit()
-        editor.putInt(LAUNCH_COUNT, defaultPrefs.getInt(LAUNCH_COUNT, 0) + 1)
-        editor.apply()
-    }
-
-    fun checkRateDialog(): Boolean {
-        val defaultPrefs = getDefaultPrefs()
-
-        val appRated = defaultPrefs.getBoolean(APP_RATED, false)
-        if (appRated) return false
-
-        val launchCount = defaultPrefs.getInt(LAUNCH_COUNT, 0)
-        return launchCount % ratePeriod == 0
-    }
-
-    fun appRated() {
-        val editor = getDefaultPrefs().edit()
-        editor.putBoolean(APP_RATED, true)
-        editor.apply()
-    }
-
     private fun getDefaultPrefs(): SharedPreferences {
         return context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
     }
@@ -98,8 +73,6 @@ class Prefs(private val context: Context) : Settings {
         private const val KEY_SPINNER_SORT_POSITION = "key_counter"
         private const val KEY_PROBLEMS_IS_FAVOURITE = "key_problems_is_favourite"
         private const val KEY_ALARM = "key_alarm"
-        private const val APP_RATED = "app_rated"
-        private const val LAUNCH_COUNT = "launch_count"
         private const val KEY_CONTESTS_FILTERS = "key_contests_filters"
         private const val KEY_PINNED_POST = "key_pinned_post"
 
