@@ -22,18 +22,19 @@ import kotlinx.android.synthetic.main.view_comment_item.view.tvContent
 import kotlinx.android.synthetic.main.view_comment_item.view.tvHandleAndTime
 import kotlinx.android.synthetic.main.view_comment_item.view.tvTitle
 import kotlinx.android.synthetic.main.view_feedback_card_view.view.*
-import kotlinx.android.synthetic.main.view_pinned_action.view.ivCross
+import kotlinx.android.synthetic.main.view_pinned_action.view.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.lang.IllegalStateException
 import java.util.*
 
 class ActionsAdapter(
         private val context: Context,
-        private val itemClickListener: (String, String) -> Unit,
-        private val callback: (() -> Unit)?
+        private val itemClickListener: (String, String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items: List<ActionItem> = listOf()
+
+    lateinit var callback: () -> Unit
 
     override fun getItemCount() = items.size
 
@@ -140,14 +141,17 @@ class ActionsAdapter(
 
             onCrossClickListener = {
                 neutralButtonClick.invoke()
+                callback.invoke()
             }
 
             onNegativeBtnClickListener = {
                 negativeButtonClick.invoke()
+                callback.invoke()
             }
 
             onPositiveBtnClickListener = {
                 positiveButtonClick.invoke()
+                callback.invoke()
             }
         }
     }
@@ -170,9 +174,9 @@ class ActionsAdapter(
 
         init {
             view.run {
-                /*ivCross.setOnClickListener {
+                ivCrossFeedback.setOnClickListener {
                     onCrossClickListener?.invoke()
-                }*/
+                }
 
                 btnNegative.setOnClickListener {
                     onNegativeBtnClickListener?.invoke()
@@ -192,11 +196,13 @@ class ActionsAdapter(
         var onCrossClickListener: (() -> Unit)? = null
 
         init {
-            view.setOnClickListener {
-                onItemClickListener?.invoke()
-            }
-            view.ivCross.setOnClickListener {
-                onCrossClickListener?.invoke()
+            view.run {
+                setOnClickListener {
+                    onItemClickListener?.invoke()
+                }
+                ivCrossPost.setOnClickListener {
+                    onCrossClickListener?.invoke()
+                }
             }
         }
     }

@@ -58,6 +58,9 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreS
 
             if (feedbackController.shouldShowFeedbackCell()) {
                 items.add(ActionItem.FeedbackItem(feedbackController.feedbackData))
+                actionsAdapter.callback = {
+                    newState(state)
+                }
             } else {
                 state.pinnedPost?.let {
                     if (settings.readPinnedPostLink() != it.link) items.add(ActionItem.PinnedItem(it))
@@ -87,11 +90,9 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreS
 
     private fun initViews() {
         swipeRefreshLayout.setOnRefreshListener(this)
-        actionsAdapter = ActionsAdapter(requireContext(), { link, title ->
+        actionsAdapter = ActionsAdapter(requireContext()) { link, title ->
             startActivity(WebViewActivity.newIntent(requireContext(), link, title))
-        }, {
-
-        })
+        }
         recyclerView.adapter = actionsAdapter
     }
 }
