@@ -22,6 +22,7 @@ import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.util.Analytics
+import com.bogdan.codeforceswatcher.util.FeedbackController
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import io.xorum.codeforceswatcher.features.problems.redux.actions.ProblemsActions
 import io.xorum.codeforceswatcher.redux.store
@@ -39,6 +40,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        FeedbackController.feedbackController = FeedbackController(this@MainActivity)
+        FeedbackController.get().updateCountOpeningScreen()
 
         initViews()
     }

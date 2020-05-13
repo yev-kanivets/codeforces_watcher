@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.features.MainActivity
 import io.xorum.codeforceswatcher.util.BaseFeedbackController
 import io.xorum.codeforceswatcher.util.FeedUIModel
 
@@ -106,7 +107,7 @@ class FeedbackController(private val context: Context) : BaseFeedbackController(
 
     companion object {
         @SuppressLint("StaticFieldLeak")
-        private val feedbackController: FeedbackController = FeedbackController(CwApp.app)
+        lateinit var feedbackController: FeedbackController
 
         fun get() = feedbackController
     }

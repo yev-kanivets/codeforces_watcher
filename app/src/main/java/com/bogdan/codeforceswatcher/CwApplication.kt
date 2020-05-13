@@ -44,8 +44,6 @@ class CwApp : Application() {
             startAlarm()
             Prefs.get().writeAlarm()
         }
-
-        FeedbackController.get().updateCountOpeningScreen()
     }
 
     private fun initDatabase() {
