@@ -8,9 +8,9 @@ import android.net.Uri
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
 import io.xorum.codeforceswatcher.util.BaseFeedbackController
-import io.xorum.codeforceswatcher.util.FeedbackData
+import io.xorum.codeforceswatcher.util.FeedUIModel
 
-class FeedbackController(private val context: Context): BaseFeedbackController() {
+class FeedbackController(private val context: Context) : BaseFeedbackController() {
     private val sharedPreferences = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
     private val editor = sharedPreferences.edit()
 
@@ -38,14 +38,14 @@ class FeedbackController(private val context: Context): BaseFeedbackController()
             positiveButtonClick: () -> Unit,
             negativeButtonClick: () -> Unit,
             neutralButtonClick: () -> Unit
-    ): FeedbackData {
-        return FeedbackData(
-                textPositiveButton=context.getString(R.string.yes),
-                textNegativeButton=context.getString(R.string.not_really),
-                textTitle=context.getString(R.string.rate_us_first_title),
-                positiveButtonClick=positiveButtonClick,
-                negativeButtonClick=negativeButtonClick,
-                neutralButtonClick=neutralButtonClick
+    ): FeedUIModel {
+        return FeedUIModel(
+                textPositiveButton = context.getString(R.string.yes),
+                textNegativeButton = context.getString(R.string.not_really),
+                textTitle = context.getString(R.string.rate_us_first_title),
+                positiveButtonClick = positiveButtonClick,
+                negativeButtonClick = negativeButtonClick,
+                neutralButtonClick = neutralButtonClick
         )
     }
 
@@ -53,14 +53,14 @@ class FeedbackController(private val context: Context): BaseFeedbackController()
             positiveButtonClick: () -> Unit,
             negativeButtonClick: () -> Unit,
             neutralButtonClick: () -> Unit
-    ): FeedbackData {
-        return FeedbackData(
-                textPositiveButton=context.getString(R.string.yes),
-                textNegativeButton=context.getString(R.string.no_thanks),
-                textTitle=context.getString(R.string.rate_us_second_title),
-                positiveButtonClick=positiveButtonClick,
-                negativeButtonClick=negativeButtonClick,
-                neutralButtonClick=neutralButtonClick
+    ): FeedUIModel {
+        return FeedUIModel(
+                textPositiveButton = context.getString(R.string.yes),
+                textNegativeButton = context.getString(R.string.no_thanks),
+                textTitle = context.getString(R.string.rate_us_second_title),
+                positiveButtonClick = positiveButtonClick,
+                negativeButtonClick = negativeButtonClick,
+                neutralButtonClick = neutralButtonClick
         )
     }
 
@@ -68,14 +68,14 @@ class FeedbackController(private val context: Context): BaseFeedbackController()
             positiveButtonClick: () -> Unit,
             negativeButtonClick: () -> Unit,
             neutralButtonClick: () -> Unit
-    ): FeedbackData {
-        return FeedbackData(
-                textPositiveButton=context.getString(R.string.yes),
-                textNegativeButton=context.getString(R.string.no_thanks),
-                textTitle=context.getString(R.string.rate_us_third_title),
-                positiveButtonClick=positiveButtonClick,
-                negativeButtonClick=negativeButtonClick,
-                neutralButtonClick=neutralButtonClick
+    ): FeedUIModel {
+        return FeedUIModel(
+                textPositiveButton = context.getString(R.string.yes),
+                textNegativeButton = context.getString(R.string.no_thanks),
+                textTitle = context.getString(R.string.rate_us_third_title),
+                positiveButtonClick = positiveButtonClick,
+                negativeButtonClick = negativeButtonClick,
+                neutralButtonClick = neutralButtonClick
         )
     }
 

@@ -60,9 +60,7 @@ class ActionsAdapter(
                     val layout = LayoutInflater.from(context).inflate(R.layout.view_blog_entry_item, parent, false)
                     BlogEntryViewHolder(layout)
                 }
-                else -> {
-                    throw IllegalStateException()
-                }
+                else -> throw IllegalStateException()
             }
 
     override fun getItemViewType(position: Int): Int {
@@ -72,9 +70,7 @@ class ActionsAdapter(
             items[position] is ActionItem.PinnedItem -> PINNED_ITEM_VIEW_TYPE
             items[position] is ActionItem.FeedbackItem -> FEEDBACK_ITEM_VIEW_TYPE
             items[position] is ActionItem.BlogEntryItem -> BLOG_ENTRY_VIEW_TYPE
-            else -> {
-                throw IllegalStateException()
-            }
+            else -> throw IllegalStateException()
         }
     }
 
@@ -132,7 +128,10 @@ class ActionsAdapter(
         }
     }
 
-    private fun bindFeedbackItem(viewHolder: FeedbackItemViewHolder, feedbackItem: ActionItem.FeedbackItem) = with(feedbackItem) {
+    private fun bindFeedbackItem(
+            viewHolder: FeedbackItemViewHolder,
+            feedbackItem: ActionItem.FeedbackItem
+    ) = with(feedbackItem) {
         with(viewHolder) {
             tvTitle.text = textTitle
 

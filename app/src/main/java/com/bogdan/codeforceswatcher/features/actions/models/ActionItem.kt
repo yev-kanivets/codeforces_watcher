@@ -7,7 +7,7 @@ import com.bogdan.codeforceswatcher.features.users.colorTextByUserRank
 import com.bogdan.codeforceswatcher.util.convertFromHtml
 import io.xorum.codeforceswatcher.features.actions.models.CFAction
 import io.xorum.codeforceswatcher.network.responses.PinnedPost
-import io.xorum.codeforceswatcher.util.FeedbackData
+import io.xorum.codeforceswatcher.util.FeedUIModel
 import io.xorum.codeforceswatcher.util.avatar
 
 sealed class ActionItem {
@@ -60,13 +60,13 @@ sealed class ActionItem {
         val link = pinnedPost.link
     }
 
-    class FeedbackItem(feedbackData: FeedbackData): ActionItem() {
-        val textPositiveButton = feedbackData.textPositiveButton
-        val textNegativeButton = feedbackData.textNegativeButton
-        val textTitle = feedbackData.textTitle
-        val positiveButtonClick = feedbackData.positiveButtonClick
-        val negativeButtonClick = feedbackData.negativeButtonClick
-        val neutralButtonClick = feedbackData.neutralButtonClick
+    class FeedbackItem(feedUIModel: FeedUIModel) : ActionItem() {
+        val textPositiveButton = feedUIModel.textPositiveButton
+        val textNegativeButton = feedUIModel.textNegativeButton
+        val textTitle = feedUIModel.textTitle
+        val positiveButtonClick = feedUIModel.positiveButtonClick
+        val negativeButtonClick = feedUIModel.negativeButtonClick
+        val neutralButtonClick = feedUIModel.neutralButtonClick
     }
 
     object Stub : ActionItem()

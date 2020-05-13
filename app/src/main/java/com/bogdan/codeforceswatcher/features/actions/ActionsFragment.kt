@@ -57,7 +57,7 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreS
             val feedbackController = FeedbackController.get()
 
             if (feedbackController.shouldShowFeedbackCell()) {
-                items.add(ActionItem.FeedbackItem(feedbackController.feedbackData))
+                items.add(ActionItem.FeedbackItem(feedbackController.feedUIModel))
                 actionsAdapter.callback = {
                     newState(state)
                 }

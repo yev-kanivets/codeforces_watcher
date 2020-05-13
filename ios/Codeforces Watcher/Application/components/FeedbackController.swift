@@ -41,8 +41,8 @@ class FeedbackController: BaseFeedbackController {
         positiveButtonClick: @escaping () -> Void,
         negativeButtonClick: @escaping () -> Void,
         neutralButtonClick: @escaping () -> Void
-    ) -> FeedbackData {
-        FeedbackData(
+    ) -> FeedUIModel {
+        FeedUIModel(
             textPositiveButton: "yes".localized,
             textNegativeButton: "not_really".localized,
             textTitle: "rate_us_first_title".localized,
@@ -56,8 +56,8 @@ class FeedbackController: BaseFeedbackController {
         positiveButtonClick: @escaping () -> Void,
         negativeButtonClick: @escaping () -> Void,
         neutralButtonClick: @escaping () -> Void
-    ) -> FeedbackData {
-        FeedbackData(
+    ) -> FeedUIModel {
+        FeedUIModel(
             textPositiveButton: "yes".localized,
             textNegativeButton: "no_thanks".localized,
             textTitle: "rate_us_second_title".localized,
@@ -71,8 +71,8 @@ class FeedbackController: BaseFeedbackController {
         positiveButtonClick: @escaping () -> Void,
         negativeButtonClick: @escaping () -> Void,
         neutralButtonClick: @escaping () -> Void
-    ) -> FeedbackData {
-        FeedbackData(
+    ) -> FeedUIModel {
+        FeedUIModel(
             textPositiveButton: "yes".localized,
             textNegativeButton: "no_thanks".localized,
             textTitle: "rate_us_third_title".localized,
