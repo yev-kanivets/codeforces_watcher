@@ -12,14 +12,12 @@ abstract class BaseFeedbackController {
 
     abstract var currentShowingItem: Int
 
-    var feedbackItem: FeedbackItem
+    var feedUIModel: FeedUIModel
         get() = when(currentShowingItem) {
             0 -> buildEnjoyingItem()
             1 -> { buildEmailItem().also { isNeededAtAll = false } }
             2 -> buildRateItem()
-            else -> {
-                throw IllegalStateException()
-            }
+            else -> throw IllegalStateException()
         }
         set(v) {}
 
@@ -27,25 +25,25 @@ abstract class BaseFeedbackController {
             positiveButtonClick: () -> Unit = { currentShowingItem = 2 },
             negativeButtonClick: () -> Unit = { currentShowingItem = 1 },
             neutralButtonClick: () -> Unit = { turnOnLockoutPeriod() }
-    ): FeedbackItem
+    ): FeedUIModel
 
     abstract fun buildEmailItem(
             positiveButtonClick: () -> Unit = { showEmailApp() },
             negativeButtonClick: () -> Unit = { turnOnLockoutPeriod() },
             neutralButtonClick: () -> Unit = { turnOnLockoutPeriod() }
-    ): FeedbackItem
+    ): FeedUIModel
 
     abstract fun buildRateItem(
             positiveButtonClick: () -> Unit = { showAppStore().also { isNeededAtAll = false } },
             negativeButtonClick: () -> Unit = { turnOnLockoutPeriod() },
             neutralButtonClick: () -> Unit = { turnOnLockoutPeriod() }
-    ): FeedbackItem
+    ): FeedUIModel
 
     abstract fun showEmailApp()
 
     abstract fun showAppStore()
 
-    fun turnOnLockoutPeriod() {
+    private fun turnOnLockoutPeriod() {
         isLockoutPeriod = true
         currentShowingItem = 0
 
@@ -59,18 +57,18 @@ abstract class BaseFeedbackController {
         val timeInHours = calculateTimeInHours(startTimeWhenShown, currentTimeMillis())
         updateLockoutPeriod(timeInHours)
 
-        return isNeededAtAll && !isLockoutPeriod && (countScreenOpening >= 10 && timeInHours >= 72)
+        return isNeededAtAll && !isLockoutPeriod && (countScreenOpening >= 10 && timeInHours >= 72 || countScreenOpening >= 1)
     }
 
-    fun updateLockoutPeriod(timeInHours: Int) {
+    private fun updateLockoutPeriod(timeInHours: Int) {
         if (timeInHours >= 168 && isLockoutPeriod) { isLockoutPeriod = false }
     }
 
-    fun calculateTimeInHours(startTimeInMillis: Long, endTimeInMillis: Long): Int {
+    private fun calculateTimeInHours(startTimeInMillis: Long, endTimeInMillis: Long): Int {
         return fromMillisToHours(endTimeInMillis - startTimeInMillis)
     }
 
-    fun fromMillisToHours(timeInMillis: Long): Int {
+    private fun fromMillisToHours(timeInMillis: Long): Int {
         return (timeInMillis / 1000 / 60 / 60).toInt()
     }
 
@@ -93,7 +91,7 @@ abstract class BaseFeedbackController {
     }
 }
 
-data class FeedbackItem(
+data class FeedUIModel(
         val textPositiveButton: String,
         val textNegativeButton: String,
         val textTitle: String,

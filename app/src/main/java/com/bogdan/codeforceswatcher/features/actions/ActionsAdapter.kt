@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -20,8 +21,10 @@ import kotlinx.android.synthetic.main.view_comment_item.view.*
 import kotlinx.android.synthetic.main.view_comment_item.view.tvContent
 import kotlinx.android.synthetic.main.view_comment_item.view.tvHandleAndTime
 import kotlinx.android.synthetic.main.view_comment_item.view.tvTitle
+import kotlinx.android.synthetic.main.view_feedback_card_view.view.*
 import kotlinx.android.synthetic.main.view_pinned_action.view.*
 import org.ocpsoft.prettytime.PrettyTime
+import java.lang.IllegalStateException
 import java.util.*
 
 class ActionsAdapter(
@@ -30,6 +33,8 @@ class ActionsAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items: List<ActionItem> = listOf()
+
+    lateinit var callback: () -> Unit
 
     override fun getItemCount() = items.size
 
@@ -47,10 +52,15 @@ class ActionsAdapter(
                     val layout = LayoutInflater.from(context).inflate(R.layout.view_pinned_action, parent, false)
                     PinnedItemViewHolder(layout)
                 }
-                else -> {
+                FEEDBACK_ITEM_VIEW_TYPE -> {
+                    val layout = LayoutInflater.from(context).inflate(R.layout.view_feedback_card_view, parent, false)
+                    FeedbackItemViewHolder(layout)
+                }
+                BLOG_ENTRY_VIEW_TYPE -> {
                     val layout = LayoutInflater.from(context).inflate(R.layout.view_blog_entry_item, parent, false)
                     BlogEntryViewHolder(layout)
                 }
+                else -> throw IllegalStateException()
             }
 
     override fun getItemViewType(position: Int): Int {
@@ -58,7 +68,9 @@ class ActionsAdapter(
             items[position] is ActionItem.Stub -> STUB_VIEW_TYPE
             items[position] is ActionItem.CommentItem -> COMMENT_VIEW_TYPE
             items[position] is ActionItem.PinnedItem -> PINNED_ITEM_VIEW_TYPE
-            else -> BLOG_ENTRY_VIEW_TYPE
+            items[position] is ActionItem.FeedbackItem -> FEEDBACK_ITEM_VIEW_TYPE
+            items[position] is ActionItem.BlogEntryItem -> BLOG_ENTRY_VIEW_TYPE
+            else -> throw IllegalStateException()
         }
     }
 
@@ -68,6 +80,7 @@ class ActionsAdapter(
             is ActionItem.PinnedItem -> bindPinnedItem(viewHolder as PinnedItemViewHolder, item)
             is ActionItem.CommentItem -> bindComment(viewHolder as CommentViewHolder, item)
             is ActionItem.BlogEntryItem -> bindBlogEntry(viewHolder as BlogEntryViewHolder, item)
+            is ActionItem.FeedbackItem -> bindFeedbackItem(viewHolder as FeedbackItemViewHolder, item)
         }
     }
 
@@ -115,10 +128,64 @@ class ActionsAdapter(
         }
     }
 
+    private fun bindFeedbackItem(
+            viewHolder: FeedbackItemViewHolder,
+            feedbackItem: ActionItem.FeedbackItem
+    ) = with(feedbackItem) {
+        with(viewHolder) {
+            tvTitle.text = textTitle
+
+            btnNegative.text = textNegativeButton
+            btnPositive.text = textPositiveButton
+
+            onCrossClickListener = {
+                neutralButtonClick.invoke()
+                callback.invoke()
+            }
+
+            onNegativeBtnClickListener = {
+                negativeButtonClick.invoke()
+                callback.invoke()
+            }
+
+            onPositiveBtnClickListener = {
+                positiveButtonClick.invoke()
+                callback.invoke()
+            }
+        }
+    }
+
     fun setItems(actionsList: List<ActionItem>) {
-        items = if (actionsList.isEmpty() || (actionsList.size == 1 && actionsList.first() is ActionItem.PinnedItem)) listOf(ActionItem.Stub)
+        items = if (actionsList.isEmpty() || (actionsList.size == 1 && (actionsList.first() is ActionItem.PinnedItem ||
+                        actionsList.first() is ActionItem.FeedbackItem))) listOf(ActionItem.Stub)
         else actionsList
         notifyDataSetChanged()
+    }
+
+    class FeedbackItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val tvTitle: TextView = view.tvTitle
+        val btnPositive: Button = view.btnPositive
+        val btnNegative: Button = view.btnNegative
+
+        var onCrossClickListener: (() -> Unit)? = null
+        var onNegativeBtnClickListener: (() -> Unit)? = null
+        var onPositiveBtnClickListener: (() -> Unit)? = null
+
+        init {
+            view.run {
+                ivCrossFeedback.setOnClickListener {
+                    onCrossClickListener?.invoke()
+                }
+
+                btnNegative.setOnClickListener {
+                    onNegativeBtnClickListener?.invoke()
+                }
+
+                btnPositive.setOnClickListener {
+                    onPositiveBtnClickListener?.invoke()
+                }
+            }
+        }
     }
 
     class PinnedItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -128,11 +195,13 @@ class ActionsAdapter(
         var onCrossClickListener: (() -> Unit)? = null
 
         init {
-            view.setOnClickListener {
-                onItemClickListener?.invoke()
-            }
-            view.ivCross.setOnClickListener {
-                onCrossClickListener?.invoke()
+            view.run {
+                setOnClickListener {
+                    onItemClickListener?.invoke()
+                }
+                ivCrossPost.setOnClickListener {
+                    onCrossClickListener?.invoke()
+                }
             }
         }
     }
@@ -174,5 +243,6 @@ class ActionsAdapter(
         const val COMMENT_VIEW_TYPE = 1
         const val BLOG_ENTRY_VIEW_TYPE = 2
         const val PINNED_ITEM_VIEW_TYPE = 3
+        const val FEEDBACK_ITEM_VIEW_TYPE = 4
     }
 }

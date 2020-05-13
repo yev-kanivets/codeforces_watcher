@@ -21,9 +21,8 @@ import com.bogdan.codeforceswatcher.features.contests.FiltersActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
-import com.bogdan.codeforceswatcher.ui.AppRateDialog
 import com.bogdan.codeforceswatcher.util.Analytics
-import com.bogdan.codeforceswatcher.util.Prefs
+import com.bogdan.codeforceswatcher.util.FeedbackController
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import io.xorum.codeforceswatcher.features.problems.redux.actions.ProblemsActions
 import io.xorum.codeforceswatcher.redux.store
@@ -42,7 +41,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (Prefs.get().checkRateDialog()) showAppRateDialog()
+        FeedbackController.feedbackController = FeedbackController(this@MainActivity)
+        FeedbackController.get().updateCountOpeningScreen()
+
         initViews()
     }
 
@@ -204,12 +205,6 @@ class MainActivity : AppCompatActivity() {
                 activeLabel.setPadding(0, 0, 0, 0)
             }
         }
-    }
-
-    private fun showAppRateDialog() {
-        val rateDialog = AppRateDialog()
-        rateDialog.isCancelable = false
-        rateDialog.show(supportFragmentManager, "progressDialog")
     }
 
     companion object {
