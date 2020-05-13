@@ -5,9 +5,7 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.features.MainActivity
 import io.xorum.codeforceswatcher.util.BaseFeedbackController
 import io.xorum.codeforceswatcher.util.FeedUIModel
 
@@ -39,46 +37,40 @@ class FeedbackController(private val context: Context) : BaseFeedbackController(
             positiveButtonClick: () -> Unit,
             negativeButtonClick: () -> Unit,
             neutralButtonClick: () -> Unit
-    ): FeedUIModel {
-        return FeedUIModel(
-                textPositiveButton = context.getString(R.string.yes),
-                textNegativeButton = context.getString(R.string.not_really),
-                textTitle = context.getString(R.string.rate_us_first_title),
-                positiveButtonClick = positiveButtonClick,
-                negativeButtonClick = negativeButtonClick,
-                neutralButtonClick = neutralButtonClick
-        )
-    }
+    ) = FeedUIModel(
+            textPositiveButton = context.getString(R.string.yes),
+            textNegativeButton = context.getString(R.string.not_really),
+            textTitle = context.getString(R.string.rate_us_first_title),
+            positiveButtonClick = positiveButtonClick,
+            negativeButtonClick = negativeButtonClick,
+            neutralButtonClick = neutralButtonClick
+    )
 
     override fun buildEmailItem(
             positiveButtonClick: () -> Unit,
             negativeButtonClick: () -> Unit,
             neutralButtonClick: () -> Unit
-    ): FeedUIModel {
-        return FeedUIModel(
-                textPositiveButton = context.getString(R.string.yes),
-                textNegativeButton = context.getString(R.string.no_thanks),
-                textTitle = context.getString(R.string.rate_us_second_title),
-                positiveButtonClick = positiveButtonClick,
-                negativeButtonClick = negativeButtonClick,
-                neutralButtonClick = neutralButtonClick
-        )
-    }
+    ) = FeedUIModel(
+            textPositiveButton = context.getString(R.string.yes),
+            textNegativeButton = context.getString(R.string.no_thanks),
+            textTitle = context.getString(R.string.rate_us_second_title),
+            positiveButtonClick = positiveButtonClick,
+            negativeButtonClick = negativeButtonClick,
+            neutralButtonClick = neutralButtonClick
+    )
 
     override fun buildRateItem(
             positiveButtonClick: () -> Unit,
             negativeButtonClick: () -> Unit,
             neutralButtonClick: () -> Unit
-    ): FeedUIModel {
-        return FeedUIModel(
-                textPositiveButton = context.getString(R.string.yes),
-                textNegativeButton = context.getString(R.string.no_thanks),
-                textTitle = context.getString(R.string.rate_us_third_title),
-                positiveButtonClick = positiveButtonClick,
-                negativeButtonClick = negativeButtonClick,
-                neutralButtonClick = neutralButtonClick
-        )
-    }
+    ) = FeedUIModel(
+            textPositiveButton = context.getString(R.string.yes),
+            textNegativeButton = context.getString(R.string.no_thanks),
+            textTitle = context.getString(R.string.rate_us_third_title),
+            positiveButtonClick = positiveButtonClick,
+            negativeButtonClick = negativeButtonClick,
+            neutralButtonClick = neutralButtonClick
+    )
 
     override fun showEmailApp() {
         val emailIntent = Intent(Intent.ACTION_SENDTO)

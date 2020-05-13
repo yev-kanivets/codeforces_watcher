@@ -5,7 +5,6 @@ import android.content.Intent
 import com.bogdan.codeforceswatcher.handlers.AndroidMessageHandler
 import com.bogdan.codeforceswatcher.handlers.AndroidNotificationHandler
 import com.bogdan.codeforceswatcher.receiver.StartAlarm
-import com.bogdan.codeforceswatcher.util.FeedbackController
 import com.bogdan.codeforceswatcher.util.Prefs
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.sqldelight.android.AndroidSqliteDriver
