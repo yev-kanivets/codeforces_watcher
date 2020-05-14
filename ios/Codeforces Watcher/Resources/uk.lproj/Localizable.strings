@@ -66,3 +66,6 @@
 "rate_us_third_title" = "То як щодо оцiнки в App Store?";
 "not_really" = "Не зовсім";
 "no_thanks" = "Нi, дякую";
+
+"contest_date_format" = "d MMM о HH:mm, EEEE";
+"user_date_format" = "d MMM yyyy";

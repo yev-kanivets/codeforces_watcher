@@ -66,3 +66,6 @@
 "rate_us_third_title" = "Тогда что насчет оценки в App Store?";
 "not_really" = "Не совсем";
 "no_thanks" = "Нет, спасибо";
+
+"contest_date_format" = "d MMM в HH:mm, EEEE";
+"user_date_format" = "d MMM yyyy";
