@@ -88,8 +88,8 @@ class UserTableViewCell: UITableViewCell {
 
         handleLabel.attributedText = colorTextByUserRank(text: user.handle, rank: user.rank)
 
-        if let rating = user.rating {
-            ratingLabel.attributedText = colorTextByUserRank(text: String(rating.intValue), rank: user.rank)
+        if let rating = user.ratingChanges.last?.newRating {
+            ratingLabel.attributedText = colorTextByUserRank(text: String(rating), rank: user.rank)
         }
 
         if let ratingChange = user.ratingChanges.last {
