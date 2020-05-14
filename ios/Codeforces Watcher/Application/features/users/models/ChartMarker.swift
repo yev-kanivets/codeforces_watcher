@@ -15,18 +15,25 @@ class ChartMarker: MarkerView {
 
     override func refreshContent(entry: ChartDataEntry, highlight: Highlight) {
         super.refreshContent(entry: entry, highlight: highlight)
-        text = entry.data as? String ?? ""
+        guard let chartItem = entry.data as? ChartItem else { fatalError() }
+
+        var ratingChange = chartItem.ratingChange
+        ratingChange = ratingChange.starts(with: "-") ? ratingChange : "+" + ratingChange
+
+        let (contestFirstHalf, contestSecondHalf) = chartItem.contest.splitStringInHalf()
+
+        text = "chart_info".localizedFormat(args: chartItem.rating, ratingChange, chartItem.rank, contestFirstHalf, contestSecondHalf)
     }
 
     override func draw(context: CGContext, point: CGPoint) {
         super.draw(context: context, point: point)
 
         var drawAttributes = [NSAttributedString.Key: Any]()
-        drawAttributes[.font] = UIFont.systemFont(ofSize: 15)
-        drawAttributes[.foregroundColor] = UIColor.white
-        drawAttributes[.backgroundColor] = UIColor.darkGray
+        drawAttributes[.font] = Font.textBody
+        drawAttributes[.foregroundColor] = Palette.white
+        drawAttributes[.backgroundColor] = Palette.darkGrey
 
-        self.bounds.size = (" \(text) " as NSString).size(withAttributes: drawAttributes)
+        self.bounds.size = (text as NSString).size(withAttributes: drawAttributes)
         self.offset = CGPoint(x: 0, y: -self.bounds.size.height - 2)
 
         let offset = self.offsetForDrawing(atPoint: point)
@@ -34,7 +41,7 @@ class ChartMarker: MarkerView {
         drawText(text: " \(text) " as NSString, rect: CGRect(origin: CGPoint(x: point.x + offset.x, y: point.y + offset.y), size: self.bounds.size), withAttributes: drawAttributes)
     }
 
-    func drawText(text: NSString, rect: CGRect, withAttributes attributes: [NSAttributedString.Key: Any]? = nil) {
+    private func drawText(text: NSString, rect: CGRect, withAttributes attributes: [NSAttributedString.Key: Any]? = nil) {
         let size = text.size(withAttributes: attributes)
         let centeredRect = CGRect(
             x: rect.origin.x + (rect.size.width - size.width) / 2.0,
@@ -55,4 +62,11 @@ class xAxisFormatter: IAxisValueFormatter {
         }
         return dayTimePeriodFormatter.string(from: date)
     }
+}
+
+struct ChartItem {
+    let rating: String
+    let ratingChange: String
+    let rank: String
+    let contest: String
 }

@@ -66,3 +66,5 @@
 "rate_us_third_title" = "How about a rating on the App Store, then?";
 "not_really" = "Not really";
 "no_thanks" = "No, thanks";
+
+"chart_info" = " = %@ (%@) \n Place: %@ \n %@ \n %@ ";

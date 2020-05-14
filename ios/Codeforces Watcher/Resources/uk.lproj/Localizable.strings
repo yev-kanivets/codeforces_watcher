@@ -66,3 +66,5 @@
 "rate_us_third_title" = "То як щодо оцiнки в App Store?";
 "not_really" = "Не зовсім";
 "no_thanks" = "Нi, дякую";
+
+"chart_info" = " = %@ (%@) \n Мiсце: %@ \n %@ \n %@ ";
