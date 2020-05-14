@@ -62,4 +62,6 @@ Codeforces WatchR позволяет:
     <string name="rate_us_third_title">Тогда что насчет оценки в Google Play?</string>
     <string name="not_really">Не совсем</string>
     <string name="no_thanks">Нет, спасибо</string>
+
+    <string name="chart_info">" = %1$s (%2$s) \n Место: %3$s \n %4$s \n %5$s "</string>
 </resources>

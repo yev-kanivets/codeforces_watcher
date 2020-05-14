@@ -63,4 +63,6 @@ Download it now on Google Play - https://play.google.com/store/apps/details?id=c
     <string name="rate_us_third_title">How about a rating on Google Play, then?</string>
     <string name="not_really">Not really</string>
     <string name="no_thanks">No, thanks</string>
+
+    <string name="chart_info">" = %1$s (%2$s) \n Place: %3$s \n %4$s \n %5$s "</string>
 </resources>

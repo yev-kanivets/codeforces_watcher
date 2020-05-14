@@ -8,12 +8,13 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF
 import kotlinx.android.synthetic.main.chart.view.tvContent
+import java.lang.IllegalStateException
 
 class CustomMarkerView(context: Context, layoutResource: Int) :
         MarkerView(context, layoutResource) {
 
     override fun getOffset(): MPPointF {
-        return MPPointF((-(width * 0.95)).toFloat(), (-height).toFloat())
+        return MPPointF((-width).toFloat(), (-height).toFloat())
     }
 
     @SuppressLint("SetTextI18n", "ResourceType")
@@ -21,7 +22,12 @@ class CustomMarkerView(context: Context, layoutResource: Int) :
         if (e?.data == null) {
             tvContent.text = context.getString(R.id.none)
         } else {
-            tvContent.text = e.data.toString()
+            val chartItem = e.data as ChartItem
+            chartItem.run {
+                val (contestFirstHalf, contestSecondHalf) = contest.splitStringInHalf()
+                val ratingChange = if (ratingChange[0] == '-') ratingChange else "+$ratingChange"
+                tvContent.text = context.getString(R.string.chart_info, rating, ratingChange, rank, contestFirstHalf, contestSecondHalf)
+            }
         }
         super.refreshContent(e, highlight)
     }
