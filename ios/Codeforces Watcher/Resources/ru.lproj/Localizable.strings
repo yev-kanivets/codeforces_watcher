@@ -68,3 +68,7 @@
 "no_thanks" = "Нет, спасибо";
 
 "chart_info" = " = %@ (%@) \n Место: %@ \n %@ \n %@ ";
+
+"contest_date_format" = "d MMM в HH:mm, EEEE";
+"user_date_format" = "d MMM yyyy";
+
