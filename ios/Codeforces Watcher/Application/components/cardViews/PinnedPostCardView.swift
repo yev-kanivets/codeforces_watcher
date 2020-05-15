@@ -79,6 +79,8 @@ class PinnedPostCardView: UIView {
         crossImage.run {
             $0.trailingToSuperview(offset: 8)
             $0.topToSuperview(offset: 8)
+            $0.width(20)
+            $0.height(20)
         }
     }
     
