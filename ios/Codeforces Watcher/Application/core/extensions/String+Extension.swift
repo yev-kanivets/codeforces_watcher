@@ -47,15 +47,6 @@ extension String {
             $0.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: NSRange(location: 0, length: self.count))
         }
     }
-    
-    func splitStringInHalf() -> (firstHalf: String, secondHalf: String) {
-        let words = self.components(separatedBy: " ")
-        let halfLength = words.count / 2
-        let firstHalf = words[0..<halfLength].joined(separator: " ")
-        let secondHalf = words[halfLength..<words.count].joined(separator: " ")
-
-        return (firstHalf, secondHalf)
-    }
 }
 
 func buildShareText(_ title: String, _ link: String) -> String {

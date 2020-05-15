@@ -8,6 +8,7 @@
 
 import Foundation
 import Charts
+import common
 
 class ChartMarker: MarkerView {
 
@@ -20,7 +21,8 @@ class ChartMarker: MarkerView {
         var ratingChange = chartItem.ratingChange
         ratingChange = ratingChange.starts(with: "-") ? ratingChange : "+" + ratingChange
 
-        let (contestFirstHalf, contestSecondHalf) = chartItem.contest.splitStringInHalf()
+        let splittedPair = StringExtensionsKt.splitStringInHalf(chartItem.contest)
+        let (contestFirstHalf, contestSecondHalf) = (String(splittedPair.first ?? ""), String(splittedPair.second ?? ""))
 
         text = "chart_info".localizedFormat(args: chartItem.rating, ratingChange, chartItem.rank, contestFirstHalf, contestSecondHalf)
     }
@@ -62,11 +64,4 @@ class xAxisFormatter: IAxisValueFormatter {
         }
         return dayTimePeriodFormatter.string(from: date)
     }
-}
-
-struct ChartItem {
-    let rating: String
-    let ratingChange: String
-    let rank: String
-    let contest: String
 }

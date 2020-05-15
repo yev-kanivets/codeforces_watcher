@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:background="@color/dark_grey"
-        android:textColor="@color/white"
         android:ellipsize="end"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 </RelativeLayout>

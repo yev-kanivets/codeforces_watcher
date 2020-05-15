@@ -7,7 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.util.ChartItem
+import io.xorum.codeforceswatcher.features.users.models.ChartItem
 import com.bogdan.codeforceswatcher.util.CustomMarkerView
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -106,13 +106,8 @@ class UserActivity : AppCompatActivity() {
         }
 
         for (ratingChange in user.ratingChanges) {
-            ratingChange.run {
-                val data = ChartItem(
-                        newRating.toString(),
-                        (newRating - oldRating).toString(),
-                        rank.toString(),
-                        contestName
-                )
+            with(ratingChange) {
+                val data = ratingChange.toChartItem()
 
                 entries.add(Entry(ratingUpdateTimeSeconds.toFloat(), newRating.toFloat(), data))
             }

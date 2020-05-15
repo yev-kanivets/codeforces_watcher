@@ -85,12 +85,7 @@ class UserViewController: UIViewControllerWithCross {
             ChartDataEntry(
                 x: Double($0.ratingUpdateTimeSeconds),
                 y: Double($0.newRating),
-                data: ChartItem(
-                    rating: String($0.newRating),
-                    ratingChange: String($0.newRating - $0.oldRating),
-                    rank: String($0.rank),
-                    contest: $0.contestName
-                )
+                data: $0.toChartItem()
             )
         }
         
