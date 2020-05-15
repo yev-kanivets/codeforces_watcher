@@ -66,3 +66,6 @@
 "rate_us_third_title" = "How about a rating on the App Store, then?";
 "not_really" = "Not really";
 "no_thanks" = "No, thanks";
+
+"contest_date_format" = "HH:mm MMM d, EEEE";
+"user_date_format" = "MMM d, yyyy";

@@ -17,7 +17,9 @@ class UserTableViewCell: UITableViewCell {
         $0.image = noImage
     }
     private let handleLabel = HeadingLabel()
-    private let ratingUpdateDateLabel = SubheadingBigLabel()
+    private let ratingUpdateDateLabel = SubheadingBigLabel().apply {
+        $0.lineBreakMode = .byTruncatingHead
+    }
 
     private let ratingLabel = HeadingLabel()
     private let ratingUpdateLabel = SubheadingBigLabel()
@@ -65,6 +67,7 @@ class UserTableViewCell: UITableViewCell {
             $0.topToBottom(of: handleLabel, offset: 4)
             $0.leading(to: handleLabel)
             $0.bottomToSuperview(offset: -8)
+            $0.trailingToLeading(of: ratingUpdateLabel, offset: -8)
         }
 
         ratingLabel.run {

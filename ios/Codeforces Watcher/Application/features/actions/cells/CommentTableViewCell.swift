@@ -24,6 +24,7 @@ class CommentTableViewCell: UITableViewCell {
 
     private let commentedByLabel = SubheadingLabel().apply {
         $0.text = "Commented by".localized + " "
+        $0.lineBreakMode = .byTruncatingHead
     }
 
     private let userHandleLabel = SubheadingLabel()
