@@ -39,7 +39,7 @@ sealed class UserItem {
         }
 
         private fun getDateTime(seconds: Long): String {
-            val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
+            val dateFormat = SimpleDateFormat(CwApp.app.getString(R.string.user_date_format), Locale.getDefault())
             return dateFormat.format(Date(seconds * 1000)).toString()
         }
     }
