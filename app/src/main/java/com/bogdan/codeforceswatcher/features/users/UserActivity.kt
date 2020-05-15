@@ -107,9 +107,9 @@ class UserActivity : AppCompatActivity() {
 
         for (ratingChange in user.ratingChanges) {
             with(ratingChange) {
-                val data = ratingChange.toChartItem()
+                val chartItem = ratingChange.toChartItem()
 
-                entries.add(Entry(ratingUpdateTimeSeconds.toFloat(), newRating.toFloat(), data))
+                entries.add(Entry(ratingUpdateTimeSeconds.toFloat(), newRating.toFloat(), chartItem))
             }
         }
 
