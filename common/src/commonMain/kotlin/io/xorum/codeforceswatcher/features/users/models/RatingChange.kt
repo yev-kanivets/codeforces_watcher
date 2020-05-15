@@ -11,4 +11,11 @@ data class RatingChange(
         val ratingUpdateTimeSeconds: Long,
         val oldRating: Int,
         val newRating: Int
-)
+) {
+    fun toChartItem() = ChartItem(
+            newRating.toString(),
+            (newRating - oldRating).toString(),
+            rank.toString(),
+            contestName
+    )
+}

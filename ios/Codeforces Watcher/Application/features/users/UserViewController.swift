@@ -82,7 +82,11 @@ class UserViewController: UIViewControllerWithCross {
         }
         
         let dataEntries = user.ratingChanges.map {
-            ChartDataEntry(x: Double($0.ratingUpdateTimeSeconds), y: Double($0.newRating), data: $0.contestName)
+            ChartDataEntry(
+                x: Double($0.ratingUpdateTimeSeconds),
+                y: Double($0.newRating),
+                data: $0.toChartItem()
+            )
         }
         
         let dataSet = LineChartDataSet(entries: dataEntries).apply {
