@@ -88,7 +88,6 @@ class UserActivity : AppCompatActivity() {
     }
 
     private fun displayChart(user: User) {
-        val entries = mutableListOf<Entry>()
         val xAxis = chart.xAxis
         chart.setTouchEnabled(true)
         chart.markerView = CustomMarkerView(this, R.layout.chart)
@@ -105,12 +104,8 @@ class UserActivity : AppCompatActivity() {
             dateFormat.format(Date(value.toLong() * 1000)).toString()
         }
 
-        for (ratingChange in user.ratingChanges) {
-            with(ratingChange) {
-                val chartItem = ratingChange.toChartItem()
-
-                entries.add(Entry(ratingUpdateTimeSeconds.toFloat(), newRating.toFloat(), chartItem))
-            }
+        val entries = user.ratingChanges.map {
+            Entry(it.ratingUpdateTimeSeconds.toFloat(), it.newRating.toFloat(), it.toChartItem())
         }
 
         val lineDataSet = LineDataSet(entries, user.handle)
