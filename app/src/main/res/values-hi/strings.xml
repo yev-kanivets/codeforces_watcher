@@ -47,4 +47,22 @@ Codeforces WatchR के साथ आप:
 इसे अब Google Play पर डाउनलोड करें - https://play.google.com/store/apps/details?id=com.bogdan.codeforceswatcher"</string>
     <string name="actions_on_the_way">आपके डिवाइस पर आने वाली हाल की क्रियाएं…</string>
     <string name="created_or_updated_text">टेक्स्ट बनाया या अपडेट किया गया, विवरण देखने के लिए क्लिक करें…</string>
+    <string name="no_favourite_problems">आपके पास अभी कोई पसंदीदा सवाल नहीं है ।\n अपना पहला पसंदीदा सवाल स्क्रीन में नीचे दिए गए «∞» बटन पर क्लिक करके जोड़ें ।</string>
+    <string name="problems_on_the_way">सवाल आपके डिवाइस पे लोड हो रहा है...</string>
+    <string name="search_for_problems">सवाल खोजे...</string>
+    <string name="no_browser_has_been_found">कोई ब्राउज़र नहीं पाया गया , कृपया कोई इंस्टॉल करें।</string>
+    <string name="filters">छाँटे </string>
+    <string name="no_contests_found">कोई प्रतियोगिता नहीं पाया गया</string>
+    <string name="click_to_see_details">विवरण देखने के लिए क्लिक करें</string>
+
+    <string name="yes">हाँ!</string>
+    <string name="rate_us_first_title">क्या आप हमारा कोडफ़ोर्सेज़ वॉचर ऐप एंजोय कर रहे हैं ?</string>
+    <string name="rate_us_second_title">क्या आप हमें फ़ीडबैक देना चाहेंगे?</string>
+    <string name="rate_us_third_title">फिर ऐप स्टोर पे रेटिंग देना कैसा रहेगा ?</string>
+    <string name="not_really">नहीं</string>
+    <string name="no_thanks">नहीं, धन्यवाद ।</string>
+
+    <string name="chart_info">" = %1$s (%2$s) \n पद: %3$s \n %4$s \n %5$s "</string>
+    <string name="contest_date_format">HH:mm MMM d, EEEE</string>
+    <string name="user_date_format">MMM d, yyyy</string>
 </resources>
