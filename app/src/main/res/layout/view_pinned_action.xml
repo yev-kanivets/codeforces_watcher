@@ -18,7 +18,7 @@
         android:layout_margin="8dp">
 
         <ImageView
-            android:id="@+id/ivCross"
+            android:id="@+id/ivCrossPost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_close"

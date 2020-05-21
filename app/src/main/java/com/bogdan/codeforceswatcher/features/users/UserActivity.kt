@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
+import io.xorum.codeforceswatcher.features.users.models.ChartItem
 import com.bogdan.codeforceswatcher.util.CustomMarkerView
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -87,7 +88,6 @@ class UserActivity : AppCompatActivity() {
     }
 
     private fun displayChart(user: User) {
-        val entries = mutableListOf<Entry>()
         val xAxis = chart.xAxis
         chart.setTouchEnabled(true)
         chart.markerView = CustomMarkerView(this, R.layout.chart)
@@ -104,12 +104,8 @@ class UserActivity : AppCompatActivity() {
             dateFormat.format(Date(value.toLong() * 1000)).toString()
         }
 
-        for (ratingChange in user.ratingChanges) {
-            val ratingUpdateTime = ratingChange.ratingUpdateTimeSeconds.toFloat()
-            val newRating = ratingChange.newRating.toFloat()
-            val data = ratingChange.contestName
-
-            entries.add(Entry(ratingUpdateTime, newRating, data))
+        val entries = user.ratingChanges.map {
+            Entry(it.ratingUpdateTimeSeconds.toFloat(), it.newRating.toFloat(), it.toChartItem())
         }
 
         val lineDataSet = LineDataSet(entries, user.handle)

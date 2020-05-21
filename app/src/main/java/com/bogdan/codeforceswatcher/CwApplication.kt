@@ -43,8 +43,6 @@ class CwApp : Application() {
             startAlarm()
             Prefs.get().writeAlarm()
         }
-
-        Prefs.get().addLaunchCount()
     }
 
     private fun initDatabase() {

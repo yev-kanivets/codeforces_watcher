@@ -1,6 +1,6 @@
 # Codeforces WatchR
 
-![](https://user-images.githubusercontent.com/11427267/75924018-7fade780-5e66-11ea-9fa6-7a3ca62a9b46.png)
+![Codeforces WatchR](https://user-images.githubusercontent.com/11427267/81408067-353a3700-9145-11ea-9a61-4120bbe388c2.png)
 
 [Codeforces](https://codeforces.com/) is one of the most popular platforms for competitive programming. Each month there are conducted dozens of contests with thousands of participants, including us.
 

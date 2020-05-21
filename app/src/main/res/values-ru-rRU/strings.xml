@@ -22,14 +22,6 @@
     <string name="add">Добавить</string>
     <string name="enter_handle">Введите хэндл</string>
 
-    <string name="like_codeforces_watcher">Вам нравится Codeforces WatchR?</string>
-    <string name="rate_it_on_gp">Оцените его на Google Play!</string>
-    <string name="maybe_later">Может быть позже</string>
-    <string name="no_thank_you">Нет, спасибо</string>
-    <string name="yes_very">Да!</string>
-
-    <string name="google_play_not_found">Google Play не найден</string>
-
     <string name="users">Люди</string>
     <string name="contests">Контесты</string>
     <string name="actions">Действия</string>
@@ -64,5 +56,20 @@ Codeforces WatchR позволяет:
     <string name="no_browser_has_been_found">Браузер не найден, попробуйте установить его.</string>
     <string name="filters">Фильтры</string>
     <string name="no_contests_found">Контестов не найдено</string>
+<<<<<<< HEAD
     <string name="click_to_see_details">Нажмите, чтобы увидеть детали</string>
+=======
+
+    <string name="yes">Да!</string>
+    <string name="rate_us_first_title">Вам нравится Codeforces WatchR?</string>
+    <string name="rate_us_second_title">Не могли бы вы дать нам обратную связь?</string>
+    <string name="rate_us_third_title">Тогда что насчет оценки в Google Play?</string>
+    <string name="not_really">Не совсем</string>
+    <string name="no_thanks">Нет, спасибо</string>
+
+    <string name="chart_info">" = %1$s (%2$s) \n Место: %3$s \n %4$s \n %5$s "</string>
+
+    <string name="contest_date_format">d MMM в HH:mm, EEEE</string>
+    <string name="user_date_format">d MMM yyyy</string>
+>>>>>>> e654152f9355d2fe9e2950594408a92c177d7bee
 </resources>

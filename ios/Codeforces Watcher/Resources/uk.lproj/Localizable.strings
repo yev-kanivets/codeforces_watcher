@@ -1,0 +1,73 @@
+"locale" = "ru";
+"Codeforces Watcher" = "Codeforces WatchR";
+
+"Contests" = "Контести";
+"Actions" = "Новини";
+"Problems" = "Задачі";
+
+"Commented by" = "Прокоментував";
+"ago" = "тому";
+
+"actions_explanation" = "Свіжі новини на шляху до вашого пристрою…";
+"created_or_updated_text" = "Створено або оновлено текст, натисніть, щоб переглянути деталі…";
+
+"problems_explanation" = "Задачі на шляху до вашого пристрою…";
+"contests_explanation" = "Контести на шляху до вашого пристрою…";
+
+"Has been added to your calendar" = "Був доданий до вашого календаря";
+"Can't add contest to Calendar without permission" = "Неможливо додати контест в календар без дозволу";
+
+"OK" = "Oк";
+"No connection" = "Немає зв\'язку";
+
+"Search for problems..." = "Пошук задач…";
+
+"Official Codeforces rules" = "Офiцiйнi правила Codeforces";
+"Apple isn't a sponsor of any contests conducted on Codeforces" = "Apple не спонсор контестiв якi проводяться на Codeforces";
+
+"Filter" = "Фiльтри";
+
+"User already added" = "Користувача вже додано";
+"failed_to_fetch_users" = "Не вдалося завантажити користувача(iв)! Зачекайте або перевiрте хендл(и)…";
+
+"Click to see details" = "Натисніть, щоб переглянути деталі…";
+"Users" = "Користувачi";
+"no_favourite_problems_explanation" = "Ви ще не маєте улюблених задач.\nДодайте першу скориставшись кнопкою «∞» знизу екрану.";
+"share_cw_message" = "Я користуюсь Codeforces WatchR - безкоштовним IOS застосунком з відкритим кодом, що використовує Codeforces API для того щоб принести більше олімпіадного програмування на ваш IOS пристрій. \n Codeforces WatchR дає можливiсть: \n\n 1. Невеликий перерелік та реєстрація на змаганнях зі спортивного програмування: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start. \n 2. Слідкуйте за новими подіями на Codeforces. \n 3. Переглядайте і шукайте задачi, додавайте їх в улюбленi. \n 4. Слідкуйте за активністю будь-якого користувача Codeforces. \n 5. Сортуйте користувачів за рейтингом і датою останньої участі. \n\n Завантажуйте прямо зараз в App Store - https://apps.apple.com/us/app/codeforces-watchr-contests/id1495591299";
+"no_users_explanation" = "Ви ще не маєте користувачів для відслідковування.\nДодайте першого скориставшись кнопкою «+» знизу екрану.";
+
+"Add user" = "Додати користувача";
+"Enter user handle" = "Введiть хендл користувача";
+"No rating update" = "Немає оновлення рейтингу";
+"Done" = "Готово";
+"Rating changes" = "Змiни рейтингу";
+
+"None" = "Немає";
+"Rank" = "Ранг: %@";
+"Name" = "Iм\'я: %@ %@";
+"Current rating" = "Поточний рейтинг: %@";
+"Max rating" = "Макс. рейтинг: %@";
+"Sort" = "Сорт. за %@ ▼";
+
+"default" = "замовчуванням";
+"rating_up" = "↑рейтингу";
+"rating_down" = "↓рейтингу";
+"update_up" = "↑оновлення";
+"update_down" = "↓оновлення";
+
+"Last rating update" = "Останнє оновлення рейтингу: %@";
+
+"share_text" = "%@ - %@\n\nВідправлено через Codeforces WatchR. Знайдiть його в App Store.";
+"Check upcoming programming contests" = "Слiдкуйте за майбутнiми контестами з програмування";
+
+"yes" = "Так!";
+"rate_us_first_title" = "Вам подобається Codeforces WatchR?";
+"rate_us_second_title" = "Ви б не хотіли дати нам відгук?";
+"rate_us_third_title" = "То як щодо оцiнки в App Store?";
+"not_really" = "Не зовсім";
+"no_thanks" = "Нi, дякую";
+
+"chart_info" = " = %@ (%@) \n Мiсце: %@ \n %@ \n %@ ";
+
+"contest_date_format" = "d MMM о HH:mm, EEEE";
+"user_date_format" = "d MMM yyyy";

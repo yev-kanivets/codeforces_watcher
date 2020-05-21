@@ -9,6 +9,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.actions.models.ActionItem
 import com.bogdan.codeforceswatcher.util.Analytics
+import com.bogdan.codeforceswatcher.util.FeedbackController
 import com.bogdan.codeforceswatcher.util.Refresh
 import io.xorum.codeforceswatcher.features.actions.models.CFAction
 import io.xorum.codeforceswatcher.features.actions.redux.requests.ActionsRequests
@@ -19,8 +20,7 @@ import kotlinx.android.synthetic.main.fragment_users.*
 import tw.geothings.rekotlin.StoreSubscriber
 import java.util.*
 
-class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
-        StoreSubscriber<ActionsState> {
+class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSubscriber<ActionsState> {
 
     private lateinit var actionsAdapter: ActionsAdapter
 
@@ -53,8 +53,18 @@ class ActionsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         } else {
             swipeRefreshLayout.isRefreshing = false
             val items = mutableListOf<ActionItem>()
-            state.pinnedPost?.let {
-                if (settings.readPinnedPostLink() != it.link) items.add(ActionItem.PinnedItem(it))
+
+            val feedbackController = FeedbackController.get()
+
+            if (feedbackController.shouldShowFeedbackCell()) {
+                items.add(ActionItem.FeedbackItem(feedbackController.feedUIModel))
+                actionsAdapter.callback = {
+                    newState(state)
+                }
+            } else {
+                state.pinnedPost?.let {
+                    if (settings.readPinnedPostLink() != it.link) items.add(ActionItem.PinnedItem(it))
+                }
             }
             items.addAll(buildActionItems(state.actions))
             actionsAdapter.setItems(items)

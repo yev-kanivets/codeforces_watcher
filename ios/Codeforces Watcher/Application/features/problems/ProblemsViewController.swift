@@ -10,7 +10,7 @@ import UIKit
 import common
 import FirebaseAnalytics
 
-class ProblemsViewController: UIViewControllerWithFab, StoreSubscriber, UISearchResultsUpdating {
+class ProblemsViewController: UIViewControllerWithFab, ReKampStoreSubscriber, UISearchResultsUpdating {
 
     private let tableView = UITableView()
     private let tableAdapter = ProblemsTableViewAdapter()

@@ -22,14 +22,6 @@
     <string name="add">Додати</string>
     <string name="enter_handle">Введіть хендл</string>
 
-    <string name="like_codeforces_watcher">Вам подобається Codeforces WatchR?</string>
-    <string name="rate_it_on_gp">Оцініть його на Google Play!</string>
-    <string name="maybe_later">Можливо пізніше</string>
-    <string name="no_thank_you">Ні, дякую</string>
-    <string name="yes_very">Так!</string>
-
-    <string name="google_play_not_found">Google Play не знайдено</string>
-
     <string name="users">Люди</string>
     <string name="contests">Контести</string>
     <string name="actions">Дії</string>
@@ -48,11 +40,11 @@
     <string name="share">Поділитися</string>
     <string name="cancel">Скасувати</string>
     <string name="share_cw_message">"Я користуюсь Codeforces WatchR - безкоштовним Android застосунком з відкритим кодом, що використовує Codeforces API для того щоб принести більше олімпіадного програмування на ваш Android пристрій.
-Codeforces WatchR дозволяє:
+Codeforces WatchR дає можливiсть:
 
 1. Невеликий перерелік та реєстрація на змаганнях зі спортивного програмування: Codeforces, LeetCode, HackerEarth, AtCoder, TopCoder, CS Academy, CodeChef, Kick Start.
 2. Слідкуйте за недавніми подіями на Codeforces.
-3. Переглядайте і шукайте проблеми, додавайте їх у обрані.
+3. Переглядайте і шукайте проблеми, додавайте їх в улюбленi.
 4. Слідкуйте за активністю будь-якого користувача Codeforces.
 5. Сортуйте користувачів за рейтингом і датою останньої участі.
 
@@ -64,5 +56,18 @@ Codeforces WatchR дозволяє:
     <string name="no_browser_has_been_found">Не знайдено браузера, спробуйте встановити його.</string>
     <string name="filters">Фiльтри</string>
     <string name="no_contests_found">Контестів не знайдено</string>
+
     <string name="click_to_see_details">Натисніть, щоб переглянути деталі…</string>
+
+    <string name="yes">Так!</string>
+    <string name="rate_us_first_title">Вам подобається Codeforces WatchR?</string>
+    <string name="rate_us_second_title">Ви б не хотіли дати нам відгук?</string>
+    <string name="rate_us_third_title">То як щодо оцiнки в Google Play?</string>
+    <string name="not_really">Не зовсім</string>
+    <string name="no_thanks">Нi, дякую</string>
+
+    <string name="chart_info">" = %1$s (%2$s) \n Мiсце: %3$s \n %4$s \n %5$s "</string>
+
+    <string name="contest_date_format">d MMM о HH:mm, EEEE</string>
+    <string name="user_date_format">d MMM yyyy</string>
 </resources>

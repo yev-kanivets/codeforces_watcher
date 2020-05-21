@@ -58,7 +58,7 @@ class ContestsAdapter(
     }
 
     private fun getDateTime(seconds: Long): String {
-        val dateFormat = SimpleDateFormat("kk:mm MMM d, EEEE", Locale.getDefault())
+        val dateFormat = SimpleDateFormat(context.getString(R.string.contest_date_format), Locale.getDefault())
         return dateFormat.format(Date(seconds)).toString()
     }
 
