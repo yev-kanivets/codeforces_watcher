@@ -38,6 +38,9 @@
                     style="@style/HeaderText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="100"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     tools:text="BOGDAN_" />
 
                 <View
@@ -49,6 +52,7 @@
                     android:id="@+id/tvRating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:textSize="18sp"
                     tools:text="4000" />
 
@@ -63,6 +67,9 @@
                     android:id="@+id/tvDateLastRatingUpdate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="100"
+                    android:ellipsize="start"
+                    android:singleLine="true"
                     android:textSize="12sp"
                     tools:text="Last rating update : 2019, 30 March" />
 
@@ -82,6 +89,7 @@
                     android:id="@+id/tvLastRatingUpdate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:textSize="12sp"
                     tools:text="41" />
             </LinearLayout>
