@@ -54,7 +54,9 @@ Codeforces WatchR позволяет:
     <string name="created_or_updated_text">Создан или обновлен текст, нажмите, чтобы увидеть детали…</string>
     <string name="search_for_problems">Поиск задач…</string>
     <string name="no_browser_has_been_found">Браузер не найден, попробуйте установить его.</string>
+    <string name="filters">Фильтры</string>
     <string name="no_contests_found">Контестов не найдено</string>
+    <string name="click_to_see_details">Нажмите, чтобы увидеть детали</string>
 
     <string name="yes">Да!</string>
     <string name="rate_us_first_title">Вам нравится Codeforces WatchR?</string>
@@ -64,7 +66,6 @@ Codeforces WatchR позволяет:
     <string name="no_thanks">Нет, спасибо</string>
 
     <string name="chart_info">" = %1$s (%2$s) \n Место: %3$s \n %4$s \n %5$s "</string>
-
     <string name="contest_date_format">d MMM в HH:mm, EEEE</string>
     <string name="user_date_format">d MMM yyyy</string>
 </resources>
