@@ -32,7 +32,7 @@ func colorTextByUserRank(text: String, rank: String?) -> NSMutableAttributedStri
     case nil:
         color = Palette.black
     case "newbie", "новичок":
-        color = Palette.grey
+        color = Palette.gray
     case "pupil", "ученик":
         color = Palette.green
     case "specialist", "специалист":
@@ -47,7 +47,7 @@ func colorTextByUserRank(text: String, rank: String?) -> NSMutableAttributedStri
          "гроссмейстер", "международный гроссмейстер", "легендарный гроссмейстер":
         color = Palette.red
     default:
-        color = Palette.grey
+        color = Palette.gray
     }
 
     let attributedText = NSMutableAttributedString(string: text).apply {

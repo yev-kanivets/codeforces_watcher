@@ -26,7 +26,7 @@ class PinnedPostCardView: UIView {
     }
     
     private let crossImage = UIImageView(image: UIImage(named: "crossIcon")?.withRenderingMode(.alwaysTemplate)).apply {
-        $0.tintColor = Palette.grey
+        $0.tintColor = Palette.gray
     }
     
     private var pinnedPost: PinnedPost!

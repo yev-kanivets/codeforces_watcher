@@ -19,8 +19,8 @@
     <string name="by_ascending_rating">↑ рейтинга</string>
     <string name="by_descending_update">↓ обновления</string>
     <string name="by_ascending_update">↑ обновления</string>
-    <string name="add">Добавить</string>
-    <string name="enter_handle">Введите хэндл</string>
+    <string name="add_user">Добавить пользователя</string>
+    <string name="enter_handle">Введите хэндл пользователя</string>
 
     <string name="users">Люди</string>
     <string name="contests">Контесты</string>

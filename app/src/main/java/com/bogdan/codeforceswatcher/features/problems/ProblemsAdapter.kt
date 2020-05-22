@@ -61,7 +61,7 @@ class ProblemsAdapter(
                 tvProblemName.text = context.getString(R.string.problem_name_with_index, contestId, index, name)
                 tvContestName.text = contestName
                 ivFavourite.setColorFilter(ContextCompat.getColor(
-                        context, if (isFavourite) R.color.colorAccent else R.color.dark_grey)
+                        context, if (isFavourite) R.color.colorAccent else R.color.dark_gray)
                 )
 
                 onClickListener = { itemClickListener(this) }

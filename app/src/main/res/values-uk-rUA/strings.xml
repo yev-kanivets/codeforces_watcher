@@ -19,8 +19,8 @@
     <string name="by_ascending_rating">↑ рейтингу</string>
     <string name="by_descending_update">↓ оновлення</string>
     <string name="by_ascending_update">↑ оновлення</string>
-    <string name="add">Додати</string>
-    <string name="enter_handle">Введіть хендл</string>
+    <string name="add_user">Додати користувача</string>
+    <string name="enter_handle">Введiть хендл користувача</string>
 
     <string name="users">Люди</string>
     <string name="contests">Контести</string>

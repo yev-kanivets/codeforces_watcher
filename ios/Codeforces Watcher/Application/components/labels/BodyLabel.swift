@@ -21,7 +21,7 @@ class BodyLabel: UILabel {
     }
     
     private func setupView() {
-        textColor = Palette.grey
+        textColor = Palette.gray
         font = Font.textBody
     }
 }

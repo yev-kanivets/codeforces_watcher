@@ -18,13 +18,15 @@
     <string name="by_ascending_rating">↑ रेटिंग</string>
     <string name="by_descending_update">↓ अपडेट</string>
     <string name="by_ascending_update">↑ अपडेट</string>
-    <string name="add">जोड़ें</string>
-    <string name="enter_handle">हैंडल दर्ज करें</string>
+    <string name="add_user">यूज़र जोड़ें</string>
+    <string name="enter_handle">यूज़र हैंडल डाले</string>
+
     <string name="users">यूजर्स</string>
     <string name="contests">प्रतियोगिताएं</string>
     <string name="actions">एक्शन</string>
     <string name="problems">प्रॉब्लेमस</string>
-    <string name="empty" translatable="false" />
+
+    <!--<string name="empty" translatable="false" />-->
     <string name="google_calendar_not_found">क्षमा करें, लेकिन इस उपकरण पर Google Calendar नहीं मिला</string>
     <string name="commented_by">"कमेंटेड बाय %1$s"</string>
     <string name="feature_isn_t_available_yet">यह सुविधा अभी तक उपलब्ध नहीं है|</string>
