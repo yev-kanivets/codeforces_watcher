@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -16,21 +15,27 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.components.CardWithEditText
 import com.bogdan.codeforceswatcher.features.actions.ActionsFragment
-import com.bogdan.codeforceswatcher.features.contests.FiltersActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
+import com.bogdan.codeforceswatcher.features.contests.FiltersActivity
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.FeedbackController
-import com.bogdan.codeforceswatcher.util.hideKeyboard
 import com.bogdan.codeforceswatcher.util.showSoftKeyboard
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import io.xorum.codeforceswatcher.features.problems.redux.actions.ProblemsActions
+import io.xorum.codeforceswatcher.features.users.redux.requests.UsersRequests
 import io.xorum.codeforceswatcher.redux.store
+import kotlinx.android.synthetic.main.activity_add_user.*
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_users.*
+import kotlinx.android.synthetic.main.activity_main.toolbar
+import kotlinx.android.synthetic.main.card_with_edit_text.*
 import kotlinx.android.synthetic.main.input_field.*
+import kotlinx.android.synthetic.main.input_field.view.*
+import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -101,11 +106,17 @@ class MainActivity : AppCompatActivity() {
         //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
     }
 
+    private val bottomSheet = CardWithEditText.newInstance(
+            actionButtonTitleResId = R.string.add_user,
+            taskTitleResId = R.string.enter_handle,
+            onConfirm = { handle ->
+                addUser(handle)
+            }
+    )
+
     override fun onBackPressed() {
-        if (cardWithEditText.visibility == View.VISIBLE)
-            cardWithEditText.visibility = View.GONE
-        else
-            super.onBackPressed()
+        super.onBackPressed()
+        bottomSheet.dismissAndNotifyListeners()
     }
 
     private fun onUsersTabSelected() {
@@ -115,17 +126,18 @@ class MainActivity : AppCompatActivity() {
 
         fab.setOnClickListener {
             //startActivity(Intent(this@MainActivity, AddUserActivity::class.java)
-            cardWithEditText.visibility = View.VISIBLE
 
-            editText.showSoftKeyboard()
-            cardWithEditText.configure(
-                    actionButtonTitleResId = R.string.add_user,
-                    taskTitleResId = R.string.enter_handle
-            ) { _ ->
-
-            }
+            bottomSheet.show(supportFragmentManager, null)
+            //bottomSheet.inputField.editText.showSoftKeyboard()
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_plus))
+    }
+
+    private fun addUser(handle: String) {
+        //var bottomSheetBehavior = BottomSheetBehavior.from(inflate(R.layout.card_with_edit_text, container, false))
+
+        store.dispatch(UsersRequests.AddUser(handle, Locale.getDefault().language))
+        //Analytics.logUserAdded()
     }
 
     private fun onContestsTabSelected() {

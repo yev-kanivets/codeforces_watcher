@@ -51,14 +51,7 @@ class UserActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
-        println("IDK")
         return true
-    }
-
-    override fun onBackPressed() {
-        //super.onBackPressed()
-        if (cardWithEditText.visibility == View.VISIBLE)
-            cardWithEditText.visibility = View.GONE
     }
 
     private fun displayUser(user: User) {

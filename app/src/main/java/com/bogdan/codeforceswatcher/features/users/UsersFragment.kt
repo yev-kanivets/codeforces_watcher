@@ -3,6 +3,8 @@ package com.bogdan.codeforceswatcher.features.users
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -23,6 +25,7 @@ import io.xorum.codeforceswatcher.features.users.redux.states.UsersState
 import io.xorum.codeforceswatcher.features.users.redux.states.UsersState.SortType.Companion.getSortType
 import io.xorum.codeforceswatcher.redux.store
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.card_with_edit_text.*
 import kotlinx.android.synthetic.main.fragment_users.*
 import kotlinx.android.synthetic.main.input_field.*
 import tw.geothings.rekotlin.StoreSubscriber
@@ -56,7 +59,33 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSub
         swipeRefreshLayout.isRefreshing = (state.status == UsersState.Status.PENDING)
         usersAdapter.setItems(state.users.sort(state.sortType).map { UserItem.User(it) })
         adjustSpinnerSortVisibility(state.users.isEmpty())
+
+        when(state.addUserStatus) {
+            UsersState.Status.DONE -> {
+                store.dispatch(UsersActions.ClearAddUserState())
+                Analytics.logUserAdded()
+
+                hideBottomSheet()
+            }
+            UsersState.Status.IDLE -> {
+
+            }
+            else -> {
+
+            }
+        }
+
+        /*progressBar1.visibility = when (state.addUserStatus) {
+            UsersState.Status.IDLE -> INVISIBLE
+            UsersState.Status.PENDING -> VISIBLE
+            UsersState.Status.DONE -> INVISIBLE
+        }*/
     }
+
+    private fun hideBottomSheet() {
+
+    }
+
     private fun adjustSpinnerSortVisibility(isUsersListEmpty: Boolean) {
         spSort.visibility = if (isUsersListEmpty) View.GONE else View.VISIBLE
         requireActivity().findViewById<TextView>(R.id.tvSortBy).visibility =

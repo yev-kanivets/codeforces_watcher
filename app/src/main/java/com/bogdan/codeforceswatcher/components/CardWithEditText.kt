@@ -1,47 +1,82 @@
 package com.bogdan.codeforceswatcher.components
 
+import android.app.Dialog
+import android.os.Bundle
 import com.bogdan.codeforceswatcher.R
-import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.FrameLayout
-import kotlinx.android.synthetic.main.card_with_edit_text.view.*
-import kotlinx.android.synthetic.main.input_field.view.*
+import android.view.ViewGroup
+import com.bogdan.codeforceswatcher.CwApp
+import com.bogdan.codeforceswatcher.extensions.actionButtonTitleResId
+import com.bogdan.codeforceswatcher.extensions.onConfirm
+import com.bogdan.codeforceswatcher.extensions.taskTitleResId
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.android.synthetic.main.card_with_edit_text.*
+import kotlinx.android.synthetic.main.input_field.*
 
-class CardWithEditText(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
+class CardWithEditText : BottomSheetDialogFragment() {
 
-    init {
-        View.inflate(context, R.layout.card_with_edit_text, this)
+    interface OnDismissListener {
+
+        fun onDismiss()
     }
 
-    private var onConfirm: ((String) -> Unit)? = null
-    private var shouldConfirm: Boolean = false
+    private val actionButtonTitleResId: Int? = arguments?.actionButtonTitleResId
+    private val taskTitleResId: Int? = arguments?.taskTitleResId
+    private val onConfirm: ((String) -> Unit)? = arguments?.onConfirm
 
-    fun configure(
-            actionButtonTitleResId: Int? = null,
-            taskTitleResId: Int? = null,
-            shouldConfirm: Boolean = true,
-            onConfirm: ((String) -> Unit)? = null
-    ) {
-        this.onConfirm = onConfirm
-        this.shouldConfirm = shouldConfirm
+    companion object {
+
+        fun newInstance(
+                actionButtonTitleResId: Int,
+                taskTitleResId: Int,
+                onConfirm: ((String) -> Unit)? = null
+        ) = CardWithEditText().apply {
+            arguments = Bundle().apply {
+                this.actionButtonTitleResId = actionButtonTitleResId
+                this.taskTitleResId = taskTitleResId
+                this.onConfirm = onConfirm
+            }
+        }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.card_with_edit_text, container, false)
+    }
+
+    /*override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
+        dialog.setOnShowListener {
+            val bottomSheet = dialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+                    ?: return@setOnShowListener
+            with(BottomSheetBehavior.from(bottomSheet)) {
+                state = BottomSheetBehavior.STATE_EXPANDED
+                skipCollapsed = true
+                isHideable = false
+                isFitToContents = true
+                isCancelable = false
+            }
+        }
+        return dialog
+    }*/
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         editText.addTextChangedListener(textEditorWatcher)
 
         actionButtonTitleResId?.let {
-            actionButton.text = context.getString(actionButtonTitleResId)
+            actionButton.text = CwApp.app.getString(actionButtonTitleResId)
         }
-        if (shouldConfirm) {
-            actionButton.setOnClickListener {
-                onConfirm?.invoke(editText.text?.toString() ?: "")
-            }
-        } else {
-            actionButton.visibility = View.GONE
+
+        actionButton.setOnClickListener {
+            onConfirm?.invoke(editText.text?.toString() ?: "")
         }
 
         taskTitleResId?.let {
-            task.text = context.getString(taskTitleResId)
+            task.text = CwApp.app.getString(taskTitleResId)
         }
         inputField.configure(
                 action = InputField.Action.Go {
@@ -57,5 +92,10 @@ class CardWithEditText(context: Context, attrs: AttributeSet) : FrameLayout(cont
         override fun afterTextChanged(s: Editable) {
             editText.setSelection(s.length)
         }
+    }
+
+    fun dismissAndNotifyListeners() = activity?.let { activity ->
+        dismissAllowingStateLoss()
+        if (activity is OnDismissListener) activity.onDismiss()
     }
 }
