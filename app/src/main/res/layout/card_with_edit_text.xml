@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
@@ -12,8 +11,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="-10dp"
-        app:cardCornerRadius="10dp"
+        app:cardCornerRadius="2dp"
         app:cardElevation="16dp">
 
         <LinearLayout
@@ -29,6 +27,7 @@
 
                 <TextView
                     android:id="@+id/task"
+                    android:textSize="12sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/enter_handle"
@@ -41,18 +40,18 @@
 
             </LinearLayout>
 
-            <com.baoui.android.components.InputField
+            <com.bogdan.codeforceswatcher.components.InputField
                 android:id="@+id/inputField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <Button
-                android:id="@+id/btnPositive"
+                android:id="@+id/actionButton"
                 android:layout_width="128dp"
                 android:layout_height="32dp"
                 android:layout_gravity="end"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/blue_button_with_ripple"
                 android:text="@string/add_user"
                 android:textColor="@color/white" />

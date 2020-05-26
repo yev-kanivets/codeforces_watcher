@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -16,17 +17,20 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.features.actions.ActionsFragment
-import com.bogdan.codeforceswatcher.features.add_user.AddUserActivity
 import com.bogdan.codeforceswatcher.features.contests.FiltersActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.FeedbackController
+import com.bogdan.codeforceswatcher.util.hideKeyboard
+import com.bogdan.codeforceswatcher.util.showSoftKeyboard
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import io.xorum.codeforceswatcher.features.problems.redux.actions.ProblemsActions
 import io.xorum.codeforceswatcher.redux.store
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_users.*
+import kotlinx.android.synthetic.main.input_field.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -92,13 +96,34 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onResume() {
+        super.onResume()
+        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+    }
+
+    override fun onBackPressed() {
+        if (cardWithEditText.visibility == View.VISIBLE)
+            cardWithEditText.visibility = View.GONE
+        else
+            super.onBackPressed()
+    }
+
     private fun onUsersTabSelected() {
         llSorting.visibility = View.VISIBLE
         ivFilter.visibility = View.GONE
         searchViewItem?.isVisible = false
 
         fab.setOnClickListener {
-            startActivity(Intent(this@MainActivity, AddUserActivity::class.java))
+            //startActivity(Intent(this@MainActivity, AddUserActivity::class.java)
+            cardWithEditText.visibility = View.VISIBLE
+
+            editText.showSoftKeyboard()
+            cardWithEditText.configure(
+                    actionButtonTitleResId = R.string.add_user,
+                    taskTitleResId = R.string.enter_handle
+            ) { _ ->
+
+            }
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_plus))
     }

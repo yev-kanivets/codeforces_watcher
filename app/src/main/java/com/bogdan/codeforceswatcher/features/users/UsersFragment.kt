@@ -14,6 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Refresh
+import com.bogdan.codeforceswatcher.util.showSoftKeyboard
 import io.xorum.codeforceswatcher.features.users.models.User
 import io.xorum.codeforceswatcher.features.users.redux.actions.UsersActions
 import io.xorum.codeforceswatcher.features.users.redux.requests.Source
@@ -21,7 +22,9 @@ import io.xorum.codeforceswatcher.features.users.redux.requests.UsersRequests
 import io.xorum.codeforceswatcher.features.users.redux.states.UsersState
 import io.xorum.codeforceswatcher.features.users.redux.states.UsersState.SortType.Companion.getSortType
 import io.xorum.codeforceswatcher.redux.store
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_users.*
+import kotlinx.android.synthetic.main.input_field.*
 import tw.geothings.rekotlin.StoreSubscriber
 import java.util.*
 
