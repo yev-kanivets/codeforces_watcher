@@ -3,8 +3,6 @@ package com.bogdan.codeforceswatcher.features.users
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -16,7 +14,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bogdan.codeforceswatcher.R
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.Refresh
-import com.bogdan.codeforceswatcher.util.showSoftKeyboard
 import io.xorum.codeforceswatcher.features.users.models.User
 import io.xorum.codeforceswatcher.features.users.redux.actions.UsersActions
 import io.xorum.codeforceswatcher.features.users.redux.requests.Source
@@ -24,10 +21,7 @@ import io.xorum.codeforceswatcher.features.users.redux.requests.UsersRequests
 import io.xorum.codeforceswatcher.features.users.redux.states.UsersState
 import io.xorum.codeforceswatcher.features.users.redux.states.UsersState.SortType.Companion.getSortType
 import io.xorum.codeforceswatcher.redux.store
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.card_with_edit_text.*
 import kotlinx.android.synthetic.main.fragment_users.*
-import kotlinx.android.synthetic.main.input_field.*
 import tw.geothings.rekotlin.StoreSubscriber
 import java.util.*
 
@@ -60,30 +54,10 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSub
         usersAdapter.setItems(state.users.sort(state.sortType).map { UserItem.User(it) })
         adjustSpinnerSortVisibility(state.users.isEmpty())
 
-        when(state.addUserStatus) {
-            UsersState.Status.DONE -> {
-                store.dispatch(UsersActions.ClearAddUserState())
-                Analytics.logUserAdded()
-
-                hideBottomSheet()
-            }
-            UsersState.Status.IDLE -> {
-
-            }
-            else -> {
-
-            }
+        if (state.addUserStatus == UsersState.Status.DONE) {
+            store.dispatch(UsersActions.ClearAddUserState())
+            Analytics.logUserAdded()
         }
-
-        /*progressBar1.visibility = when (state.addUserStatus) {
-            UsersState.Status.IDLE -> INVISIBLE
-            UsersState.Status.PENDING -> VISIBLE
-            UsersState.Status.DONE -> INVISIBLE
-        }*/
-    }
-
-    private fun hideBottomSheet() {
-
     }
 
     private fun adjustSpinnerSortVisibility(isUsersListEmpty: Boolean) {

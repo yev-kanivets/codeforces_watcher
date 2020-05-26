@@ -23,17 +23,12 @@ import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.util.Analytics
 import com.bogdan.codeforceswatcher.util.FeedbackController
-import com.bogdan.codeforceswatcher.util.showSoftKeyboard
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import io.xorum.codeforceswatcher.features.problems.redux.actions.ProblemsActions
 import io.xorum.codeforceswatcher.features.users.redux.requests.UsersRequests
 import io.xorum.codeforceswatcher.redux.store
-import kotlinx.android.synthetic.main.activity_add_user.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.toolbar
-import kotlinx.android.synthetic.main.card_with_edit_text.*
-import kotlinx.android.synthetic.main.input_field.*
-import kotlinx.android.synthetic.main.input_field.view.*
 import java.util.*
 
 
@@ -101,11 +96,6 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onResume() {
-        super.onResume()
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
-    }
-
     private val bottomSheet = CardWithEditText.newInstance(
             actionButtonTitleResId = R.string.add_user,
             taskTitleResId = R.string.enter_handle,
@@ -114,30 +104,19 @@ class MainActivity : AppCompatActivity() {
             }
     )
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        bottomSheet.dismissAndNotifyListeners()
-    }
-
     private fun onUsersTabSelected() {
         llSorting.visibility = View.VISIBLE
         ivFilter.visibility = View.GONE
         searchViewItem?.isVisible = false
 
         fab.setOnClickListener {
-            //startActivity(Intent(this@MainActivity, AddUserActivity::class.java)
-
             bottomSheet.show(supportFragmentManager, null)
-            //bottomSheet.inputField.editText.showSoftKeyboard()
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_plus))
     }
 
     private fun addUser(handle: String) {
-        //var bottomSheetBehavior = BottomSheetBehavior.from(inflate(R.layout.card_with_edit_text, container, false))
-
         store.dispatch(UsersRequests.AddUser(handle, Locale.getDefault().language))
-        //Analytics.logUserAdded()
     }
 
     private fun onContestsTabSelected() {
