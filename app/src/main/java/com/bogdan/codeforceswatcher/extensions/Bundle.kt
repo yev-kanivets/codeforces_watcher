@@ -4,21 +4,21 @@ import android.os.Bundle
 import java.io.Serializable
 
 var Bundle.onConfirm: ((String) -> Unit)?
-    get() = getSerializable("order_feature") as? ((String) -> Unit)
-    set(value) = putSerializable("order_feature", value as Serializable)
+    get() = getSerializable("on_confirm") as? ((String) -> Unit)
+    set(value) = putSerializable("on_confirm", value as Serializable)
 
 var Bundle.taskTitleResId: Int?
-    get() = getInt("task_title")
+    get() = getInt("task_title_id")
     set(value) {
         if (value != null) {
-            putInt("task_title", value)
+            putInt("task_title_id", value)
         }
     }
 
 var Bundle.actionButtonTitleResId: Int?
-    get() = getInt("action_button_title")
+    get() = getInt("action_button_title_id")
     set(value) {
         if (value != null) {
-            putInt("action_button_title", value)
+            putInt("action_button_title_id", value)
         }
     }

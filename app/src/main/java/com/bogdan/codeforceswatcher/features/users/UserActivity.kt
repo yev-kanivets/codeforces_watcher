@@ -5,10 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.codeforceswatcher.R
-import io.xorum.codeforceswatcher.features.users.models.ChartItem
 import com.bogdan.codeforceswatcher.util.CustomMarkerView
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -21,7 +19,6 @@ import io.xorum.codeforceswatcher.features.users.redux.requests.UsersRequests
 import io.xorum.codeforceswatcher.redux.store
 import io.xorum.codeforceswatcher.util.avatar
 import kotlinx.android.synthetic.main.activity_user.*
-import kotlinx.android.synthetic.main.fragment_users.*
 import java.text.SimpleDateFormat
 import java.util.*
 

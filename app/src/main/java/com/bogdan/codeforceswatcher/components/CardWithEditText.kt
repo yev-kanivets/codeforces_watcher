@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.card_with_edit_text.*
 import kotlinx.android.synthetic.main.input_field.*
 import tw.geothings.rekotlin.StoreSubscriber
 
-class CardWithEditText : BottomSheetDialogFragment(), StoreSubscriber<UsersState> {
+class AddUserBottomSheet : BottomSheetDialogFragment(), StoreSubscriber<UsersState> {
 
     companion object {
 
@@ -30,7 +30,7 @@ class CardWithEditText : BottomSheetDialogFragment(), StoreSubscriber<UsersState
                 actionButtonTitleResId: Int,
                 taskTitleResId: Int,
                 onConfirm: ((String) -> Unit)? = null
-        ) = CardWithEditText().apply {
+        ) = AddUserBottomSheet().apply {
             arguments = Bundle().apply {
                 this.actionButtonTitleResId = actionButtonTitleResId
                 this.taskTitleResId = taskTitleResId

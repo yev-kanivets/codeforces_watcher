@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
-import com.bogdan.codeforceswatcher.components.CardWithEditText
+import com.bogdan.codeforceswatcher.components.AddUserBottomSheet
 import com.bogdan.codeforceswatcher.features.actions.ActionsFragment
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
 import com.bogdan.codeforceswatcher.features.contests.FiltersActivity
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    private val bottomSheet = CardWithEditText.newInstance(
+    private val addUserBottomSheet = AddUserBottomSheet.newInstance(
             actionButtonTitleResId = R.string.add_user,
             taskTitleResId = R.string.enter_handle,
             onConfirm = { handle ->
@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity() {
         searchViewItem?.isVisible = false
 
         fab.setOnClickListener {
-            bottomSheet.show(supportFragmentManager, null)
+            addUserBottomSheet.show(supportFragmentManager, null)
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_plus))
     }
