@@ -9,6 +9,7 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import com.bogdan.codeforceswatcher.CwApp
 import com.bogdan.codeforceswatcher.extensions.actionButtonTitleResId
 import com.bogdan.codeforceswatcher.extensions.onConfirm
@@ -39,11 +40,18 @@ class CardWithEditText : BottomSheetDialogFragment(), StoreSubscriber<UsersState
     }
 
     private val actionButtonTitleResId: Int?
-            get() = arguments?.actionButtonTitleResId
+        get() = arguments?.actionButtonTitleResId
+
     private val taskTitleResId: Int?
-            get() = arguments?.taskTitleResId
+        get() = arguments?.taskTitleResId
+
     private val onConfirm: ((String) -> Unit)?
-            get() = arguments?.onConfirm
+        get() = arguments?.onConfirm
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogStyle)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.card_with_edit_text, container, false)
@@ -64,17 +72,19 @@ class CardWithEditText : BottomSheetDialogFragment(), StoreSubscriber<UsersState
     }
 
     override fun newState(state: UsersState) {
-        progressBar.visibility = when (state.addUserStatus) {
+        val addUserStatus = state.addUserStatus
+
+        progressBar.visibility = when (addUserStatus) {
             UsersState.Status.IDLE -> INVISIBLE
             UsersState.Status.PENDING -> VISIBLE
             UsersState.Status.DONE -> INVISIBLE
         }
 
-        when (state.addUserStatus) {
-            UsersState.Status.DONE -> {
-                editText.text.clear()
-                dismiss()
-            }
+        actionButton.isEnabled = (addUserStatus != UsersState.Status.PENDING)
+
+        if (addUserStatus == UsersState.Status.DONE) {
+            editText.text.clear()
+            dismiss()
         }
     }
 

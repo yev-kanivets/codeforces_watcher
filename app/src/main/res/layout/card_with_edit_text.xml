@@ -13,20 +13,22 @@
         app:cardCornerRadius="2dp"
         app:cardElevation="16dp">
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorPrimary" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:indeterminate="true"
-                android:visibility="invisible"
-                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -35,10 +37,10 @@
 
                 <TextView
                     android:id="@+id/task"
-                    android:textSize="12sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray" />
+                    android:textColor="@color/gray"
+                    android:textSize="12sp" />
 
                 <View
                     android:layout_width="0dp"

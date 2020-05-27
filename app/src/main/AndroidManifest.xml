@@ -33,10 +33,6 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".features.add_user.AddUserActivity"
-            android:label="Add User"
-            android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver
             android:name=".receiver.RatingUpdateReceiver"
