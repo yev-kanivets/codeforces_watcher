@@ -14,7 +14,7 @@ import common
 
 class ContestsViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
     
-    private let contestsRulesView = ContestsRulesView()
+    private let contestsRulesCardView = ContestsRulesCardView()
     private let tableView = UITableView()
     private let tableAdapter = ContestsTableViewAdapter()
     private let refreshControl = UIRefreshControl()
@@ -51,13 +51,13 @@ class ContestsViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "filterIcon"), style: .plain, target: self, action: #selector(filterTapped))
 
-        contestsRulesView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.contestsRulesTapped)))
+        contestsRulesCardView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.contestsRulesTapped)))
     }
 
     private func buildViewTree() {
         view.addSubview(tableView)
 
-        tableView.tableHeaderView = contestsRulesView
+        tableView.tableHeaderView = contestsRulesCardView
     }
 
     private func setConstraints() {
@@ -66,7 +66,7 @@ class ContestsViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
             $0.tableHeaderView?.widthToSuperview()
         }
 
-        contestsRulesView.run {
+        contestsRulesCardView.run {
             $0.setNeedsLayout()
             $0.layoutIfNeeded()
         }

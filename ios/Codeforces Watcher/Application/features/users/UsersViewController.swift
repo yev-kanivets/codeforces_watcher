@@ -26,6 +26,12 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
     private let pickerView = UIPickerView()
     private let pickerAdapter = UsersPickerViewAdapter()
     
+    private let blackView = UIView().apply {
+        $0.isHidden = true
+        $0.alpha = 0.5
+        $0.backgroundColor = Palette.black
+    }
+    
     private let bottomInputCardView = AddUserCardView(
         frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 136)
     ).apply {
@@ -128,11 +134,14 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
     
     private func buildViewTree() {
         view.addSubview(tableView)
+        navigationController?.view.addSubview(blackView)
         navigationController?.navigationBar.addSubview(sortTextField)
     }
     
     private func setConstraints() {
         tableView.edgesToSuperview()
+        blackView.edgesToSuperview()
+        
         sortTextField.run {
             $0.topToSuperview()
             $0.bottomToSuperview()
@@ -141,11 +150,9 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
     }
     
     private func setInteractions() {
-        [navigationController?.navigationBar, view].forEach {
-            ($0 as AnyObject).addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOutside)).apply {
-                $0.cancelsTouchesInView = false
-            })
-        }
+        blackView.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(didTapOutside))
+        )
     }
     
     @objc func didTapOutside() {
@@ -196,6 +203,7 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
             $0.isHidden = false
             $0.textField.becomeFirstResponder()
         }
+        blackView.isHidden = false
     }
     
     private func hideBottomInputView() {
@@ -204,6 +212,7 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
             $0.resignFirstResponder()
         }
         resignFirstResponder()
+        blackView.isHidden = true
     }
     
     private func sortUsers(_ sortType: UsersState.SortType) {
