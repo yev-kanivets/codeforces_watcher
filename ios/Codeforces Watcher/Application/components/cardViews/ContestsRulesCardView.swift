@@ -1,5 +1,5 @@
 //
-//  ContestsRulesTableViewCell.swift
+//  ContestsRulesCardView.swift
 //  Codeforces Watcher
 //
 //  Created by Den Matyash on 1/27/20.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ContestsRulesView: UIView {
+class ContestsRulesCardView: UIView {
     
     private let cardView = CardView()
 
