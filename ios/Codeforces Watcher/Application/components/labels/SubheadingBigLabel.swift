@@ -21,7 +21,7 @@ class SubheadingBigLabel: UILabel {
     }
     
     private func setupView() {
-        textColor = Palette.grey
+        textColor = Palette.gray
         font = Font.textSubheadingBig
         numberOfLines = 1
     }

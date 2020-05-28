@@ -22,7 +22,7 @@ class FeedbackCardView: UIView {
     }
     private let closeButton = UIButton().apply {
         $0.setImage(UIImage(named: "crossIcon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        $0.tintColor = Palette.grey
+        $0.tintColor = Palette.gray
     }
     private let negativeButton = SmallButton().apply {
         $0.mode = .bordered

@@ -3,10 +3,10 @@
     <color name="colorPrimary">#1289CE</color>
     <color name="colorPrimaryDark">#1266CE</color>
     <color name="colorAccent">#FFCA00</color>
-    <color name="grey">#808080</color>
+    <color name="gray">#808080</color>
     <color name="green">#008000</color>
     <color name="blue_green">#0D98BA</color>
-    <color name="dark_grey">#636363</color>
+    <color name="dark_gray">#636363</color>
     <color name="blue">#0000FF</color>
     <color name="bright_blue">#3333ff</color>
     <color name="purple">#9B1EA4</color>
@@ -15,7 +15,7 @@
     <color name="bright_green">#00FF00</color>
     <color name="white">#FFFFFF</color>
     <color name="bright_black">#212121</color>
-    <color name="divider_grey">#20000000</color>
+    <color name="divider_gray">#20000000</color>
     <color name="black">#000</color>
 
     <color name="xlight">#EBF0F5</color>

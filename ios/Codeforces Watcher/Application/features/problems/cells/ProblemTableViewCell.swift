@@ -22,7 +22,7 @@ class ProblemTableViewCell: UITableViewCell {
     private var problem: Problem!
 
     private let starIcon = UIImageView(image: UIImage(named: "starIcon")?.withRenderingMode(.alwaysTemplate)).apply {
-        $0.tintColor = Palette.grey
+        $0.tintColor = Palette.gray
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -78,7 +78,7 @@ class ProblemTableViewCell: UITableViewCell {
     }
     
     @objc func starTapped() {
-        starIcon.tintColor = problem.isFavourite ? Palette.grey : Palette.colorAccent
+        starIcon.tintColor = problem.isFavourite ? Palette.gray : Palette.colorAccent
         store.dispatch(action: ProblemsRequests.ChangeStatusFavourite(problem: problem))
     }
 
@@ -87,6 +87,6 @@ class ProblemTableViewCell: UITableViewCell {
         contestLabel.text = problem.contestName
         self.problem = problem
         
-        starIcon.tintColor = problem.isFavourite ? Palette.colorAccent : Palette.grey
+        starIcon.tintColor = problem.isFavourite ? Palette.colorAccent : Palette.gray
     }
 }

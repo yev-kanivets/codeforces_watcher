@@ -53,7 +53,13 @@ class UsersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, StoreSub
         swipeRefreshLayout.isRefreshing = (state.status == UsersState.Status.PENDING)
         usersAdapter.setItems(state.users.sort(state.sortType).map { UserItem.User(it) })
         adjustSpinnerSortVisibility(state.users.isEmpty())
+
+        if (state.addUserStatus == UsersState.Status.DONE) {
+            store.dispatch(UsersActions.ClearAddUserState())
+            Analytics.logUserAdded()
+        }
     }
+
     private fun adjustSpinnerSortVisibility(isUsersListEmpty: Boolean) {
         spSort.visibility = if (isUsersListEmpty) View.GONE else View.VISIBLE
         requireActivity().findViewById<TextView>(R.id.tvSortBy).visibility =

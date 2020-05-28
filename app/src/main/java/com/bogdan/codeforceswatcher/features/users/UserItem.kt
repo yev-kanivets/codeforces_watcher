@@ -51,8 +51,8 @@ fun colorTextByUserRank(text: String, rank: String?): SpannableString {
     val color = when (rank) {
         null -> R.color.black
 
-        "newbie" -> R.color.grey
-        "новичок" -> R.color.grey
+        "newbie" -> R.color.gray
+        "новичок" -> R.color.gray
 
         "pupil" -> R.color.green
         "ученик" -> R.color.green
@@ -78,7 +78,7 @@ fun colorTextByUserRank(text: String, rank: String?): SpannableString {
         "international grandmaster" -> R.color.red
         "международный гроссмейстер" -> R.color.red
 
-        else -> R.color.grey
+        else -> R.color.gray
     }
 
     return if (listOf("legendary grandmaster", "легендарный гроссмейстер").contains(rank)) {

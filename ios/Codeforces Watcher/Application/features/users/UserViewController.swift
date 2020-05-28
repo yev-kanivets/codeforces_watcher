@@ -19,7 +19,7 @@ class UserViewController: UIViewControllerWithCross {
     private let maxRatingLabel = BodyLabel()
     private let ratingChangesLabel = HeadingLabel().apply {
         $0.text = "Rating changes".localized
-        $0.textColor = Palette.grey
+        $0.textColor = Palette.gray
     }
     private let lineChartView = LineChartView()
     

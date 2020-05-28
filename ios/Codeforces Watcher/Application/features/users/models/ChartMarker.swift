@@ -33,7 +33,7 @@ class ChartMarker: MarkerView {
         var drawAttributes = [NSAttributedString.Key: Any]()
         drawAttributes[.font] = Font.textBody
         drawAttributes[.foregroundColor] = Palette.white
-        drawAttributes[.backgroundColor] = Palette.darkGrey
+        drawAttributes[.backgroundColor] = Palette.darkGray
 
         self.bounds.size = (text as NSString).size(withAttributes: drawAttributes)
         self.offset = CGPoint(x: 0, y: -self.bounds.size.height - 2)

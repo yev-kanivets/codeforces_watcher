@@ -15,10 +15,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bogdan.codeforceswatcher.R
+import com.bogdan.codeforceswatcher.components.AddUserBottomSheet
 import com.bogdan.codeforceswatcher.features.actions.ActionsFragment
-import com.bogdan.codeforceswatcher.features.add_user.AddUserActivity
-import com.bogdan.codeforceswatcher.features.contests.FiltersActivity
 import com.bogdan.codeforceswatcher.features.contests.ContestsFragment
+import com.bogdan.codeforceswatcher.features.contests.FiltersActivity
 import com.bogdan.codeforceswatcher.features.problems.ProblemsFragment
 import com.bogdan.codeforceswatcher.features.users.UsersFragment
 import com.bogdan.codeforceswatcher.util.Analytics
@@ -27,6 +27,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import io.xorum.codeforceswatcher.features.problems.redux.actions.ProblemsActions
 import io.xorum.codeforceswatcher.redux.store
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.toolbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -98,7 +99,7 @@ class MainActivity : AppCompatActivity() {
         searchViewItem?.isVisible = false
 
         fab.setOnClickListener {
-            startActivity(Intent(this@MainActivity, AddUserActivity::class.java))
+            AddUserBottomSheet().show(supportFragmentManager, null)
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_plus))
     }
