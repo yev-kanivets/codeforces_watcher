@@ -10,43 +10,17 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.bogdan.codeforceswatcher.CwApp
-import com.bogdan.codeforceswatcher.extensions.actionButtonTitleResId
-import com.bogdan.codeforceswatcher.extensions.onConfirm
-import com.bogdan.codeforceswatcher.extensions.taskTitleResId
 import com.bogdan.codeforceswatcher.util.showSoftKeyboard
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import io.xorum.codeforceswatcher.features.users.redux.requests.UsersRequests
 import io.xorum.codeforceswatcher.features.users.redux.states.UsersState
 import io.xorum.codeforceswatcher.redux.store
 import kotlinx.android.synthetic.main.card_with_edit_text.*
 import kotlinx.android.synthetic.main.input_field.*
 import tw.geothings.rekotlin.StoreSubscriber
+import java.util.*
 
 class AddUserBottomSheet : BottomSheetDialogFragment(), StoreSubscriber<UsersState> {
-
-    companion object {
-
-        fun newInstance(
-                actionButtonTitleResId: Int,
-                taskTitleResId: Int,
-                onConfirm: ((String) -> Unit)? = null
-        ) = AddUserBottomSheet().apply {
-            arguments = Bundle().apply {
-                this.actionButtonTitleResId = actionButtonTitleResId
-                this.taskTitleResId = taskTitleResId
-                this.onConfirm = onConfirm
-            }
-        }
-    }
-
-    private val actionButtonTitleResId: Int?
-        get() = arguments?.actionButtonTitleResId
-
-    private val taskTitleResId: Int?
-        get() = arguments?.taskTitleResId
-
-    private val onConfirm: ((String) -> Unit)?
-        get() = arguments?.onConfirm
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +57,6 @@ class AddUserBottomSheet : BottomSheetDialogFragment(), StoreSubscriber<UsersSta
         actionButton.isEnabled = (addUserStatus != UsersState.Status.PENDING)
 
         if (addUserStatus == UsersState.Status.DONE) {
-            editText.text.clear()
             dismiss()
         }
     }
@@ -91,37 +64,23 @@ class AddUserBottomSheet : BottomSheetDialogFragment(), StoreSubscriber<UsersSta
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        editText.addTextChangedListener(textEditorWatcher)
-
-        actionButtonTitleResId?.let {
-            actionButton.text = CwApp.app.getString(it)
-        }
-
         actionButton.setOnClickListener {
-            onConfirm?.invoke(editText.text?.toString() ?: "")
+            addUser(editText.text?.toString() ?: "")
         }
 
-        taskTitleResId?.let {
-            task.text = CwApp.app.getString(it)
-        }
         inputField.configure(
                 action = InputField.Action.Go {
-                    onConfirm?.invoke(editText.text?.toString() ?: "")
+                    addUser(editText.text?.toString() ?: "")
                 }
         )
+    }
+
+    private fun addUser(handle: String) {
+        store.dispatch(UsersRequests.AddUser(handle, Locale.getDefault().language))
     }
 
     override fun onResume() {
         super.onResume()
         editText.showSoftKeyboard()
-    }
-
-    private val textEditorWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-
-        override fun afterTextChanged(s: Editable) {
-            editText.setSelection(s.length)
-        }
     }
 }

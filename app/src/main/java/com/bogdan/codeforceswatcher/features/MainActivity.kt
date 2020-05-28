@@ -96,27 +96,15 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    private val addUserBottomSheet = AddUserBottomSheet.newInstance(
-            actionButtonTitleResId = R.string.add_user,
-            taskTitleResId = R.string.enter_handle,
-            onConfirm = { handle ->
-                addUser(handle)
-            }
-    )
-
     private fun onUsersTabSelected() {
         llSorting.visibility = View.VISIBLE
         ivFilter.visibility = View.GONE
         searchViewItem?.isVisible = false
 
         fab.setOnClickListener {
-            addUserBottomSheet.show(supportFragmentManager, null)
+            AddUserBottomSheet().show(supportFragmentManager, null)
         }
         fab.setImageDrawable(getDrawable(R.drawable.ic_plus))
-    }
-
-    private fun addUser(handle: String) {
-        store.dispatch(UsersRequests.AddUser(handle, Locale.getDefault().language))
     }
 
     private fun onContestsTabSelected() {
