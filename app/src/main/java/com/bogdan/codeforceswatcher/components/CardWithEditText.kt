@@ -2,8 +2,6 @@ package com.bogdan.codeforceswatcher.components
 
 import android.os.Bundle
 import com.bogdan.codeforceswatcher.R
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE

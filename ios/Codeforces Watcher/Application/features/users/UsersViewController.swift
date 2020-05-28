@@ -143,7 +143,7 @@ class UsersViewController: UIViewControllerWithFab, ReKampStoreSubscriber {
     private func setInteractions() {
         [navigationController?.navigationBar, view].forEach {
             ($0 as AnyObject).addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOutside)).apply {
-                $0.cancelsTouchesInView = true
+                $0.cancelsTouchesInView = false
             })
         }
     }
